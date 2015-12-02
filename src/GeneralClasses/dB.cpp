@@ -1,13 +1,22 @@
 #include <GeneralClasses/dB.h>
 #include <cmath>
+#include <climits>
 
 dB::dB(long double value, InitType Type) {
     if (Type == InitType::init_dB) {
         value_dB = value;
         value_Linear = std::pow(10, 0.1 * value);
     } else if (Type == InitType::init_Linear) {
+
         value_Linear = value;
-        value_dB = 10 * log10(value);
+
+        if (value != 0) {
+            value_dB = 10 * log10(value);
+        } else {
+            value_Linear = value;
+			value_dB = LONG_MIN;
+        }
+
     }
 }
 

@@ -5,9 +5,9 @@
 
 class Device {
   public:
-    virtual dB get_Gain();
-    virtual dB get_Loss();
-    virtual dB get_Noise();
+	virtual dB get_Gain() = 0;
+	virtual dB get_Loss() = 0;
+	virtual dB get_Noise() = 0;
 
     Device *Previous;
     Device *Next;

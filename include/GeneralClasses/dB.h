@@ -18,7 +18,7 @@ class dB {
      * @param value is the value of this object, either in linear or in dB units.
      * @param Type is used to choose between value measured in linear or in dB units.
      */
-    dB(long double value, InitType Type);
+	dB(long double value, InitType Type = init_dB);
     dB(const dB &);
 
     /**
