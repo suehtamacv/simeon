@@ -1,7 +1,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include <dB.h>
+#include <GeneralClasses/dB.h>
 
 class Device {
   public:

@@ -1,4 +1,4 @@
-#include <TransmissionBitrate.h>
+#include <GeneralClasses/TransmissionBitrate.h>
 
 TransmissionBitrate::TransmissionBitrate(long double Bitrate) {
     this->Bitrate = Bitrate;

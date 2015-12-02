@@ -1,8 +1,8 @@
 #ifndef MODULATIONSCHEME_H
 #define MODULATIONSCHEME_H
 
-#include <TransmissionBitrate.h>
-#include <dB.h>
+#include <GeneralClasses/TransmissionBitrate.h>
+#include <GeneralClasses/dB.h>
 
 /**
  * @brief The ModulationScheme class is a model of a modulation scheme.

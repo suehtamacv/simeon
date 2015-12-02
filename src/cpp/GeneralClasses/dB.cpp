@@ -1,4 +1,4 @@
-#include "dB.h"
+#include <GeneralClasses/dB.h>
 #include <cmath>
 
 dB::dB(long double value, InitType Type) {

@@ -1,4 +1,4 @@
-#include "MQAM_ModulationScheme.h"
+#include <ModulationSchemes/MQAM_ModulationScheme.h>
 
 MQAM_ModulationScheme::MQAM_ModulationScheme(unsigned int M,
         dB SNR_Per_Bit) : SNR_Per_Bit(SNR_Per_Bit) {

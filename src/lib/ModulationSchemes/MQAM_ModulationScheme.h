@@ -1,8 +1,8 @@
 #ifndef MQAM_MODULATIONSCHEME_H
 #define MQAM_MODULATIONSCHEME_H
 
-#include <ModulationScheme.h>
-#include <dB.h>
+#include <GeneralClasses/dB.h>
+#include <ModulationSchemes/ModulationScheme.h>
 
 class MQAM_ModulationScheme : public ModulationScheme {
   public:
