@@ -10,7 +10,8 @@ SOURCES += src/main.cpp \
 HEADERS += src/lib/ModulationScheme.h \
     src/lib/TransmissionBitrate.h \
     src/lib/MQAM_ModulationScheme.h \
-    src/lib/dB.h
+    src/lib/dB.h \
+    src/lib/Device.h
 
 LIBS += -lboost_system
 

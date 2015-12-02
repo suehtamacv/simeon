@@ -1,9 +1,14 @@
 #include "dB.h"
 #include <cmath>
 
-dB::dB(long double value) {
-    value_dB = value;
-    value_Linear = std::pow(10, 0.1 * value);
+dB::dB(long double value, InitType Type) {
+    if (Type == InitType::init_dB) {
+        value_dB = value;
+        value_Linear = std::pow(10, 0.1 * value);
+    } else if (Type == InitType::init_Linear) {
+        value_Linear = value;
+        value_dB = 10 * log10(value);
+    }
 }
 
 dB::dB(const dB &Value) {
