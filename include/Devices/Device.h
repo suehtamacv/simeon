@@ -7,7 +7,7 @@
 class Device {
   public:
 	enum DeviceType {
-		Amplifier, Fiber, Splitter, SSS
+		AmplifierDevice, FiberDevice, SplitterDevice, SSSDevice
 	};
 
 	virtual Gain get_Gain() = 0;

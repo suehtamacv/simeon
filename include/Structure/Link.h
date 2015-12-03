@@ -3,7 +3,7 @@
 
 #include <Devices/Device.h>
 #include <Devices/Fiber.h>
-#include <Devices/Amplifier.h>
+#include <Devices/Amplifiers/LineAmplifier.h>
 #include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
 #include <memory>

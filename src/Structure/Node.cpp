@@ -27,22 +27,5 @@ void Node::insert_Link(Node *N, std::shared_ptr<Link> Link) {
 	if (!LinkExists) {
 		Neighbours.push_back(N);
 		Links.push_back(Link);
-		create_Devices(Link);
 	}
-}
-
-void Node::create_Devices(std::shared_ptr<Link> Link) {
-	Gain PreampGain(Link->AvgSpanLength / (Link->numLineAmplifiers + 1));
-
-	if (Architecture == SwitchingSelect) {
-		PreampGain = PreampGain + SSS::SSSLoss;
-	} else if (Architecture == BroadcastAndSelect) {
-		PreampGain = PreampGain + Gain(Neighbours.size() + 1, Gain::Linear);
-	}
-
-	std::unique_ptr<std::vector<std::unique_ptr<Device>>> LinkDevices(
-		new std::vector<std::unique_ptr<Device>>);
-
-	//Pre-amplifier
-	LinkDevices->push_back(std::unique_ptr<Device>(new Amplifier(PreampGain)));
 }

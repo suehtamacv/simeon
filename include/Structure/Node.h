@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 #include <Devices/Device.h>
-#include <Devices/Amplifier.h>
+#include <Devices/Amplifiers/Amplifier.h>
 #include <Devices/Splitter.h>
 #include <Devices/SSS.h>
 #include <Structure/Link.h>
@@ -44,7 +44,6 @@ class Node {
 	void insert_Link(Node *N, std::shared_ptr<Link> Link);
 
   private:
-	void create_Devices(std::shared_ptr<Link> Link);
 	Node_Type Type;
 	Node_Architecure Architecture;
 	int NumRegenerators;

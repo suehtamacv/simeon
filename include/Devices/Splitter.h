@@ -5,7 +5,7 @@
 
 class Splitter : public Device {
   public:
-	static constexpr DeviceType T = Device::Splitter;
+	static constexpr DeviceType T = Device::SplitterDevice;
 
 	Splitter(int NumPorts);
 

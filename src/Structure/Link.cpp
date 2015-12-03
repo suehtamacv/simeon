@@ -30,13 +30,14 @@ void Link::create_Devices() {
 
 	long double SpanLength = Length / numLineAmplifiers;
 
-	//Each line amplifier compensates for the loss in the previous fiber segment.
-	Gain AmplGain(SpanLength * Fiber::alphaFiber);
-
 	for (int i = 0; i < numLineAmplifiers; i++) {
-		Devices.push_back(std::unique_ptr<Amplifier>(new Amplifier(AmplGain)));
 		Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
+		Devices.push_back(std::unique_ptr<LineAmplifier>(
+							  new LineAmplifier((Fiber &)*Devices.back())));
 	}
+
+	//There's an extra fiber segment in the end of the link
+	Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
 }
 
 Signal Link::cross_Link(Signal S) {

@@ -5,7 +5,7 @@
 
 class SSS : public Device {
   public:
-	static constexpr DeviceType T = Device::SSS;
+	static constexpr DeviceType T = Device::SSSDevice;
 	static Gain SSSLoss;
 
 	SSS();
