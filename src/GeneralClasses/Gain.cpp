@@ -21,6 +21,10 @@ Gain Gain::operator +(Gain G) {
 	return Gain(value_dB + G.in_dB());
 }
 
+Gain Gain::operator -(Gain G) {
+	return Gain(value_dB - G.in_dB());
+}
+
 Gain::Gain(const Gain &Value) {
 	value_dB = Value.in_dB();
 	value_Linear = Value.in_Linear();

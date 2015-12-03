@@ -21,3 +21,8 @@ void Amplifier::calculate_NoisePower() {
 						Amplifier::BRef * NoiseFigure.in_Linear() * (AmplifierGain.in_Linear() - 1);
 	NoisePower = Power(Noise, Power::Watt);
 }
+
+void Amplifier::set_Gain(Gain G) {
+	AmplifierGain = G;
+	calculate_NoisePower();
+}

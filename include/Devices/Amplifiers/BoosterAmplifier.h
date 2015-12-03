@@ -6,7 +6,9 @@
 class BoosterAmplifier : public Amplifier {
   public:
 	static constexpr AmplifierType AT = Amplifier::BoosterAmplifierType;
-	BoosterAmplifier(Gain G);
+	BoosterAmplifier();
+
+	Gain get_Gain();
 };
 
 #endif // BOOSTERAMPLIFIER_H

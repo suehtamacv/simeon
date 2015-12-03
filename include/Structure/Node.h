@@ -1,14 +1,11 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <map>
 #include <memory>
 #include <vector>
 #include <Devices/Device.h>
-#include <Devices/Amplifiers/Amplifier.h>
-#include <Devices/Splitter.h>
-#include <Devices/SSS.h>
-#include <Structure/Link.h>
+
+class Link;
 
 class Node {
   public:
@@ -32,20 +29,23 @@ class Node {
 		BroadcastAndSelect, SwitchingSelect
 	};
 
-	Node(int ID, Node_Type T = TransparentNode, Node_Architecure A = SwitchingSelect, int NumRegenerators = 0);
+	Node(int ID, Node_Type T = TransparentNode,
+		 Node_Architecure A = SwitchingSelect, int NumRegenerators = 0);
 
-	const int ID;
 	bool operator==(Node *);
 
+	const int ID;
 	std::vector<Node *> Neighbours;
 	std::vector<std::shared_ptr<Link>> Links;
-	std::map<std::weak_ptr<Link> , std::unique_ptr<std::vector<Device>>> Devices;
+	std::vector<std::unique_ptr<Device>> Devices;
 
+	Node_Architecure get_NodeArch();
 	void insert_Link(Node *N, std::shared_ptr<Link> Link);
 
-  private:
+	private:
 	Node_Type Type;
 	Node_Architecure Architecture;
+	void create_Devices();
 	int NumRegenerators;
 };
 
