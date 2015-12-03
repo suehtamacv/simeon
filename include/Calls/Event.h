@@ -27,7 +27,7 @@ class Event {
      * @brief operator < is used to compare the ocurral instants of two events.
      * @return true iff this event ocurrs prior to the Event passed as argument.
      */
-    bool operator<(Event);
+    bool operator<(const Event) const;
 
     long double t;
     Event_Type Type;

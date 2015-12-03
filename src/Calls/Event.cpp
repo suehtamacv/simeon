@@ -5,7 +5,7 @@ Event::Event(long double t, Event_Type Type,
 
 }
 
-bool Event::operator <(Event E) {
+bool Event::operator <(const Event E) const {
     if (t < E.t) {
         return true;
     }
