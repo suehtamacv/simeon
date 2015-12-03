@@ -20,7 +20,8 @@ SOURCES += src/main.cpp \
     src/Devices/Amplifiers/PreAmplifier.cpp \
     src/Calls/Event.cpp \
     src/Calls/Call.cpp \
-    src/Calls/CallGenerator.cpp
+    src/Calls/CallGenerator.cpp \
+    src/Structure/Topology.cpp
 
 
 HEADERS += \
@@ -43,7 +44,8 @@ HEADERS += \
     include/Devices/Amplifiers/PreAmplifier.h \
     include/Calls/Event.h \
     include/Calls/Call.h \
-    include/Calls/CallGenerator.h
+    include/Calls/CallGenerator.h \
+    include/Structure/Topology.h
 
 LIBS += -lboost_system
 
