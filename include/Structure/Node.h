@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <Devices/Device.h>
+#include <GeneralClasses/Signal.h>
 
 class Link;
 
@@ -42,7 +43,10 @@ class Node {
 	Node_Architecure get_NodeArch();
 	void insert_Link(Node *N, std::shared_ptr<Link> Link);
 
-	private:
+	Signal cross(Signal);
+	Signal enter(Signal);
+	Signal exit(Signal);
+  private:
 	Node_Type Type;
 	Node_Architecure Architecture;
 	void create_Devices();

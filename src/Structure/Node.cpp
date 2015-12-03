@@ -60,3 +60,45 @@ void Node::create_Devices() {
 	//Booster AmplifierD
 	Devices.push_back(std::unique_ptr<Device>(new BoosterAmplifier()));
 }
+
+Signal Node::cross(Signal S) {
+	for (auto it = Devices.begin(); it != Devices.end(); ++it) {
+		S *= (*it)->get_Gain();
+		S *= (*it)->get_Loss();
+		S += (*it)->get_Noise();
+	}
+
+	return S;
+}
+
+Signal Node::enter(Signal S) {
+	for (auto it = Devices.begin(); it != Devices.end(); ++it) {
+		S *= (*it)->get_Gain();
+		S *= (*it)->get_Loss();
+		S += (*it)->get_Noise();
+
+		if ((*it)->T == Device::SplitterDevice || (*it)->T == Device::SSSDevice) {
+			break;
+		}
+	}
+
+	return S;
+}
+
+Signal Node::exit(Signal S) {
+	bool foundExit = false;
+
+	for (auto it = Devices.begin(); it != Devices.end(); ++it) {
+		if (!foundExit && (*it)->T != Device::SplitterDevice &&
+				(*it)->T != Device::SSSDevice) {
+			foundExit = true;
+			continue;
+		}
+
+		S *= (*it)->get_Gain();
+		S *= (*it)->get_Loss();
+		S += (*it)->get_Noise();
+	}
+
+	return S;
+}
