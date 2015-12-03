@@ -17,6 +17,7 @@ class Fiber : public Device {
 
     Gain get_Gain();
     Gain get_Loss();
+	Power get_Noise();
 
   private:
     long double SpanLength;

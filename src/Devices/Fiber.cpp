@@ -14,3 +14,7 @@ Gain Fiber::get_Gain() {
 Gain Fiber::get_Loss() {
     return NetLoss;
 }
+
+Power Fiber::get_Noise() {
+	return Power(0, Power::init_Watt);
+}

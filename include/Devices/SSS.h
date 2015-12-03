@@ -5,11 +5,14 @@
 
 class SSS : public Device {
   public:
-	static Gain SSSLoss;
 	SSS();
 
 	Gain get_Gain();
 	Gain get_Loss();
+	Power get_Noise();
+
+  private:
+	static Gain SSSLoss;
 };
 
 #endif // SSS_H

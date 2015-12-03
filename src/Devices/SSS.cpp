@@ -13,3 +13,7 @@ Gain SSS::get_Gain() {
 Gain SSS::get_Loss() {
 	return SSSLoss;
 }
+
+Power SSS::get_Noise() {
+	return Power(0, Power::init_Watt);
+}

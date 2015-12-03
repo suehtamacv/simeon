@@ -7,6 +7,9 @@
 class Amplifier : public Device {
   public:
 	Amplifier(Gain G);
+
+	Gain get_Gain();
+	Gain get_Loss();
 	Power get_Noise();
 
   private:

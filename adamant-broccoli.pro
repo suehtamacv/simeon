@@ -10,7 +10,8 @@ SOURCES += src/main.cpp \
     src/Devices/Amplifier.cpp \
     src/GeneralClasses/Gain.cpp \
     src/GeneralClasses/Power.cpp \
-    src/Devices/Device.cpp
+    src/Devices/Device.cpp \
+    src/Devices/Splitter.cpp
 
 
 HEADERS += include/ModulationSchemes/ModulationScheme.h \
@@ -22,7 +23,8 @@ HEADERS += include/ModulationSchemes/ModulationScheme.h \
     include/Devices/Amplifier.h \
     include/GeneralClasses/Gain.h \
     include/GeneralClasses/Power.h \
-    include/GeneralClasses/PhysicalConstants.h
+    include/GeneralClasses/PhysicalConstants.h \
+    include/Devices/Splitter.h
 
 LIBS += -lboost_system
 
