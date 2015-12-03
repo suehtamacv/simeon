@@ -17,7 +17,9 @@ SOURCES += src/main.cpp \
 	src/GeneralClasses/Signal.cpp \
 	src/Devices/Amplifiers/LineAmplifier.cpp \
 	src/Devices/Amplifiers/BoosterAmplifier.cpp \
-	src/Devices/Amplifiers/PreAmplifier.cpp
+	src/Devices/Amplifiers/PreAmplifier.cpp \
+    src/Calls/Event.cpp \
+    src/Calls/Call.cpp
 
 
 HEADERS += \
@@ -37,7 +39,9 @@ HEADERS += \
 	include/GeneralClasses/Signal.h \
 	include/Devices/Amplifiers/LineAmplifier.h \
 	include/Devices/Amplifiers/BoosterAmplifier.h \
-	include/Devices/Amplifiers/PreAmplifier.h
+	include/Devices/Amplifiers/PreAmplifier.h \
+    include/Calls/Event.h \
+    include/Calls/Call.h
 
 LIBS += -lboost_system
 
