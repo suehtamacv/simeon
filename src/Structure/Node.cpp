@@ -2,6 +2,8 @@
 #include <Structure/Node.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 #include <Devices/Amplifiers/BoosterAmplifier.h>
+#include <Devices/SSS.h>
+#include <Devices/Splitter.h>
 
 Node::Node(int ID, Node_Type T, Node_Architecure A,
 		   int NumRegenerators) : ID(ID), Type(T) , Architecture(A) ,
@@ -32,6 +34,11 @@ void Node::insert_Link(Node *N, std::shared_ptr<Link> Link) {
 	if (!LinkExists) {
 		Neighbours.push_back(N);
 		Links.push_back(Link);
+
+		if (Architecture == BroadcastAndSelect) {
+			assert((*Devices.front()).T == Device::SplitterDevice);
+			static_cast<Splitter &>(*Devices.front()).set_NumPorts(Links.size());
+		}
 	}
 }
 
@@ -40,4 +47,16 @@ Node::Node_Architecure Node::get_NodeArch() {
 }
 
 void Node::create_Devices() {
+	//Switching element - entrance
+	if (Architecture == BroadcastAndSelect) {
+		Devices.push_back(std::unique_ptr<Device>(new Splitter(Links.size())));
+	} else {
+		Devices.push_back(std::unique_ptr<Device>(new SSS()));
+	}
+
+	//Switching element - exit
+	Devices.push_back(std::unique_ptr<Device>(new SSS()));
+
+	//Booster AmplifierD
+	Devices.push_back(std::unique_ptr<Device>(new BoosterAmplifier()));
 }

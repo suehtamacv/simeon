@@ -38,6 +38,11 @@ void Link::create_Devices() {
 
 	//There's an extra fiber segment in the end of the link
 	Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
+
+	//There's a preamplifier in the node's entrance.
+	//It compensates the fiber segment loss and also the switching element loss.
+	Devices.push_back(std::unique_ptr<PreAmplifier>(new PreAmplifier((
+						  Fiber &)*Devices.back(), *Destination.lock())));
 }
 
 Signal Link::cross_Link(Signal S) {

@@ -13,6 +13,8 @@ class Splitter : public Device {
 	Gain get_Loss();
 	Power get_Noise();
 
+	void set_NumPorts(int NumPorts);
+
   private:
 	int NumPorts;
 	Gain SplitterLoss;
