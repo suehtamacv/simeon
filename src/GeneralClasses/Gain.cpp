@@ -3,10 +3,10 @@
 #include <GeneralClasses/Gain.h>
 
 Gain::Gain(long double value, InitType Type) {
-    if (Type == InitType::init_dB) {
+    if (Type == InitType::dB) {
         value_dB = value;
         value_Linear = std::pow(10, 0.1 * value);
-    } else if (Type == InitType::init_Linear) {
+    } else if (Type == InitType::Linear) {
 		assert(value > 0);
         value_Linear = value;
 		value_dB = 10 * log10(value);

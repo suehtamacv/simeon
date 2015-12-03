@@ -6,14 +6,18 @@
 class Power {
   public:
 	/**
-	* @brief The InitType enum is used to choose how to init the object. Use init_dBm to provide an initial value in dBm, and init_Watt to provide an initial value in watts.
+	* @brief The InitType enum is used to choose how to init the object. Use dBm to provide an initial value in dBm, and Watt to provide an initial value in watts.
 	*/
 	enum InitType {
-		init_dBm, init_Watt
+		dBm, Watt
 	};
-	Power(long double value, InitType = init_dBm);
+	Power(long double value, InitType = dBm);
+	Power(const Power&);
 
 	Power operator*(Gain G);
+	Power operator+(Power P);
+	void operator*=(Gain G);
+	void operator+=(Power P);
 
 	long double in_dBm() const;
 	long double in_Watts() const;

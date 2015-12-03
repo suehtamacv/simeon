@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
+#include <GeneralClasses/Signal.h>
 
 int main(void) {
-	std::cout << log10(0) << std::endl;
-    return 0;
+	return 0;
 }

@@ -14,7 +14,8 @@ SOURCES += src/main.cpp \
     src/Structure/Slot.cpp \
     src/Structure/Link.cpp \
     src/Structure/Node.cpp \
-    src/ModulationSchemes/ModulationScheme.cpp
+    src/ModulationSchemes/ModulationScheme.cpp \
+    src/GeneralClasses/Signal.cpp
 
 
 HEADERS += \
@@ -30,7 +31,8 @@ HEADERS += \
     include/Structure/Slot.h \
     include/Structure/Link.h \
     include/Structure/Node.h \
-    include/ModulationSchemes/ModulationScheme.h
+    include/ModulationSchemes/ModulationScheme.h \
+    include/GeneralClasses/Signal.h
 
 LIBS += -lboost_system
 

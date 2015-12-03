@@ -7,10 +7,10 @@
 class Gain {
   public:
     /**
-     * @brief The InitType enum is used to choose how to init the object. Use init_dB to provide an initial value in dB, and init_Linear to provide an initial value in linear units.
+	 * @brief The InitType enum is used to choose how to init the object. Use dB to provide an initial value in dB, and Linear to provide an initial value in linear units.
      */
     enum InitType {
-        init_dB, init_Linear
+		dB, Linear
     };
 
     /**
@@ -18,7 +18,7 @@ class Gain {
      * @param value is the value of this object, either in linear or in dB units.
      * @param Type is used to choose between value measured in linear or in dB units.
      */
-	Gain(long double value, InitType Type = init_dB);
+	Gain(long double value, InitType Type = dB);
 	Gain(const Gain &);
 
 	/**
