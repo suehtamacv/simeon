@@ -1,36 +1,33 @@
 #ifndef LINK_H
 #define LINK_H
 
-#include <Devices/Device.h>
-#include <Devices/Fiber.h>
-#include <Devices/Amplifiers/LineAmplifier.h>
-#include <Devices/Amplifiers/PreAmplifier.h>
 #include <GeneralClasses/Signal.h>
-#include <Structure/Slot.h>
 #include <memory>
 #include <vector>
 
 class Node;
+class Slot;
+class Device;
 
 class Link {
   public:
-	constexpr static int NumSlots = 64;
-	constexpr static long double AvgSpanLength = 80;
+    constexpr static int NumSlots = 64;
+    constexpr static long double AvgSpanLength = 80;
 
-	Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination, long double Length);
+    Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination, long double Length);
 
-	std::weak_ptr<Node> Origin;
-	std::weak_ptr<Node> Destination;
-	long double Length;
-	int numLineAmplifiers;
+    std::weak_ptr<Node> Origin;
+    std::weak_ptr<Node> Destination;
+    long double Length;
+    int numLineAmplifiers;
 
-	Signal cross(Signal);
+    Signal cross(Signal);
 
   private:
-	void create_Slots();
-	void create_Devices();
-	std::vector<std::unique_ptr<Slot>> Slots;
-	std::vector<std::unique_ptr<Device>> Devices;
+    void create_Slots();
+    void create_Devices();
+    std::vector<std::unique_ptr<Slot>> Slots;
+    std::vector<std::unique_ptr<Device>> Devices;
 };
 
 #endif // LINK_H

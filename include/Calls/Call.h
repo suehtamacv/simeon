@@ -4,7 +4,8 @@
 #include <memory>
 #include <Calls/Event.h>
 #include <GeneralClasses/TransmissionBitrate.h>
-#include <Structure/Node.h>
+
+class Node;
 
 class Call {
   public:
