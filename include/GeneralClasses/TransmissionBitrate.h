@@ -3,10 +3,10 @@
 
 class TransmissionBitrate {
   public:
-    TransmissionBitrate(long double Bitrate);
-    long double get_Bitrate();
+	TransmissionBitrate(long double Bitrate);
+	long double get_Bitrate();
   private:
-    long double Bitrate;
+	long double Bitrate;
 };
 
 #endif // TRANSMISSIONBITRATE_H

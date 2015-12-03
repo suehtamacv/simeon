@@ -20,6 +20,7 @@ Power Amplifier::get_Noise() {
 }
 
 void Amplifier::calculate_NoisePower() {
+	//This is the ASE Noise Modelling.
 	long double Noise = 0.5 * PhysicalConstants::h * PhysicalConstants::freq *
 						Amplifier::BRef * NoiseFigure.in_Linear() * (AmplifierGain.in_Linear() - 1);
 	NoisePower = Power(Noise, Power::Watt);

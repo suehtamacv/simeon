@@ -9,7 +9,6 @@ SOURCES += src/main.cpp \
     src/Devices/Amplifier.cpp \
     src/GeneralClasses/Gain.cpp \
     src/GeneralClasses/Power.cpp \
-    src/Devices/Device.cpp \
     src/Devices/Splitter.cpp \
     src/Structure/Slot.cpp \
     src/Structure/Link.cpp \

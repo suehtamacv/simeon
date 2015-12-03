@@ -31,6 +31,8 @@ void Link::create_Devices() {
 	}
 
 	long double SpanLength = Length / num_LineAmplifiers;
+
+	//Each line amplifier compensates for the loss in the previous fiber segment.
 	Gain AmplGain(SpanLength * Fiber::alphaFiber);
 
 	for (int i = 0; i < num_LineAmplifiers; i++) {
