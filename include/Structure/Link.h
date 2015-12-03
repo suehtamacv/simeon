@@ -4,6 +4,7 @@
 #include <Devices/Device.h>
 #include <Devices/Fiber.h>
 #include <Devices/Amplifier.h>
+#include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
 #include <memory>
 #include <vector>
@@ -20,6 +21,8 @@ class Link {
 	std::weak_ptr<Node> Origin;
 	std::weak_ptr<Node> Destination;
 	long double Length;
+
+	Signal cross_Link(Signal);
 
   private:
 	void create_Slots();

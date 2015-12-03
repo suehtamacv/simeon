@@ -40,3 +40,13 @@ void Link::create_Devices() {
 		Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
 	}
 }
+
+Signal Link::cross_Link(Signal S) {
+	for (auto it = Devices.begin(); it != Devices.end(); ++it) {
+		S *= (*it)->get_Gain();
+		S *= (*it)->get_Loss();
+		S += (*it)->get_Noise();
+	}
+
+	return S;
+}
