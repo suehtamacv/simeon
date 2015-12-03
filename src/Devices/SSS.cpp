@@ -1,19 +1,15 @@
 #include <Devices/SSS.h>
 
-dB SSS::SSSLoss = dB(-5, dB::init_dB);
+Gain SSS::SSSLoss = Gain(-5);
 
 SSS::SSS() {
 
 }
 
-dB SSS::get_Gain() {
-	return dB(0);
+Gain SSS::get_Gain() {
+	return Gain(0);
 }
 
-dB SSS::get_Loss() {
+Gain SSS::get_Loss() {
 	return SSSLoss;
-}
-
-dB SSS::get_Noise() {
-	return dB(0, dB::init_Linear);
 }

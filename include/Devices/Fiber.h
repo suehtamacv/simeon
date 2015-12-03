@@ -15,13 +15,12 @@ class Fiber : public Device {
      */
     Fiber(long double SpanLength);
 
-    dB get_Gain();
-    dB get_Loss();
-    dB get_Noise();
+    Gain get_Gain();
+    Gain get_Loss();
 
   private:
     long double SpanLength;
-    dB NetLoss;
+    Gain NetLoss;
 };
 
 #endif // FIBER_H

@@ -1,10 +1,10 @@
-#ifndef DB_H
-#define DB_H
+#ifndef GAIN_H
+#define GAIN_H
 
 /**
- * @brief The dB class provides a interface to variables that are measured in dB units or in linear units.
+ * @brief The Gain class provides a interface to gain variables that are measured in dB units or in linear units.
  */
-class dB {
+class Gain {
   public:
     /**
      * @brief The InitType enum is used to choose how to init the object. Use init_dB to provide an initial value in dB, and init_Linear to provide an initial value in linear units.
@@ -18,8 +18,14 @@ class dB {
      * @param value is the value of this object, either in linear or in dB units.
      * @param Type is used to choose between value measured in linear or in dB units.
      */
-	dB(long double value, InitType Type = init_dB);
-    dB(const dB &);
+	Gain(long double value, InitType Type = init_dB);
+	Gain(const Gain &);
+
+	/**
+	 * @brief operator - returns the symmetrical Gain.
+	 * @return the symmetrical Gain.
+	 */
+	Gain operator-();
 
     /**
      * @brief in_dB returns the value of this object in dB units.
@@ -37,4 +43,4 @@ class dB {
     long double value_Linear;
 };
 
-#endif // DB_H
+#endif // GAIN_H
