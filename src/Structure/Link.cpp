@@ -2,8 +2,6 @@
 #include <cmath>
 #include <Structure/Link.h>
 
-long double Link::AvgSpanLength = 80;
-
 Link::Link(std::weak_ptr<Node> Origin,
 		   std::weak_ptr<Node> Destination,
 		   long double Length) {
@@ -24,18 +22,18 @@ void Link::create_Slots() {
 }
 
 void Link::create_Devices() {
-	int num_LineAmplifiers = floor(Length / AvgSpanLength);
+	numLineAmplifiers = floor(Length / AvgSpanLength);
 
-	if (ceil(Length / AvgSpanLength) == num_LineAmplifiers) {
-		num_LineAmplifiers--;
+	if (ceil(Length / AvgSpanLength) == numLineAmplifiers) {
+		numLineAmplifiers--;
 	}
 
-	long double SpanLength = Length / num_LineAmplifiers;
+	long double SpanLength = Length / numLineAmplifiers;
 
 	//Each line amplifier compensates for the loss in the previous fiber segment.
 	Gain AmplGain(SpanLength * Fiber::alphaFiber);
 
-	for (int i = 0; i < num_LineAmplifiers; i++) {
+	for (int i = 0; i < numLineAmplifiers; i++) {
 		Devices.push_back(std::unique_ptr<Amplifier>(new Amplifier(AmplGain)));
 		Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
 	}

@@ -6,6 +6,8 @@
 
 class Amplifier : public Device {
   public:
+	static constexpr DeviceType T = Device::Amplifier;
+
 	Amplifier(Gain G);
 
 	Gain get_Gain();

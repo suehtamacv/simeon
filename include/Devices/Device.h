@@ -6,6 +6,10 @@
 
 class Device {
   public:
+	enum DeviceType {
+		Amplifier, Fiber, Splitter, SSS
+	};
+
 	virtual Gain get_Gain() = 0;
 	virtual Gain get_Loss() = 0;
 	virtual Power get_Noise() = 0;

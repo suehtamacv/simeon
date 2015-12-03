@@ -14,13 +14,14 @@ class Node;
 class Link {
   public:
 	constexpr static int NumSlots = 64;
-	static long double AvgSpanLength;
+	constexpr static long double AvgSpanLength = 80;
 
 	Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination, long double Length);
 
 	std::weak_ptr<Node> Origin;
 	std::weak_ptr<Node> Destination;
 	long double Length;
+	int numLineAmplifiers;
 
 	Signal cross_Link(Signal);
 

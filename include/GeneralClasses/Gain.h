@@ -26,6 +26,11 @@ class Gain {
 	 * @return the symmetrical Gain.
 	 */
 	Gain operator-();
+	/**
+	 * @brief operator + returns the net gain after summing two successive gains.
+	 * @return net gain after summing two successive gains.
+	 */
+	Gain operator+(Gain);
 
 	/**
 	 * @brief in_dB returns the value of this object in dB units.

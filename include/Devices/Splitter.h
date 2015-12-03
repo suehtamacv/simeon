@@ -5,6 +5,8 @@
 
 class Splitter : public Device {
   public:
+	static constexpr DeviceType T = Device::Splitter;
+
 	Splitter(int NumPorts);
 
 	Gain get_Gain();

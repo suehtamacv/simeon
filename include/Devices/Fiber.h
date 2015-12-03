@@ -5,6 +5,8 @@
 
 class Fiber : public Device {
   public:
+	static constexpr DeviceType T = Device::Fiber;
+
 	/**
 	 * @brief alphaFiber is the fiber loss coefficient, measured in dB per kilometer.
 	 */
