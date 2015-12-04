@@ -1,6 +1,6 @@
 #include <Devices/SSS.h>
 
-Gain SSS::SSSLoss = Gain(-5);
+Gain SSS::SSSLoss(-5);
 
 SSS::SSS() {
 
