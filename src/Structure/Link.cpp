@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <boost/assert.hpp>
 #include <cmath>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
@@ -10,7 +10,7 @@ Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
            long double Length) {
 
-    assert(Length >= 0);
+    BOOST_ASSERT_MSG(Length >= 0, "Length can't be negative.");
     this->Origin = Origin;
     this->Destination = Destination;
     this->Length = Length;
