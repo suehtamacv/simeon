@@ -49,7 +49,7 @@ void Link::create_Devices() {
                           Fiber &)*Devices.back(), *Destination.lock())));
 }
 
-Signal Link::cross(Signal S) {
+Signal Link::bypass(Signal S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
         S *= (*it)->get_Loss();

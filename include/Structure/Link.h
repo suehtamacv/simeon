@@ -21,7 +21,7 @@ class Link {
     long double Length;
     int numLineAmplifiers;
 
-    Signal cross(Signal);
+    Signal bypass(Signal);
 
   private:
     void create_Slots();

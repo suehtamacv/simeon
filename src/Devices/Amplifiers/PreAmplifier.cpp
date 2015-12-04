@@ -4,7 +4,7 @@
 #include <Structure/Node.h>
 
 PreAmplifier::PreAmplifier(Fiber &Segment,
-                           Node &Destination) : Amplifier(Gain(0)) , Destination(Destination) {
+                           Node &Destination) : EDFA(Gain(0)) , Destination(Destination) {
     numPorts = Destination.Links.size();
 
     if (Destination.get_NodeArch() == Node::SwitchingSelect) {

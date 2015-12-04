@@ -1,12 +1,12 @@
 #ifndef PREAMPLIFIER_H
 #define PREAMPLIFIER_H
 
-#include <Devices/Amplifiers/Amplifier.h>
+#include <Devices/Amplifiers/EDFA.h>
 
 class Node;
 class Fiber;
 
-class PreAmplifier : public Amplifier {
+class PreAmplifier : public EDFA {
   public:
     static constexpr AmplifierType AT = Amplifier::PreAmplifierType;
     /**

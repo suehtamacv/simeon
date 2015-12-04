@@ -62,11 +62,11 @@ void Node::create_Devices() {
     //Switching element - exit
     Devices.push_back(std::unique_ptr<Device>(new SSS()));
 
-    //Booster AmplifierD
+    //Booster Amplifier
     Devices.push_back(std::unique_ptr<Device>(new BoosterAmplifier()));
 }
 
-Signal Node::cross(Signal S) {
+Signal Node::bypass(Signal S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
         S *= (*it)->get_Loss();
@@ -76,7 +76,7 @@ Signal Node::cross(Signal S) {
     return S;
 }
 
-Signal Node::enter(Signal S) {
+Signal Node::add(Signal S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
         S *= (*it)->get_Loss();
@@ -90,7 +90,7 @@ Signal Node::enter(Signal S) {
     return S;
 }
 
-Signal Node::exit(Signal S) {
+Signal Node::drop(Signal S) {
     bool foundExit = false;
 
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
