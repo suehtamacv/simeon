@@ -1,9 +1,10 @@
 #include <Calls/CallGenerator.h>
+#include <Calls/Call.h>
 
 boost::mt19937 CallGenerator::MersenneTwister;
 
 CallGenerator::CallGenerator(Topology NetTopology, long double mu,
-                             long double h) : NetTopology(NetTopology), mu(mu), h(h) {
+                             long double h) : NetTopology(NetTopology), mu(mu), h(h), simulationTime(0) {
 
     //MersenneTwister = boost::mt19937(time(0)); Do not seed RNG
 
@@ -25,3 +26,21 @@ CallGenerator::CallGenerator(Topology NetTopology, long double mu,
          (MersenneTwister, ExponentialDistributionH));
 }
 
+Call CallGenerator::generate_Call() {
+    long double ArrivalTime = simulationTime + (*ExponentialGeneratorH)();
+    long double EndingTime = ArrivalTime + (*ExponentialGeneratorMu)();
+
+    int Origin = (*UniformGenerator)();
+    int Destination = (*UniformGenerator)();
+
+    while (Origin == Destination) {
+        Destination = (*UniformGenerator)();
+    }
+
+    Call C(ArrivalTime, EndingTime, std::weak_ptr<Node>(NetTopology.Nodes.at(Origin)),
+           std::weak_ptr<Node>(NetTopology.Nodes.at(Destination)));
+    Events.push( *C.CallRequisition);
+    Events.push( *C.CallEnding );
+
+    return C;
+}

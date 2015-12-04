@@ -14,10 +14,10 @@ class CallGenerator {
 
     std::priority_queue<Event> Events;
 
-
     Topology NetTopology;
     long double mu;
     long double h;
+    long double simulationTime;
 
     //Mersenne Twister Random Number Generator
     static boost::mt19937 MersenneTwister;
@@ -34,6 +34,8 @@ class CallGenerator {
             ExponentialGeneratorMu;
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
             ExponentialGeneratorH;
+
+    Call generate_Call();
 };
 
 #endif // CALLGENERATOR_H

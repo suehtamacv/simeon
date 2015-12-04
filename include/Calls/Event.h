@@ -21,7 +21,7 @@ class Event {
      * @param Type is the type of Event.
      * @param Parent is the Call that owns this Event.
      */
-    Event(long double t, Event_Type Type, std::shared_ptr<Call> Parent);
+    Event(long double t, Event_Type Type, Call *Parent);
 
     /**
      * @brief operator < is used to compare the ocurral instants of two events.
@@ -31,7 +31,7 @@ class Event {
 
     long double t;
     Event_Type Type;
-    std::shared_ptr<Call> Parent;
+    Call *Parent;
 };
 
 #endif // EVENT_H
