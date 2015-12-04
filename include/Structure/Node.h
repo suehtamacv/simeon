@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 #include <GeneralClasses/Signal.h>
+#include <Devices/Device.h>
 
 class Link;
-class Device;
 
 class Node {
   public:
