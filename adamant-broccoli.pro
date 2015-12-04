@@ -21,7 +21,8 @@ SOURCES += src/main.cpp \
     src/Calls/Event.cpp \
     src/Calls/Call.cpp \
     src/Calls/CallGenerator.cpp \
-    src/Structure/Topology.cpp
+    src/Structure/Topology.cpp \
+    src/Devices/Amplifiers/EDFA.cpp
 
 
 HEADERS += \
@@ -45,7 +46,8 @@ HEADERS += \
     include/Calls/Event.h \
     include/Calls/Call.h \
     include/Calls/CallGenerator.h \
-    include/Structure/Topology.h
+    include/Structure/Topology.h \
+    include/Devices/Amplifiers/EDFA.h
 
 LIBS += -lboost_system
 

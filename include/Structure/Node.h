@@ -43,9 +43,9 @@ class Node {
     Node_Architecure get_NodeArch();
     void insert_Link(Node *N, std::shared_ptr<Link> Link);
 
-    Signal cross(Signal);
-    Signal enter(Signal);
-    Signal exit(Signal);
+    Signal bypass(Signal);
+    Signal add(Signal);
+    Signal drop(Signal);
   private:
     Node_Type Type;
     Node_Architecure Architecture;

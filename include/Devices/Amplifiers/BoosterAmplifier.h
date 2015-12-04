@@ -1,14 +1,14 @@
 #ifndef BOOSTERAMPLIFIER_H
 #define BOOSTERAMPLIFIER_H
 
-#include <Devices/Amplifiers/Amplifier.h>
+#include <Devices/Amplifiers/EDFA.h>
 
-class BoosterAmplifier : public Amplifier {
+class BoosterAmplifier : public EDFA {
   public:
-	static constexpr AmplifierType AT = Amplifier::BoosterAmplifierType;
-	BoosterAmplifier();
+    static constexpr AmplifierType AT = Amplifier::BoosterAmplifierType;
+    BoosterAmplifier();
 
-	Gain get_Gain();
+    Gain get_Gain();
 };
 
 #endif // BOOSTERAMPLIFIER_H
