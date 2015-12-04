@@ -49,7 +49,7 @@ HEADERS += \
     include/Structure/Topology.h \
     include/Devices/Amplifiers/EDFA.h
 
-LIBS += -lboost_system
+LIBS += -lboost_system -lboost_program_options
 
 OTHER_FILES += README.md \
                .astylerc

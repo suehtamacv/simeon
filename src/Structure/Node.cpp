@@ -5,12 +5,9 @@
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
-Node::Node(int ID, Node_Type T, Node_Architecure A,
-           int NumRegenerators) : ID(ID), Type(T) , Architecture(A) ,
-    NumRegenerators(NumRegenerators) {
-
+Node::Node(int ID, Node_Type T, Node_Architecure A) : ID(ID), Type(T) ,
+    Architecture(A) {
     create_Devices();
-
 }
 
 bool Node::operator ==(Node *N) {
@@ -45,6 +42,14 @@ void Node::insert_Link(Node *N, std::shared_ptr<Link> Link) {
 
 Node::Node_Architecure Node::get_NodeArch() {
     return Architecture;
+}
+
+Node::Node_Type Node::get_NodeType() {
+    return Type;
+}
+
+unsigned int Node::get_NumRegenerators() {
+    return NumRegenerators;
 }
 
 void Node::create_Devices() {
@@ -106,4 +111,8 @@ Signal Node::drop(Signal S) {
     }
 
     return S;
+}
+
+void Node::set_NumRegenerators(unsigned int NReg) {
+    NumRegenerators = NReg;
 }

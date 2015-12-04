@@ -10,7 +10,7 @@ CallGenerator::CallGenerator(Topology NetTopology, long double mu,
 
     UniformDistribution = boost::uniform_int<>(0, NetTopology.numNodes - 1);
     ExponentialDistributionMu = boost::exponential_distribution<>(mu);
-    ExponentialDistributionH = boost::exponential_distribution<>(h);
+    ExponentialDistributionH = boost::exponential_distribution<>(1.0 / h);
 
     UniformGenerator =
         std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
@@ -37,10 +37,11 @@ Call CallGenerator::generate_Call() {
         Destination = (*UniformGenerator)();
     }
 
-    Call C(ArrivalTime, EndingTime, std::weak_ptr<Node>(NetTopology.Nodes.at(Origin)),
+    Call C(ArrivalTime, EndingTime,
+           std::weak_ptr<Node>(NetTopology.Nodes.at(Origin)),
            std::weak_ptr<Node>(NetTopology.Nodes.at(Destination)));
-    Events.push( *C.CallRequisition);
-    Events.push( *C.CallEnding );
+    Events.push(*C.CallRequisition);
+    Events.push(*C.CallEnding);
 
     return C;
 }

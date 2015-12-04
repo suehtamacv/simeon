@@ -31,7 +31,7 @@ class Node {
     };
 
     Node(int ID, Node_Type T = TransparentNode,
-         Node_Architecure A = SwitchingSelect, int NumRegenerators = 0);
+         Node_Architecure A = SwitchingSelect);
 
     bool operator==(Node *);
 
@@ -41,16 +41,21 @@ class Node {
     std::vector<std::unique_ptr<Device>> Devices;
 
     Node_Architecure get_NodeArch();
+    Node_Type get_NodeType();
+    unsigned int get_NumRegenerators();
+
     void insert_Link(Node *N, std::shared_ptr<Link> Link);
 
     Signal bypass(Signal);
     Signal add(Signal);
     Signal drop(Signal);
+
+    void set_NumRegenerators(unsigned int);
   private:
     Node_Type Type;
     Node_Architecure Architecture;
     void create_Devices();
-    int NumRegenerators;
+    unsigned int NumRegenerators;
 };
 
 #endif // NODE_H

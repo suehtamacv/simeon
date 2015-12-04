@@ -3,8 +3,8 @@
 #include <Devices/SSS.h>
 #include <Structure/Node.h>
 
-PreAmplifier::PreAmplifier(Fiber &Segment,
-                           Node &Destination) : EDFA(Gain(0)) , Destination(Destination) {
+PreAmplifier::PreAmplifier(Fiber &Segment, Node &Destination) : EDFA(Gain(0)) ,
+    Destination(Destination) {
     numPorts = Destination.Links.size();
 
     if (Destination.get_NodeArch() == Node::SwitchingSelect) {

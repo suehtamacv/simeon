@@ -15,6 +15,10 @@ class Topology {
     * @param TopologyFile is the file in which the Topology was stored.
     */
     Topology(std::string TopologyFileName);
+    /**
+     * @brief Topology is the constructor for a empty Topology.
+     */
+    Topology();
 
     unsigned int numNodes;
     std::vector<std::shared_ptr<Node>> Nodes;
@@ -24,6 +28,9 @@ class Topology {
                                  Node::Node_Architecure = Node::SwitchingSelect, int NumReg = 0);
     std::weak_ptr<Link> add_Link(std::weak_ptr<Node> Origin,
                                  std::weak_ptr<Node> Destination, long double Length);
+
+    void read_Topology(std::string TopologyFileName);
+    void print_Topology(std::string TopologyFileName);
 };
 
 #endif // TOPOLOGY_H

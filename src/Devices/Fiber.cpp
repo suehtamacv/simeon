@@ -3,7 +3,7 @@
 long double Fiber::alphaFiber = 0.22;
 
 Fiber::Fiber(long double SpanLength) :
-	NetLoss(SpanLength * alphaFiber, Gain::dB) {
+    NetLoss(- SpanLength * alphaFiber, Gain::dB) {
 	this->SpanLength = SpanLength;
 }
 
