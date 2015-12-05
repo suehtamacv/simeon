@@ -8,7 +8,7 @@ CallGenerator::CallGenerator(Topology NetTopology, long double mu,
 
     //MersenneTwister = boost::mt19937(time(0)); Do not seed RNG
 
-    UniformDistribution = boost::uniform_int<>(0, NetTopology.numNodes - 1);
+    UniformDistribution = boost::uniform_int<>(0, NetTopology.Nodes.size() - 1);
     ExponentialDistributionMu = boost::exponential_distribution<>(mu);
     ExponentialDistributionH = boost::exponential_distribution<>(1.0 / h);
 

@@ -1,25 +1,29 @@
 #include <Structure/Topology.h>
 #include <boost/assert.hpp>
 #include <boost/program_options.hpp>
+#include <iostream>
 #include <fstream>
+#include <sstream>
 #include <Structure/Link.h>
 
-#include <iostream>
-
-Topology::Topology() : numNodes(0) {
+Topology::Topology() {
     Nodes.clear();
     Links.clear();
 }
 
-Topology::Topology(std::string TopologyFileName) : numNodes(0) {
+Topology::Topology(std::string TopologyFileName) {
     std::ifstream TopologyFile;
     TopologyFile.open(TopologyFileName);
     BOOST_ASSERT_MSG(TopologyFile.is_open(), "Topology file could not be open.");
 }
 
-std::weak_ptr<Node> Topology::add_Node(Node::Node_Type Type,
+std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::Node_Type Type,
                                        Node::Node_Architecure Arch, int NumReg) {
-    unsigned int NodeID = ++numNodes;
+
+    if (NodeID == -1) {
+        NodeID = Nodes.size() + 1;
+    }
+
     Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
     Nodes.back()->set_NumRegenerators(NumReg);
     return (std::weak_ptr<Node>) Nodes.back();
@@ -33,24 +37,69 @@ std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
 }
 
 void Topology::read_Topology(std::string TopologyFileName) {
-    boost::program_options::options_description TopologyDescription("Topology");
+    using namespace boost::program_options;
+
+    Nodes.clear();
+    Links.clear();
+
+    options_description TopologyDescription("Topology");
     TopologyDescription.add_options()
-    ("nodes.node",
-     boost::program_options::value<std::vector<std::string>>()->multitoken(),
+    ("nodes.node", value<std::vector<std::string>>()->multitoken(),
      "Node Description")
-    ("links.->",
-     boost::program_options::value<std::vector<std::string>>()->multitoken(),
-     "Unidirectional Link Description")
-    ("links.<->",
-     boost::program_options::value<std::vector<std::string>>()->multitoken(),
-     "Bidirectional Link Description");
+    ("links.->", value<std::vector<std::string>>()->multitoken(),
+     "Unidirectional Link Description");
 
-    boost::program_options::variables_map VariablesMap;
+    variables_map VariablesMap;
 
-    boost::program_options::store(
-        boost::program_options::parse_config_file<char>(
-            TopologyFileName.c_str(), TopologyDescription),
-        VariablesMap);
+    store(parse_config_file<char>(TopologyFileName.c_str(), TopologyDescription),
+          VariablesMap);
+
+    //Reads nodes from configuration file.
+    std::vector<std::string> NodesList =
+        VariablesMap.find("nodes.node")->second.as<std::vector<std::string>>();
+
+    for (auto node = NodesList.begin(); node != NodesList.end(); ++node) {
+        int NodeId, Type, Arch, NumReg;
+
+        std::istringstream NodeParameters(*node);
+        NodeParameters >> NodeId >> Type >> Arch >> NumReg;
+
+        add_Node(NodeId, (Node::Node_Type) Type, (Node::Node_Architecure) Arch, NumReg);
+    }
+
+    //Reads links from configuration file.
+    std::vector<std::string> LinksList =
+        VariablesMap.find("links.->")->second.as<std::vector<std::string>>();
+
+    for (auto link = LinksList.begin(); link != LinksList.end(); ++link) {
+        int OriginID, DestinationID;
+        long double length;
+        std::weak_ptr<Node> Origin, Destination;
+
+        std::istringstream LinkParameters(*link);
+        LinkParameters >> OriginID >> DestinationID >> length;
+        BOOST_ASSERT_MSG(OriginID != DestinationID,
+                         "Link can't have the same Origin and Destination.");
+
+        int NodesFound = 0;
+
+        for (auto node = Nodes.begin(); node != Nodes.end(); ++node) {
+            if ((*node)->ID == OriginID) {
+                Origin = *node;
+                NodesFound++;
+            }
+
+            if ((*node)->ID == DestinationID) {
+                Destination = *node;
+                NodesFound++;
+            }
+        }
+
+        BOOST_ASSERT_MSG(NodesFound == 2,
+                         "Link with invalid origin and/or destination.");
+
+        add_Link(Origin, Destination, length);
+    }
 }
 
 void Topology::print_Topology(std::string TopologyFileName) {
@@ -58,11 +107,11 @@ void Topology::print_Topology(std::string TopologyFileName) {
     TopologyFile.open(TopologyFileName);
 
     TopologyFile << "  [nodes]" << std::endl << std::endl;
-    TopologyFile << "# node = ID ARCHITECTURE TYPE NUMREG" << std::endl;
+    TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
 
     for (auto it = Nodes.begin(); it != Nodes.end(); ++it) {
-        TopologyFile << "  node = " << (*it)->ID << " " << (*it)->get_NodeArch() << " "
-                     << (*it)->get_NodeType() << " " << (*it)->get_NumRegenerators() << std::endl;
+        TopologyFile << "  node = " << (*it)->ID << " " << (*it)->get_NodeType() << " "
+                     << (*it)->get_NodeArch() << " " << (*it)->get_NumRegenerators() << std::endl;
     }
 
     TopologyFile << std::endl;

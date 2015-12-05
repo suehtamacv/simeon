@@ -20,11 +20,10 @@ class Topology {
      */
     Topology();
 
-    unsigned int numNodes;
     std::vector<std::shared_ptr<Node>> Nodes;
     std::vector<std::shared_ptr<Link>> Links;
 
-    std::weak_ptr<Node> add_Node(Node::Node_Type = Node::TransparentNode,
+    std::weak_ptr<Node> add_Node(int NodeID = -1, Node::Node_Type = Node::TransparentNode,
                                  Node::Node_Architecure = Node::SwitchingSelect, int NumReg = 0);
     std::weak_ptr<Link> add_Link(std::weak_ptr<Node> Origin,
                                  std::weak_ptr<Node> Destination, long double Length);
