@@ -22,7 +22,10 @@ SOURCES += src/main.cpp \
     src/Calls/Call.cpp \
     src/Calls/CallGenerator.cpp \
     src/Structure/Topology.cpp \
-    src/Devices/Amplifiers/EDFA.cpp
+    src/Devices/Amplifiers/EDFA.cpp \
+    src/RWA/RoutingWavelengthAssignment.cpp \
+    src/RWA/Routing/RoutingAlgorithm.cpp \
+    src/RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.cpp
 
 
 HEADERS += \
@@ -47,7 +50,10 @@ HEADERS += \
     include/Calls/Call.h \
     include/Calls/CallGenerator.h \
     include/Structure/Topology.h \
-    include/Devices/Amplifiers/EDFA.h
+    include/Devices/Amplifiers/EDFA.h \
+    include/RWA/RoutingWavelengthAssignment.h \
+    include/RWA/Routing/RoutingAlgorithm.h \
+    include/RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h
 
 LIBS += -lboost_system -lboost_program_options
 
