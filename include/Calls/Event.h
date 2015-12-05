@@ -28,6 +28,7 @@ class Event {
      * @return true iff this event ocurrs prior to the Event passed as argument.
      */
     bool operator<(const Event) const;
+    bool operator>(const Event) const;
 
     long double t;
     Event_Type Type;

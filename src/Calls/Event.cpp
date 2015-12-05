@@ -12,3 +12,7 @@ bool Event::operator <(const Event E) const {
 
     return false;
 }
+
+bool Event::operator >(const Event E) const {
+    return !(this->operator <(E));
+}

@@ -12,7 +12,7 @@ class CallGenerator {
   public:
     CallGenerator(Topology NetTopology, long double mu, long double h);
 
-    std::priority_queue<Event> Events;
+    std::priority_queue<Event, std::vector<Event>, std::greater<Event>> Events;
 
     Topology NetTopology;
     long double mu;
