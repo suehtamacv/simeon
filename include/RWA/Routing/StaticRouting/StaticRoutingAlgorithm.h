@@ -2,6 +2,7 @@
 #define STATICROUTINGALGORITHM_H
 
 #include <RWA/Routing/DijkstraRoutingAlgorithm.h>
+#include <Structure/Link.h>
 #include <map>
 
 class StaticRoutingAlgorithm : public DijkstraRoutingAlgorithm {

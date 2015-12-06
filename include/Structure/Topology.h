@@ -7,7 +7,7 @@
 #include <vector>
 #include <Structure/Node.h>
 
-typedef std::pair<unsigned, unsigned> OrigDestPair;
+typedef std::pair<int, int> OrigDestPair;
 
 class Link;
 

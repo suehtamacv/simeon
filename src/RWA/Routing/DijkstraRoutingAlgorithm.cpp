@@ -1,4 +1,5 @@
 #include <RWA/Routing/DijkstraRoutingAlgorithm.h>
+#include <algorithm>
 #include <limits>
 #include <map>
 
@@ -29,8 +30,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
         std::shared_ptr<Node> CurrentNode = UnvisitedNodes[0];
 
         for (auto it = UnvisitedNodes.begin(); it != UnvisitedNodes.end(); ++it) {
-            if (VertexCost[CurrentNode->ID] < VertexCost[(*it)->ID]) {
-                CurrentNode.reset();
+            if (VertexCost[CurrentNode->ID] > VertexCost[(*it)->ID]) {
                 CurrentNode = *it;
             }
         }
@@ -66,10 +66,12 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
         CurrentNode = Precedent[CurrentNode];
     }
 
-    for (int i = NodesInRoute.size(); i != 1; i--) {
-        RouteLinks.insert(RouteLinks.begin(), T->Links.at(
-                              OrigDestPair(NodesInRoute[i], NodesInRoute[i - 1])));
+    for (int i = NodesInRoute.size() - 1; i > 0; i--) {
+        RouteLinks.push_back(T->Links.at(OrigDestPair(NodesInRoute[i],
+                                         NodesInRoute[i - 1])));
     }
+
+    std::reverse(RouteLinks.begin(), RouteLinks.end());
 
     return RouteLinks;
 }

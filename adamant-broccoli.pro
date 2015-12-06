@@ -29,7 +29,8 @@ SOURCES += src/main.cpp \
     src/RWA/Route.cpp \
     src/RWA/Routing/DijkstraRoutingAlgorithm.cpp \
     src/RWA/Routing/StaticRouting/StaticRoutingAlgorithm.cpp \
-    src/RWA/Routing/StaticRouting/MinimumHops.cpp
+    src/RWA/Routing/StaticRouting/MinimumHops.cpp \
+    src/RWA/Routing/StaticRouting/ShortestPath.cpp
 
 
 HEADERS += \
@@ -61,7 +62,8 @@ HEADERS += \
     include/RWA/Route.h \
     include/RWA/Routing/DijkstraRoutingAlgorithm.h \
     include/RWA/Routing/StaticRouting/StaticRoutingAlgorithm.h \
-    include/RWA/Routing/StaticRouting/MinimumHops.h
+    include/RWA/Routing/StaticRouting/MinimumHops.h \
+    include/RWA/Routing/StaticRouting/ShortestPath.h
 
 LIBS += -lboost_system -lboost_program_options
 

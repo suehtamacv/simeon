@@ -2,10 +2,13 @@
 
 StaticRoutingAlgorithm::StaticRoutingAlgorithm(std::shared_ptr<Topology> T) :
     DijkstraRoutingAlgorithm(T) {
-    precalculate_Routes();
 }
 
 std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(Call C) {
+    if (Routes.empty()) {
+        precalculate_Routes();
+    }
+
     OrigDestPair OrigDest(C.Origin.lock()->ID, C.Destination.lock()->ID);
     return Routes[OrigDest];
 }
