@@ -26,7 +26,7 @@ CallGenerator::CallGenerator(Topology NetTopology, long double mu,
          (MersenneTwister, ExponentialDistributionH));
 }
 
-Call CallGenerator::generate_Call() {
+Call CallGenerator::generate_Call(TransmissionBitrate Bitrate) {
     long double ArrivalTime = simulationTime + (*ExponentialGeneratorH)();
     long double EndingTime = ArrivalTime + (*ExponentialGeneratorMu)();
 
@@ -39,7 +39,7 @@ Call CallGenerator::generate_Call() {
 
     Call C(ArrivalTime, EndingTime,
            std::weak_ptr<Node>(NetTopology.Nodes.at(Origin)),
-           std::weak_ptr<Node>(NetTopology.Nodes.at(Destination)));
+           std::weak_ptr<Node>(NetTopology.Nodes.at(Destination)), Bitrate);
     Events.push(*C.CallRequisition);
     Events.push(*C.CallEnding);
 

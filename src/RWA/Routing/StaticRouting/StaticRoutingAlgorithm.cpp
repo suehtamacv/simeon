@@ -20,7 +20,7 @@ void StaticRoutingAlgorithm::precalculate_Routes() {
                 continue;
             }
 
-            Call DummyCall(0, 1, *orig, *dest);
+            Call DummyCall(0, 1, *orig, *dest, 0);
             OrigDestPair DummyOrigDest((*orig)->ID, (*dest)->ID);
 
             Routes.emplace(DummyOrigDest, DijkstraRoutingAlgorithm::route(DummyCall));

@@ -22,7 +22,7 @@ class Call {
     * @param Bitrate is a TransmissionBitrate.
     */
     Call(long double tOcurr, long double tDur, std::weak_ptr<Node> Origin,
-         std::weak_ptr<Node> Destination, TransmissionBitrate Bitrate = 0);
+         std::weak_ptr<Node> Destination, TransmissionBitrate Bitrate);
 
     std::shared_ptr<Event> CallRequisition;
     std::shared_ptr<Event> CallEnding;

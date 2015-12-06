@@ -5,6 +5,7 @@
 #include <boost/random.hpp>
 #include <boost/generator_iterator.hpp>
 #include <Calls/Event.h>
+#include <GeneralClasses/TransmissionBitrate.h>
 #include <Structure/Topology.h>
 #include <queue>
 
@@ -50,7 +51,7 @@ class CallGenerator {
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
             ExponentialGeneratorH;
 
-    Call generate_Call();
+    Call generate_Call(TransmissionBitrate Bitrate = 0);
 };
 
 #endif // CALLGENERATOR_H

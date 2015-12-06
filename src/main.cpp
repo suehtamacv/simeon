@@ -2,6 +2,7 @@
 #include <Calls/CallGenerator.h>
 #include <Calls/Call.h>
 #include <RWA/Routing/StaticRouting/ShortestPath.h>
+#include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
 
 int main(void) {
     auto T = std::shared_ptr<Topology>(new Topology());
@@ -18,6 +19,7 @@ int main(void) {
     T->print_Topology("here");
 
     ShortestPath SP = ShortestPath(T);
+    NodalDegreeFirst NDF = NodalDegreeFirst(T);
 
     CallGenerator CG(*T, 1, 100);
 
