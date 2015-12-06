@@ -22,6 +22,8 @@ class Link {
     long double Length;
     int numLineAmplifiers;
 
+    bool operator==(Link *);
+
     Signal bypass(Signal);
 
   private:

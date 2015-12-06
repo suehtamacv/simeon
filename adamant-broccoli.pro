@@ -30,7 +30,8 @@ SOURCES += src/main.cpp \
     src/RWA/Routing/DijkstraRoutingAlgorithm.cpp \
     src/RWA/Routing/StaticRouting/StaticRoutingAlgorithm.cpp \
     src/RWA/Routing/StaticRouting/MinimumHops.cpp \
-    src/RWA/Routing/StaticRouting/ShortestPath.cpp
+    src/RWA/Routing/StaticRouting/ShortestPath.cpp \
+    src/RWA/WavelengthAssignment/FirstFit.cpp
 
 
 HEADERS += \
@@ -63,7 +64,8 @@ HEADERS += \
     include/RWA/Routing/DijkstraRoutingAlgorithm.h \
     include/RWA/Routing/StaticRouting/StaticRoutingAlgorithm.h \
     include/RWA/Routing/StaticRouting/MinimumHops.h \
-    include/RWA/Routing/StaticRouting/ShortestPath.h
+    include/RWA/Routing/StaticRouting/ShortestPath.h \
+    include/RWA/WavelengthAssignment/FirstFit.h
 
 LIBS += -lboost_system -lboost_program_options
 

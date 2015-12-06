@@ -58,3 +58,19 @@ Signal Link::bypass(Signal S) {
 
     return S;
 }
+
+bool Link::operator ==(Link *L) {
+    if (Origin.lock() != L->Origin.lock()) {
+        return false;
+    }
+
+    if (Destination.lock() != L->Destination.lock()) {
+        return false;
+    }
+
+    if (Length != L->Length) {
+        return false;
+    }
+
+    return true;
+}

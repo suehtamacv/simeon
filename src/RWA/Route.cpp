@@ -17,3 +17,20 @@ Route::Route(std::vector<std::weak_ptr<Link> > Links,
 
 }
 
+Signal Route::bypass() {
+    Signal S;
+
+    for (auto it = Links.begin(); it != Links.end(); ++it) {
+        if (it == Links.begin()) {
+            S = (*it).lock()->Origin.lock()->add(S);
+        }
+
+        S = (*it).lock()->bypass(S);
+
+        if ((*it).lock() == Links.back().lock()) {
+            S = (*it).lock()->Destination.lock()->drop(S);
+        }
+    }
+
+    return S;
+}
