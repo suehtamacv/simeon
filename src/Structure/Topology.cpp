@@ -31,9 +31,12 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::Node_Type Type,
 
 std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                        std::weak_ptr<Node> Destination, long double Length) {
-    Links.push_back(std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
-    Origin.lock()->insert_Link(Destination.lock().get(), Links.back());
-    return (std::weak_ptr<Link>) Links.back();
+    Links.emplace(OrigDestPair(Origin.lock()->ID, Destination.lock()->ID),
+                  std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
+    Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
+                                                                  Destination.lock()->ID)));
+    return (std::weak_ptr<Link>) Links.at(OrigDestPair(Origin.lock()->ID,
+                                          Destination.lock()->ID));
 }
 
 void Topology::read_Topology(std::string TopologyFileName) {
@@ -120,8 +123,9 @@ void Topology::print_Topology(std::string TopologyFileName) {
     TopologyFile << "# -> = ORIGIN DESTINATION LENGTH" << std::endl;
 
     for (auto it = Links.begin(); it != Links.end(); ++it) {
-        TopologyFile << "  -> = " << (*it)->Origin.lock().get()->ID << " " <<
-                     (*it)->Destination.lock().get()->ID << " " << (*it)->Length << std::endl;
+        TopologyFile << "  -> = " << it->second->Origin.lock().get()->ID << " " <<
+                     it->second->Destination.lock().get()->ID << " " <<
+                        it->second->Length << std::endl;
     }
 
     TopologyFile.close();

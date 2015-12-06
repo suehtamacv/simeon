@@ -7,6 +7,10 @@
 
 class Node;
 
+/**
+ * @brief The Call class is the standard object representing a connection
+ * between two nodes.
+ */
 class Call {
   public:
     /**

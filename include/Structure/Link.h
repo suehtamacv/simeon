@@ -14,7 +14,8 @@ class Link {
     constexpr static int NumSlots = 64;
     constexpr static long double AvgSpanLength = 80;
 
-    Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination, long double Length);
+    Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination,
+         long double Length);
 
     std::weak_ptr<Node> Origin;
     std::weak_ptr<Node> Destination;

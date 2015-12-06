@@ -14,7 +14,6 @@ class RoutingAlgorithm {
     RoutingAlgorithm(std::shared_ptr<Topology> T);
 
     virtual std::vector<std::weak_ptr<Link>> route(Call C) = 0;
-    virtual long double get_LinkCost(std::weak_ptr<Link> Link) = 0;
 
     std::shared_ptr<Topology> T;
 };

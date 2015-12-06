@@ -8,11 +8,14 @@ class Call;
 class Event {
   public:
     /**
-    * @brief The Event_Type enum is used to specify the type of event. Each call generates two events, a CallRequisition
-    * on its start and a CallEnding on its ending.
+    * @brief The Event_Type enum is used to specify the type of event.
+    *
+    * Each call generates two events, a CallRequisition on its start and a
+    * CallEnding on its ending.
     */
     enum Event_Type {
-        CallRequisition, CallEnding
+        CallRequisition, /*!< Event on the starting call. */
+        CallEnding /*!< Event on the ending call. */
     };
 
     /**
@@ -28,6 +31,10 @@ class Event {
      * @return true iff this event ocurrs prior to the Event passed as argument.
      */
     bool operator<(const Event) const;
+    /**
+     * @brief operator > is used to compare the ocurral instants of two events.
+     * @return true iff this event ocurrs after the Event passed as argument.
+     */
     bool operator>(const Event) const;
 
     long double t;

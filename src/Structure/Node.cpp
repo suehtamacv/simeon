@@ -18,11 +18,11 @@ bool Node::operator ==(Node *N) {
     return false;
 }
 
-void Node::insert_Link(Node *N, std::shared_ptr<Link> Link) {
+void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     bool LinkExists = false;
 
     for (auto it = Neighbours.begin(); it != Neighbours.end(); ++it) {
-        if (*it == N) {
+        if ((*it).lock() == N.lock()) {
             LinkExists = true;
             break;
         }
@@ -115,4 +115,14 @@ Signal Node::drop(Signal S) {
 
 void Node::set_NumRegenerators(unsigned int NReg) {
     NumRegenerators = NReg;
+}
+
+bool Node::isNeighbour(std::weak_ptr<Node> N) {
+    for (auto it = Neighbours.begin(); it != Neighbours.end(); ++it) {
+        if (N.lock() == (*it).lock()) {
+            return true;
+        }
+    }
+
+    return false;
 }

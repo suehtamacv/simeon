@@ -27,7 +27,7 @@ SOURCES += src/main.cpp \
     src/RWA/Routing/RoutingAlgorithm.cpp \
     src/RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.cpp \
     src/RWA/Route.cpp \
-    src/RWA/Routing/StaticRoutingAlgorithm.cpp
+    src/RWA/Routing/DijkstraRoutingAlgorithm.cpp
 
 
 HEADERS += \
@@ -57,7 +57,7 @@ HEADERS += \
     include/RWA/Routing/RoutingAlgorithm.h \
     include/RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h \
     include/RWA/Route.h \
-    include/RWA/Routing/StaticRoutingAlgorithm.h
+    include/RWA/Routing/DijkstraRoutingAlgorithm.h
 
 LIBS += -lboost_system -lboost_program_options
 
