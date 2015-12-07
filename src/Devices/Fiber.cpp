@@ -8,11 +8,7 @@ Fiber::Fiber(long double SpanLength) :
 }
 
 Gain Fiber::get_Gain() {
-	return Gain(0);
-}
-
-Gain Fiber::get_Loss() {
-	return NetLoss;
+    return NetLoss;
 }
 
 Power Fiber::get_Noise() {

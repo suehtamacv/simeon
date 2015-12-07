@@ -3,9 +3,12 @@
 
 #include <Devices/Device.h>
 
+/**
+ * @brief The Fiber class represents a Fiber segment.
+ */
 class Fiber : public Device {
   public:
-	static constexpr DeviceType T = Device::FiberDevice;
+	static constexpr DeviceType DevType = Device::FiberDevice;
 
 	/**
 	 * @brief alphaFiber is the fiber loss coefficient, measured in dB per kilometer.
@@ -18,7 +21,6 @@ class Fiber : public Device {
 	Fiber(long double SpanLength);
 
 	Gain get_Gain();
-	Gain get_Loss();
 	Power get_Noise();
 
   private:

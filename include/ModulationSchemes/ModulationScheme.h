@@ -3,6 +3,9 @@
 
 #include <GeneralClasses/Gain.h>
 
+/**
+ * @brief The ModulationScheme class represents a modulation scheme.
+ */
 class ModulationScheme {
   public:
 	ModulationScheme(unsigned int M, Gain SNR_Per_Bit);

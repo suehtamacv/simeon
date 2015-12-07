@@ -3,7 +3,7 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 #include <Devices/Fiber.h>
-#include <Devices/Amplifiers/LineAmplifier.h>
+#include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 
 Link::Link(std::weak_ptr<Node> Origin,
@@ -36,8 +36,8 @@ void Link::create_Devices() {
 
     for (int i = 0; i < numLineAmplifiers; i++) {
         Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
-        Devices.push_back(std::unique_ptr<LineAmplifier>(
-                              new LineAmplifier((Fiber &)*Devices.back())));
+        Devices.push_back(std::unique_ptr<InLineAmplifier>(
+                              new InLineAmplifier((Fiber &)*Devices.back())));
     }
 
     //There's an extra fiber segment in the end of the link
@@ -52,7 +52,6 @@ void Link::create_Devices() {
 Signal Link::bypass(Signal S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
-        S *= (*it)->get_Loss();
         S += (*it)->get_Noise();
     }
 

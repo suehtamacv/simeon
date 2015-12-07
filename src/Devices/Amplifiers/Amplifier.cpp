@@ -4,10 +4,6 @@ Amplifier::Amplifier(Gain G) : AmplifierGain(G), NoisePower(0) {
 
 }
 
-Gain Amplifier::get_Loss() {
-    return Gain(0);
-}
-
 Power Amplifier::get_Noise() {
     return NoisePower;
 }

@@ -33,7 +33,7 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
         Links.push_back(Link);
 
         if (Architecture == BroadcastAndSelect) {
-            BOOST_ASSERT_MSG((*Devices.front()).T == Device::SplitterDevice,
+            BOOST_ASSERT_MSG((*Devices.front()).DevType == Device::SplitterDevice,
                              "In a B&S node, the first device is a spliiter.");
             static_cast<Splitter &>(*Devices.front()).set_NumPorts(Links.size());
         }
@@ -74,7 +74,6 @@ void Node::create_Devices() {
 Signal Node::bypass(Signal S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
-        S *= (*it)->get_Loss();
         S += (*it)->get_Noise();
     }
 
@@ -84,10 +83,9 @@ Signal Node::bypass(Signal S) {
 Signal Node::add(Signal S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
-        S *= (*it)->get_Loss();
         S += (*it)->get_Noise();
 
-        if ((*it)->T == Device::SplitterDevice || (*it)->T == Device::SSSDevice) {
+        if ((*it)->DevType == Device::SplitterDevice || (*it)->DevType == Device::SSSDevice) {
             break;
         }
     }
@@ -99,14 +97,13 @@ Signal Node::drop(Signal S) {
     bool foundExit = false;
 
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
-        if (!foundExit && (*it)->T != Device::SplitterDevice &&
-                (*it)->T != Device::SSSDevice) {
+        if (!foundExit && (*it)->DevType != Device::SplitterDevice &&
+                (*it)->DevType != Device::SSSDevice) {
             foundExit = true;
             continue;
         }
 
         S *= (*it)->get_Gain();
-        S *= (*it)->get_Loss();
         S += (*it)->get_Noise();
     }
 

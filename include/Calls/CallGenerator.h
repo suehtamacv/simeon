@@ -26,16 +26,39 @@ class CallGenerator {
      * @param mu is the parameter for the call duration distribution.
      * @param h is the parameter for the call interarrival time distribution.
      */
-    CallGenerator(Topology NetTopology, long double mu, long double h);
+    CallGenerator(std::shared_ptr<Topology> NetTopology, long double mu,
+                  long double h);
 
+    /**
+     * @brief Events is a priority queue.
+     *
+     * The Events of the topology are stored here in increasing order of their
+     * ocurring times.
+     */
     std::priority_queue<Event, std::vector<Event>, std::greater<Event>> Events;
 
-    Topology NetTopology;
+    /**
+     * @brief NetTopology is the Topology over which the calls are generated.
+     */
+    std::shared_ptr<Topology> NetTopology;
+    /**
+     * @brief mu is the parameter for the call duration exponential distribution.
+     */
     long double mu;
+    /**
+     * @brief h is t parameter for the cl interarrival time exponential
+     * distribution.
+     */
     long double h;
+    /**
+     * @brief simulationTime is the current time seen by the last call.
+     */
     long double simulationTime;
 
-    //Mersenne Twister Random Number Generator
+
+    /**
+     * @brief MersenneTwister is the Random Number Generator.
+     */
     static boost::mt19937 MersenneTwister;
 
     //Distributions

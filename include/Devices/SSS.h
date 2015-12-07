@@ -3,15 +3,21 @@
 
 #include <Devices/Device.h>
 
+/**
+ * @brief The SSS class represents a Spectrum Selective Switch.
+ */
 class SSS : public Device {
   public:
-	static constexpr DeviceType T = Device::SSSDevice;
+	static constexpr DeviceType DevType = Device::SSSDevice;
+    /**
+     * @brief SSSLoss is the loss of a SSS. Is considered constant for all
+     * the SSS devices.
+     */
 	static Gain SSSLoss;
 
 	SSS();
 
 	Gain get_Gain();
-	Gain get_Loss();
 	Power get_Noise();
 };
 

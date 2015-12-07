@@ -3,8 +3,13 @@
 
 #include <GeneralClasses/Power.h>
 
+/**
+ * @brief The Signal class represents a signal that propagates through the
+ * network.
+ */
 class Signal {
   public:
+
 	static Gain InputOSNR;
 	static Power InputPower;
 

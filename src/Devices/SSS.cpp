@@ -7,11 +7,7 @@ SSS::SSS() {
 }
 
 Gain SSS::get_Gain() {
-	return Gain(0);
-}
-
-Gain SSS::get_Loss() {
-	return SSSLoss;
+    return SSSLoss;
 }
 
 Power SSS::get_Noise() {

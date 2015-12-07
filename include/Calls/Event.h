@@ -5,6 +5,10 @@
 
 class Call;
 
+/**
+ * @brief The Event class represents an event that happened in the network. Is
+ * either a call requisition or a call ending.
+ */
 class Event {
   public:
     /**
@@ -37,6 +41,9 @@ class Event {
      */
     bool operator>(const Event) const;
 
+    /**
+     * @brief t is the ocurring time of the event.
+     */
     long double t;
     Event_Type Type;
     Call *Parent;

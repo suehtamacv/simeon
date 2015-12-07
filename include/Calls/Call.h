@@ -24,10 +24,25 @@ class Call {
     Call(long double tOcurr, long double tDur, std::weak_ptr<Node> Origin,
          std::weak_ptr<Node> Destination, TransmissionBitrate Bitrate);
 
+    /**
+     * @brief CallRequisition is a pointer to the requisition event.
+     */
     std::shared_ptr<Event> CallRequisition;
+    /**
+     * @brief CallEnding is a pointer to the endin event.
+     */
     std::shared_ptr<Event> CallEnding;
+    /**
+     * @brief Origin is a pointer to the origin node.
+     */
     std::weak_ptr<Node> Origin;
+    /**
+     * @brief Destination is a pointer to the destination node.
+     */
     std::weak_ptr<Node> Destination;
+    /**
+     * @brief Bitrate is a Transmission Bitrate.
+     */
     TransmissionBitrate Bitrate;
 };
 

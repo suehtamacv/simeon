@@ -8,7 +8,7 @@ PreAmplifier::PreAmplifier(Fiber &Segment, Node &Destination) : EDFA(Gain(0)) ,
     numPorts = Destination.Links.size();
 
     if (Destination.get_NodeArch() == Node::SwitchingSelect) {
-        set_Gain(-SSS::SSSLoss - Segment.get_Loss());
+        set_Gain(-SSS::SSSLoss - Segment.get_Gain());
     } else {
         set_Gain(-SSS::SSSLoss - Gain(numPorts + 1, Gain::Linear));
     }

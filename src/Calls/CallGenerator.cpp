@@ -3,12 +3,12 @@
 
 boost::mt19937 CallGenerator::MersenneTwister;
 
-CallGenerator::CallGenerator(Topology NetTopology, long double mu,
+CallGenerator::CallGenerator(std::shared_ptr<Topology> NetTopology, long double mu,
                              long double h) : NetTopology(NetTopology), mu(mu), h(h), simulationTime(0) {
 
     //MersenneTwister = boost::mt19937(time(0)); Do not seed RNG
 
-    UniformDistribution = boost::uniform_int<>(0, NetTopology.Nodes.size() - 1);
+    UniformDistribution = boost::uniform_int<>(0, NetTopology->Nodes.size() - 1);
     ExponentialDistributionMu = boost::exponential_distribution<>(mu);
     ExponentialDistributionH = boost::exponential_distribution<>(1.0 / h);
 
@@ -38,8 +38,8 @@ Call CallGenerator::generate_Call(TransmissionBitrate Bitrate) {
     }
 
     Call C(ArrivalTime, EndingTime,
-           std::weak_ptr<Node>(NetTopology.Nodes.at(Origin)),
-           std::weak_ptr<Node>(NetTopology.Nodes.at(Destination)), Bitrate);
+           std::weak_ptr<Node>(NetTopology->Nodes.at(Origin)),
+           std::weak_ptr<Node>(NetTopology->Nodes.at(Destination)), Bitrate);
     Events.push(*C.CallRequisition);
     Events.push(*C.CallEnding);
 

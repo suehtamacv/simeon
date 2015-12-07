@@ -7,10 +7,11 @@
 class Gain {
   public:
 	/**
-	 * @brief The InitType enum is used to choose how to init the object. Use dB to provide an initial value in dB, and Linear to provide an initial value in linear units.
-	 */
+     * @brief The InitType enum is used to choose how to init the object.
+     */
 	enum InitType {
-		dB, Linear
+        dB, /*!< Use dB to provide an initial value in dB */
+        Linear /*!< Use Linear to provide an initial value in linear units */
 	};
 
 	/**

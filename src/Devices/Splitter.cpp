@@ -5,11 +5,7 @@ Splitter::Splitter(int NumPorts) : NumPorts(NumPorts) ,
 }
 
 Gain Splitter::get_Gain() {
-	return Gain(0);
-}
-
-Gain Splitter::get_Loss() {
-	return SplitterLoss;
+    return SplitterLoss;
 }
 
 Power Splitter::get_Noise() {

@@ -1,6 +1,9 @@
 #ifndef PHYSICALCONSTANTS_H
 #define PHYSICALCONSTANTS_H
 
+/**
+ * @brief The PhysicalConstants class stores physical constants.
+ */
 class PhysicalConstants {
 	public:
 		/**
