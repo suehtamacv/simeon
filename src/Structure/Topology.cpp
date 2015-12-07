@@ -61,10 +61,10 @@ void Topology::read_Topology(std::string TopologyFileName) {
     std::vector<std::string> NodesList =
         VariablesMap.find("nodes.node")->second.as<std::vector<std::string>>();
 
-    for (auto node = NodesList.begin(); node != NodesList.end(); ++node) {
+    for (auto node : NodesList) {
         int NodeId, Type, Arch, NumReg;
 
-        std::istringstream NodeParameters(*node);
+        std::istringstream NodeParameters(node);
         NodeParameters >> NodeId >> Type >> Arch >> NumReg;
 
         add_Node(NodeId, (Node::Node_Type) Type, (Node::Node_Architecure) Arch, NumReg);
@@ -74,26 +74,26 @@ void Topology::read_Topology(std::string TopologyFileName) {
     std::vector<std::string> LinksList =
         VariablesMap.find("links.->")->second.as<std::vector<std::string>>();
 
-    for (auto link = LinksList.begin(); link != LinksList.end(); ++link) {
+    for (auto link : LinksList) {
         int OriginID, DestinationID;
         long double length;
         std::weak_ptr<Node> Origin, Destination;
 
-        std::istringstream LinkParameters(*link);
+        std::istringstream LinkParameters(link);
         LinkParameters >> OriginID >> DestinationID >> length;
         BOOST_ASSERT_MSG(OriginID != DestinationID,
                          "Link can't have the same Origin and Destination.");
 
         int NodesFound = 0;
 
-        for (auto node = Nodes.begin(); node != Nodes.end(); ++node) {
-            if ((*node)->ID == OriginID) {
-                Origin = *node;
+        for (auto node : Nodes) {
+            if (node->ID == OriginID) {
+                Origin = node;
                 NodesFound++;
             }
 
-            if ((*node)->ID == DestinationID) {
-                Destination = *node;
+            if (node->ID == DestinationID) {
+                Destination = node;
                 NodesFound++;
             }
         }
@@ -112,9 +112,9 @@ void Topology::print_Topology(std::string TopologyFileName) {
     TopologyFile << "  [nodes]" << std::endl << std::endl;
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
 
-    for (auto it = Nodes.begin(); it != Nodes.end(); ++it) {
-        TopologyFile << "  node = " << (*it)->ID << " " << (*it)->get_NodeType() << " "
-                     << (*it)->get_NodeArch() << " " << (*it)->get_NumRegenerators() << std::endl;
+    for (auto it : Nodes) {
+        TopologyFile << "  node = " << it->ID << " " << it->get_NodeType() << " "
+                     << it->get_NodeArch() << " " << it->get_NumRegenerators() << std::endl;
     }
 
     TopologyFile << std::endl;
@@ -122,10 +122,10 @@ void Topology::print_Topology(std::string TopologyFileName) {
     TopologyFile << "  [links]" << std::endl << std::endl;
     TopologyFile << "# -> = ORIGIN DESTINATION LENGTH" << std::endl;
 
-    for (auto it = Links.begin(); it != Links.end(); ++it) {
-        TopologyFile << "  -> = " << it->second->Origin.lock().get()->ID << " " <<
-                     it->second->Destination.lock().get()->ID << " " <<
-                        it->second->Length << std::endl;
+    for (auto it : Links) {
+        TopologyFile << "  -> = " << it.second->Origin.lock().get()->ID << " " <<
+                     it.second->Destination.lock().get()->ID << " " <<
+                        it.second->Length << std::endl;
     }
 
     TopologyFile.close();

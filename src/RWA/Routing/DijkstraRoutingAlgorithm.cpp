@@ -29,9 +29,9 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
     while (!UnvisitedNodes.empty()) {
         std::shared_ptr<Node> CurrentNode = UnvisitedNodes[0];
 
-        for (auto it = UnvisitedNodes.begin(); it != UnvisitedNodes.end(); ++it) {
-            if (VertexCost[CurrentNode->ID] > VertexCost[(*it)->ID]) {
-                CurrentNode = *it;
+        for (auto it : UnvisitedNodes) {
+            if (VertexCost[CurrentNode->ID] > VertexCost[it->ID]) {
+                CurrentNode = it;
             }
         }
 
@@ -46,14 +46,13 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
             }
         }
 
-        for (auto it = CurrentNode->Neighbours.begin();
-                it != CurrentNode->Neighbours.end(); ++it) {
+        for (auto it : CurrentNode->Neighbours) {
             long double AltCost = VertexCost[CurrentNode->ID] +
-                                  get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, (*it).lock()->ID)), C);
+                                  get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, it.lock()->ID)), C);
 
-            if (AltCost < VertexCost[(*it).lock()->ID]) {
-                VertexCost[(*it).lock()->ID] = AltCost;
-                Precedent[(*it).lock()->ID] = CurrentNode->ID;
+            if (AltCost < VertexCost[it.lock()->ID]) {
+                VertexCost[it.lock()->ID] = AltCost;
+                Precedent[it.lock()->ID] = CurrentNode->ID;
             }
         }
     }

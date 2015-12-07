@@ -14,14 +14,14 @@ std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(Call C) {
 }
 
 void StaticRoutingAlgorithm::precalculate_Routes() {
-    for (auto orig = T->Nodes.begin(); orig != T->Nodes.end(); ++orig) {
-        for (auto dest = T->Nodes.begin(); dest != T->Nodes.end(); ++dest) {
+    for (auto orig : T->Nodes) {
+        for (auto dest : T->Nodes) {
             if (orig == dest) {
                 continue;
             }
 
-            Call DummyCall(0, 1, *orig, *dest, 0);
-            OrigDestPair DummyOrigDest((*orig)->ID, (*dest)->ID);
+            Call DummyCall(0, 1, orig, dest, 0);
+            OrigDestPair DummyOrigDest(orig->ID, dest->ID);
 
             Routes.emplace(DummyOrigDest, DijkstraRoutingAlgorithm::route(DummyCall));
         }

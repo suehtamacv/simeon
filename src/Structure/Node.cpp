@@ -21,8 +21,8 @@ bool Node::operator ==(Node *N) {
 void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     bool LinkExists = false;
 
-    for (auto it = Neighbours.begin(); it != Neighbours.end(); ++it) {
-        if ((*it).lock() == N.lock()) {
+    for (auto it : Neighbours) {
+        if (it.lock() == N.lock()) {
             LinkExists = true;
             break;
         }
@@ -118,8 +118,8 @@ void Node::set_NumRegenerators(unsigned int NReg) {
 }
 
 bool Node::isNeighbour(std::weak_ptr<Node> N) {
-    for (auto it = Neighbours.begin(); it != Neighbours.end(); ++it) {
-        if (N.lock() == (*it).lock()) {
+    for (auto it : Neighbours) {
+        if (N.lock() == it.lock()) {
             return true;
         }
     }
