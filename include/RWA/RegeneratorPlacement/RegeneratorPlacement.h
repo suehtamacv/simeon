@@ -10,7 +10,7 @@ class RegeneratorPlacement {
     std::shared_ptr<Topology> T;
 
   private:
-    virtual void placeRegenerators(int, int) = 0;
+    virtual void placeRegenerators(unsigned, unsigned) = 0;
 };
 
 #endif // REGENERATORPLACEMENT_H

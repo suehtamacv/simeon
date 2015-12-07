@@ -12,7 +12,7 @@ class NX_RegeneratorPlacement : public RegeneratorPlacement {
      * @param N is the number of translucent nodes.
      * @param X is the number of regenerators per translucent node.
      */
-    virtual void placeRegenerators(int N, int X) = 0;
+    virtual void placeRegenerators(unsigned N, unsigned X) = 0;
 };
 
 #endif // NX_REGENERATORPLACEMENT_H

@@ -126,3 +126,7 @@ bool Node::isNeighbour(std::weak_ptr<Node> N) {
 
     return false;
 }
+
+void Node::set_NodeType(Node_Type T) {
+    Type = T;
+}

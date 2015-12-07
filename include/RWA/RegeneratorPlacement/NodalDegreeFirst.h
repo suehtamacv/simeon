@@ -6,7 +6,7 @@
 class NodalDegreeFirst : public NX_RegeneratorPlacement {
   public:
     NodalDegreeFirst(std::shared_ptr<Topology> T);
-    void placeRegenerators(int N, int X);
+    void placeRegenerators(unsigned N, unsigned X);
 };
 
 #endif // NODALDEGREEFIRST_H
