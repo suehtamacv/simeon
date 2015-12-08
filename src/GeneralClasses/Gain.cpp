@@ -37,3 +37,27 @@ long double Gain::in_dB() const {
 long double Gain::in_Linear() const {
     return value_Linear;
 }
+
+bool Gain::operator >(Gain G) {
+    if (value_dB > G.in_dB()) {
+        return true;
+    }
+
+    return false;
+}
+
+bool Gain::operator <(Gain G) {
+    if (value_dB < G.in_dB()) {
+        return true;
+    }
+
+    return false;
+}
+
+bool Gain::operator ==(Gain G) {
+    if (value_dB == G.in_dB()) {
+        return true;
+    }
+
+    return false;
+}

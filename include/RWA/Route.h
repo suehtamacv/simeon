@@ -22,6 +22,7 @@ class Route {
         std::owner_less<std::weak_ptr<Node>>> Regenerators;
 
     Signal bypass();
+    Signal partial_bypass(std::weak_ptr<Node> orig, std::weak_ptr<Node> dest);
 };
 
 #endif // ROUTE_H

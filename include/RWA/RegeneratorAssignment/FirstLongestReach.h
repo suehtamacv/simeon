@@ -9,9 +9,15 @@ class FirstLongestReach : public RegeneratorAssignment {
     FirstLongestReach(std::shared_ptr<Topology> T,
                       std::vector<std::shared_ptr<M_QAM>> ModulationSchemes);
 
-    void assignRegenerators(Call C, std::shared_ptr<Route> R);
+    bool assignRegenerators(Call C, std::shared_ptr<Route> R);
 
     std::vector<std::shared_ptr<M_QAM>> ModulationSchemes;
+
+  private:
+    bool isThereSpectrumAndOSNR(Call C,
+                                std::shared_ptr<Route> R,
+                                std::vector<std::weak_ptr<Node>>::iterator s,
+                                std::vector<std::weak_ptr<Node>>::iterator x);
 };
 
 #endif // FIRSTLONGESTREACH_H

@@ -34,6 +34,10 @@ class Gain {
 	Gain operator+(Gain);
 	Gain operator-(Gain);
 
+    bool operator>(Gain);
+    bool operator<(Gain);
+    bool operator==(Gain);
+
 	/**
 	 * @brief in_dB returns the value of this object in dB units.
 	 * @return the value of this object in dB units.

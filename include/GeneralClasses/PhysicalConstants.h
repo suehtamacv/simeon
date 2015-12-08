@@ -22,6 +22,10 @@ class PhysicalConstants {
 		 * @brief freq is the light's frequency;
 		 */
 		constexpr static long double freq = c / lambda;
+        /**
+         * @brief BRef is the reference bandwidth.
+         */
+        static constexpr long double BRef = 12.5E9;
 };
 
 #endif // PHYSICALCONSTANTS_H
