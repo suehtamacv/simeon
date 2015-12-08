@@ -22,7 +22,8 @@ class Link {
     long double Length;
     int numLineAmplifiers;
 
-    bool operator==(Link *);
+    bool operator==(Link *) const;
+    bool operator<(Link *) const;
 
     Signal bypass(Signal);
 

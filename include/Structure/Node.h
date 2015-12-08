@@ -1,4 +1,4 @@
-#ifndef NODE_H
+﻿#ifndef NODE_H
 #define NODE_H
 
 #include <memory>
@@ -33,7 +33,8 @@ class Node {
     Node(int ID, Node_Type T = TransparentNode,
          Node_Architecure A = SwitchingSelect);
 
-    bool operator==(Node *);
+    bool operator==(Node *) const;
+    bool operator<(Node *) const;
 
     const int ID;
     std::vector<std::weak_ptr<Node>> Neighbours;
@@ -43,6 +44,7 @@ class Node {
     Node_Architecure get_NodeArch();
     Node_Type get_NodeType();
     unsigned int get_NumRegenerators();
+    unsigned int get_NumAvailableRegenerators();
 
     void insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link);
 
@@ -58,6 +60,7 @@ class Node {
     Node_Architecure Architecture;
     void create_Devices();
     unsigned int NumRegenerators;
+    unsigned int NumAvailableRegenerators;
 };
 
 #endif // NODE_H

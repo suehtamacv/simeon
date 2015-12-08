@@ -10,9 +10,11 @@ Route::Route(std::vector<std::weak_ptr<Link> > Links,
     for (auto it : Links) {
         if (it.lock() == Links.front().lock()) {
             Nodes.push_back(it.lock()->Origin);
+            Regenerators.emplace(it.lock()->Origin, 0);
         }
 
         Nodes.push_back(it.lock()->Destination);
+        Regenerators.emplace(it.lock()->Destination, 0);
     }
 
 }

@@ -35,7 +35,8 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorPlacement/NodalDegreeFirst.cpp \
     src/Devices/Amplifiers/InLineAmplifier.cpp \
     src/RWA/RegeneratorAssignment/RegeneratorAssignment.cpp \
-    src/ModulationSchemes/M_QAM.cpp
+    src/ModulationSchemes/M_QAM.cpp \
+    src/RWA/RegeneratorAssignment/FirstLongestReach.cpp
 
 
 HEADERS += \
@@ -73,7 +74,8 @@ HEADERS += \
     include/RWA/RegeneratorPlacement/NodalDegreeFirst.h \
     include/Devices/Amplifiers/InLineAmplifier.h \
     include/RWA/RegeneratorAssignment/RegeneratorAssignment.h \
-    include/ModulationSchemes/M_QAM.h
+    include/ModulationSchemes/M_QAM.h \
+    include/RWA/RegeneratorAssignment/FirstLongestReach.h
 
 LIBS += -lboost_system -lboost_program_options
 

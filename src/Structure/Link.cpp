@@ -58,7 +58,7 @@ Signal Link::bypass(Signal S) {
     return S;
 }
 
-bool Link::operator ==(Link *L) {
+bool Link::operator ==(Link *L) const {
     if (Origin.lock() != L->Origin.lock()) {
         return false;
     }
@@ -72,4 +72,20 @@ bool Link::operator ==(Link *L) {
     }
 
     return true;
+}
+
+bool Link::operator <(Link *L) const {
+    if (Origin.lock() < L->Origin.lock()) {
+        return true;
+    }
+
+    if (Destination.lock() < L->Destination.lock()) {
+        return true;
+    }
+
+    if (Length < L->Length) {
+        return true;
+    }
+
+    return false;
 }

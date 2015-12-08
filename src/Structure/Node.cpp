@@ -10,8 +10,16 @@ Node::Node(int ID, Node_Type T, Node_Architecure A) : ID(ID), Type(T) ,
     create_Devices();
 }
 
-bool Node::operator ==(Node *N) {
+bool Node::operator ==(Node *N) const {
     if (ID == N->ID) {
+        return true;
+    }
+
+    return false;
+}
+
+bool Node::operator <(Node *N) const {
+    if (ID < N->ID) {
         return true;
     }
 
@@ -52,6 +60,10 @@ unsigned int Node::get_NumRegenerators() {
     return NumRegenerators;
 }
 
+unsigned int Node::get_NumAvailableRegenerators() {
+    return NumAvailableRegenerators;
+}
+
 void Node::create_Devices() {
     //Switching element - entrance
     switch (Architecture) {
@@ -85,7 +97,8 @@ Signal Node::add(Signal S) {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
 
-        if ((*it)->DevType == Device::SplitterDevice || (*it)->DevType == Device::SSSDevice) {
+        if ((*it)->DevType == Device::SplitterDevice ||
+                (*it)->DevType == Device::SSSDevice) {
             break;
         }
     }
@@ -112,6 +125,7 @@ Signal Node::drop(Signal S) {
 
 void Node::set_NumRegenerators(unsigned int NReg) {
     NumRegenerators = NReg;
+    NumAvailableRegenerators = NumRegenerators;
 }
 
 bool Node::isNeighbour(std::weak_ptr<Node> N) {
