@@ -18,10 +18,6 @@ class EDFA : public Amplifier {
      * @brief NoiseFigure is the noise figure of the amplifiers.
      */
     static Gain NoiseFigure;
-    /**
-     * @brief numPolarizations is used to choose whether one or two polarizations are used to transmit the signal.
-     */
-    constexpr static int numPolarizations = 2;
 };
 
 #endif // EDFA_H

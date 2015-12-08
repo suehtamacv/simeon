@@ -1,5 +1,7 @@
+#include <cmath>
 #include <ModulationSchemes/M_QAM.h>
 #include <GeneralClasses/PhysicalConstants.h>
+#include <Structure/Slot.h>
 
 M_QAM::M_QAM(unsigned int M, Gain SNR_Per_Bit) : SNR_Per_Bit(SNR_Per_Bit) {
     this->M = M;
@@ -32,4 +34,10 @@ bool M_QAM::operator >(M_QAM Scheme) const {
 Gain M_QAM::get_ThresholdOSNR(TransmissionBitrate BitRate) {
     return Gain(0.5 * BitRate.get_Bitrate() * SNR_Per_Bit.in_Linear() /
                 PhysicalConstants::BRef, Gain::Linear);
+}
+
+unsigned int M_QAM::get_NumSlots(TransmissionBitrate BitRate) {
+    return ceil(BitRate.get_Bitrate() / (Slot::BSlot *
+                                         PhysicalConstants::numPolarizations *
+                                         log2(M)));
 }

@@ -91,3 +91,45 @@ Signal Route::partial_bypass(std::weak_ptr<Node> orig,
 
     return S;
 }
+
+unsigned int Route::get_MaxContigSlots(std::weak_ptr<Node> orig,
+                                       std::weak_ptr<Node> dest) {
+
+    auto currentLink = Links.begin();
+
+    while ((*currentLink).lock()->Origin.lock() != orig.lock()) {
+        currentLink++;
+    }
+
+    std::vector<bool> SlotsAvailability;
+
+    for (unsigned int i = 0; i < Link::NumSlots; i++) {
+        SlotsAvailability.push_back((*currentLink).lock()->isSlotFree(i));
+    }
+
+    while ((*currentLink).lock()->Origin.lock() != dest.lock()) {
+        for (unsigned int i = 0; i < Link::NumSlots; i++) {
+            SlotsAvailability[i] = SlotsAvailability[i] &&
+                                   (*currentLink).lock()->isSlotFree(i);
+        }
+
+        currentLink++;
+    }
+
+    unsigned MaxSlots = 0;
+    unsigned CurrentFreeSlots = 0;
+
+    for (auto slot : SlotsAvailability) {
+        if (slot) {
+            CurrentFreeSlots++;
+        } else {
+            CurrentFreeSlots = 0;
+        }
+
+        if (CurrentFreeSlots > MaxSlots) {
+            MaxSlots = CurrentFreeSlots;
+        }
+    }
+
+    return MaxSlots;
+}

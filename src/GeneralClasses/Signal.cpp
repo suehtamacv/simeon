@@ -15,7 +15,7 @@ void Signal::operator +=(Power P) {
 	NoisePower += P;
 }
 
-long double Signal::get_OSNR() {
-	return SignalPower.in_dBm() - NoisePower.in_dBm();
+Gain Signal::get_OSNR() {
+    return Gain(SignalPower.in_dBm() - NoisePower.in_dBm());
 }
 

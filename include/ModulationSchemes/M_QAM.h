@@ -17,6 +17,7 @@ class M_QAM {
     bool operator>(M_QAM Scheme) const;
 
     Gain get_ThresholdOSNR(TransmissionBitrate BitRate);
+    unsigned int get_NumSlots(TransmissionBitrate BitRate);
   private:
     unsigned int M;
     Gain SNR_Per_Bit;

@@ -89,3 +89,8 @@ bool Link::operator <(Link *L) const {
 
     return false;
 }
+
+bool Link::isSlotFree(unsigned int slot) const {
+    BOOST_ASSERT_MSG(slot < NumSlots, "Invalid slot requested.");
+    return (Slots[slot])->isFree;
+}

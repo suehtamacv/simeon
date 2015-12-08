@@ -7,6 +7,11 @@ class Link;
 
 class Slot {
   public:
+    /**
+     * @brief BSlot is the bandwidth of a single slot.
+     */
+    constexpr static long double BSlot = 12.5E9;
+
 	Slot(int, Link* Owner);
 
 	/**

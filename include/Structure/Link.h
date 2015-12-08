@@ -24,6 +24,7 @@ class Link {
 
     bool operator==(Link *) const;
     bool operator<(Link *) const;
+    bool isSlotFree(unsigned int) const;
 
     Signal bypass(Signal);
 

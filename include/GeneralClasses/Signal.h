@@ -18,7 +18,7 @@ class Signal {
 	void operator*=(Gain);
 	void operator+=(Power);
 
-	long double get_OSNR();
+    Gain get_OSNR();
 
   private:
 	Power SignalPower;

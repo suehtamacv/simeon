@@ -26,6 +26,11 @@ class PhysicalConstants {
          * @brief BRef is the reference bandwidth.
          */
         static constexpr long double BRef = 12.5E9;
+        /**
+         * @brief numPolarizations is used to choose whether
+         * one or two polarizations are used to transmit the signal.
+         */
+        constexpr static int numPolarizations = 2;
 };
 
 #endif // PHYSICALCONSTANTS_H

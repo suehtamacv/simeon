@@ -16,8 +16,8 @@ class FirstLongestReach : public RegeneratorAssignment {
   private:
     bool isThereSpectrumAndOSNR(Call C,
                                 std::shared_ptr<Route> R,
-                                std::vector<std::weak_ptr<Node>>::iterator s,
-                                std::vector<std::weak_ptr<Node>>::iterator x);
+                                std::weak_ptr<Node> s,
+                                std::weak_ptr<Node> x);
 };
 
 #endif // FIRSTLONGESTREACH_H

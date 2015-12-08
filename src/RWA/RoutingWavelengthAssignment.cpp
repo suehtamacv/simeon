@@ -22,9 +22,15 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
 }
 
 std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(Call C) {
-    std::vector<std::weak_ptr<Link>> Links = R_Alg->route(C);
-    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>> Slots =
-        WA_Alg->assignSlots(C, Links);
 
-    return std::shared_ptr<Route>(new Route(Links, Slots));
+    if (RA_Alg != 0) {
+        //No algorithm RA. Transparent Network.
+        std::vector<std::weak_ptr<Link>> Links = R_Alg->route(C);
+        std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>> Slots =
+            WA_Alg->assignSlots(C, Links);
+
+        return std::shared_ptr<Route>(new Route(Links, Slots));
+    } else {
+        //There's an RA Algorithm.
+    }
 }
