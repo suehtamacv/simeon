@@ -8,15 +8,25 @@
 #include <RWA/Route.h>
 #include <RWA/Routing/RoutingAlgorithm.h>
 #include <RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h>
+#include <RWA/RegeneratorPlacement/RegeneratorPlacement.h>
+#include <RWA/RegeneratorAssignment/RegeneratorAssignment.h>
 
 class RoutingWavelengthAssignment {
   public:
+    RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
+                                std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
+                                std::shared_ptr<RegeneratorPlacement> RP_Alg,
+                                std::shared_ptr<RegeneratorAssignment> RA_Alg,
+                                std::shared_ptr<Topology> T);
+
     RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
                                 std::shared_ptr<Topology> T);
 
     std::shared_ptr<RoutingAlgorithm> R_Alg;
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg;
+    std::shared_ptr<RegeneratorPlacement> RP_Alg;
+    std::shared_ptr<RegeneratorAssignment> RA_Alg;
     std::shared_ptr<Topology> T;
 
     std::shared_ptr<Route> routeCall(Call C);

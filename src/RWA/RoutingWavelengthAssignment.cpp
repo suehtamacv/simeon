@@ -3,8 +3,21 @@
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm> R_Alg,
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
+    std::shared_ptr<RegeneratorPlacement> RP_Alg,
+    std::shared_ptr<RegeneratorAssignment> RA_Alg,
     std::shared_ptr<Topology> T) :
-    R_Alg(R_Alg) , WA_Alg(WA_Alg) , T(T) {
+    R_Alg(R_Alg), WA_Alg(WA_Alg), RP_Alg(RP_Alg), RA_Alg(RA_Alg), T(T) {
+
+}
+
+RoutingWavelengthAssignment::RoutingWavelengthAssignment(
+    std::shared_ptr<RoutingAlgorithm>  R_Alg,
+    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
+    std::shared_ptr<Topology> T) :
+    R_Alg(R_Alg), WA_Alg(WA_Alg), T(T) {
+
+    RP_Alg = 0;
+    RA_Alg = 0;
 
 }
 

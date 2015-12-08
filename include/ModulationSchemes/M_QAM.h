@@ -6,11 +6,14 @@
 /**
  * @brief The ModulationScheme class represents a modulation scheme.
  */
-class ModulationScheme {
+class M_QAM {
   public:
-	ModulationScheme(unsigned int M, Gain SNR_Per_Bit);
+    M_QAM(unsigned int M, Gain SNR_Per_Bit);
 	unsigned int get_M();
 	Gain get_SNR_Per_Bit();
+
+    bool operator<(M_QAM Scheme) const;
+    bool operator>(M_QAM Scheme) const;
 
   private:
 	unsigned int M;

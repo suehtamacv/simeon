@@ -13,7 +13,6 @@ SOURCES += src/main.cpp \
     src/Structure/Slot.cpp \
     src/Structure/Link.cpp \
     src/Structure/Node.cpp \
-    src/ModulationSchemes/ModulationScheme.cpp \
     src/GeneralClasses/Signal.cpp \
     src/Devices/Amplifiers/BoosterAmplifier.cpp \
     src/Devices/Amplifiers/PreAmplifier.cpp \
@@ -34,7 +33,9 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorPlacement/RegeneratorPlacement.cpp \
     src/RWA/RegeneratorPlacement/NX_RegeneratorPlacement.cpp \
     src/RWA/RegeneratorPlacement/NodalDegreeFirst.cpp \
-    src/Devices/Amplifiers/InLineAmplifier.cpp
+    src/Devices/Amplifiers/InLineAmplifier.cpp \
+    src/RWA/RegeneratorAssignment/RegeneratorAssignment.cpp \
+    src/ModulationSchemes/M_QAM.cpp
 
 
 HEADERS += \
@@ -50,7 +51,6 @@ HEADERS += \
     include/Structure/Slot.h \
     include/Structure/Link.h \
     include/Structure/Node.h \
-    include/ModulationSchemes/ModulationScheme.h \
     include/GeneralClasses/Signal.h \
     include/Devices/Amplifiers/BoosterAmplifier.h \
     include/Devices/Amplifiers/PreAmplifier.h \
@@ -71,7 +71,9 @@ HEADERS += \
     include/RWA/RegeneratorPlacement/RegeneratorPlacement.h \
     include/RWA/RegeneratorPlacement/NX_RegeneratorPlacement.h \
     include/RWA/RegeneratorPlacement/NodalDegreeFirst.h \
-    include/Devices/Amplifiers/InLineAmplifier.h
+    include/Devices/Amplifiers/InLineAmplifier.h \
+    include/RWA/RegeneratorAssignment/RegeneratorAssignment.h \
+    include/ModulationSchemes/M_QAM.h
 
 LIBS += -lboost_system -lboost_program_options
 
