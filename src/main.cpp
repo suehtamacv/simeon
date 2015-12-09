@@ -3,6 +3,7 @@
 #include <Calls/Call.h>
 #include <RWA/Routing/StaticRouting/ShortestPath.h>
 #include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
+#include <RWA/WavelengthAssignment/FirstFit.h>
 
 int main(void) {
     auto T = std::shared_ptr<Topology>(new Topology());
@@ -12,6 +13,7 @@ int main(void) {
     ShortestPath SP = ShortestPath(T);
     NodalDegreeFirst NDF = NodalDegreeFirst(T);
     NDF.placeRegenerators(2,10);
+
 
     CallGenerator CG(T, 1, 100);
 

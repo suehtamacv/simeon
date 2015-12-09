@@ -19,6 +19,9 @@ class Link {
 
     std::weak_ptr<Node> Origin;
     std::weak_ptr<Node> Destination;
+    std::vector<std::shared_ptr<Slot>> Slots;
+    std::vector<std::shared_ptr<Device>> Devices;
+
     long double Length;
     int numLineAmplifiers;
 
@@ -31,8 +34,6 @@ class Link {
   private:
     void create_Slots();
     void create_Devices();
-    std::vector<std::unique_ptr<Slot>> Slots;
-    std::vector<std::unique_ptr<Device>> Devices;
 };
 
 #endif // LINK_H

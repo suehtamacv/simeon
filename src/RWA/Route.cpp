@@ -29,12 +29,7 @@ Route::Route(std::vector<TransparentSegment> Segments,
 }
 
 Signal Route::bypass(Signal S) {
-    //Does not consider regeneration
-    for (auto segment : Segments) {
-        S = segment.bypass(S);
-    }
-
-    return S;
+    return Segments.back().bypass(S);
 }
 
 Signal Route::partial_bypass(Signal S, std::weak_ptr<Node> orig,
