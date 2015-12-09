@@ -5,7 +5,9 @@
 #include <Structure/Node.h>
 #include <Structure/Link.h>
 
-Route::Route(std::vector<TransparentSegment> Segments) : Segments(Segments) {
+Route::Route(std::vector<TransparentSegment> Segments,
+             std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
+             Slots) : Segments(Segments), Slots(Slots) {
     for (auto segment : Segments) {
         for (auto node : segment.Nodes) {
             if (node.lock() != segment.Nodes.back().lock()) {

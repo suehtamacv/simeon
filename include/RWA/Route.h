@@ -8,7 +8,8 @@
 
 class Route {
   public:
-    Route(std::vector<TransparentSegment> Segments);
+    Route(std::vector<TransparentSegment> Segments, std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
+          std::owner_less<std::weak_ptr<Link>>> Slots);
 
     std::map<std::weak_ptr<Node>, unsigned int,
         std::owner_less<std::weak_ptr<Node>>> Regenerators;
@@ -16,7 +17,8 @@ class Route {
     std::vector<TransparentSegment> Segments;
     std::vector<std::weak_ptr<Node>> Nodes;
     std::vector<std::weak_ptr<Link>> Links;
-    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>> Slots;
+    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
+        std::owner_less<std::weak_ptr<Link>>> Slots;
 
     Signal bypass(Signal S);
     Signal partial_bypass(Signal S,
