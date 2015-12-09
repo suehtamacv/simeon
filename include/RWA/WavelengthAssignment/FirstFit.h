@@ -5,7 +5,7 @@
 
 class FirstFit : public WavelengthAssignmentAlgorithm {
   public:
-    FirstFit(std::shared_ptr<Topology> T);
+    FirstFit(std::shared_ptr<Topology> T, std::vector<ModulationScheme> Schemes);
 };
 
 #endif // FIRSTFIT_H

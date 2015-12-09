@@ -2,7 +2,8 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
-FirstFit::FirstFit(std::shared_ptr<Topology> T) :
-    WavelengthAssignmentAlgorithm(T) {
+FirstFit::FirstFit(std::shared_ptr<Topology> T,
+                   std::vector<ModulationScheme> Schemes) :
+    WavelengthAssignmentAlgorithm(T, Schemes) {
 
 }

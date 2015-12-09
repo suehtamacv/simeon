@@ -5,41 +5,37 @@
 #include <Structure/Node.h>
 #include <Structure/Link.h>
 
-Route::Route(std::vector<std::weak_ptr<Link> > Links,
-             std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot> > > Slots)
-    : Links(Links), Slots(Slots) {
+Route::Route(std::vector<TransparentSegment> Segments) : Segments(Segments) {
+    for (auto segment : Segments) {
+        for (auto node : segment.Nodes) {
+            if (node.lock() != segment.Nodes.back().lock()) {
+                Nodes.push_back(node);
+            }
 
-    for (auto it : Links) {
-        if (it.lock() == Links.front().lock()) {
-            Nodes.push_back(it.lock()->Origin);
-            Regenerators.emplace(it.lock()->Origin, 0);
+            Regenerators.emplace(node, 0);
         }
 
-        Nodes.push_back(it.lock()->Destination);
-        Regenerators.emplace(it.lock()->Destination, 0);
+        Regenerators[segment.Nodes.back()] = segment.NumRegUsed;
+
+        for (auto link : segment.Links) {
+            Links.push_back(link);
+        }
     }
 
+    Nodes.push_back(Segments.back().Nodes.back());
+    Regenerators.emplace(Segments.back().Nodes.back(), 0);
 }
 
-Signal Route::bypass() {
-    Signal S;
-
-    for (auto it : Links) {
-        if (it.lock() == Links.front().lock()) {
-            S = it.lock()->Origin.lock()->add(S);
-        }
-
-        S = it.lock()->bypass(S);
-
-        if (it.lock() == Links.back().lock()) {
-            S = it.lock()->Destination.lock()->drop(S);
-        }
+Signal Route::bypass(Signal S) {
+    //Does not consider regeneration
+    for (auto segment : Segments) {
+        S = segment.bypass(S);
     }
 
     return S;
 }
 
-Signal Route::partial_bypass(std::weak_ptr<Node> orig,
+Signal Route::partial_bypass(Signal S, std::weak_ptr<Node> orig,
                              std::weak_ptr<Node> dest) {
 
     auto currentNode = Nodes.begin();
@@ -68,8 +64,6 @@ Signal Route::partial_bypass(std::weak_ptr<Node> orig,
     while ((*currentLink).lock()->Origin.lock() != orig.lock()) {
         currentLink++;
     }
-
-    Signal S;
 
     //Traverses the network
     do {

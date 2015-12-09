@@ -1,9 +1,10 @@
 #include <RWA/RegeneratorAssignment/FirstLongestReach.h>
 #include <Structure/Node.h>
+#include <Structure/Link.h>
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
-                                     std::vector<std::shared_ptr<M_QAM>> ModulationSchemes) :
-    RegeneratorAssignment(T), ModulationSchemes(ModulationSchemes) {
+                                     std::vector<std::shared_ptr<ModulationScheme>> ModulationSchemes) :
+    RegeneratorAssignment(T, ModulationSchemes) {
 
 }
 
@@ -17,41 +18,25 @@ bool FirstLongestReach::assignRegenerators(Call C, std::shared_ptr<Route> R) {
                     ((*x).lock() == C.Destination.lock())) {
                 if (isThereSpectrumAndOSNR(C, R, *s, *x)) {
                     if ((*x).lock() == C.Destination.lock()) {
-                        //It's possible to implement the call.
+                        R->Segments.push_back(createTransparentSegment(C, R,
+                                              *r, *x, NeededRegenerators));
                         return true;
                     } else {
                         r = x;
                     }
                 } else {
                     if (r != s) {
+                        R->Segments.push_back(createTransparentSegment(C, R,
+                                              *s, *r, NeededRegenerators));
                         R->Regenerators.emplace(*r, NeededRegenerators);
                         s = r;
                         x = r;
                     } else {
                         R->Regenerators.clear();
+                        R->Segments.clear();
                         return false;
                     }
                 }
-            }
-        }
-    }
-
-    return false;
-}
-
-bool FirstLongestReach::isThereSpectrumAndOSNR(Call C,
-        std::shared_ptr<Route> R,
-        std::weak_ptr<Node> s,
-        std::weak_ptr<Node> x) {
-
-    Signal S = R->partial_bypass(s, x);
-
-    for (auto scheme : ModulationSchemes) {
-        //There's OSNR
-        if (S.get_OSNR() > scheme->get_ThresholdOSNR(C.Bitrate)) {
-            //There's spectrum
-            if (R->get_MaxContigSlots(s, x) > scheme->get_NumSlots(C.Bitrate)) {
-                return true;
             }
         }
     }

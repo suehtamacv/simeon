@@ -1,21 +1,21 @@
 #include <cmath>
-#include <ModulationSchemes/M_QAM.h>
+#include <ModulationSchemes/ModulationScheme.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <Structure/Slot.h>
 
-M_QAM::M_QAM(unsigned int M, Gain SNR_Per_Bit) : SNR_Per_Bit(SNR_Per_Bit) {
-    this->M = M;
+ModulationScheme::ModulationScheme(unsigned int M, Gain SNR_Per_Bit)
+    : SNR_Per_Bit(SNR_Per_Bit), M(M) {
 }
 
-unsigned int M_QAM::get_M() {
+unsigned int ModulationScheme::get_M() {
     return M;
 }
 
-Gain M_QAM::get_SNR_Per_Bit() {
+Gain ModulationScheme::get_SNR_Per_Bit() {
     return SNR_Per_Bit;
 }
 
-bool M_QAM::operator <(M_QAM Scheme) const {
+bool ModulationScheme::operator <(ModulationScheme Scheme) const {
     if (M < Scheme.get_M()) {
         return true;
     }
@@ -23,7 +23,7 @@ bool M_QAM::operator <(M_QAM Scheme) const {
     return false;
 }
 
-bool M_QAM::operator >(M_QAM Scheme) const {
+bool ModulationScheme::operator >(ModulationScheme Scheme) const {
     if (M > Scheme.get_M()) {
         return true;
     }
@@ -31,12 +31,12 @@ bool M_QAM::operator >(M_QAM Scheme) const {
     return false;
 }
 
-Gain M_QAM::get_ThresholdOSNR(TransmissionBitrate BitRate) {
+Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate BitRate) {
     return Gain(0.5 * BitRate.get_Bitrate() * SNR_Per_Bit.in_Linear() /
                 PhysicalConstants::BRef, Gain::Linear);
 }
 
-unsigned int M_QAM::get_NumSlots(TransmissionBitrate BitRate) {
+unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate BitRate) {
     return ceil(BitRate.get_Bitrate() / (Slot::BSlot *
                                          PhysicalConstants::numPolarizations *
                                          log2(M)));
