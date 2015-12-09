@@ -4,7 +4,7 @@
 #include <Structure/Slot.h>
 
 ModulationScheme::ModulationScheme(unsigned int M, Gain SNR_Per_Bit)
-    : SNR_Per_Bit(SNR_Per_Bit), M(M) {
+    : M(M), SNR_Per_Bit(SNR_Per_Bit) {
 }
 
 unsigned int ModulationScheme::get_M() {

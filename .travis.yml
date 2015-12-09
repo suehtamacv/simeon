@@ -1,0 +1,17 @@
+language: cpp
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - libboost-all-dev
+    - libboost-random-dev
+    - gcc-4.8
+    - g++-4.8
+
+script:
+  - qmake adamant-broccoli.pro
+  - sed -i 's/= gcc/= gcc-4.8/g' Makefile
+  - sed -i 's/= g++/= g++-4.8/g' Makefile
+  - make
