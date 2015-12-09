@@ -8,17 +8,16 @@
  */
 class SSS : public Device {
   public:
-	static constexpr DeviceType DevType = Device::SSSDevice;
     /**
      * @brief SSSLoss is the loss of a SSS. Is considered constant for all
      * the SSS devices.
      */
-	static Gain SSSLoss;
+    static Gain SSSLoss;
 
-	SSS();
+    SSS();
 
-	Gain get_Gain();
-	Power get_Noise();
+    Gain get_Gain();
+    Power get_Noise();
 };
 
 #endif // SSS_H

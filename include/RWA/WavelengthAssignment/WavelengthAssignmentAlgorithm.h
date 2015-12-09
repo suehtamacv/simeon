@@ -9,8 +9,7 @@
 
 class WavelengthAssignmentAlgorithm {
   public:
-    WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T,
-                                  std::vector<ModulationScheme> Schemes);
+    WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T);
 
     virtual std::map<std::weak_ptr<Link>,
             std::vector<std::weak_ptr<Slot>>,
@@ -18,7 +17,6 @@ class WavelengthAssignmentAlgorithm {
             assignSlots(Call C, TransparentSegment Seg) = 0;
 
     std::shared_ptr<Topology> T;
-    std::vector<ModulationScheme> Schemes;
 };
 
 #endif // WAVELENGTHASSIGNMENTALGORITHM_H

@@ -35,17 +35,17 @@ void Link::create_Devices() {
     long double SpanLength = Length / numLineAmplifiers;
 
     for (int i = 0; i < numLineAmplifiers; i++) {
-        Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
-        Devices.push_back(std::unique_ptr<InLineAmplifier>(
+        Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
+        Devices.push_back(std::shared_ptr<InLineAmplifier>(
                               new InLineAmplifier((Fiber &)*Devices.back())));
     }
 
     //There's an extra fiber segment in the end of the link
-    Devices.push_back(std::unique_ptr<Fiber>(new Fiber(SpanLength)));
+    Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
 
     //There's a preamplifier in the node's entrance.
     //It compensates the fiber segment loss and also the switching element loss.
-    Devices.push_back(std::unique_ptr<PreAmplifier>(new PreAmplifier((
+    Devices.push_back(std::shared_ptr<PreAmplifier>(new PreAmplifier((
                           Fiber &)*Devices.back(), *Destination.lock())));
 }
 

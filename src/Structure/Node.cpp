@@ -68,19 +68,19 @@ void Node::create_Devices() {
     //Switching element - entrance
     switch (Architecture) {
         case BroadcastAndSelect:
-            Devices.push_back(std::unique_ptr<Device>(new Splitter(Links.size())));
+            Devices.push_back(std::shared_ptr<Device>(new Splitter(Links.size())));
             break;
 
         case SwitchingSelect:
-            Devices.push_back(std::unique_ptr<Device>(new SSS()));
+            Devices.push_back(std::shared_ptr<Device>(new SSS()));
             break;
     }
 
     //Switching element - exit
-    Devices.push_back(std::unique_ptr<Device>(new SSS()));
+    Devices.push_back(std::shared_ptr<Device>(new SSS()));
 
     //Booster Amplifier
-    Devices.push_back(std::unique_ptr<Device>(new BoosterAmplifier()));
+    Devices.push_back(std::shared_ptr<Device>(new BoosterAmplifier()));
 }
 
 Signal Node::bypass(Signal S) {
@@ -93,12 +93,12 @@ Signal Node::bypass(Signal S) {
 }
 
 Signal Node::add(Signal S) {
-    for (auto it = Devices.begin(); it != Devices.end(); ++it) {
-        S *= (*it)->get_Gain();
-        S += (*it)->get_Noise();
+    for (auto it : Devices) {
+        S *= it->get_Gain();
+        S += it->get_Noise();
 
-        if ((*it)->DevType == Device::SplitterDevice ||
-                (*it)->DevType == Device::SSSDevice) {
+        if ((it->DevType == Device::SplitterDevice) ||
+                (it->DevType == Device::SSSDevice)) {
             break;
         }
     }
@@ -109,15 +109,15 @@ Signal Node::add(Signal S) {
 Signal Node::drop(Signal S) {
     bool foundExit = false;
 
-    for (auto it = Devices.begin(); it != Devices.end(); ++it) {
-        if (!foundExit && (*it)->DevType != Device::SplitterDevice &&
-                (*it)->DevType != Device::SSSDevice) {
+    for (auto it : Devices) {
+        if (!foundExit && (it->DevType != Device::SplitterDevice) &&
+                (it->DevType != Device::SSSDevice)) {
             foundExit = true;
             continue;
         }
 
-        S *= (*it)->get_Gain();
-        S += (*it)->get_Noise();
+        S *= it->get_Gain();
+        S += it->get_Noise();
     }
 
     return S;

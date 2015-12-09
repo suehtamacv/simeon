@@ -74,7 +74,7 @@ class CallGenerator {
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
             ExponentialGeneratorH;
 
-    Call generate_Call(TransmissionBitrate Bitrate = 0);
+    Call generate_Call(TransmissionBitrate Bitrate);
 };
 
 #endif // CALLGENERATOR_H

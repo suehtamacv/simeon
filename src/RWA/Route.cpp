@@ -24,8 +24,10 @@ Route::Route(std::vector<TransparentSegment> Segments,
         }
     }
 
-    Nodes.push_back(Segments.back().Nodes.back());
-    Regenerators.emplace(Segments.back().Nodes.back(), 0);
+    if (!Segments.empty()) {
+        Nodes.push_back(Segments.back().Nodes.back());
+        Regenerators.emplace(Segments.back().Nodes.back(), 0);
+    }
 }
 
 Signal Route::bypass(Signal S) {

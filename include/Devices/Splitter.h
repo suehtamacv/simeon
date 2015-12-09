@@ -9,8 +9,6 @@
  */
 class Splitter : public Device {
   public:
-	static constexpr DeviceType DevType = Device::SplitterDevice;
-
     /**
      * @brief Splitter is the standard constructor for a splitter.
      * @param NumPorts is the number of ports of the splitter.

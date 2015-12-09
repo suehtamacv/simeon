@@ -17,8 +17,6 @@ class Amplifier : public Device {
         PreAmplifierType /*!< Pre-Amplifier */
     };
 
-    static constexpr DeviceType DevType = Device::AmplifierDevice;
-
     Amplifier(Gain G);
 
     Power get_Noise();

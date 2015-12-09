@@ -16,8 +16,11 @@ class Device {
         AmplifierDevice, /*!< Amplifier */
         FiberDevice, /*!< Fiber Segment */
         SplitterDevice, /*!< Splitter */
-        SSSDevice /*!< Selective Spectrum Switch */
+        SSSDevice, /*!< Selective Spectrum Switch */
+        UndefinedDevice /*!< Undefined Device */
     };
+
+    Device(DeviceType  DevType = UndefinedDevice);
 
     /**
      * @brief DevType is the type of device.

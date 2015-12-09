@@ -2,7 +2,7 @@
 
 Gain SSS::SSSLoss(-5);
 
-SSS::SSS() {
+SSS::SSS() : Device(Device::SSSDevice) {
 
 }
 
@@ -11,5 +11,5 @@ Gain SSS::get_Gain() {
 }
 
 Power SSS::get_Noise() {
-	return Power(0, Power::Watt);
+    return Power(0, Power::Watt);
 }

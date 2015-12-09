@@ -2,9 +2,8 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
-FirstFit::FirstFit(std::shared_ptr<Topology> T,
-                   std::vector<ModulationScheme> Schemes) :
-    WavelengthAssignmentAlgorithm(T, Schemes) {
+FirstFit::FirstFit(std::shared_ptr<Topology> T) :
+    WavelengthAssignmentAlgorithm(T) {
 
 }
 
@@ -35,19 +34,20 @@ FirstFit::assignSlots(Call C, TransparentSegment Seg) {
             CurrentFreeSlots = 0;
         }
 
-        sf++;
-
         if (CurrentFreeSlots == RequiredSlots) {
             si = sf - RequiredSlots + 1;
             break;
         }
+
+        sf++;
     }
 
     if (si != -1) {
         for (auto link : Seg.Links) {
             std::vector<std::weak_ptr<Slot>> LinkSlots;
 
-            for (int slot = si; slot < sf; slot++) {
+            for (int slot = si; slot <= sf; slot++) {
+                link.lock()->Slots.at(slot)->useSlot();
                 LinkSlots.push_back(link.lock()->Slots.at(slot));
             }
 

@@ -39,7 +39,7 @@ class Node {
     const int ID;
     std::vector<std::weak_ptr<Node>> Neighbours;
     std::vector<std::shared_ptr<Link>> Links;
-    std::vector<std::unique_ptr<Device>> Devices;
+    std::vector<std::shared_ptr<Device>> Devices;
 
     Node_Architecure get_NodeArch();
     Node_Type get_NodeType();

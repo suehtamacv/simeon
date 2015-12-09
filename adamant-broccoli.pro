@@ -37,7 +37,8 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorAssignment/RegeneratorAssignment.cpp \
     src/RWA/RegeneratorAssignment/FirstLongestReach.cpp \
     src/RWA/TransparentSegment.cpp \
-    src/ModulationSchemes/ModulationScheme.cpp
+    src/ModulationSchemes/ModulationScheme.cpp \
+    src/Devices/Device.cpp
 
 
 HEADERS += \
