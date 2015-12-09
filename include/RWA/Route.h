@@ -22,8 +22,6 @@ class Route {
     Signal partial_bypass(Signal S,
                           std::weak_ptr<Node> orig,
                           std::weak_ptr<Node> dest);
-    unsigned int get_MaxContigSlots(std::weak_ptr<Node> orig,
-                                    std::weak_ptr<Node> dest);
 };
 
 #endif // ROUTE_H

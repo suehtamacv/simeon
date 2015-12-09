@@ -8,38 +8,48 @@ FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
 
 }
 
-bool FirstLongestReach::assignRegenerators(Call C, std::shared_ptr<Route> R) {
-    unsigned int NeededRegenerators = get_NumNeededRegenerators(C);
-    auto r = R->Nodes.begin();
+std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(Call C,
+        std::vector<std::weak_ptr<Link> > Links) {
 
-    for (auto s = R->Nodes.begin(); s != R->Nodes.end(); ++s) {
-        for (auto x = s + 1; s != R->Nodes.end(); ++x) {
+    unsigned int NeededRegenerators = get_NumNeededRegenerators(C);
+    std::vector<TransparentSegment> TransparentSegments;
+    std::vector<std::weak_ptr<Node>> Nodes;
+
+    for (auto link : Links) {
+        Nodes.push_back(link.lock()->Origin);
+    }
+
+    Nodes.push_back(Links.back().lock()->Destination);
+
+    auto r = Nodes.begin();
+
+    for (auto s = Nodes.begin(); s != Nodes.end(); ++s) {
+        for (auto x = s + 1; s != Nodes.end(); ++x) {
             if (((*x).lock()->get_NumAvailableRegenerators() >= NeededRegenerators) ||
                     ((*x).lock() == C.Destination.lock())) {
-                if (isThereSpectrumAndOSNR(C, R, *s, *x)) {
+                if (isThereSpectrumAndOSNR(C, Links, *s, *x)) {
                     if ((*x).lock() == C.Destination.lock()) {
-                        R->Segments.push_back(createTransparentSegment(C, R,
-                                              *r, *x, NeededRegenerators));
-                        return true;
+                        TransparentSegments.push_back(createTransparentSegment(C, Links,
+                                                      *r, *x, NeededRegenerators));
+                        return TransparentSegments;
                     } else {
                         r = x;
                     }
                 } else {
                     if (r != s) {
-                        R->Segments.push_back(createTransparentSegment(C, R,
-                                              *s, *r, NeededRegenerators));
-                        R->Regenerators.emplace(*r, NeededRegenerators);
+                        TransparentSegments.push_back(createTransparentSegment(C, Links,
+                                                      *s, *r, NeededRegenerators));
                         s = r;
                         x = r;
                     } else {
-                        R->Regenerators.clear();
-                        R->Segments.clear();
-                        return false;
+                        TransparentSegments.clear();
+                        return TransparentSegments;
                     }
                 }
             }
         }
     }
 
-    return false;
+    TransparentSegments.clear();
+    return TransparentSegments;
 }

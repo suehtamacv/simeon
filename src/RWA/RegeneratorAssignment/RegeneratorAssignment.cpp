@@ -15,18 +15,34 @@ unsigned int RegeneratorAssignment::get_NumNeededRegenerators(Call C) {
 }
 
 bool RegeneratorAssignment::isThereSpectrumAndOSNR(Call C,
-        std::shared_ptr<Route> R,
+        std::vector<std::weak_ptr<Link> > Links,
         std::weak_ptr<Node> s,
         std::weak_ptr<Node> x) {
 
+    std::vector<std::weak_ptr<Link>> SegmentLinks;
+    bool foundNode = false;
+
+    for (auto link : Links) {
+        if (link.lock()->Origin.lock() == s.lock()) {
+            foundNode = true;
+        } else if (link.lock()->Origin.lock() == x.lock()) {
+            break;
+        } else if (!foundNode) {
+            continue;
+        }
+
+        SegmentLinks.push_back(link);
+    }
+
     Signal Sig;
-    Sig = R->partial_bypass(Sig, s, x);
+    TransparentSegment Segment(SegmentLinks, *ModulationSchemes.front(), 0);
+    Sig = Segment.bypass(Sig);
 
     for (auto scheme : ModulationSchemes) {
         //There's OSNR
         if (Sig.get_OSNR() > scheme->get_ThresholdOSNR(C.Bitrate)) {
             //There's spectrum
-            if (R->get_MaxContigSlots(s, x) > scheme->get_NumSlots(C.Bitrate)) {
+            if (Segment.get_MaxContigSlots() > scheme->get_NumSlots(C.Bitrate)) {
                 return true;
             }
         }
@@ -36,12 +52,28 @@ bool RegeneratorAssignment::isThereSpectrumAndOSNR(Call C,
 }
 
 ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
-        std::shared_ptr<Route> R,
+        std::vector<std::weak_ptr<Link> > Links,
         std::weak_ptr<Node> s,
         std::weak_ptr<Node> x) {
 
+    std::vector<std::weak_ptr<Link>> SegmentLinks;
+    bool foundNode = false;
+
+    for (auto link : Links) {
+        if (link.lock()->Origin.lock() == s.lock()) {
+            foundNode = true;
+        } else if (link.lock()->Origin.lock() == x.lock()) {
+            break;
+        } else if (!foundNode) {
+            continue;
+        }
+
+        SegmentLinks.push_back(link);
+    }
+
+    TransparentSegment Segment(SegmentLinks, *ModulationSchemes.front(), 0);
     Signal Sig;
-    Sig = R->partial_bypass(Sig, s, x);
+    Sig = Segment.bypass(Sig);
 
     std::sort(ModulationSchemes.rbegin(), ModulationSchemes.rend());
 
@@ -49,7 +81,7 @@ ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
         //There's OSNR
         if (Sig.get_OSNR() > scheme->get_ThresholdOSNR(C.Bitrate)) {
             //There's spectrum
-            if (R->get_MaxContigSlots(s, x) > scheme->get_NumSlots(C.Bitrate)) {
+            if (Segment.get_MaxContigSlots() > scheme->get_NumSlots(C.Bitrate)) {
                 return *scheme;
             }
         }
@@ -59,7 +91,7 @@ ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
 }
 
 TransparentSegment RegeneratorAssignment::createTransparentSegment(Call C,
-        std::shared_ptr<Route> R,
+        std::vector<std::weak_ptr<Link> > Links,
         std::weak_ptr<Node> s,
         std::weak_ptr<Node> r,
         unsigned int NumRegUsed) {
@@ -67,7 +99,7 @@ TransparentSegment RegeneratorAssignment::createTransparentSegment(Call C,
     std::vector<std::weak_ptr<Link>> SegmentLinks;
     bool foundNode = false;
 
-    for (auto link : R->Links) {
+    for (auto link : Links) {
         if (link.lock()->Origin.lock() == s.lock()) {
             foundNode = true;
         } else if (link.lock()->Origin.lock() == r.lock()) {
@@ -77,7 +109,7 @@ TransparentSegment RegeneratorAssignment::createTransparentSegment(Call C,
         }
     }
 
-    ModulationScheme Scheme = getMostEfficientScheme(C, R, s, r);
+    ModulationScheme Scheme = getMostEfficientScheme(C, Links, s, r);
 
     return TransparentSegment(SegmentLinks, Scheme, NumRegUsed);
 }

@@ -15,7 +15,7 @@ class TransparentSegment {
   public:
     TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
                        ModulationScheme ModScheme,
-                       unsigned int NumRegUsed);
+                       unsigned int NumRegUsed = 0);
 
     std::vector<std::weak_ptr<Node>> Nodes;
     std::vector<std::weak_ptr<Link>> Links;
@@ -27,6 +27,7 @@ class TransparentSegment {
     unsigned int NumRegUsed;
 
     Signal bypass(Signal S);
+    unsigned int get_MaxContigSlots();
 };
 
 #endif // TRANSPARENTSEGMENT_H
