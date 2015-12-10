@@ -14,6 +14,30 @@ Topology::Topology() {
 Topology::Topology(const Topology &topology) {
     Nodes.clear();
     Links.clear();
+
+    for (auto node : topology.Nodes) {
+        add_Node(node->ID,
+                 node->get_NodeType(),
+                 node->get_NodeArch(),
+                 node->get_NumRegenerators());
+    }
+
+    for (auto link : topology.Links) {
+        std::weak_ptr<Node> orig = Nodes.front();
+        std::weak_ptr<Node> dest = Nodes.front();
+
+        for (auto node : Nodes) {
+            if (node == link.second->Origin.lock()) {
+                orig = node;
+            }
+
+            if (node == link.second->Origin.lock()) {
+                dest = node;
+            }
+        }
+
+        add_Link(orig, dest, link.second->Length);
+    }
 }
 
 Topology::Topology(std::string TopologyFileName) {
