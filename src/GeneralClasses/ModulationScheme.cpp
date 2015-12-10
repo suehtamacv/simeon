@@ -7,6 +7,11 @@ ModulationScheme::ModulationScheme(unsigned int M, Gain SNR_Per_Bit)
     : M(M), SNR_Per_Bit(SNR_Per_Bit) {
 }
 
+ModulationScheme &ModulationScheme::operator =(const ModulationScheme &scheme) {
+    M = scheme.M;
+    SNR_Per_Bit = scheme.SNR_Per_Bit;
+}
+
 unsigned int ModulationScheme::get_M() {
     return M;
 }

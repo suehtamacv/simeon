@@ -17,6 +17,19 @@ TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
 
 }
 
+TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
+    ModScheme(segment.ModScheme) {
+    NumRegUsed = segment.NumRegUsed;
+
+    for (auto node : segment.Nodes) {
+        Nodes.push_back(node);
+    }
+
+    for (auto link : segment.Links) {
+        Links.push_back(link);
+    }
+}
+
 Signal TransparentSegment::bypass(Signal S) {
     for (auto it : Links) {
         if (it.lock() == Links.front().lock()) {

@@ -30,6 +30,28 @@ Route::Route(std::vector<TransparentSegment> Segments,
     }
 }
 
+Route::Route(const Route &route) {
+    for (auto segment : route.Segments) {
+        Segments.push_back(segment);
+    }
+
+    for (auto node : route.Nodes) {
+        Nodes.push_back(node);
+    }
+
+    for (auto link : route.Links) {
+        Links.push_back(link);
+    }
+
+    for (auto node : route.Regenerators) {
+        Regenerators.emplace(node.first, node.second);
+    }
+
+    for (auto link : route.Slots) {
+        Slots.emplace(link.first, link.second);
+    }
+}
+
 Signal Route::bypass(Signal S) {
     return Segments.back().bypass(S);
 }

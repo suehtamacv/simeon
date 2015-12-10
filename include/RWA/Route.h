@@ -8,8 +8,10 @@
 
 class Route {
   public:
-    Route(std::vector<TransparentSegment> Segments, std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
+    Route(std::vector<TransparentSegment> Segments,
+          std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
           std::owner_less<std::weak_ptr<Link>>> Slots);
+    Route(const Route &route);
 
     std::map<std::weak_ptr<Node>, unsigned int,
         std::owner_less<std::weak_ptr<Node>>> Regenerators;

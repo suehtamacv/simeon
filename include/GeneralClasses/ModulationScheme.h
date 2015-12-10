@@ -13,6 +13,8 @@ class ModulationScheme {
     unsigned int get_M();
     Gain get_SNR_Per_Bit();
 
+    ModulationScheme &operator=(const ModulationScheme &scheme);
+
     bool operator<(ModulationScheme Scheme) const;
     bool operator>(ModulationScheme Scheme) const;
 

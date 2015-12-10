@@ -16,6 +16,7 @@ class TransparentSegment {
     TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
                        ModulationScheme ModScheme,
                        unsigned int NumRegUsed = 0);
+    TransparentSegment(const TransparentSegment &segment);
 
     std::vector<std::weak_ptr<Node>> Nodes;
     std::vector<std::weak_ptr<Link>> Links;

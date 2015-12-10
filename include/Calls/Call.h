@@ -27,11 +27,11 @@ class Call {
     /**
      * @brief CallRequisition is a pointer to the requisition event.
      */
-    std::shared_ptr<Event> CallRequisition;
+    Event CallRequisition;
     /**
      * @brief CallEnding is a pointer to the endin event.
      */
-    std::shared_ptr<Event> CallEnding;
+    Event CallEnding;
     /**
      * @brief Origin is a pointer to the origin node.
      */

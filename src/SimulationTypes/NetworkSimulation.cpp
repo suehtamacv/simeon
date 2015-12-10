@@ -15,21 +15,21 @@ void NetworkSimulation::run() {
     Generator->generate_Call(); //Generates first call
 
     while (NumCalls < NumMaxCalls) {
-        std::shared_ptr<Event> evt = Generator->Events.top();
+        Event evt = Generator->Events.top();
         Generator->Events.pop();
 
-        if (evt->Type == Event::CallRequisition) {
+        if (evt.Type == Event::CallRequisition) {
             implement_call(evt);
-        } else if (evt->Type == Event::CallEnding) {
+        } else if (evt.Type == Event::CallEnding) {
             drop_call(evt);
         }
     }
 }
 
-bool NetworkSimulation::implement_call(std::shared_ptr<Event> evt) {
-    std::shared_ptr<Route> route = RWA->routeCall(*(evt->Parent));
+bool NetworkSimulation::implement_call(Event evt) {
+    std::shared_ptr<Route> route = RWA->routeCall(*(evt.Parent));
 
-    evt->Parent->CallEnding->route = route;
+    evt.Parent->CallEnding.route = route;
 
     if (route->Slots.empty()) {
         //Blocked Call
@@ -50,9 +50,9 @@ bool NetworkSimulation::implement_call(std::shared_ptr<Event> evt) {
     }
 }
 
-void NetworkSimulation::drop_call(std::shared_ptr<Event> evt) {
-    if (!evt->route->Slots.empty())
-        for (auto node : evt->route->Slots) {
+void NetworkSimulation::drop_call(Event evt) {
+    if (!evt.route->Slots.empty())
+        for (auto node : evt.route->Slots) {
             for (auto slot : node.second) {
                 slot.lock()->freeSlot();
             }
