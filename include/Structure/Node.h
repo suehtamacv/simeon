@@ -32,6 +32,7 @@ class Node {
 
     Node(int ID, Node_Type T = TransparentNode,
          Node_Architecure A = SwitchingSelect);
+    Node(const Node& node);
 
     bool operator==(Node *) const;
     bool operator<(Node *) const;

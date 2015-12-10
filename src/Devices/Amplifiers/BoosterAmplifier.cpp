@@ -9,3 +9,6 @@ Gain BoosterAmplifier::get_Gain() {
     return AmplifierGain;
 }
 
+std::shared_ptr<Device> BoosterAmplifier::clone() {
+    return std::shared_ptr<Device>(new BoosterAmplifier(*this));
+}

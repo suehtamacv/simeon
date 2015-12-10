@@ -15,6 +15,7 @@ class BoosterAmplifier : public EDFA {
     BoosterAmplifier();
 
     Gain get_Gain();
+    std::shared_ptr<Device> clone();
 };
 
 #endif // BOOSTERAMPLIFIER_H

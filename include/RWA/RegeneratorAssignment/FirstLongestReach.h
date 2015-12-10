@@ -2,7 +2,7 @@
 #define FIRSTLONGESTREACH_H
 
 #include <RWA/RegeneratorAssignment/RegeneratorAssignment.h>
-#include <ModulationSchemes/ModulationScheme.h>
+#include <GeneralClasses/ModulationScheme.h>
 
 class FirstLongestReach : public RegeneratorAssignment {
   public:

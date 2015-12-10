@@ -1,5 +1,6 @@
 #include <boost/assert.hpp>
 #include <Structure/Node.h>
+#include <Structure/Link.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 #include <Devices/Amplifiers/BoosterAmplifier.h>
 #include <Devices/SSS.h>
@@ -8,6 +9,22 @@
 Node::Node(int ID, Node_Type T, Node_Architecure A) : ID(ID), Type(T) ,
     Architecture(A) {
     create_Devices();
+}
+
+Node::Node(const Node &node) : ID(node.ID) {
+    Type = node.Type;
+    Architecture = node.Architecture;
+    NumRegenerators = node.NumRegenerators;
+    NumAvailableRegenerators = NumRegenerators;
+
+    for (auto link : node.Links) {
+        std::shared_ptr<Link> newlink = std::shared_ptr<Link>(new Link(*link));
+        insert_Link(newlink->Destination, newlink);
+    }
+
+    for (auto device : node.Devices) {
+        Devices.push_back(device->clone());
+    }
 }
 
 bool Node::operator ==(Node *N) const {

@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 #include <GeneralClasses/Signal.h>
-#include <ModulationSchemes/ModulationScheme.h>
+#include <GeneralClasses/ModulationScheme.h>
 
 class Link;
 class Node;

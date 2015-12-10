@@ -1,5 +1,5 @@
 #include <cmath>
-#include <ModulationSchemes/ModulationScheme.h>
+#include <GeneralClasses/ModulationScheme.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <Structure/Slot.h>
 

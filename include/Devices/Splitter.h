@@ -17,6 +17,7 @@ class Splitter : public Device {
 
 	Gain get_Gain();
 	Power get_Noise();
+    std::shared_ptr<Device> clone();
 
 	void set_NumPorts(int NumPorts);
 

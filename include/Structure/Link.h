@@ -16,6 +16,7 @@ class Link {
 
     Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination,
          long double Length);
+    Link(const Link &link);
 
     std::weak_ptr<Node> Origin;
     std::weak_ptr<Node> Destination;

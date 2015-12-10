@@ -11,35 +11,12 @@ Topology::Topology() {
     Links.clear();
 }
 
+Topology::Topology(const Topology &topology) {
+    Nodes.clear();
+    Links.clear();
+}
+
 Topology::Topology(std::string TopologyFileName) {
-    std::ifstream TopologyFile;
-    TopologyFile.open(TopologyFileName);
-    BOOST_ASSERT_MSG(TopologyFile.is_open(), "Topology file could not be open.");
-}
-
-std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::Node_Type Type,
-                                       Node::Node_Architecure Arch, int NumReg) {
-
-    if (NodeID == -1) {
-        NodeID = Nodes.size() + 1;
-    }
-
-    Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
-    Nodes.back()->set_NumRegenerators(NumReg);
-    return (std::weak_ptr<Node>) Nodes.back();
-}
-
-std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
-                                       std::weak_ptr<Node> Destination, long double Length) {
-    Links.emplace(OrigDestPair(Origin.lock()->ID, Destination.lock()->ID),
-                  std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
-    Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
-                                                                  Destination.lock()->ID)));
-    return (std::weak_ptr<Link>) Links.at(OrigDestPair(Origin.lock()->ID,
-                                          Destination.lock()->ID));
-}
-
-void Topology::read_Topology(std::string TopologyFileName) {
     using namespace boost::program_options;
 
     Nodes.clear();
@@ -105,6 +82,28 @@ void Topology::read_Topology(std::string TopologyFileName) {
     }
 }
 
+std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::Node_Type Type,
+                                       Node::Node_Architecure Arch, int NumReg) {
+
+    if (NodeID == -1) {
+        NodeID = Nodes.size() + 1;
+    }
+
+    Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
+    Nodes.back()->set_NumRegenerators(NumReg);
+    return (std::weak_ptr<Node>) Nodes.back();
+}
+
+std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
+                                       std::weak_ptr<Node> Destination, long double Length) {
+    Links.emplace(OrigDestPair(Origin.lock()->ID, Destination.lock()->ID),
+                  std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
+    Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
+                               Destination.lock()->ID)));
+    return (std::weak_ptr<Link>) Links.at(OrigDestPair(Origin.lock()->ID,
+                                          Destination.lock()->ID));
+}
+
 void Topology::print_Topology(std::string TopologyFileName) {
     std::ofstream TopologyFile;
     TopologyFile.open(TopologyFileName);
@@ -125,7 +124,7 @@ void Topology::print_Topology(std::string TopologyFileName) {
     for (auto it : Links) {
         TopologyFile << "  -> = " << it.second->Origin.lock().get()->ID << " " <<
                      it.second->Destination.lock().get()->ID << " " <<
-                        it.second->Length << std::endl;
+                     it.second->Length << std::endl;
     }
 
     TopologyFile.close();

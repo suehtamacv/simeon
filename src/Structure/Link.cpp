@@ -19,9 +19,23 @@ Link::Link(std::weak_ptr<Node> Origin,
     create_Devices();
 }
 
+Link::Link(const Link &link) {
+    Length = link.Length;
+    Origin = link.Origin;
+    Destination = link.Destination;
+
+    for (auto slot : link.Slots) {
+        Slots.push_back(std::shared_ptr<Slot>(new Slot(*slot)));
+    }
+
+    for (auto device : link.Devices) {
+        Devices.push_back(device->clone());
+    }
+}
+
 void Link::create_Slots() {
     for (int i = 0; i < NumSlots; i++) {
-        Slots.push_back(std::unique_ptr<Slot>(new Slot(i, this)));
+        Slots.push_back(std::shared_ptr<Slot>(new Slot(i)));
     }
 }
 

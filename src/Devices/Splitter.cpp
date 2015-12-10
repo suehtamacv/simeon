@@ -16,3 +16,7 @@ void Splitter::set_NumPorts(int NumPorts) {
     this->NumPorts = NumPorts;
     SplitterLoss = Gain(1.0 / (NumPorts + 1), Gain::Linear);
 }
+
+std::shared_ptr<Device> Splitter::clone() {
+    return std::shared_ptr<Device>(new Splitter(*this));
+}

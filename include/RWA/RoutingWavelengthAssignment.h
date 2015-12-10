@@ -1,15 +1,16 @@
 #ifndef ROUTINGWAVELENGTHASSIGNMENT_H
 #define ROUTINGWAVELENGTHASSIGNMENT_H
 
+#include <vector>
 #include <memory>
 #include <Calls/Call.h>
-#include <ModulationSchemes/ModulationScheme.h>
-#include <Structure/Topology.h>
-#include <RWA/Route.h>
-#include <RWA/Routing/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacement/RegeneratorPlacement.h>
-#include <RWA/RegeneratorAssignment/RegeneratorAssignment.h>
+
+class RoutingAlgorithm;
+class WavelengthAssignmentAlgorithm;
+class RegeneratorAssignment;
+class ModulationScheme;
+class Topology;
+class Route;
 
 class RoutingWavelengthAssignment {
   public:

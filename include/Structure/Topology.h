@@ -14,14 +14,19 @@ class Link;
 class Topology {
   public:
     /**
+     * @brief Topology is the constructor for a empty Topology.
+     */
+    Topology();
+    /**
+     * @brief Topology is the copy constructor for a Topology.
+     */
+    Topology(const Topology &topology);
+    /**
     * @brief Topology is the basic constructor for a Topology.
     * @param TopologyFile is the file in which the Topology was stored.
     */
     Topology(std::string TopologyFileName);
-    /**
-     * @brief Topology is the constructor for a empty Topology.
-     */
-    Topology();
+
 
     std::vector<std::shared_ptr<Node>> Nodes;
     std::map<OrigDestPair, std::shared_ptr<Link>> Links;
@@ -32,7 +37,6 @@ class Topology {
     std::weak_ptr<Link> add_Link(std::weak_ptr<Node> Origin,
                                  std::weak_ptr<Node> Destination, long double Length);
 
-    void read_Topology(std::string TopologyFileName);
     void print_Topology(std::string TopologyFileName);
 };
 

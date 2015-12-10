@@ -8,9 +8,7 @@
 #include <RWA/WavelengthAssignment/FirstFit.h>
 
 int main(void) {
-    auto T = std::shared_ptr<Topology>(new Topology());
-
-    T->read_Topology("NSFNet");
+    auto T = std::shared_ptr<Topology>(new Topology("NSFNet"));
 
     std::vector<ModulationScheme> Schemes;
     Schemes.push_back(ModulationScheme(4, Gain(6.8)));

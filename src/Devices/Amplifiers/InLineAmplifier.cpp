@@ -9,3 +9,6 @@ Gain InLineAmplifier::get_Gain() {
     return AmplifierGain;
 }
 
+std::shared_ptr<Device> InLineAmplifier::clone() {
+    return std::shared_ptr<Device>(new InLineAmplifier(*this));
+}

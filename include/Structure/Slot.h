@@ -12,20 +12,23 @@ class Slot {
      */
     constexpr static long double BSlot = 12.5E9;
 
-	Slot(int, Link* Owner);
+    Slot(int);
 
-	/**
-	 * @brief numSlot identifies the slot in the link.
-	 */
-	int numSlot;
-	/**
-	 * @brief isFree is true, iff the slot is free.
-	 */
-	bool isFree;
+    Slot(const Slot &slot);
 
-	void freeSlot();
-	void useSlot();
-	Link* SlotOwner;
+    Slot &operator= (const Slot &slot);
+
+    /**
+     * @brief numSlot identifies the slot in the link.
+     */
+    int numSlot;
+    /**
+     * @brief isFree is true, iff the slot is free.
+     */
+    bool isFree;
+
+    void freeSlot();
+    void useSlot();
 };
 
 #endif // SLOT_H

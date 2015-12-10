@@ -13,3 +13,7 @@ Gain SSS::get_Gain() {
 Power SSS::get_Noise() {
     return Power(0, Power::Watt);
 }
+
+std::shared_ptr<Device> SSS::clone() {
+    return std::shared_ptr<Device>(new SSS(*this));
+}

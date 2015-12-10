@@ -14,3 +14,7 @@ Gain Fiber::get_Gain() {
 Power Fiber::get_Noise() {
     return Power(0, Power::Watt);
 }
+
+std::shared_ptr<Device> Fiber::clone() {
+    return std::shared_ptr<Device>(new Fiber(*this));
+}

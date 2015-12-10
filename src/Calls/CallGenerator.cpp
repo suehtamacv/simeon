@@ -29,6 +29,7 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> NetTopology, long double 
 Call CallGenerator::generate_Call(TransmissionBitrate Bitrate) {
     long double ArrivalTime = simulationTime + (*ExponentialGeneratorH)();
     long double EndingTime = ArrivalTime + (*ExponentialGeneratorMu)();
+    simulationTime += ArrivalTime;
 
     int Origin = (*UniformGenerator)();
     int Destination = (*UniformGenerator)();

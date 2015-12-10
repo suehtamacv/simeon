@@ -23,3 +23,7 @@ Gain PreAmplifier::get_Gain() {
 
     return AmplifierGain;
 }
+
+std::shared_ptr<Device> PreAmplifier::clone() {
+    return std::shared_ptr<Device>(new PreAmplifier(*this));
+}

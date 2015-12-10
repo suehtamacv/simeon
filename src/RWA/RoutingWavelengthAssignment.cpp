@@ -1,5 +1,12 @@
-#include <algorithm>
 #include <RWA/RoutingWavelengthAssignment.h>
+#include <algorithm>
+#include <GeneralClasses/ModulationScheme.h>
+#include <RWA/Route.h>
+#include <RWA/Routing/RoutingAlgorithm.h>
+#include <RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h>
+#include <RWA/RegeneratorPlacement/RegeneratorPlacement.h>
+#include <RWA/RegeneratorAssignment/RegeneratorAssignment.h>
+#include <Structure/Topology.h>
 
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm> R_Alg,

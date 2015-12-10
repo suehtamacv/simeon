@@ -20,6 +20,7 @@ class Fiber : public Device {
 
 	Gain get_Gain();
 	Power get_Noise();
+    std::shared_ptr<Device> clone();
 
   private:
 	long double SpanLength;
