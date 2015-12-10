@@ -47,7 +47,6 @@ FirstFit::assignSlots(Call C, TransparentSegment Seg) {
             std::vector<std::weak_ptr<Slot>> LinkSlots;
 
             for (int slot = si; slot <= sf; slot++) {
-                link.lock()->Slots.at(slot)->useSlot();
                 LinkSlots.push_back(link.lock()->Slots.at(slot));
             }
 

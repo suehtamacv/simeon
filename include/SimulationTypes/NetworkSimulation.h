@@ -9,13 +9,20 @@ class NetworkSimulation {
   public:
     NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                       std::shared_ptr<RoutingWavelengthAssignment> RWA,
-                      long unsigned NumCalls);
+                      long unsigned NumMaxCalls);
 
     void run();
 
     std::shared_ptr<CallGenerator> Generator;
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
+
+    long unsigned NumMaxCalls;
     long unsigned NumCalls;
+    long unsigned NumBlockedCalls;
+
+  private:
+    bool implement_call(std::shared_ptr<Event> evt);
+    void drop_call(std::shared_ptr<Event> evt);
 };
 
 #endif // NETWORKSIMULATION_H

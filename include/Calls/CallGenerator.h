@@ -35,7 +35,10 @@ class CallGenerator {
      * The Events of the topology are stored here in increasing order of their
      * ocurring times.
      */
-    std::priority_queue<Event, std::vector<Event>, std::greater<Event>> Events;
+    std::priority_queue<std::shared_ptr<Event>,
+        std::vector<std::shared_ptr<Event>>,
+        std::greater<std::shared_ptr<Event>>>
+        Events;
 
     /**
      * @brief T is the Topology over which the calls are generated.
@@ -81,7 +84,7 @@ class CallGenerator {
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
             ExponentialGeneratorH;
 
-    Call generate_Call();
+    std::shared_ptr<Call> generate_Call();
 };
 
 #endif // CALLGENERATOR_H

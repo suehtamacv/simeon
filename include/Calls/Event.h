@@ -4,6 +4,7 @@
 #include <memory>
 
 class Call;
+class Route;
 
 /**
  * @brief The Event class represents an event that happened in the network. Is
@@ -47,6 +48,7 @@ class Event {
     long double t;
     Event_Type Type;
     Call *Parent;
+    std::shared_ptr<Route> route;
 };
 
 #endif // EVENT_H

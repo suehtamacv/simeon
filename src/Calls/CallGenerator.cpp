@@ -34,7 +34,7 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
          (MersenneTwister, ExponentialDistributionH));
 }
 
-Call CallGenerator::generate_Call() {
+std::shared_ptr<Call> CallGenerator::generate_Call() {
     long double ArrivalTime = simulationTime + (*ExponentialGeneratorH)();
     long double EndingTime = ArrivalTime + (*ExponentialGeneratorMu)();
     simulationTime += ArrivalTime;
@@ -48,11 +48,11 @@ Call CallGenerator::generate_Call() {
 
     int Bitrate = (*UniformBitrateGenerator)();
 
-    Call C(ArrivalTime, EndingTime,
-           std::weak_ptr<Node>(T->Nodes.at(Origin)),
-           std::weak_ptr<Node>(T->Nodes.at(Destination)), Bitrates[Bitrate]);
-    Events.push(*C.CallRequisition);
-    Events.push(*C.CallEnding);
+    std::shared_ptr<Call> C(new Call(ArrivalTime, EndingTime,
+                                     std::weak_ptr<Node>(T->Nodes.at(Origin)),
+                                     std::weak_ptr<Node>(T->Nodes.at(Destination)), Bitrates[Bitrate]));
+    Events.push(C->CallRequisition);
+    Events.push(C->CallEnding);
 
     return C;
 }

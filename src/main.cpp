@@ -19,7 +19,6 @@ int main(void) {
     std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
 
-
     std::vector<TransmissionBitrate> Bitrates;
     Bitrates.push_back(TransmissionBitrate(100E9));
     Bitrates.push_back(TransmissionBitrate(160E9));
