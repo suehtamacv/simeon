@@ -88,6 +88,7 @@ ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
     }
 
     BOOST_ASSERT_MSG(false, "No Scheme can implement Call in Transparent Segment.");
+    return *(ModulationSchemes.back());
 }
 
 TransparentSegment RegeneratorAssignment::createTransparentSegment(Call C,

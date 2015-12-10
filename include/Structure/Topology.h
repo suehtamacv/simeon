@@ -37,7 +37,7 @@ class Topology {
     std::weak_ptr<Link> add_Link(std::weak_ptr<Node> Origin,
                                  std::weak_ptr<Node> Destination, long double Length);
 
-    void print_Topology(std::string TopologyFileName);
+    void save(std::ofstream TopologyFile);
 };
 
 #endif // TOPOLOGY_H

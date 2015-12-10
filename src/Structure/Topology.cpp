@@ -128,9 +128,9 @@ std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                           Destination.lock()->ID));
 }
 
-void Topology::print_Topology(std::string TopologyFileName) {
-    std::ofstream TopologyFile;
-    TopologyFile.open(TopologyFileName);
+void Topology::save(std::ofstream TopologyFile) {
+
+    BOOST_ASSERT_MSG(TopologyFile.is_open(), "Output file is not open");
 
     TopologyFile << "  [nodes]" << std::endl << std::endl;
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
@@ -151,5 +151,4 @@ void Topology::print_Topology(std::string TopologyFileName) {
                      it.second->Length << std::endl;
     }
 
-    TopologyFile.close();
 }
