@@ -9,6 +9,12 @@
 #include <Structure/Topology.h>
 #include <queue>
 
+struct EventCompare {
+    bool operator()(const std::shared_ptr<Event> a, const std::shared_ptr<Event> b) const {
+        return a->t > b->t;
+    }
+};
+
 /**
  * @brief The CallGenerator class implements methods to continuously generate
  * calls.
@@ -35,9 +41,9 @@ class CallGenerator {
      * The Events of the topology are stored here in increasing order of their
      * ocurring times.
      */
-    std::priority_queue < std::shared_ptr<Event>,
+    std::priority_queue <std::shared_ptr<Event>,
         std::vector<std::shared_ptr<Event>>,
-        std::greater<std::shared_ptr<Event>>> Events;
+        EventCompare> Events;
 
     /**
      * @brief T is the Topology over which the calls are generated.

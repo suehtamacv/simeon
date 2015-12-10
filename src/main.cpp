@@ -20,16 +20,20 @@ int main(void) {
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
 
     std::vector<TransmissionBitrate> Bitrates;
+    Bitrates.push_back(TransmissionBitrate(10E9));
+    Bitrates.push_back(TransmissionBitrate(40E9));
     Bitrates.push_back(TransmissionBitrate(100E9));
     Bitrates.push_back(TransmissionBitrate(160E9));
     Bitrates.push_back(TransmissionBitrate(400E9));
 
-    std::shared_ptr<CallGenerator> CG(new CallGenerator(T, 1, 100, Bitrates));
     std::shared_ptr<RoutingWavelengthAssignment> RWA(
         new RoutingWavelengthAssignment(SP, FF, Schemes, T));
 
-    NetworkSimulation Sim(CG, RWA, 10000);
-    Sim.run();
+    for (long double load = 80; load <= 300; load += 10) {
+        std::shared_ptr<CallGenerator> CG(new CallGenerator(T, 1, load, Bitrates));
+        NetworkSimulation Sim(CG, RWA, 1E4);
+        std::cout << load << "\t" << Sim.get_CallBlockingProbability() << std::endl;
+    }
 
     return 0;
 }

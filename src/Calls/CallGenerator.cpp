@@ -13,8 +13,8 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
 
     UniformNodeDistribution = boost::uniform_int<>(0, T->Nodes.size() - 1);
     UniformBitrateDistribution = boost::uniform_int<>(0, Bitrates.size() - 1);
-    ExponentialDistributionMu = boost::exponential_distribution<>(mu);
-    ExponentialDistributionH = boost::exponential_distribution<>(1.0 / h);
+    ExponentialDistributionMu = boost::exponential_distribution<>(1.0 / mu);
+    ExponentialDistributionH = boost::exponential_distribution<>(h);
 
     UniformNodeGenerator =
         std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
@@ -37,7 +37,7 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
 std::shared_ptr<Call> CallGenerator::generate_Call() {
     long double ArrivalTime = simulationTime + (*ExponentialGeneratorH)();
     long double EndingTime = ArrivalTime + (*ExponentialGeneratorMu)();
-    simulationTime += ArrivalTime;
+    simulationTime = ArrivalTime;
 
     int Origin = (*UniformNodeGenerator)();
     int Destination = (*UniformNodeGenerator)();

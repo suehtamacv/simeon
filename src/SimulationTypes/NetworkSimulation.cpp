@@ -1,3 +1,4 @@
+#include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
 #include <RWA/Route.h>
@@ -8,6 +9,7 @@ NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
     Generator(Generator), RWA(RWA), NumMaxCalls(NumMaxCalls) {
     NumCalls = 0;
     NumBlockedCalls = 0;
+    hasSimulated = false;
 }
 
 void NetworkSimulation::run() {
@@ -15,7 +17,7 @@ void NetworkSimulation::run() {
     Generator->generate_Call(); //Generates first call
 
     while (NumCalls < NumMaxCalls) {
-        std::shared_ptr<Event> evt = Generator->Events.top();
+        std::shared_ptr<Event> evt(Generator->Events.top());
         Generator->Events.pop();
 
         if (evt->Type == Event::CallRequisition) {
@@ -24,6 +26,8 @@ void NetworkSimulation::run() {
             drop_call(evt);
         }
     }
+
+    hasSimulated = true;
 }
 
 void NetworkSimulation::implement_call(std::shared_ptr<Event> evt) {
@@ -54,4 +58,12 @@ void NetworkSimulation::drop_call(std::shared_ptr<Event> evt) {
                 slot.lock()->freeSlot();
             }
         }
+}
+
+long double NetworkSimulation::get_CallBlockingProbability() {
+    if (!hasSimulated) {
+        run();
+    }
+
+    return NumBlockedCalls / (1.0 * NumCalls);
 }
