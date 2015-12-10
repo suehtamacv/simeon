@@ -36,7 +36,7 @@ class Gain {
 
     bool operator>(Gain);
     bool operator<(Gain);
-    bool operator==(Gain);
+    bool operator==(Gain) const;
 
 	/**
 	 * @brief in_dB returns the value of this object in dB units.

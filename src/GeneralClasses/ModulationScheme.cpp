@@ -10,13 +10,14 @@ ModulationScheme::ModulationScheme(unsigned int M, Gain SNR_Per_Bit)
 ModulationScheme &ModulationScheme::operator =(const ModulationScheme &scheme) {
     M = scheme.M;
     SNR_Per_Bit = scheme.SNR_Per_Bit;
+    return *this;
 }
 
-unsigned int ModulationScheme::get_M() {
+unsigned int ModulationScheme::get_M() const {
     return M;
 }
 
-Gain ModulationScheme::get_SNR_Per_Bit() {
+Gain ModulationScheme::get_SNR_Per_Bit() const {
     return SNR_Per_Bit;
 }
 
@@ -30,6 +31,14 @@ bool ModulationScheme::operator <(ModulationScheme Scheme) const {
 
 bool ModulationScheme::operator >(ModulationScheme Scheme) const {
     if (M > Scheme.get_M()) {
+        return true;
+    }
+
+    return false;
+}
+
+bool ModulationScheme::operator ==(ModulationScheme Scheme) const {
+    if ((M == Scheme.get_M()) && (SNR_Per_Bit == Scheme.get_SNR_Per_Bit())) {
         return true;
     }
 

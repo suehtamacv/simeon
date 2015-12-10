@@ -7,7 +7,7 @@ class MinimumHops : public StaticRoutingAlgorithm {
   public:
     MinimumHops(std::shared_ptr<Topology> T);
 
-    long double get_Cost(std::weak_ptr<Link> Link, Call);
+    long double get_Cost(std::weak_ptr<Link> Link, std::shared_ptr<Call>);
 };
 
 #endif // MINIMUMHOPS_H

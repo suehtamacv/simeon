@@ -29,7 +29,8 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
 
 }
 
-std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(Call C) {
+std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
+    std::shared_ptr<Call> C) {
 
     std::vector<std::weak_ptr<Link>> Links;
     std::vector<TransparentSegment> Segments;
@@ -38,27 +39,55 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(Call C) {
 
     Links = R_Alg->route(C);
 
-    if (RA_Alg == 0) {
+    if (Links.empty()) {
+        C->Status = Call::Blocked;
+    }
+
+    if (RA_Alg == nullptr) {
         std::sort(Schemes.rbegin(), Schemes.rend());
 
         for (auto scheme : Schemes) {
             TransparentSegment Segment(Links, scheme, 0);
             Signal S;
 
-            if (Segment.bypass(S).get_OSNR() > scheme.get_ThresholdOSNR(C.Bitrate)) {
+            if (Segment.bypass(S).get_OSNR() > scheme.get_ThresholdOSNR(C->Bitrate)) {
                 Segments.push_back(Segment);
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
+
+                if (SegmentSlots.empty()) {
+                    continue;
+                }
+
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 break;
+            }
+
+            if (scheme == Schemes.back()) {
+                C->Status = Call::Blocked;
             }
         }
     } else {
         Segments = RA_Alg->assignRegenerators(C, Links);
 
+        if (Segments.empty()) {
+            C->Status = Call::Blocked;
+        }
+
         for (auto segment : Segments) {
             auto SegmentSlots = WA_Alg->assignSlots(C, segment);
+
+            if (SegmentSlots.empty()) {
+                C->Status = Call::Blocked;
+                Slots.clear();
+                break;
+            }
+
             Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
         }
+    }
+
+    if (C->Status == Call::Not_Evaluated) {
+        C->Status = Call::Implemented;
     }
 
     return std::shared_ptr<Route>(new Route(Segments, Slots));

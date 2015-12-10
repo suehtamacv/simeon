@@ -31,7 +31,7 @@ class RoutingWavelengthAssignment {
     std::vector<ModulationScheme> Schemes;
     std::shared_ptr<Topology> T;
 
-    std::shared_ptr<Route> routeCall(Call C);
+    std::shared_ptr<Route> routeCall(std::shared_ptr<Call> C);
 };
 
 #endif // ROUTINGWAVELENGTHASSIGNMENT_H

@@ -8,7 +8,7 @@ FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
 
 }
 
-std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(Call C,
+std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links) {
 
     unsigned int NeededRegenerators = get_NumNeededRegenerators(C);
@@ -26,9 +26,9 @@ std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(Call C,
     for (auto s = Nodes.begin(); s != Nodes.end(); ++s) {
         for (auto x = s + 1; s != Nodes.end(); ++x) {
             if (((*x).lock()->get_NumAvailableRegenerators() >= NeededRegenerators) ||
-                    ((*x).lock() == C.Destination.lock())) {
+                    ((*x).lock() == C->Destination.lock())) {
                 if (isThereSpectrumAndOSNR(C, Links, *s, *x)) {
-                    if ((*x).lock() == C.Destination.lock()) {
+                    if ((*x).lock() == C->Destination.lock()) {
                         TransparentSegments.push_back(createTransparentSegment(C, Links,
                                                       *r, *x, NeededRegenerators));
                         return TransparentSegments;

@@ -54,7 +54,7 @@ bool Gain::operator <(Gain G) {
     return false;
 }
 
-bool Gain::operator ==(Gain G) {
+bool Gain::operator ==(Gain G) const {
     if (value_dB == G.in_dB()) {
         return true;
     }

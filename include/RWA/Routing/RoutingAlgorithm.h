@@ -13,7 +13,7 @@ class RoutingAlgorithm {
   public:
     RoutingAlgorithm(std::shared_ptr<Topology> T);
 
-    virtual std::vector<std::weak_ptr<Link>> route(Call C) = 0;
+    virtual std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C) = 0;
 
     std::shared_ptr<Topology> T;
 };

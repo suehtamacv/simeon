@@ -14,7 +14,7 @@ class WavelengthAssignmentAlgorithm {
     virtual std::map<std::weak_ptr<Link>,
             std::vector<std::weak_ptr<Slot>>,
             std::owner_less<std::weak_ptr<Link>>>
-            assignSlots(Call C, TransparentSegment Seg) = 0;
+            assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) = 0;
 
     std::shared_ptr<Topology> T;
 };

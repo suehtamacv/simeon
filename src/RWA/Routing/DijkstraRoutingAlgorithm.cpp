@@ -8,7 +8,7 @@ DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T)
 
 }
 
-std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
+std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(std::shared_ptr<Call> C) {
     /** Attention: this code breaks if there are nodes in the Topology with the
      * same ID. This should not happen. **/
 
@@ -24,7 +24,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
         UnvisitedNodes.push_back(*it);
     }
 
-    VertexCost[ C.Origin.lock()->ID ] = 0;
+    VertexCost[ C->Origin.lock()->ID ] = 0;
 
     while (!UnvisitedNodes.empty()) {
         std::shared_ptr<Node> CurrentNode = UnvisitedNodes[0];
@@ -35,7 +35,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
             }
         }
 
-        if (CurrentNode == C.Destination.lock()) {
+        if (CurrentNode == C->Destination.lock()) {
             break;
         }
 
@@ -48,7 +48,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
 
         for (auto it : CurrentNode->Neighbours) {
             long double AltCost = VertexCost[CurrentNode->ID] +
-                                  get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, it.lock()->ID)), C);
+                                   get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, it.lock()->ID)), C);
 
             if (AltCost < VertexCost[it.lock()->ID]) {
                 VertexCost[it.lock()->ID] = AltCost;
@@ -57,7 +57,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(Call C) {
         }
     }
 
-    unsigned int CurrentNode = C.Destination.lock()->ID;
+    unsigned int CurrentNode = C->Destination.lock()->ID;
     NodesInRoute.push_back(CurrentNode);
 
     while (Precedent[CurrentNode] != -1) {

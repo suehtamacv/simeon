@@ -4,12 +4,13 @@ StaticRoutingAlgorithm::StaticRoutingAlgorithm(std::shared_ptr<Topology> T) :
     DijkstraRoutingAlgorithm(T) {
 }
 
-std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(Call C) {
+std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(
+std::shared_ptr<Call> C) {
     if (Routes.empty()) {
         precalculate_Routes();
     }
 
-    OrigDestPair OrigDest(C.Origin.lock()->ID, C.Destination.lock()->ID);
+    OrigDestPair OrigDest(C->Origin.lock()->ID, C->Destination.lock()->ID);
     return Routes[OrigDest];
 }
 
@@ -20,7 +21,7 @@ void StaticRoutingAlgorithm::precalculate_Routes() {
                 continue;
             }
 
-            Call DummyCall(0, 1, orig, dest, 0);
+            std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
             OrigDestPair DummyOrigDest(orig->ID, dest->ID);
 
             Routes.emplace(DummyOrigDest, DijkstraRoutingAlgorithm::route(DummyCall));

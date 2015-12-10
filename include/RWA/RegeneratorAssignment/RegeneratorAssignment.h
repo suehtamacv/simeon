@@ -20,19 +20,19 @@ class RegeneratorAssignment {
     std::shared_ptr<Topology> T;
     std::vector<std::shared_ptr<ModulationScheme>> ModulationSchemes;
 
-    virtual std::vector<TransparentSegment> assignRegenerators(Call C,
+    virtual std::vector<TransparentSegment> assignRegenerators(std::shared_ptr<Call> C,
             std::vector<std::weak_ptr<Link>> Links) = 0;
-    unsigned int get_NumNeededRegenerators(Call C);
+    unsigned int get_NumNeededRegenerators(std::shared_ptr<Call> C);
 
-    bool isThereSpectrumAndOSNR(Call C,
+    bool isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
                                 std::vector<std::weak_ptr<Link>> Links,
                                 std::weak_ptr<Node> s,
                                 std::weak_ptr<Node> x);
-    ModulationScheme getMostEfficientScheme(Call C,
+    ModulationScheme getMostEfficientScheme(std::shared_ptr<Call> C,
                                             std::vector<std::weak_ptr<Link>> Links,
                                             std::weak_ptr<Node> s,
                                             std::weak_ptr<Node> x);
-    TransparentSegment createTransparentSegment(Call C,
+    TransparentSegment createTransparentSegment(std::shared_ptr<Call> C,
             std::vector<std::weak_ptr<Link>> Links,
             std::weak_ptr<Node> s,
             std::weak_ptr<Node> r,

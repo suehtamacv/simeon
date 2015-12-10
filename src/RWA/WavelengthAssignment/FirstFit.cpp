@@ -10,9 +10,9 @@ FirstFit::FirstFit(std::shared_ptr<Topology> T) :
 std::map<std::weak_ptr<Link>,
     std::vector<std::weak_ptr<Slot>>,
     std::owner_less<std::weak_ptr<Link>>>
-FirstFit::assignSlots(Call C, TransparentSegment Seg) {
+FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) {
 
-    unsigned int RequiredSlots = Seg.ModScheme.get_NumSlots(C.Bitrate);
+    unsigned int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
     std::vector<bool> SlotsAvailability(Link::NumSlots, true);

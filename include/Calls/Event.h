@@ -27,15 +27,15 @@ class Event {
      * @brief Event is the constructor of a Event.
      * @param t is the instant of ocurral of the Event.
      * @param Type is the type of Event.
-     * @param Parent is the Call that owns this Event.
      */
-    Event(long double t, Event_Type Type, Call *Parent);
+    Event(long double t, Event_Type Type, std::shared_ptr<Call> Parent);
 
     /**
      * @brief operator < is used to compare the ocurral instants of two events.
      * @return true iff this event ocurrs prior to the Event passed as argument.
      */
     bool operator<(const Event) const;
+    bool operator<(const std::shared_ptr<Event> event);
     /**
      * @brief operator > is used to compare the ocurral instants of two events.
      * @return true iff this event ocurrs after the Event passed as argument.
@@ -47,7 +47,7 @@ class Event {
      */
     long double t;
     Event_Type Type;
-    Call *Parent;
+    std::shared_ptr<Call> Parent;
     std::shared_ptr<Route> route;
 };
 

@@ -48,11 +48,20 @@ std::shared_ptr<Call> CallGenerator::generate_Call() {
 
     int Bitrate = (*UniformBitrateGenerator)();
 
-    std::shared_ptr<Call> C(new Call(ArrivalTime, EndingTime,
-                                     std::weak_ptr<Node>(T->Nodes.at(Origin)),
-                                     std::weak_ptr<Node>(T->Nodes.at(Destination)), Bitrates[Bitrate]));
-    Events.push(C->CallRequisition);
-    Events.push(C->CallEnding);
+    std::shared_ptr<Call> C(new Call(std::weak_ptr<Node>(T->Nodes.at(Origin)),
+                                     std::weak_ptr<Node>(T->Nodes.at(Destination)),
+                                     Bitrates[Bitrate]));
+
+    std::shared_ptr<Event> CallRequisition(new Event(ArrivalTime,
+                                           Event::CallRequisition, C));
+    std::shared_ptr<Event> CallEnding(new Event(EndingTime,
+                                      Event::CallEnding, C));
+
+    Events.push(CallRequisition);
+    Events.push(CallEnding);
+
+    C->CallRequisition = CallRequisition;
+    C->CallEnding = CallEnding;
 
     return C;
 }

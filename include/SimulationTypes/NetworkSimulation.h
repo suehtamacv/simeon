@@ -21,8 +21,8 @@ class NetworkSimulation {
     long unsigned NumBlockedCalls;
 
   private:
-    bool implement_call(Event evt);
-    void drop_call(Event evt);
+    void implement_call(std::shared_ptr<Event> evt);
+    void drop_call(std::shared_ptr<Event> evt);
 };
 
 #endif // NETWORKSIMULATION_H

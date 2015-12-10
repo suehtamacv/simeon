@@ -13,25 +13,30 @@ class Node;
  */
 class Call {
   public:
+    enum Call_Status {
+        Implemented,
+        Blocked,
+        Not_Evaluated
+    };
+
     /**
     * @brief Call is the standard constructor for a Call object.
-    * @param tOcurr is the instant when the call occurs.
-    * @param tDur is the duration of the call.
     * @param Origin is a weak_ptr for the Origin node.
     * @param Destination is a weak_ptr for the Destination node.
     * @param Bitrate is a TransmissionBitrate.
     */
-    Call(long double tOcurr, long double tDur, std::weak_ptr<Node> Origin,
-         std::weak_ptr<Node> Destination, TransmissionBitrate Bitrate);
+    Call(std::weak_ptr<Node> Origin,
+         std::weak_ptr<Node> Destination,
+         TransmissionBitrate Bitrate);
 
     /**
      * @brief CallRequisition is a pointer to the requisition event.
      */
-    Event CallRequisition;
+    std::weak_ptr<Event> CallRequisition;
     /**
-     * @brief CallEnding is a pointer to the endin event.
+     * @brief CallEnding is a pointer to the ending event.
      */
-    Event CallEnding;
+    std::weak_ptr<Event> CallEnding;
     /**
      * @brief Origin is a pointer to the origin node.
      */
@@ -44,6 +49,7 @@ class Call {
      * @brief Bitrate is a Transmission Bitrate.
      */
     TransmissionBitrate Bitrate;
+    Call_Status Status;
 };
 
 #endif // CALL_H

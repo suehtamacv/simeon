@@ -10,11 +10,11 @@ RegeneratorAssignment::RegeneratorAssignment(std::shared_ptr<Topology> T,
 
 }
 
-unsigned int RegeneratorAssignment::get_NumNeededRegenerators(Call C) {
-    return ceil(C.Bitrate.get_Bitrate() / RegeneratorBitrate);
+unsigned int RegeneratorAssignment::get_NumNeededRegenerators(std::shared_ptr<Call> C) {
+    return ceil(C->Bitrate.get_Bitrate() / RegeneratorBitrate);
 }
 
-bool RegeneratorAssignment::isThereSpectrumAndOSNR(Call C,
+bool RegeneratorAssignment::isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links,
         std::weak_ptr<Node> s,
         std::weak_ptr<Node> x) {
@@ -40,9 +40,9 @@ bool RegeneratorAssignment::isThereSpectrumAndOSNR(Call C,
 
     for (auto scheme : ModulationSchemes) {
         //There's OSNR
-        if (Sig.get_OSNR() > scheme->get_ThresholdOSNR(C.Bitrate)) {
+        if (Sig.get_OSNR() > scheme->get_ThresholdOSNR(C->Bitrate)) {
             //There's spectrum
-            if (Segment.get_MaxContigSlots() > scheme->get_NumSlots(C.Bitrate)) {
+            if (Segment.get_MaxContigSlots() > scheme->get_NumSlots(C->Bitrate)) {
                 return true;
             }
         }
@@ -51,7 +51,7 @@ bool RegeneratorAssignment::isThereSpectrumAndOSNR(Call C,
     return false;
 }
 
-ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
+ModulationScheme RegeneratorAssignment::getMostEfficientScheme(std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links,
         std::weak_ptr<Node> s,
         std::weak_ptr<Node> x) {
@@ -79,9 +79,9 @@ ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
 
     for (auto scheme : ModulationSchemes) {
         //There's OSNR
-        if (Sig.get_OSNR() > scheme->get_ThresholdOSNR(C.Bitrate)) {
+        if (Sig.get_OSNR() > scheme->get_ThresholdOSNR(C->Bitrate)) {
             //There's spectrum
-            if (Segment.get_MaxContigSlots() > scheme->get_NumSlots(C.Bitrate)) {
+            if (Segment.get_MaxContigSlots() > scheme->get_NumSlots(C->Bitrate)) {
                 return *scheme;
             }
         }
@@ -91,7 +91,7 @@ ModulationScheme RegeneratorAssignment::getMostEfficientScheme(Call C,
     return *(ModulationSchemes.back());
 }
 
-TransparentSegment RegeneratorAssignment::createTransparentSegment(Call C,
+TransparentSegment RegeneratorAssignment::createTransparentSegment(std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links,
         std::weak_ptr<Node> s,
         std::weak_ptr<Node> r,
