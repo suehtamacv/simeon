@@ -41,7 +41,9 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorAssignment/FirstLongestReach.cpp \
     src/RWA/TransparentSegment.cpp \
     src/GeneralClasses/ModulationScheme.cpp \
-    src/Devices/Device.cpp
+    src/Devices/Device.cpp \
+    src/SimulationTypes/SimulationType.cpp \
+    src/SimulationTypes/NetworkSimulation.cpp
 
 
 HEADERS += \
@@ -81,7 +83,9 @@ HEADERS += \
     include/RWA/RegeneratorAssignment/RegeneratorAssignment.h \
     include/RWA/RegeneratorAssignment/FirstLongestReach.h \
     include/RWA/TransparentSegment.h \
-    include/GeneralClasses/ModulationScheme.h
+    include/GeneralClasses/ModulationScheme.h \
+    include/SimulationTypes/SimulationType.h \
+    include/SimulationTypes/NetworkSimulation.h
 
 LIBS += -lboost_system -lboost_program_options
 
