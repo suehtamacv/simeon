@@ -6,6 +6,7 @@
 #include <RWA/Routing/StaticRouting/ShortestPath.h>
 #include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
 #include <RWA/WavelengthAssignment/FirstFit.h>
+#include <SimulationTypes/NetworkSimulation.h>
 
 int main(void) {
     auto T = std::shared_ptr<Topology>(new Topology("NSFNet"));
@@ -18,15 +19,18 @@ int main(void) {
     std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
 
-    CallGenerator CG(T, 1, 100);
 
-    RoutingWavelengthAssignment RWA = RoutingWavelengthAssignment(SP, FF,
-                                      Schemes, T);
+    std::vector<TransmissionBitrate> Bitrates;
+    Bitrates.push_back(TransmissionBitrate(100E9));
+    Bitrates.push_back(TransmissionBitrate(160E9));
+    Bitrates.push_back(TransmissionBitrate(400E9));
 
-    for (int i = 0 ; i < 5; i++) {
-        Call C = CG.generate_Call(TransmissionBitrate(100E9));
-        RWA.routeCall(C);
-    }
+    std::shared_ptr<CallGenerator> CG(new CallGenerator(T, 1, 100, Bitrates));
+    std::shared_ptr<RoutingWavelengthAssignment> RWA(
+        new RoutingWavelengthAssignment(SP, FF, Schemes, T));
+
+    NetworkSimulation Sim(CG, RWA, 10000);
+    Sim.run();
 
     return 0;
 }

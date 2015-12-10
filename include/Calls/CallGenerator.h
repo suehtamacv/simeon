@@ -22,12 +22,12 @@ class CallGenerator {
   public:
     /**
      * @brief CallGenerator is the standard constructor for a CallGenerator.
-     * @param NetTopology is the topology over which the calls are generated.
+     * @param T is the topology over which the calls are generated.
      * @param mu is the parameter for the call duration distribution.
      * @param h is the parameter for the call interarrival time distribution.
      */
-    CallGenerator(std::shared_ptr<Topology> NetTopology, long double mu,
-                  long double h);
+    CallGenerator(std::shared_ptr<Topology> T, long double mu,
+                  long double h, std::vector<TransmissionBitrate> Bitrates);
 
     /**
      * @brief Events is a priority queue.
@@ -38,9 +38,9 @@ class CallGenerator {
     std::priority_queue<Event, std::vector<Event>, std::greater<Event>> Events;
 
     /**
-     * @brief NetTopology is the Topology over which the calls are generated.
+     * @brief T is the Topology over which the calls are generated.
      */
-    std::shared_ptr<Topology> NetTopology;
+    std::shared_ptr<Topology> T;
     /**
      * @brief mu is the parameter for the call duration exponential distribution.
      */
@@ -54,6 +54,10 @@ class CallGenerator {
      * @brief simulationTime is the current time seen by the last call.
      */
     long double simulationTime;
+    /**
+     * @brief Bitrates is a vector containing the possible bitrates.
+     */
+    std::vector<TransmissionBitrate> Bitrates;
 
 
     /**
@@ -62,19 +66,22 @@ class CallGenerator {
     static boost::mt19937 MersenneTwister;
 
     //Distributions
-    boost::uniform_int<> UniformDistribution;
+    boost::uniform_int<> UniformNodeDistribution;
+    boost::uniform_int<> UniformBitrateDistribution;
     boost::exponential_distribution<> ExponentialDistributionMu;
     boost::exponential_distribution<> ExponentialDistributionH;
 
     //Number Generators
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
-            UniformGenerator;
+            UniformNodeGenerator;
+    std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
+            UniformBitrateGenerator;
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
             ExponentialGeneratorMu;
     std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
             ExponentialGeneratorH;
 
-    Call generate_Call(TransmissionBitrate Bitrate);
+    Call generate_Call();
 };
 
 #endif // CALLGENERATOR_H
