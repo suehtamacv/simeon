@@ -26,13 +26,13 @@ Topology::Topology(const Topology &topology) {
         std::weak_ptr<Node> orig = Nodes.front();
         std::weak_ptr<Node> dest = Nodes.front();
 
-        for (auto node : Nodes) {
-            if (node == link.second->Origin.lock()) {
-                orig = node;
+        for (auto node = Nodes.begin(); node != Nodes.end(); ++node) {
+            if (*(*node) == *(link.second->Origin.lock())) {
+                orig = *node;
             }
 
-            if (node == link.second->Origin.lock()) {
-                dest = node;
+            if (*(*node) == *(link.second->Destination.lock())) {
+                dest = *node;
             }
         }
 

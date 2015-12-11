@@ -27,20 +27,12 @@ Node::Node(const Node &node) : ID(node.ID) {
     }
 }
 
-bool Node::operator ==(Node *N) const {
-    if (ID == N->ID) {
-        return true;
-    }
-
-    return false;
+bool Node::operator ==(const Node &N) const {
+    return (ID == N.ID);
 }
 
-bool Node::operator <(Node *N) const {
-    if (ID < N->ID) {
-        return true;
-    }
-
-    return false;
+bool Node::operator <(const Node &N) const {
+    return (ID < N.ID);
 }
 
 void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {

@@ -71,36 +71,16 @@ Signal Link::bypass(Signal S) {
     return S;
 }
 
-bool Link::operator ==(Link *L) const {
-    if (Origin.lock() != L->Origin.lock()) {
-        return false;
-    }
-
-    if (Destination.lock() != L->Destination.lock()) {
-        return false;
-    }
-
-    if (Length != L->Length) {
-        return false;
-    }
-
-    return true;
+bool Link::operator ==(const Link &L) const {
+    return ((Origin.lock() == L.Origin.lock()) &&
+            (Destination.lock() == L.Destination.lock()) &&
+            (Length == L.Length));
 }
 
-bool Link::operator <(Link *L) const {
-    if (Origin.lock() < L->Origin.lock()) {
-        return true;
-    }
-
-    if (Destination.lock() < L->Destination.lock()) {
-        return true;
-    }
-
-    if (Length < L->Length) {
-        return true;
-    }
-
-    return false;
+bool Link::operator <(const Link &L) const {
+    return ((Origin.lock() < L.Origin.lock()) ||
+            (Destination.lock() < L.Destination.lock()) ||
+            (Length < L.Length));
 }
 
 bool Link::isSlotFree(unsigned int slot) const {

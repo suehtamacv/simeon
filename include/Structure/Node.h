@@ -34,8 +34,8 @@ class Node {
          Node_Architecure A = SwitchingSelect);
     Node(const Node& node);
 
-    bool operator==(Node *) const;
-    bool operator<(Node *) const;
+    bool operator==(const Node &) const;
+    bool operator<(const Node &) const;
 
     const int ID;
     std::vector<std::weak_ptr<Node>> Neighbours;

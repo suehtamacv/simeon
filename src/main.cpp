@@ -17,8 +17,6 @@ int main(void) {
     Schemes.push_back(ModulationScheme(16, Gain(10.5)));
     Schemes.push_back(ModulationScheme(64, Gain(14.8)));
 
-    std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
-    std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
 
     std::vector<TransmissionBitrate> Bitrates;
     Bitrates.push_back(TransmissionBitrate(10E9));
@@ -27,11 +25,14 @@ int main(void) {
     Bitrates.push_back(TransmissionBitrate(160E9));
     Bitrates.push_back(TransmissionBitrate(400E9));
 
-    std::shared_ptr<RoutingWavelengthAssignment> RWA(
-        new RoutingWavelengthAssignment(SP, FF, Schemes, T));
 
     for (long double load = 80; load <= 300; load += 10) {
-        std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));
+        std::shared_ptr<Topology> NewT(new Topology(*T));
+        std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(NewT));
+        std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(NewT));
+        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+            new RoutingWavelengthAssignment(SP, FF, Schemes, NewT));
+        std::shared_ptr<CallGenerator> CG(new CallGenerator(NewT, load, Bitrates));
         NetworkSimulation Sim(CG, RWA, 1E5);
         std::cout << load << "\t" << Sim.get_CallBlockingProbability() << std::endl;
     }
