@@ -16,7 +16,7 @@ void NetworkSimulation::run() {
     NumCalls++;
     Generator->generate_Call(); //Generates first call
 
-    while (NumCalls < NumMaxCalls) {
+    while (!Generator->Events.empty()) {
         std::shared_ptr<Event> evt(Generator->Events.top());
         Generator->Events.pop();
 
@@ -47,8 +47,9 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt) {
         }
     }
 
-    NumCalls++;
-    Generator->generate_Call();
+    if (NumCalls++ < NumMaxCalls) {
+        Generator->generate_Call();
+    }
 }
 
 void NetworkSimulation::drop_call(std::shared_ptr<Event> evt) {
@@ -65,5 +66,5 @@ long double NetworkSimulation::get_CallBlockingProbability() {
         run();
     }
 
-    return NumBlockedCalls / (1.0 * NumCalls);
+    return 1.0 * NumBlockedCalls / (1.0 * NumCalls);
 }

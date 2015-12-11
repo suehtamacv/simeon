@@ -55,15 +55,15 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
 
                 if (SegmentSlots.empty()) {
+                    if (scheme == Schemes.back()) {
+                        C->Status = Call::Blocked;
+                    }
+
                     continue;
                 }
 
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 break;
-            }
-
-            if (scheme == Schemes.back()) {
-                C->Status = Call::Blocked;
             }
         }
     } else {

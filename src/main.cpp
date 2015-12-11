@@ -32,7 +32,7 @@ int main(void) {
 
     for (long double load = 80; load <= 300; load += 10) {
         std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));
-        NetworkSimulation Sim(CG, RWA, 1E4);
+        NetworkSimulation Sim(CG, RWA, 1E5);
         std::cout << load << "\t" << Sim.get_CallBlockingProbability() << std::endl;
     }
 

@@ -15,6 +15,8 @@ FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) {
     unsigned int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
+    Slots.clear();
+
     std::vector<bool> SlotsAvailability(Link::NumSlots, true);
 
     for (auto link : Seg.Links) {
