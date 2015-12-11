@@ -2,15 +2,16 @@
 #include <cmath>
 #include <GeneralClasses/Gain.h>
 
-Gain::Gain(long double value, InitType Type) {
+Gain::Gain(long double value, InitType Type) : value_Linear(0),
+    calculatedLinear(false) {
+
     if (Type == InitType::dB) {
         value_dB = value;
-        value_Linear = std::pow(10, 0.1 * value);
     } else if (Type == InitType::Linear) {
         BOOST_ASSERT_MSG(value > 0, "There's no dB value for something negative.");
-        value_Linear = value;
         value_dB = 10 * log10(value);
     }
+
 }
 
 Gain Gain::operator -() {
@@ -27,37 +28,36 @@ Gain Gain::operator -(Gain G) {
 
 Gain::Gain(const Gain &Value) {
     value_dB = Value.in_dB();
-    value_Linear = Value.in_Linear();
+
+    if (Value.calculatedLinear) {
+        value_Linear = Value.value_Linear;
+        calculatedLinear = true;
+    } else {
+        calculatedLinear = false;
+    }
 }
 
 long double Gain::in_dB() const {
     return value_dB;
 }
 
-long double Gain::in_Linear() const {
+long double Gain::in_Linear() {
+    if (!calculatedLinear) {
+        value_Linear = std::pow(10, 0.1 * value_dB);
+        calculatedLinear = true;
+    }
+
     return value_Linear;
 }
 
-bool Gain::operator >(Gain G) {
-    if (value_dB > G.in_dB()) {
-        return true;
-    }
-
-    return false;
+bool Gain::operator >(const Gain &G) const {
+    return (value_dB > G.in_dB());
 }
 
-bool Gain::operator <(Gain G) {
-    if (value_dB < G.in_dB()) {
-        return true;
-    }
-
-    return false;
+bool Gain::operator <(const Gain &G) const {
+    return (value_dB < G.in_dB());
 }
 
-bool Gain::operator ==(Gain G) const {
-    if (value_dB == G.in_dB()) {
-        return true;
-    }
-
-    return false;
+bool Gain::operator ==(const Gain &G) const {
+    return (value_dB == G.in_dB());
 }

@@ -21,28 +21,16 @@ Gain ModulationScheme::get_SNR_Per_Bit() const {
     return SNR_Per_Bit;
 }
 
-bool ModulationScheme::operator <(ModulationScheme Scheme) const {
-    if (M < Scheme.get_M()) {
-        return true;
-    }
-
-    return false;
+bool ModulationScheme::operator <(const ModulationScheme &scheme) const {
+    return (M < scheme.get_M());
 }
 
-bool ModulationScheme::operator >(ModulationScheme Scheme) const {
-    if (M > Scheme.get_M()) {
-        return true;
-    }
-
-    return false;
+bool ModulationScheme::operator >(const ModulationScheme &scheme) const {
+    return (M > scheme.get_M());
 }
 
-bool ModulationScheme::operator ==(ModulationScheme Scheme) const {
-    if ((M == Scheme.get_M()) && (SNR_Per_Bit == Scheme.get_SNR_Per_Bit())) {
-        return true;
-    }
-
-    return false;
+bool ModulationScheme::operator ==(const ModulationScheme &scheme) const {
+    return ((M == scheme.get_M()) && (SNR_Per_Bit == scheme.get_SNR_Per_Bit()));
 }
 
 Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate BitRate) {

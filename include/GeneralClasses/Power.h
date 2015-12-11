@@ -27,7 +27,6 @@ class Power {
     long double in_dBm() const;
     long double in_Watts() const;
   private:
-    long double value_dBm;
     long double value_Watts;
 };
 
