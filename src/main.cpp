@@ -7,9 +7,10 @@
 #include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
 #include <RWA/WavelengthAssignment/FirstFit.h>
 #include <SimulationTypes/NetworkSimulation.h>
+#include <RWA/Route.h>
 
 int main(void) {
-    auto T = std::shared_ptr<Topology>(new Topology("NSFNet"));
+    std::shared_ptr<Topology> T = std::shared_ptr<Topology>(new Topology("NSFNet"));
 
     std::vector<ModulationScheme> Schemes;
     Schemes.push_back(ModulationScheme(4, Gain(6.8)));
@@ -30,7 +31,7 @@ int main(void) {
         new RoutingWavelengthAssignment(SP, FF, Schemes, T));
 
     for (long double load = 80; load <= 300; load += 10) {
-        std::shared_ptr<CallGenerator> CG(new CallGenerator(T, 1, load, Bitrates));
+        std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));
         NetworkSimulation Sim(CG, RWA, 1E4);
         std::cout << load << "\t" << Sim.get_CallBlockingProbability() << std::endl;
     }

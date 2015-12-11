@@ -12,7 +12,6 @@ class StaticRoutingAlgorithm : public DijkstraRoutingAlgorithm {
     std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C);
 
     std::map<OrigDestPair, std::vector<std::weak_ptr<Link>>> Routes;
-
   private:
     void precalculate_Routes();
 };

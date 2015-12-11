@@ -46,7 +46,7 @@ void Link::create_Devices() {
         numLineAmplifiers--;
     }
 
-    long double SpanLength = Length / numLineAmplifiers;
+    long double SpanLength = Length / (numLineAmplifiers + 1);
 
     for (int i = 0; i < numLineAmplifiers; i++) {
         Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
@@ -64,11 +64,10 @@ void Link::create_Devices() {
 }
 
 Signal Link::bypass(Signal S) {
-    for (auto it = Devices.begin(); it != Devices.end(); ++it) {
-        S *= (*it)->get_Gain();
-        S += (*it)->get_Noise();
+    for (auto it : Devices) {
+        S *= it->get_Gain();
+        S += it->get_Noise();
     }
-
     return S;
 }
 

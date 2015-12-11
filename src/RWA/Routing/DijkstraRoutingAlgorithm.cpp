@@ -70,7 +70,5 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(std::shared_ptr
                                          NodesInRoute[i - 1])));
     }
 
-    std::reverse(RouteLinks.begin(), RouteLinks.end());
-
     return RouteLinks;
 }

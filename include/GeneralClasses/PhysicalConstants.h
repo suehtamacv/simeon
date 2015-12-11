@@ -9,11 +9,11 @@ class PhysicalConstants {
 		/**
 		 * @brief c is the light's velocity.
 		 */
-		constexpr static long double c = 299792458;
+        constexpr static long double c = 299792458;
 		/**
 		 * @brief h is the Planck's constant.
 		 */
-		constexpr static long double h = 6.62606957E-34;
+        constexpr static long double h = 6.62606957E-34;
 		/**
 		 * @brief lambda is the light's wavelength.
 		 */
@@ -21,7 +21,7 @@ class PhysicalConstants {
 		/**
 		 * @brief freq is the light's frequency;
 		 */
-		constexpr static long double freq = c / lambda;
+        constexpr static long double freq = 193.4E12;
         /**
          * @brief BRef is the reference bandwidth.
          */

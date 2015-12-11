@@ -22,18 +22,20 @@ Power Power::operator *(Gain G) {
     return Power(G.in_dB() + value_dBm);
 }
 
-void Power::operator *=(Gain G) {
+Power &Power::operator *=(Gain G) {
     value_dBm += G.in_dB();
     value_Watts = 0.001L * pow(10, 0.1 * value_dBm);
+    return *this;
 }
 
 Power Power::operator +(Power P) {
     return Power(value_Watts + P.in_Watts(), Power::Watt);
 }
 
-void Power::operator +=(Power P) {
+Power &Power::operator +=(Power P) {
     value_Watts += P.in_Watts();
     value_dBm = 10 * log10(value_Watts) + 30;
+    return *this;
 }
 
 long double Power::in_dBm() const {

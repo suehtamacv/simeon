@@ -109,7 +109,7 @@ Signal Node::bypass(Signal S) {
     return S;
 }
 
-Signal Node::add(Signal S) {
+Signal Node::drop(Signal S) {
     for (auto it : Devices) {
         S *= it->get_Gain();
         S += it->get_Noise();
@@ -123,18 +123,19 @@ Signal Node::add(Signal S) {
     return S;
 }
 
-Signal Node::drop(Signal S) {
-    bool foundExit = false;
+Signal Node::add(Signal S) {
+    auto it = Devices.begin();
 
-    for (auto it : Devices) {
-        if (!foundExit && (it->DevType != Device::SplitterDevice) &&
-                (it->DevType != Device::SSSDevice)) {
-            foundExit = true;
-            continue;
-        }
+    while (((*it)->DevType != Device::SplitterDevice) &&
+            ((*it)->DevType != Device::SSSDevice)) {
+        it++;
+    }
 
-        S *= it->get_Gain();
-        S += it->get_Noise();
+    it++;
+
+    for (; it != Devices.end(); ++it) {
+        S *= (*it)->get_Gain();
+        S += (*it)->get_Noise();
     }
 
     return S;

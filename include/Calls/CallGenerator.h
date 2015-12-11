@@ -10,7 +10,8 @@
 #include <queue>
 
 struct EventCompare {
-    bool operator()(const std::shared_ptr<Event> a, const std::shared_ptr<Event> b) const {
+    bool operator()(const std::shared_ptr<Event> a,
+                    const std::shared_ptr<Event> b) const {
         return a->t > b->t;
     }
 };
@@ -29,11 +30,10 @@ class CallGenerator {
     /**
      * @brief CallGenerator is the standard constructor for a CallGenerator.
      * @param T is the topology over which the calls are generated.
-     * @param mu is the parameter for the call duration distribution.
      * @param h is the parameter for the call interarrival time distribution.
      */
-    CallGenerator(std::shared_ptr<Topology> T, long double mu,
-                  long double h, std::vector<TransmissionBitrate> Bitrates);
+    CallGenerator(std::shared_ptr<Topology> T, long double h,
+                  std::vector<TransmissionBitrate> Bitrates);
 
     /**
      * @brief Events is a priority queue.
@@ -52,7 +52,7 @@ class CallGenerator {
     /**
      * @brief mu is the parameter for the call duration exponential distribution.
      */
-    long double mu;
+    static constexpr long double mu = 1;
     /**
      * @brief h is t parameter for the cl interarrival time exponential
      * distribution.

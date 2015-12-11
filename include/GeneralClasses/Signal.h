@@ -10,19 +10,19 @@
 class Signal {
   public:
 
-	static Gain InputOSNR;
-	static Power InputPower;
+    static Gain InputOSNR;
+    static Power InputPower;
 
-	Signal();
+    Signal();
 
-	void operator*=(Gain);
-	void operator+=(Power);
+    Signal &operator *=(Gain);
+    Signal &operator +=(Power);
 
     Gain get_OSNR();
 
   private:
-	Power SignalPower;
-	Power NoisePower;
+    Power SignalPower;
+    Power NoisePower;
 };
 
 #endif // SIGNAL_H

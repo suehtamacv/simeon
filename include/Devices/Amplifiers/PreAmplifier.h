@@ -27,6 +27,7 @@ class PreAmplifier : public EDFA {
   private:
     unsigned numPorts;
     Node &Destination;
+    Fiber &Segment;
 };
 
 #endif // PREAMPLIFIER_H

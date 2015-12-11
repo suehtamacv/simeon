@@ -4,10 +4,9 @@
 boost::mt19937 CallGenerator::MersenneTwister;
 
 CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
-                             long double mu,
                              long double h,
                              std::vector<TransmissionBitrate> Bitrates) :
-    T(T), mu(mu), h(h), simulationTime(0), Bitrates(Bitrates) {
+    T(T), h(h), simulationTime(0), Bitrates(Bitrates) {
 
     //MersenneTwister = boost::mt19937(time(0)); Do not seed RNG
 

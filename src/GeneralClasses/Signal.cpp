@@ -4,15 +4,17 @@ Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 
 Signal::Signal() : SignalPower(InputPower) ,
-	NoisePower(InputPower * -InputOSNR) { }
+    NoisePower(InputPower * -InputOSNR) { }
 
-void Signal::operator *=(Gain G) {
-	SignalPower *= G;
-	NoisePower *= G;
+Signal &Signal::operator *=(Gain G) {
+    SignalPower *= G;
+    NoisePower *= G;
+    return *this;
 }
 
-void Signal::operator +=(Power P) {
-	NoisePower += P;
+Signal &Signal::operator +=(Power P) {
+    NoisePower += P;
+    return *this;
 }
 
 Gain Signal::get_OSNR() {

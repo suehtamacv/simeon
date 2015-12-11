@@ -40,6 +40,8 @@ Signal TransparentSegment::bypass(Signal S) {
 
         if (it.lock() == Links.back().lock()) {
             S = it.lock()->Destination.lock()->drop(S);
+        } else {
+            S = it.lock()->Destination.lock()->bypass(S);
         }
     }
 
