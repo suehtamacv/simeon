@@ -9,11 +9,13 @@
 Topology::Topology() {
     Nodes.clear();
     Links.clear();
+    LongestLink = -1;
 }
 
 Topology::Topology(const Topology &topology) {
     Nodes.clear();
     Links.clear();
+    LongestLink = -1;
 
     for (auto node : topology.Nodes) {
         add_Node(node->ID,
@@ -45,6 +47,7 @@ Topology::Topology(std::string TopologyFileName) {
 
     Nodes.clear();
     Links.clear();
+    LongestLink = -1;
 
     options_description TopologyDescription("Topology");
     TopologyDescription.add_options()
@@ -124,6 +127,7 @@ std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                   std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
     Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
                                Destination.lock()->ID)));
+    LongestLink = -1;
     return (std::weak_ptr<Link>) Links.at(OrigDestPair(Origin.lock()->ID,
                                           Destination.lock()->ID));
 }
@@ -154,13 +158,13 @@ void Topology::save(std::ofstream TopologyFile) {
 }
 
 long double Topology::get_LengthLongestLink() {
-    long double MaxLength = -1;
-
-    for (auto link : Links) {
-        if (MaxLength < link.second->Length) {
-            MaxLength = link.second->Length;
+    if (LongestLink == -1) {
+        for (auto link : Links) {
+            if (LongestLink < link.second->Length) {
+                LongestLink = link.second->Length;
+            }
         }
     }
 
-    return MaxLength;
+    return LongestLink;
 }

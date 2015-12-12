@@ -4,6 +4,7 @@
 #include <memory>
 #include <Calls/Event.h>
 #include <GeneralClasses/TransmissionBitrate.h>
+#include <GeneralClasses/ModulationScheme.h>
 
 class Node;
 
@@ -50,6 +51,7 @@ class Call {
      */
     TransmissionBitrate Bitrate;
     Call_Status Status;
+    ModulationScheme Scheme;
 };
 
 #endif // CALL_H

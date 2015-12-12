@@ -10,6 +10,7 @@
 class ModulationScheme {
   public:
     ModulationScheme(unsigned int M, Gain SNR_Per_Bit);
+    ModulationScheme(const ModulationScheme &scheme);
     unsigned int get_M() const;
     Gain get_SNR_Per_Bit() const;
 

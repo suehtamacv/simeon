@@ -1,5 +1,6 @@
 #include <boost/assert.hpp>
 #include <cmath>
+#include <Calls/Call.h>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 #include <Devices/Fiber.h>
@@ -103,4 +104,35 @@ long double Link::get_Availability() {
 
 long double Link::get_Occupability() {
     return 1 - get_Availability();
+}
+
+long double Link::get_Contiguity(std::shared_ptr<Call> C) {
+    BOOST_ASSERT_MSG(C->Scheme.get_M() != 0,
+                     "Can't calculate contiguity without knowing the modulation"
+                     " scheme. Either you forgot to set it or one of the chosen "
+                     "algorithms is not compatible with the contiguity measure");
+    int NumRequiredSlots = C->Scheme.get_NumSlots(C->Bitrate);
+    int Contiguity = 0;
+    int si = 0;
+    bool SlotsAvailability[Link::NumSlots];
+
+    for (int i = 0; i < Link::NumSlots; i++) {
+        SlotsAvailability[i] = Slots[i]->isFree;
+    }
+
+    for (si = 0; si <= Link::NumSlots - NumRequiredSlots; si++) {
+        int slot;
+
+        for (slot = si; slot < si + NumRequiredSlots; slot++) {
+            if (!SlotsAvailability[slot]) {
+                break;
+            }
+
+            if (slot == si + NumRequiredSlots) {
+                Contiguity++;
+            }
+        }
+    }
+
+    return Contiguity;
 }

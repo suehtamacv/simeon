@@ -40,6 +40,8 @@ class Topology {
     void save(std::ofstream TopologyFile);
 
     long double get_LengthLongestLink();
+  private:
+    long double LongestLink;
 };
 
 #endif // TOPOLOGY_H

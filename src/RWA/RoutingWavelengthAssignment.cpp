@@ -37,16 +37,18 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
 
-    Links = R_Alg->route(C);
-
-    if (Links.empty()) {
-        C->Status = Call::Blocked;
-    }
-
     if (RA_Alg == nullptr) {
         std::sort(Schemes.rbegin(), Schemes.rend());
 
         for (auto scheme : Schemes) {
+            C->Scheme = scheme;
+
+            Links = R_Alg->route(C);
+
+            if (Links.empty()) {
+                C->Status = Call::Blocked;
+            }
+
             TransparentSegment Segment(Links, scheme, 0);
             Signal S;
 
@@ -67,6 +69,12 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             }
         }
     } else {
+        Links = R_Alg->route(C);
+
+        if (Links.empty()) {
+            C->Status = Call::Blocked;
+        }
+
         Segments = RA_Alg->assignRegenerators(C, Links);
 
         if (Segments.empty()) {
