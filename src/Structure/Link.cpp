@@ -88,3 +88,19 @@ bool Link::isSlotFree(unsigned int slot) const {
     BOOST_ASSERT_MSG(slot < NumSlots, "Invalid slot requested.");
     return (Slots[slot])->isFree;
 }
+
+long double Link::get_Availability() {
+    long double FreeSlots = 0;
+
+    for (auto slot : Slots) {
+        if (slot->isFree) {
+            FreeSlots++;
+        }
+    }
+
+    return FreeSlots / Link::NumSlots;
+}
+
+long double Link::get_Occupability() {
+    return 1 - get_Availability();
+}

@@ -38,6 +38,8 @@ class Topology {
                                  std::weak_ptr<Node> Destination, long double Length);
 
     void save(std::ofstream TopologyFile);
+
+    long double get_LengthLongestLink();
 };
 
 #endif // TOPOLOGY_H

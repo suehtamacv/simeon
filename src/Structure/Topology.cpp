@@ -152,3 +152,15 @@ void Topology::save(std::ofstream TopologyFile) {
     }
 
 }
+
+long double Topology::get_LengthLongestLink() {
+    long double MaxLength = -1;
+
+    for (auto link : Links) {
+        if (MaxLength < link.second->Length) {
+            MaxLength = link.second->Length;
+        }
+    }
+
+    return MaxLength;
+}

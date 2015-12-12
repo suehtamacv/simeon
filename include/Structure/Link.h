@@ -8,6 +8,7 @@
 #include <Structure/Slot.h>
 
 class Node;
+class Call;
 
 class Link {
   public:
@@ -31,6 +32,9 @@ class Link {
     bool isSlotFree(unsigned int) const;
 
     Signal &bypass(Signal &);
+
+    long double get_Availability();
+    long double get_Occupability();
 
   private:
     void create_Slots();

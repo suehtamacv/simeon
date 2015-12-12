@@ -3,6 +3,7 @@
 #include <Calls/Call.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <RWA/RoutingWavelengthAssignment.h>
+#include <RWA/Routing/LengthOccupationRoutingAvailability.h>
 #include <RWA/Routing/StaticRouting/ShortestPath.h>
 #include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
 #include <RWA/WavelengthAssignment/FirstFit.h>
@@ -26,14 +27,14 @@ int main(void) {
     Bitrates.push_back(TransmissionBitrate(160E9));
     Bitrates.push_back(TransmissionBitrate(400E9));
 
-    std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
+    std::shared_ptr<RoutingAlgorithm> LORa(new LengthOccupationRoutingAvailability(T));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
     std::shared_ptr<RoutingWavelengthAssignment>
-    RWA(new RoutingWavelengthAssignment(SP, FF, Schemes, T));
+    RWA(new RoutingWavelengthAssignment(LORa, FF, Schemes, T));
 
     for (long double load = 80; load <= 300; load += 10) {
         std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));
-        NetworkSimulation Sim(CG, RWA, 1E6);
+        NetworkSimulation Sim(CG, RWA, 1E5);
         std::cout << load << "\t" << Sim.get_CallBlockingProbability() << std::endl;
     }
 
