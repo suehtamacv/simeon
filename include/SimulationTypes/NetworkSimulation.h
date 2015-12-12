@@ -12,6 +12,7 @@ class NetworkSimulation {
                       long unsigned NumMaxCalls);
 
     void run();
+    void print();
 
     std::shared_ptr<CallGenerator> Generator;
     std::shared_ptr<RoutingWavelengthAssignment> RWA;

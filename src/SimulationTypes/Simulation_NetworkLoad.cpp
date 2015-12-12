@@ -24,16 +24,18 @@ void Simulation_NetworkLoad::run() {
 }
 
 void Simulation_NetworkLoad::print() {
-    if (!hasSimulated) {
-        run();
-    }
-
     std::cout << "Results:" << std::endl;
     std::cout << "LOAD\tCALL BLOC. PROB" << std::endl;
 
-    for (auto simulation : simulations) {
-        std::cout << simulation->get_Load() << "\t" <<
-                  simulation->get_CallBlockingProbability() << std::endl;
+    if (!hasSimulated) {
+        for (auto simulation : simulations) {
+            simulation->run();
+            simulation->print();
+        }
+    } else {
+        for (auto simulation : simulations) {
+            simulation->print();
+        }
     }
 }
 

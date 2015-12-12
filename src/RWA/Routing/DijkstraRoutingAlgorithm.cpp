@@ -2,60 +2,51 @@
 #include <algorithm>
 #include <limits>
 #include <map>
+#include <set>
 
 DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T)
     : RoutingAlgorithm(T) {
 
 }
 
-std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(std::shared_ptr<Call> C) {
+std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
+std::shared_ptr<Call> C) {
     /** Attention: this code breaks if there are nodes in the Topology with the
-     * same ID. This should not happen. **/
+     * same ID. This should not happen. The nodes must have sequential ID. **/
 
-    std::map<int, long double> VertexCost;
-    std::map<int, int> Precedent;
-    std::vector<std::shared_ptr<Node>> UnvisitedNodes;
-    std::vector<int> NodesInRoute;
-    std::vector<std::weak_ptr<Link>> RouteLinks;
+    std::vector<long double> MinDistance(T->Nodes.size() + 1,
+                                 std::numeric_limits<double>::max());
+    std::set<std::pair<std::shared_ptr<Node>, int>> ActiveVertices;
+    std::vector<int> Precedent(T->Nodes.size() + 1, -1);
 
-    for (auto it = T->Nodes.begin(); it != T->Nodes.end(); ++it) {
-        VertexCost.emplace((*it)->ID, std::numeric_limits<double>::max());
-        Precedent.emplace((*it)->ID, -1);
-        UnvisitedNodes.push_back(*it);
-    }
+    MinDistance[C->Origin.lock()->ID] = 0;
+    ActiveVertices.insert({C->Origin.lock(), 0});
 
-    VertexCost[ C->Origin.lock()->ID ] = 0;
-
-    while (!UnvisitedNodes.empty()) {
-        std::shared_ptr<Node> CurrentNode = UnvisitedNodes[0];
-
-        for (auto it : UnvisitedNodes) {
-            if (VertexCost[CurrentNode->ID] > VertexCost[it->ID]) {
-                CurrentNode = it;
-            }
-        }
+    while (!ActiveVertices.empty()) {
+        std::shared_ptr<Node> CurrentNode = ActiveVertices.begin()->first;
 
         if (CurrentNode == C->Destination.lock()) {
             break;
         }
 
-        for (auto it = UnvisitedNodes.begin(); it != UnvisitedNodes.end(); ++it) {
-            if (CurrentNode == *it) {
-                UnvisitedNodes.erase(it);
-                break;
-            }
-        }
+        ActiveVertices.erase(ActiveVertices.begin());
 
-        for (auto it : CurrentNode->Neighbours) {
-            long double AltCost = VertexCost[CurrentNode->ID] +
-                                   get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, it.lock()->ID)), C);
+        for (auto node : CurrentNode->Neighbours) {
+            auto locknode = node.lock();
+            long double newLength = MinDistance[CurrentNode->ID] +
+                                    get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);
 
-            if (AltCost < VertexCost[it.lock()->ID]) {
-                VertexCost[it.lock()->ID] = AltCost;
-                Precedent[it.lock()->ID] = CurrentNode->ID;
+            if (MinDistance[locknode->ID] > newLength) {
+                ActiveVertices.erase({locknode, MinDistance[node.lock()->ID] });
+                MinDistance[locknode->ID] = newLength;
+                ActiveVertices.insert({locknode, newLength});
+                Precedent[locknode->ID] = CurrentNode->ID;
             }
         }
     }
+
+    std::vector<int> NodesInRoute;
+    std::vector<std::weak_ptr<Link>> RouteLinks;
 
     unsigned int CurrentNode = C->Destination.lock()->ID;
     NodesInRoute.push_back(CurrentNode);

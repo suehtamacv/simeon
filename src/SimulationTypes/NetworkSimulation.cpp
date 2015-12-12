@@ -2,6 +2,7 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
 #include <RWA/Route.h>
+#include <iostream>
 
 NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                                      std::shared_ptr<RoutingWavelengthAssignment> RWA,
@@ -59,6 +60,14 @@ void NetworkSimulation::drop_call(std::shared_ptr<Event> evt) {
                 slot.lock()->freeSlot();
             }
         }
+}
+
+void NetworkSimulation::print() {
+    if (!hasSimulated) {
+        run();
+    }
+
+    std::cout << get_Load() << "\t" << get_CallBlockingProbability() << std::endl;
 }
 
 long double NetworkSimulation::get_CallBlockingProbability() {
