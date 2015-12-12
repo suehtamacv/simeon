@@ -23,7 +23,7 @@ class CallGenerator {
     struct EventCompare {
         bool operator()(const std::shared_ptr<Event> a,
                         const std::shared_ptr<Event> b) const {
-            return a->t > b->t;
+            return *a > *b;
         }
     };
 

@@ -52,12 +52,12 @@ Route::Route(const Route &route) {
     }
 }
 
-Signal Route::bypass(Signal S) {
+Signal &Route::bypass(Signal &S) {
     return Segments.back().bypass(S);
 }
 
-Signal Route::partial_bypass(Signal S, std::weak_ptr<Node> orig,
-                             std::weak_ptr<Node> dest) {
+Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
+                              std::weak_ptr<Node> dest) {
 
     auto currentNode = Nodes.begin();
 

@@ -22,10 +22,10 @@ class Route {
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
 
-    Signal bypass(Signal S);
-    Signal partial_bypass(Signal S,
-                          std::weak_ptr<Node> orig,
-                          std::weak_ptr<Node> dest);
+    Signal &bypass(Signal &S);
+    Signal &partial_bypass(Signal &S,
+                           std::weak_ptr<Node> orig,
+                           std::weak_ptr<Node> dest);
 };
 
 #endif // ROUTE_H

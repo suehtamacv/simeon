@@ -31,16 +31,10 @@ class Event {
     Event(long double t, Event_Type Type, std::shared_ptr<Call> Parent);
 
     /**
-     * @brief operator < is used to compare the ocurral instants of two events.
-     * @return true iff this event ocurrs prior to the Event passed as argument.
-     */
-    bool operator<(const Event) const;
-    bool operator<(const std::shared_ptr<Event> event);
-    /**
      * @brief operator > is used to compare the ocurral instants of two events.
      * @return true iff this event ocurrs after the Event passed as argument.
      */
-    bool operator>(const Event) const;
+    bool operator>(const Event &) const;
 
     /**
      * @brief t is the ocurring time of the event.
