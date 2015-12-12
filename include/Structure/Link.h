@@ -30,7 +30,7 @@ class Link {
     bool operator<(const Link &) const;
     bool isSlotFree(unsigned int) const;
 
-    Signal bypass(Signal);
+    Signal &bypass(Signal &);
 
   private:
     void create_Slots();

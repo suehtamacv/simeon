@@ -32,7 +32,7 @@ class Node {
 
     Node(int ID, Node_Type T = TransparentNode,
          Node_Architecure A = SwitchingSelect);
-    Node(const Node& node);
+    Node(const Node &node);
 
     bool operator==(const Node &) const;
     bool operator<(const Node &) const;
@@ -49,9 +49,9 @@ class Node {
 
     void insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link);
 
-    Signal bypass(Signal);
-    Signal add(Signal);
-    Signal drop(Signal);
+    Signal &bypass(Signal &);
+    Signal &add(Signal &);
+    Signal &drop(Signal &);
 
     void set_NumRegenerators(unsigned int);
     void set_NodeType(Node_Type);

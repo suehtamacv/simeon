@@ -1,54 +1,39 @@
 #include <Calls/CallGenerator.h>
 #include <Calls/Call.h>
 
-boost::mt19937 CallGenerator::MersenneTwister;
+std::default_random_engine CallGenerator::generator;
 
 CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
                              long double h,
                              std::vector<TransmissionBitrate> Bitrates) :
     T(T), h(h), simulationTime(0), Bitrates(Bitrates) {
 
-    //MersenneTwister = boost::mt19937(time(0)); Do not seed RNG
+    UniformNodeDistribution = std::uniform_int_distribution<int>
+                              (0, T->Nodes.size() - 1);
+    UniformBitrateDistribution = std::uniform_int_distribution<int>
+                                 (0, Bitrates.size() - 1);
+    ExponentialDistributionMu = std::exponential_distribution<long double>
+                                (1.0L / mu);
+    ExponentialDistributionH = std::exponential_distribution<long double>(h);
 
-    UniformNodeDistribution = boost::uniform_int<>(0, T->Nodes.size() - 1);
-    UniformBitrateDistribution = boost::uniform_int<>(0, Bitrates.size() - 1);
-    ExponentialDistributionMu = boost::exponential_distribution<>(1.0 / mu);
-    ExponentialDistributionH = boost::exponential_distribution<>(h);
-
-    UniformNodeGenerator =
-        std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
-        (new boost::variate_generator< boost::mt19937 , boost::uniform_int<> >
-         (MersenneTwister, UniformNodeDistribution));
-    UniformBitrateGenerator =
-        std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
-        (new boost::variate_generator< boost::mt19937 , boost::uniform_int<> >
-         (MersenneTwister, UniformBitrateDistribution));
-    ExponentialGeneratorMu =
-        std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
-        (new boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >
-         (MersenneTwister, ExponentialDistributionMu));
-    ExponentialGeneratorH =
-        std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
-        (new boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >
-         (MersenneTwister, ExponentialDistributionH));
 }
 
 std::shared_ptr<Call> CallGenerator::generate_Call() {
-    long double ArrivalTime = simulationTime + (*ExponentialGeneratorH)();
-    long double EndingTime = ArrivalTime + (*ExponentialGeneratorMu)();
+    long double ArrivalTime = simulationTime + ExponentialDistributionH(generator);
+    long double EndingTime = ArrivalTime + ExponentialDistributionMu(generator);
     simulationTime = ArrivalTime;
 
-    int Origin = (*UniformNodeGenerator)();
-    int Destination = (*UniformNodeGenerator)();
+    int Origin = UniformNodeDistribution(generator);
+    int Destination = UniformNodeDistribution(generator);
 
     while (Origin == Destination) {
-        Destination = (*UniformNodeGenerator)();
+        Destination = UniformNodeDistribution(generator);
     }
 
-    int Bitrate = (*UniformBitrateGenerator)();
+    int Bitrate = UniformBitrateDistribution(generator);
 
-    std::shared_ptr<Call> C(new Call(std::weak_ptr<Node>(T->Nodes.at(Origin)),
-                                     std::weak_ptr<Node>(T->Nodes.at(Destination)),
+    std::shared_ptr<Call> C(new Call(std::weak_ptr<Node>(T->Nodes[Origin]),
+                                     std::weak_ptr<Node>(T->Nodes[Destination]),
                                      Bitrates[Bitrate]));
 
     std::shared_ptr<Event> CallRequisition(new Event(ArrivalTime,

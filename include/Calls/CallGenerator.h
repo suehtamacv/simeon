@@ -2,19 +2,12 @@
 #define CALLGENERATOR_H
 
 #include <memory>
-#include <boost/random.hpp>
+#include <random>
 #include <boost/generator_iterator.hpp>
 #include <Calls/Event.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <Structure/Topology.h>
 #include <queue>
-
-struct EventCompare {
-    bool operator()(const std::shared_ptr<Event> a,
-                    const std::shared_ptr<Event> b) const {
-        return a->t > b->t;
-    }
-};
 
 /**
  * @brief The CallGenerator class implements methods to continuously generate
@@ -26,6 +19,14 @@ struct EventCompare {
  * with parameter 1/h.
  */
 class CallGenerator {
+  private:
+    struct EventCompare {
+        bool operator()(const std::shared_ptr<Event> a,
+                        const std::shared_ptr<Event> b) const {
+            return a->t > b->t;
+        }
+    };
+
   public:
     /**
      * @brief CallGenerator is the standard constructor for a CallGenerator.
@@ -67,27 +68,13 @@ class CallGenerator {
      */
     std::vector<TransmissionBitrate> Bitrates;
 
-
-    /**
-     * @brief MersenneTwister is the Random Number Generator.
-     */
-    static boost::mt19937 MersenneTwister;
+    static std::default_random_engine generator;
 
     //Distributions
-    boost::uniform_int<> UniformNodeDistribution;
-    boost::uniform_int<> UniformBitrateDistribution;
-    boost::exponential_distribution<> ExponentialDistributionMu;
-    boost::exponential_distribution<> ExponentialDistributionH;
-
-    //Number Generators
-    std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
-            UniformNodeGenerator;
-    std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::uniform_int<> >>
-            UniformBitrateGenerator;
-    std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
-            ExponentialGeneratorMu;
-    std::unique_ptr<boost::variate_generator< boost::mt19937 , boost::exponential_distribution<> >>
-            ExponentialGeneratorH;
+    std::uniform_int_distribution<int> UniformNodeDistribution;
+    std::uniform_int_distribution<int> UniformBitrateDistribution;
+    std::exponential_distribution<long double> ExponentialDistributionMu;
+    std::exponential_distribution<long double> ExponentialDistributionH;
 
     std::shared_ptr<Call> generate_Call();
 };

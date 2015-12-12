@@ -92,7 +92,7 @@ void Node::create_Devices() {
     Devices.push_back(std::shared_ptr<Device>(new BoosterAmplifier()));
 }
 
-Signal Node::bypass(Signal S) {
+Signal &Node::bypass(Signal &S) {
     for (auto it = Devices.begin(); it != Devices.end(); ++it) {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
@@ -101,7 +101,7 @@ Signal Node::bypass(Signal S) {
     return S;
 }
 
-Signal Node::drop(Signal S) {
+Signal &Node::drop(Signal &S) {
     for (auto it : Devices) {
         S *= it->get_Gain();
         S += it->get_Noise();
@@ -115,7 +115,7 @@ Signal Node::drop(Signal S) {
     return S;
 }
 
-Signal Node::add(Signal S) {
+Signal &Node::add(Signal &S) {
     auto it = Devices.begin();
 
     while (((*it)->DevType != Device::SplitterDevice) &&

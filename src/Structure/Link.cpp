@@ -63,7 +63,7 @@ void Link::create_Devices() {
                           Fiber &)*Devices.back(), *Destination.lock())));
 }
 
-Signal Link::bypass(Signal S) {
+Signal &Link::bypass(Signal &S) {
     for (auto it : Devices) {
         S *= it->get_Gain();
         S += it->get_Noise();
