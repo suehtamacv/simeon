@@ -3,4 +3,3 @@
 SimulationType::SimulationType() {
 
 }
-

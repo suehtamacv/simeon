@@ -21,6 +21,7 @@ class NetworkSimulation {
     long unsigned NumBlockedCalls;
 
     long double get_CallBlockingProbability();
+    long double get_Load();
 
   private:
     bool hasSimulated;

@@ -44,7 +44,8 @@ SOURCES += src/main.cpp \
     src/Devices/Device.cpp \
     src/SimulationTypes/SimulationType.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
-    src/RWA/Routing/LengthOccupationRoutingAvailability.cpp
+    src/RWA/Routing/LengthOccupationRoutingAvailability.cpp \
+    src/SimulationTypes/Simulation_NetworkLoad.cpp
 
 
 HEADERS += \
@@ -87,7 +88,8 @@ HEADERS += \
     include/GeneralClasses/ModulationScheme.h \
     include/SimulationTypes/SimulationType.h \
     include/SimulationTypes/NetworkSimulation.h \
-    include/RWA/Routing/LengthOccupationRoutingAvailability.h
+    include/RWA/Routing/LengthOccupationRoutingAvailability.h \
+    include/SimulationTypes/Simulation_NetworkLoad.h
 
 LIBS += -lboost_system -lboost_program_options
 

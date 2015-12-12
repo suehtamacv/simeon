@@ -68,3 +68,7 @@ long double NetworkSimulation::get_CallBlockingProbability() {
 
     return 1.0 * NumBlockedCalls / (1.0 * NumCalls);
 }
+
+long double NetworkSimulation::get_Load() {
+    return Generator->h;
+}
