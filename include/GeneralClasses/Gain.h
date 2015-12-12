@@ -26,13 +26,13 @@ class Gain {
      * @brief operator - returns the symmetrical Gain.
      * @return the symmetrical Gain.
      */
-    Gain operator-();
+    Gain operator -();
     /**
      * @brief operator + returns the net gain after summing two successive gains.
      * @return net gain after summing two successive gains.
      */
-    Gain operator+(Gain);
-    Gain operator-(Gain);
+    Gain operator+(Gain &);
+    Gain operator-(Gain &);
 
     bool operator>(const Gain &) const;
     bool operator<(const Gain &) const;

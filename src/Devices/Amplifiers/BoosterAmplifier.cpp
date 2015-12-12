@@ -5,7 +5,7 @@ BoosterAmplifier::BoosterAmplifier() : EDFA(-SSS::SSSLoss) {
 
 }
 
-Gain BoosterAmplifier::get_Gain() {
+Gain &BoosterAmplifier::get_Gain() {
     return AmplifierGain;
 }
 

@@ -5,7 +5,7 @@ Amplifier::Amplifier(Gain G) : Device(Device::AmplifierDevice),
 
 }
 
-Power Amplifier::get_Noise() {
+Power &Amplifier::get_Noise() {
     return NoisePower;
 }
 

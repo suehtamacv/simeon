@@ -19,8 +19,8 @@ class ModulationScheme {
     bool operator>(const ModulationScheme &scheme) const;
     bool operator==(const ModulationScheme &scheme) const;
 
-    Gain get_ThresholdOSNR(TransmissionBitrate BitRate);
-    unsigned int get_NumSlots(TransmissionBitrate BitRate);
+    Gain get_ThresholdOSNR(TransmissionBitrate &BitRate);
+    unsigned int get_NumSlots(TransmissionBitrate &BitRate);
 
   private:
     unsigned int M;

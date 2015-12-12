@@ -13,17 +13,18 @@ class Splitter : public Device {
      * @brief Splitter is the standard constructor for a splitter.
      * @param NumPorts is the number of ports of the splitter.
      */
-	Splitter(int NumPorts);
+    Splitter(int NumPorts);
 
-	Gain get_Gain();
-	Power get_Noise();
+    Gain &get_Gain();
+    Power &get_Noise();
     std::shared_ptr<Device> clone();
 
-	void set_NumPorts(int NumPorts);
+    void set_NumPorts(int NumPorts);
 
   private:
-	int NumPorts;
-	Gain SplitterLoss;
+    int NumPorts;
+    Gain SplitterLoss;
+    Power NoisePower;
 };
 
 #endif // SPLITTER_H

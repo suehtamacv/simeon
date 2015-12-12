@@ -15,8 +15,8 @@ class Signal {
 
     Signal();
 
-    Signal &operator *=(Gain);
-    Signal &operator +=(Power);
+    Signal &operator *=(Gain &);
+    Signal &operator +=(Power &);
 
     Gain get_OSNR();
 

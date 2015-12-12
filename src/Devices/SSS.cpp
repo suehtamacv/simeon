@@ -2,16 +2,16 @@
 
 Gain SSS::SSSLoss(-5);
 
-SSS::SSS() : Device(Device::SSSDevice) {
+SSS::SSS() : Device(Device::SSSDevice), NoisePower(0, Power::Watt) {
 
 }
 
-Gain SSS::get_Gain() {
+Gain &SSS::get_Gain() {
     return SSSLoss;
 }
 
-Power SSS::get_Noise() {
-    return Power(0, Power::Watt);
+Power &SSS::get_Noise() {
+    return NoisePower;
 }
 
 std::shared_ptr<Device> SSS::clone() {

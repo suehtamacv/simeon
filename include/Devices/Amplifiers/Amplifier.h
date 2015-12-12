@@ -19,7 +19,7 @@ class Amplifier : public Device {
 
     Amplifier(Gain G);
 
-    Power get_Noise();
+    Power &get_Noise();
 
     void set_Gain(Gain G);
 

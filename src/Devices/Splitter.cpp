@@ -1,15 +1,17 @@
 #include <Devices/Splitter.h>
 
 Splitter::Splitter(int NumPorts) : Device(Device::SplitterDevice),
-    NumPorts(NumPorts), SplitterLoss(1.0 / (NumPorts + 1), Gain::Linear) {
+    NumPorts(NumPorts), SplitterLoss(1.0 / (NumPorts + 1), Gain::Linear),
+    NoisePower(0, Power::Watt) {
+
 }
 
-Gain Splitter::get_Gain() {
+Gain &Splitter::get_Gain() {
     return SplitterLoss;
 }
 
-Power Splitter::get_Noise() {
-    return Power(0, Power::Watt);
+Power &Splitter::get_Noise() {
+    return NoisePower;
 }
 
 void Splitter::set_NumPorts(int NumPorts) {

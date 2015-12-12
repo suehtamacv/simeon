@@ -20,9 +20,9 @@ class Power {
     Power(const Power &);
 
     Power operator*(Gain G);
-    Power operator+(Power P);
-    Power &operator*=(Gain G);
-    Power &operator+=(Power P);
+    Power operator+(Power &P);
+    Power &operator*=(Gain &G);
+    Power &operator+=(Power &P);
 
     long double in_dBm() const;
     long double in_Watts() const;

@@ -33,12 +33,12 @@ bool ModulationScheme::operator ==(const ModulationScheme &scheme) const {
     return ((M == scheme.get_M()) && (SNR_Per_Bit == scheme.get_SNR_Per_Bit()));
 }
 
-Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate BitRate) {
+Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate) {
     return Gain(0.5 * BitRate.get_Bitrate() * SNR_Per_Bit.in_Linear() /
                 PhysicalConstants::BRef, Gain::Linear);
 }
 
-unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate BitRate) {
+unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate) {
     return ceil(BitRate.get_Bitrate() / (Slot::BSlot *
                                          PhysicalConstants::numPolarizations *
                                          log2(M)));

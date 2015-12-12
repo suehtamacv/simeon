@@ -3,16 +3,16 @@
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 
-Signal::Signal() : SignalPower(InputPower) ,
+Signal::Signal() : SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR) { }
 
-Signal &Signal::operator *=(Gain G) {
+Signal &Signal::operator *=(Gain &G) {
     SignalPower *= G;
     NoisePower *= G;
     return *this;
 }
 
-Signal &Signal::operator +=(Power P) {
+Signal &Signal::operator +=(Power &P) {
     NoisePower += P;
     return *this;
 }

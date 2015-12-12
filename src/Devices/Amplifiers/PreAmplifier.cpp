@@ -8,17 +8,17 @@ PreAmplifier::PreAmplifier(Fiber &Segment, Node &Destination) : EDFA(Gain(0)) ,
     numPorts = Destination.Links.size();
 
     if (Destination.get_NodeArch() == Node::SwitchingSelect) {
-        set_Gain(-Segment.get_Gain() - SSS::SSSLoss);
+        set_Gain(-SSS::SSSLoss - Segment.get_Gain());
     } else {
-        set_Gain(-Segment.get_Gain() - Gain(numPorts + 1, Gain::Linear));
+        set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
     }
 }
 
-Gain PreAmplifier::get_Gain() {
+Gain &PreAmplifier::get_Gain() {
     if (Destination.get_NodeArch() == Node::BroadcastAndSelect &&
             Destination.Links.size() != numPorts)  {
         numPorts = Destination.Links.size();
-        set_Gain(-Segment.get_Gain() - Gain(numPorts + 1, Gain::Linear));
+        set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
     }
 
     return AmplifierGain;

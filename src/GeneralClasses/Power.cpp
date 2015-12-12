@@ -19,16 +19,16 @@ Power Power::operator *(Gain G) {
     return Power(value_Watts * G.in_Linear(), Power::Watt);
 }
 
-Power &Power::operator *=(Gain G) {
+Power &Power::operator *=(Gain &G) {
     value_Watts *= G.in_Linear();
     return *this;
 }
 
-Power Power::operator +(Power P) {
+Power Power::operator +(Power &P) {
     return Power(value_Watts + P.in_Watts(), Power::Watt);
 }
 
-Power &Power::operator +=(Power P) {
+Power &Power::operator +=(Power &P) {
     value_Watts += P.in_Watts();
     return *this;
 }

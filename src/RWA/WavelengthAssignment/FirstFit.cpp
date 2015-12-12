@@ -17,20 +17,23 @@ FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) {
         std::owner_less<std::weak_ptr<Link>>> Slots;
     Slots.clear();
 
-    std::vector<bool> SlotsAvailability(Link::NumSlots, true);
+    bool SlotsAvailability[Link::NumSlots];
+
+    for (int i = 0; i < Link::NumSlots; i++) {
+        SlotsAvailability[i] = true;
+    }
 
     for (auto link : Seg.Links) {
-        for (unsigned int i = 0; i < Link::NumSlots; i++) {
-            SlotsAvailability[i] = SlotsAvailability[i] &&
-                                   link.lock()->isSlotFree(i);
+        for (auto slot : link.lock()->Slots) {
+            SlotsAvailability[slot->numSlot] &= slot->isFree;
         }
     }
 
     unsigned int CurrentFreeSlots = 0;
     int si = -1, sf = 0;
 
-    for (auto slot : SlotsAvailability) {
-        if (slot) {
+    for (int i = 0; i < Link::NumSlots; i++) {
+        if (SlotsAvailability[i]) {
             CurrentFreeSlots++;
         } else {
             CurrentFreeSlots = 0;

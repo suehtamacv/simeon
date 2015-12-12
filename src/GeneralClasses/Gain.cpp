@@ -18,11 +18,11 @@ Gain Gain::operator -() {
     return Gain(-value_dB);
 }
 
-Gain Gain::operator +(Gain G) {
+Gain Gain::operator +(Gain &G) {
     return Gain(value_dB + G.in_dB());
 }
 
-Gain Gain::operator -(Gain G) {
+Gain Gain::operator -(Gain &G) {
     return Gain(value_dB - G.in_dB());
 }
 
@@ -43,7 +43,8 @@ long double Gain::in_dB() const {
 
 long double Gain::in_Linear() {
     if (!calculatedLinear) {
-        value_Linear = std::pow(10, 0.1 * value_dB);
+
+        value_Linear = pow10(0.1 * value_dB);
         calculatedLinear = true;
     }
 

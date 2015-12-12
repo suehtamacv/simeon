@@ -16,7 +16,7 @@ class InLineAmplifier : public EDFA {
     static constexpr AmplifierType AT = Amplifier::InLineAmplifierType;
     InLineAmplifier(Fiber &Segment);
 
-    Gain get_Gain();
+    Gain &get_Gain();
     std::shared_ptr<Device> clone();
 };
 

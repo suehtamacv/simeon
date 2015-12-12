@@ -14,7 +14,7 @@ class BoosterAmplifier : public EDFA {
     static constexpr AmplifierType AT = Amplifier::BoosterAmplifierType;
     BoosterAmplifier();
 
-    Gain get_Gain();
+    Gain &get_Gain();
     std::shared_ptr<Device> clone();
 };
 

@@ -16,9 +16,12 @@ class SSS : public Device {
 
     SSS();
 
-    Gain get_Gain();
-    Power get_Noise();
+    Gain &get_Gain();
+    Power &get_Noise();
     std::shared_ptr<Device> clone();
+
+  private:
+    Power NoisePower;
 };
 
 #endif // SSS_H
