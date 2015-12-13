@@ -15,15 +15,15 @@ std::shared_ptr<Call> C) {
      * same ID. This should not happen. The nodes must have sequential ID. **/
 
     std::vector<long double> MinDistance(T->Nodes.size() + 1,
-                                 std::numeric_limits<double>::max());
-    std::set<std::pair<std::shared_ptr<Node>, int>> ActiveVertices;
+                                         std::numeric_limits<double>::max());
+    std::set<std::pair<int, std::shared_ptr<Node>>> ActiveVertices;
     std::vector<int> Precedent(T->Nodes.size() + 1, -1);
 
     MinDistance[C->Origin.lock()->ID] = 0;
-    ActiveVertices.insert({C->Origin.lock(), 0});
+    ActiveVertices.insert({0, C->Origin.lock()});
 
     while (!ActiveVertices.empty()) {
-        std::shared_ptr<Node> CurrentNode = ActiveVertices.begin()->first;
+        std::shared_ptr<Node> CurrentNode = ActiveVertices.begin()->second;
 
         if (CurrentNode == C->Destination.lock()) {
             break;
@@ -37,9 +37,9 @@ std::shared_ptr<Call> C) {
                                     get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);
 
             if (MinDistance[locknode->ID] > newLength) {
-                ActiveVertices.erase({locknode, MinDistance[node.lock()->ID] });
+                ActiveVertices.erase({MinDistance[locknode->ID], locknode});
                 MinDistance[locknode->ID] = newLength;
-                ActiveVertices.insert({locknode, newLength});
+                ActiveVertices.insert({newLength, locknode});
                 Precedent[locknode->ID] = CurrentNode->ID;
             }
         }
