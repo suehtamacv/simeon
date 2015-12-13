@@ -42,7 +42,6 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
         for (auto scheme : Schemes) {
             C->Scheme = scheme;
-
             Links = R_Alg->route(C);
 
             if (Links.empty()) {
@@ -53,7 +52,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             TransparentSegment Segment(Links, scheme, 0);
             Signal S;
 
-            if (Segment.bypass(S).get_OSNR() > scheme.get_ThresholdOSNR(C->Bitrate)) {
+            if (Segment.bypass(S).get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) {
                 Segments.push_back(Segment);
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
 
@@ -68,6 +67,9 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 break;
+            } else if (scheme == Schemes.back()) {
+                C->Status = Call::Blocked;
+                return nullptr;
             }
         }
     } else {

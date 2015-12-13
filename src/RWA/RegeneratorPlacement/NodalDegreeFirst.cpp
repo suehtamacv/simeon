@@ -1,8 +1,6 @@
 #include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
 #include <boost/assert.hpp>
 
-#include <iostream>
-
 NodalDegreeFirst::NodalDegreeFirst(std::shared_ptr<Topology> T) :
     NX_RegeneratorPlacement(T) {
 

@@ -62,3 +62,11 @@ bool Gain::operator <(const Gain &G) const {
 bool Gain::operator ==(const Gain &G) const {
     return (value_dB == G.in_dB());
 }
+
+bool Gain::operator >=(const Gain &G) const {
+    return ((operator >(G)) || (operator ==(G)));
+}
+
+bool Gain::operator <=(const Gain &G) const {
+    return ((operator <(G)) || (operator ==(G)));
+}
