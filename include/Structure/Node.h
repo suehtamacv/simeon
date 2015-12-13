@@ -46,6 +46,8 @@ class Node {
     Node_Type get_NodeType();
     unsigned int get_NumRegenerators();
     unsigned int get_NumAvailableRegenerators();
+    void request_Regenerators(unsigned int);
+    void free_Regenerators(unsigned int);
 
     void insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link);
 

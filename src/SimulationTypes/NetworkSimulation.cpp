@@ -46,6 +46,10 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt) {
                 slot.lock()->useSlot();
             }
         }
+
+        for (auto reg : route->Regenerators) {
+            reg.first.lock()->request_Regenerators(reg.second);
+        }
     }
 
     if (NumCalls++ < NumMaxCalls) {
@@ -54,12 +58,17 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt) {
 }
 
 void NetworkSimulation::drop_call(std::shared_ptr<Event> evt) {
-    if (evt->Parent->Status == Call::Implemented)
+    if (evt->Parent->Status == Call::Implemented) {
         for (auto node : evt->route->Slots) {
             for (auto slot : node.second) {
                 slot.lock()->freeSlot();
             }
         }
+
+        for (auto reg : evt->route->Regenerators) {
+            reg.first.lock()->free_Regenerators(reg.second);
+        }
+    }
 }
 
 void NetworkSimulation::print() {

@@ -47,6 +47,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
             if (Links.empty()) {
                 C->Status = Call::Blocked;
+                return nullptr;
             }
 
             TransparentSegment Segment(Links, scheme, 0);
@@ -59,6 +60,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                 if (SegmentSlots.empty()) {
                     if (scheme == Schemes.back()) {
                         C->Status = Call::Blocked;
+                        return nullptr;
                     }
 
                     continue;
@@ -73,12 +75,14 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
         if (Links.empty()) {
             C->Status = Call::Blocked;
+            return nullptr;
         }
 
         Segments = RA_Alg->assignRegenerators(C, Links);
 
         if (Segments.empty()) {
             C->Status = Call::Blocked;
+            return nullptr;
         }
 
         for (auto segment : Segments) {
@@ -87,7 +91,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             if (SegmentSlots.empty()) {
                 C->Status = Call::Blocked;
                 Slots.clear();
-                break;
+                return nullptr;
             }
 
             Slots.insert(SegmentSlots.begin(), SegmentSlots.end());

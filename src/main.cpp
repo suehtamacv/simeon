@@ -6,6 +6,7 @@
 #include <RWA/Routing/LengthOccupationRoutingContiguity.h>
 #include <RWA/Routing/StaticRouting/ShortestPath.h>
 #include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
+#include <RWA/RegeneratorAssignment/FirstLongestReach.h>
 #include <RWA/WavelengthAssignment/FirstFit.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <RWA/Route.h>
@@ -13,6 +14,9 @@
 
 int main(void) {
     std::shared_ptr<Topology> T = std::shared_ptr<Topology>(new Topology("NSFNet"));
+
+    std::shared_ptr<NodalDegreeFirst> NDF(new NodalDegreeFirst(T));
+    NDF->placeRegenerators(14, 20);
 
     std::vector<ModulationScheme> Schemes;
     Schemes.push_back(ModulationScheme(4, Gain(6.8)));
@@ -27,10 +31,11 @@ int main(void) {
     Bitrates.push_back(TransmissionBitrate(160E9));
     Bitrates.push_back(TransmissionBitrate(400E9));
 
-    std::shared_ptr<RoutingAlgorithm> LORc(new LengthOccupationRoutingContiguity(T));
+    std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
+    std::shared_ptr<RegeneratorAssignment> FLR(new FirstLongestReach(T, Schemes));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
     std::shared_ptr<RoutingWavelengthAssignment>
-    RWA(new RoutingWavelengthAssignment(LORc, FF, Schemes, T));
+    RWA(new RoutingWavelengthAssignment(SP, FF, FLR, Schemes, T));
 
     for (long double load = 80; load <= 300; load += 10) {
         std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));

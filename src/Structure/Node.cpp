@@ -151,3 +151,15 @@ bool Node::isNeighbour(std::weak_ptr<Node> N) {
 void Node::set_NodeType(Node_Type T) {
     Type = T;
 }
+
+void Node::request_Regenerators(unsigned int NReg) {
+    BOOST_ASSERT_MSG(NReg <= NumAvailableRegenerators,
+                     "Request to more regenerators than available.");
+    NumAvailableRegenerators -= NReg;
+}
+
+void Node::free_Regenerators(unsigned int NReg) {
+    BOOST_ASSERT_MSG(NReg + NumAvailableRegenerators <= NumRegenerators,
+                     "Freed more regenerators than available.");
+    NumAvailableRegenerators += NReg;
+}

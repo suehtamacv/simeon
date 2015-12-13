@@ -8,25 +8,23 @@
 Route::Route(std::vector<TransparentSegment> Segments,
              std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
              Slots) : Segments(Segments), Slots(Slots) {
+    Nodes.clear();
+    Links.clear();
+    Slots.clear();
+    Regenerators.clear();
+
     for (auto segment : Segments) {
-        for (auto node : segment.Nodes) {
-            if (node.lock() != segment.Nodes.back().lock()) {
-                Nodes.push_back(node);
-            }
-
-            Regenerators.emplace(node, 0);
-        }
-
+        Nodes.insert(Nodes.end(), segment.Nodes.begin(), segment.Nodes.end() - 1);
+        BOOST_ASSERT_MSG((!segment.NumRegUsed) ||
+                         (segment.Nodes.back().lock()->get_NodeType() != Node::TransparentNode),
+                         "Trying to regenerate in transparent node.");
         Regenerators[segment.Nodes.back()] = segment.NumRegUsed;
 
-        for (auto link : segment.Links) {
-            Links.push_back(link);
-        }
+        Links.insert(Links.end(), segment.Links.begin(), segment.Links.end());
     }
 
     if (!Segments.empty()) {
         Nodes.push_back(Segments.back().Nodes.back());
-        Regenerators.emplace(Segments.back().Nodes.back(), 0);
     }
 }
 
