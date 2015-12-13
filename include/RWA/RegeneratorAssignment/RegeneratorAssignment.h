@@ -27,15 +27,25 @@ class RegeneratorAssignment {
 
     bool isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
                                 std::vector<std::weak_ptr<Link>> Links,
-                                std::weak_ptr<Node> s,
-                                std::weak_ptr<Node> x);
+                                std::weak_ptr<Node> start,
+                                std::weak_ptr<Node> end);
+    bool isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
+                                std::vector<std::weak_ptr<Link>> Links,
+                                std::weak_ptr<Node> start,
+                                std::weak_ptr<Node> end,
+                                ModulationScheme scheme);
     ModulationScheme getMostEfficientScheme(std::shared_ptr<Call> C,
                                             std::vector<std::weak_ptr<Link>> SegmentLinks);
     TransparentSegment createTransparentSegment(std::shared_ptr<Call> C,
             std::vector<std::weak_ptr<Link>> Links,
-            std::weak_ptr<Node> s,
-            std::weak_ptr<Node> r,
+            std::weak_ptr<Node> start,
+            std::weak_ptr<Node> end,
             unsigned int NumRegUsed);
+  private:
+    std::vector<std::weak_ptr<Link>> segmentLinks(
+                                      std::vector<std::weak_ptr<Link>>Links,
+                                      std::weak_ptr<Node> start,
+                                      std::weak_ptr<Node> end);
 };
 
 #endif // REGENERATORASSIGNMENT_H

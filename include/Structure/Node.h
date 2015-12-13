@@ -57,7 +57,7 @@ class Node {
 
     void set_NumRegenerators(unsigned int);
     void set_NodeType(Node_Type);
-    bool isNeighbour(std::weak_ptr<Node>);
+    bool hasAsNeighbour(std::weak_ptr<Node>);
   private:
     Node_Type Type;
     Node_Architecure Architecture;

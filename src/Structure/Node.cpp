@@ -1,4 +1,5 @@
 #include <boost/assert.hpp>
+#include <limits>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
@@ -66,10 +67,18 @@ Node::Node_Type Node::get_NodeType() {
 }
 
 unsigned int Node::get_NumRegenerators() {
+    if (Type == OpaqueNode) {
+        return std::numeric_limits<unsigned int>::max();
+    }
+
     return NumRegenerators;
 }
 
 unsigned int Node::get_NumAvailableRegenerators() {
+    if (Type == OpaqueNode) {
+        return std::numeric_limits<unsigned int>::max();
+    }
+
     return NumAvailableRegenerators;
 }
 
@@ -138,7 +147,7 @@ void Node::set_NumRegenerators(unsigned int NReg) {
     NumAvailableRegenerators = NumRegenerators;
 }
 
-bool Node::isNeighbour(std::weak_ptr<Node> N) {
+bool Node::hasAsNeighbour(std::weak_ptr<Node> N) {
     for (auto it : Neighbours) {
         if (N.lock() == it.lock()) {
             return true;
@@ -153,12 +162,20 @@ void Node::set_NodeType(Node_Type T) {
 }
 
 void Node::request_Regenerators(unsigned int NReg) {
+    if (Type == OpaqueNode) {
+        return;
+    }
+
     BOOST_ASSERT_MSG(NReg <= NumAvailableRegenerators,
                      "Request to more regenerators than available.");
     NumAvailableRegenerators -= NReg;
 }
 
 void Node::free_Regenerators(unsigned int NReg) {
+    if (Type == OpaqueNode) {
+        return;
+    }
+
     BOOST_ASSERT_MSG(NReg + NumAvailableRegenerators <= NumRegenerators,
                      "Freed more regenerators than available.");
     NumAvailableRegenerators += NReg;

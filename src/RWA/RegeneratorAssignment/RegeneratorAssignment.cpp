@@ -17,40 +17,41 @@ unsigned int RegeneratorAssignment::get_NumNeededRegenerators(
 
 bool RegeneratorAssignment::isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links,
-        std::weak_ptr<Node> s,
-        std::weak_ptr<Node> x) {
+        std::weak_ptr<Node> start,
+        std::weak_ptr<Node> end) {
 
-    std::vector<std::weak_ptr<Link>> SegmentLinks;
-    bool foundNode = false;
-
-    for (auto link : Links) {
-        if (link.lock()->Origin.lock() == s.lock()) {
-            SegmentLinks.push_back(link);
-            foundNode = true;
-            continue;
-        } else if (foundNode && (link.lock()->Origin.lock() == x.lock())) {
-            break;
-        } else if (foundNode) {
-            SegmentLinks.push_back(link);
-            continue;
-        }
-    }
+    std::vector<std::weak_ptr<Link>> SegmentLinks = segmentLinks(Links, start, end);
 
     Signal Sig;
     TransparentSegment Segment(SegmentLinks, ModulationSchemes.front(), 0);
     Sig = Segment.bypass(Sig);
 
+    bool isThereScheme = false;
+
     for (auto scheme : ModulationSchemes) {
-        //There's OSNR
-        if (Sig.get_OSNR() > scheme.get_ThresholdOSNR(C->Bitrate)) {
-            //There's spectrum
-            if (Segment.get_MaxContigSlots() > scheme.get_NumSlots(C->Bitrate)) {
-                return true;
-            }
+        isThereScheme |= isThereSpectrumAndOSNR(C, Links, start, end, scheme);
+
+        if (isThereScheme) {
+            return true;
         }
     }
 
     return false;
+}
+
+bool RegeneratorAssignment::isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
+        std::vector<std::weak_ptr<Link> > Links,
+        std::weak_ptr<Node> start,
+        std::weak_ptr<Node> end,
+        ModulationScheme scheme) {
+
+    std::vector<std::weak_ptr<Link>> SegmentLinks = segmentLinks(Links, start, end);
+    TransparentSegment Segment(SegmentLinks, scheme, 0);
+    Signal Sig;
+    Sig = Segment.bypass(Sig);
+
+    return ((Sig.get_OSNR() > scheme.get_ThresholdOSNR(C->Bitrate)) &&
+            (Segment.get_MaxContigSlots() > scheme.get_NumSlots(C->Bitrate)));
 }
 
 ModulationScheme RegeneratorAssignment::getMostEfficientScheme(
@@ -80,19 +81,30 @@ ModulationScheme RegeneratorAssignment::getMostEfficientScheme(
 TransparentSegment RegeneratorAssignment::createTransparentSegment(
     std::shared_ptr<Call> C,
     std::vector<std::weak_ptr<Link> > Links,
-    std::weak_ptr<Node> s,
-    std::weak_ptr<Node> r,
+    std::weak_ptr<Node> start,
+    std::weak_ptr<Node> end,
     unsigned int NumRegUsed) {
+
+    std::vector<std::weak_ptr<Link>> SegmentLinks = segmentLinks(Links, start, end);
+    ModulationScheme Scheme = getMostEfficientScheme(C, SegmentLinks);
+
+    return TransparentSegment(SegmentLinks, Scheme, NumRegUsed);
+}
+
+std::vector<std::weak_ptr<Link>> RegeneratorAssignment::segmentLinks(
+                                  std::vector<std::weak_ptr<Link> > Links,
+                                  std::weak_ptr<Node> start,
+std::weak_ptr<Node> end) {
 
     std::vector<std::weak_ptr<Link>> SegmentLinks;
     bool foundNode = false;
 
     for (auto link : Links) {
-        if (link.lock()->Origin.lock() == s.lock()) {
+        if (link.lock()->Origin.lock() == start.lock()) {
             SegmentLinks.push_back(link);
             foundNode = true;
             continue;
-        } else if (foundNode && (link.lock()->Origin.lock() == r.lock())) {
+        } else if (foundNode && (link.lock()->Origin.lock() == end.lock())) {
             break;
         } else if (foundNode) {
             SegmentLinks.push_back(link);
@@ -100,7 +112,5 @@ TransparentSegment RegeneratorAssignment::createTransparentSegment(
         }
     }
 
-    ModulationScheme Scheme = getMostEfficientScheme(C, SegmentLinks);
-
-    return TransparentSegment(SegmentLinks, Scheme, NumRegUsed);
+    return SegmentLinks;
 }
