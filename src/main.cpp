@@ -20,7 +20,6 @@ int main(void) {
     Schemes.push_back(ModulationScheme(16, Gain(10.5)));
     Schemes.push_back(ModulationScheme(64, Gain(14.8)));
 
-
     std::vector<TransmissionBitrate> Bitrates;
     Bitrates.push_back(TransmissionBitrate(10E9));
     Bitrates.push_back(TransmissionBitrate(40E9));

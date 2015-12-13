@@ -6,10 +6,7 @@
 class RegeneratorPlacement {
   public:
     RegeneratorPlacement(std::shared_ptr<Topology> T);
-
     std::shared_ptr<Topology> T;
-
-  private:
     virtual void placeRegenerators(unsigned, unsigned) = 0;
 };
 

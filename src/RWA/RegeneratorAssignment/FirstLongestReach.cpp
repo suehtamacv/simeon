@@ -32,7 +32,7 @@ std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(
                 if (isThereSpectrumAndOSNR(C, Links, *s, *x)) {
                     if ((*x).lock() == C->Destination.lock()) {
                         TransparentSegments.push_back(
-                            createTransparentSegment(C, Links, *r, *x, 0));
+                            createTransparentSegment(C, Links, *s, *x, 0));
                         return TransparentSegments;
                     } else {
                         r = x;

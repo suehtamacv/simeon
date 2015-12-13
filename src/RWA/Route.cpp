@@ -10,7 +10,6 @@ Route::Route(std::vector<TransparentSegment> Segments,
              Slots) : Segments(Segments), Slots(Slots) {
     Nodes.clear();
     Links.clear();
-    Slots.clear();
     Regenerators.clear();
 
     for (auto segment : Segments) {
@@ -18,7 +17,7 @@ Route::Route(std::vector<TransparentSegment> Segments,
         BOOST_ASSERT_MSG((!segment.NumRegUsed) ||
                          (segment.Nodes.back().lock()->get_NodeType() != Node::TransparentNode),
                          "Trying to regenerate in transparent node.");
-        Regenerators[segment.Nodes.back()] = segment.NumRegUsed;
+        Regenerators.emplace(segment.Nodes.back(), segment.NumRegUsed);
 
         Links.insert(Links.end(), segment.Links.begin(), segment.Links.end());
     }
