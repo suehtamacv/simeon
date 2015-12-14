@@ -22,17 +22,17 @@ int main(void) {
     Bitrates.push_back(TransmissionBitrate(160E9));
     Bitrates.push_back(TransmissionBitrate(400E9));
 
-    std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
+    std::shared_ptr<RoutingAlgorithm> LORc(new LengthOccupationRoutingContiguity(T));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
     std::shared_ptr<RegeneratorAssignmentAlgorithm> FLR(new FirstLongestReach(T,
             Schemes));
     std::shared_ptr<RoutingWavelengthAssignment>
-    RWA(new RoutingWavelengthAssignment(SP, FF, FLR, Schemes, T));
+    RWA(new RoutingWavelengthAssignment(LORc, FF, Schemes, T));
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> MSU(new MostSimultaneouslyUsed(T,
-            RWA, 80, 1E6,
-            Bitrates));
-    MSU->placeRegenerators(200, 0);
+    RWA, 80, 1E6,
+    Bitrates));
+    //MSU->placeRegenerators(200, 0);
 
     for (long double load = 80; load <= 300; load += 10) {
         std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));

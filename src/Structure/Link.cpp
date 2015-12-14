@@ -113,24 +113,22 @@ long double Link::get_Contiguity(std::shared_ptr<Call> C) {
                      "algorithms is not compatible with the contiguity measure");
     int NumRequiredSlots = C->Scheme.get_NumSlots(C->Bitrate);
     int Contiguity = 0;
-    int si = 0;
+    int CurrentFreeSlots = 0;
     bool SlotsAvailability[Link::NumSlots];
 
     for (int i = 0; i < Link::NumSlots; i++) {
         SlotsAvailability[i] = Slots[i]->isFree;
     }
 
-    for (si = 0; si <= Link::NumSlots - NumRequiredSlots; si++) {
-        int slot;
+    for (int sf = 0; sf < Link::NumSlots; sf++) {
+        if (SlotsAvailability[sf]) {
+            CurrentFreeSlots++;
+        } else {
+            CurrentFreeSlots = 0;
+        }
 
-        for (slot = si; slot < si + NumRequiredSlots; slot++) {
-            if (!SlotsAvailability[slot]) {
-                break;
-            }
-
-            if (slot == si + NumRequiredSlots) {
-                Contiguity++;
-            }
+        if (CurrentFreeSlots >= NumRequiredSlots) {
+            Contiguity++;
         }
     }
 

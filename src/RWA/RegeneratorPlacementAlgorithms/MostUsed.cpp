@@ -14,12 +14,12 @@ MostUsed::MostUsed(std::shared_ptr<Topology> T,
     NumCalls(NumCalls),
     Bitrates(Bitrates) {
 
-    BOOST_ASSERT_MSG(RWA->RA_Alg != nullptr, "Regenerator Placement can only run"
-                     " if a Regenerator Assignment Algorithm has been set.");
-
 }
 
 void MostUsed::placeRegenerators(unsigned N, unsigned X) {
+    BOOST_ASSERT_MSG(RWA->RA_Alg != nullptr, "Regenerator Placement can only run"
+                     " if a Regenerator Assignment Algorithm has been set.");
+
     for (auto node : T->Nodes) {
         node->set_NodeType(Node::OpaqueNode);
     }
