@@ -176,16 +176,13 @@ void Node::request_Regenerators(unsigned int NReg) {
 }
 
 void Node::free_Regenerators(unsigned int NReg) {
+    BOOST_ASSERT_MSG(NumUsedRegenerators >= NReg,
+                     "Freed more regenerators than available.");
+
     if (MaxSimultUsedRegenerators < NumUsedRegenerators) {
         MaxSimultUsedRegenerators = NumUsedRegenerators;
     }
 
-    if (Type == OpaqueNode) {
-        return;
-    }
-
-    BOOST_ASSERT_MSG(NumUsedRegenerators >= NReg,
-                     "Freed more regenerators than available.");
     NumUsedRegenerators -= NReg;
 }
 
