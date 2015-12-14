@@ -47,7 +47,8 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
     src/RWA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.cpp \
     src/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp
+    src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/MostUsed.cpp
 
 
 HEADERS += \
@@ -104,7 +105,8 @@ HEADERS += \
     include/RWA/RoutingAlgorithms.h \
     include/RWA/WavelengthAssignmentAlgorithms.h \
     include/RWA.h \
-    include/SimulationTypes.h
+    include/SimulationTypes.h \
+    include/RWA/RegeneratorPlacementAlgorithms/MostUsed.h
 
 LIBS += -lboost_system -lboost_program_options
 

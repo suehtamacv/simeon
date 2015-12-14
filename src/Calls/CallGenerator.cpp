@@ -1,5 +1,6 @@
 #include <Calls/CallGenerator.h>
 #include <Calls/Call.h>
+#include <boost/assert.hpp>
 
 std::default_random_engine CallGenerator::generator;
 
@@ -48,4 +49,10 @@ std::shared_ptr<Call> CallGenerator::generate_Call() {
     C->CallEnding = CallEnding;
 
     return C;
+}
+
+void CallGenerator::set_Load(long double h) {
+    BOOST_ASSERT_MSG(h >= 0, "Network loads must be positive.");
+    this->h = h;
+    ExponentialDistributionH = std::exponential_distribution<long double>(h);
 }

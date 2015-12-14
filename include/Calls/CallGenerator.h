@@ -3,11 +3,10 @@
 
 #include <memory>
 #include <random>
-#include <boost/generator_iterator.hpp>
+#include <queue>
 #include <Calls/Event.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <Structure/Topology.h>
-#include <queue>
 
 /**
  * @brief The CallGenerator class implements methods to continuously generate
@@ -77,6 +76,7 @@ class CallGenerator {
     std::exponential_distribution<long double> ExponentialDistributionH;
 
     std::shared_ptr<Call> generate_Call();
+    void set_Load(long double);
 };
 
 #endif // CALLGENERATOR_H
