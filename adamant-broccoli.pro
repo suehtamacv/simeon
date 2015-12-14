@@ -46,7 +46,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
     src/RWA/Routing/LengthOccupationRoutingAvailability.cpp \
     src/SimulationTypes/Simulation_NetworkLoad.cpp \
-    src/RWA/Routing/LengthOccupationRoutingContiguity.cpp
+    src/RWA/Routing/LengthOccupationRoutingContiguity.cpp \
+    src/RWA/RegeneratorAssignment/FirstNarrowestSpectrum.cpp
 
 
 HEADERS += \
@@ -91,7 +92,8 @@ HEADERS += \
     include/SimulationTypes/NetworkSimulation.h \
     include/RWA/Routing/LengthOccupationRoutingAvailability.h \
     include/SimulationTypes/Simulation_NetworkLoad.h \
-    include/RWA/Routing/LengthOccupationRoutingContiguity.h
+    include/RWA/Routing/LengthOccupationRoutingContiguity.h \
+    include/RWA/RegeneratorAssignment/FirstNarrowestSpectrum.h
 
 LIBS += -lboost_system -lboost_program_options
 

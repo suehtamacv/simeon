@@ -22,7 +22,7 @@ TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
     Links = segment.Links;
 }
 
-Signal &TransparentSegment::bypass(Signal &S) {
+Signal TransparentSegment::bypass(Signal S) {
     S = Links.front().lock()->Origin.lock()->add(S);
 
     for (auto it : Links) {

@@ -49,7 +49,7 @@ Route::Route(const Route &route) {
     }
 }
 
-Signal &Route::bypass(Signal &S) {
+Signal Route::bypass(Signal S) {
     return Segments.back().bypass(S);
 }
 

@@ -27,7 +27,7 @@ class TransparentSegment {
      */
     unsigned int NumRegUsed;
 
-    Signal &bypass(Signal &S);
+    Signal bypass(Signal S);
     unsigned int get_MaxContigSlots();
 };
 
