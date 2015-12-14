@@ -29,9 +29,10 @@ int main(void) {
     std::shared_ptr<RoutingWavelengthAssignment>
     RWA(new RoutingWavelengthAssignment(SP, FF, FLR, Schemes, T));
 
-    std::shared_ptr<RegeneratorPlacementAlgorithm> MU(new MostUsed(T, RWA, 80, 1E6,
+    std::shared_ptr<RegeneratorPlacementAlgorithm> MSU(new MostSimultaneouslyUsed(T,
+            RWA, 80, 1E6,
             Bitrates));
-    MU->placeRegenerators(10, 20);
+    MSU->placeRegenerators(200, 0);
 
     for (long double load = 80; load <= 300; load += 10) {
         std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));
