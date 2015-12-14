@@ -1,4 +1,5 @@
 #include <RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h>
+#include <random>
 #include <boost/assert.hpp>
 
 NodalDegreeFirst::NodalDegreeFirst(std::shared_ptr<Topology> T) :
@@ -18,10 +19,10 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
     }
 
     for (unsigned iter = 0; iter < N; iter++) {
-        std::map<int, int> NodeDegree;
+        std::map<std::shared_ptr<Node>, int> NodeDegree;
 
         for (auto node : PossibleNodes) {
-            NodeDegree.emplace(node->ID, 0);
+            NodeDegree.emplace(node, 0);
         }
 
         for (auto orig : PossibleNodes) {
@@ -31,29 +32,41 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
                 }
 
                 if (orig->hasAsNeighbour(dest)) {
-                    NodeDegree[orig->ID]++;
+                    NodeDegree[orig]++;
                 }
             }
         }
 
-        int MaxDegree = -1, MaxDegreeNode = PossibleNodes.front()->ID;
+        int MaxDegree = -1;
 
         for (auto node : NodeDegree) {
             if (node.second > MaxDegree) {
-                MaxDegreeNode = node.first;
                 MaxDegree = node.second;
             }
         }
 
-        for (auto it = PossibleNodes.begin(); it != PossibleNodes.end(); ++it) {
-            if ((*it)->ID != MaxDegreeNode) {
-                continue;
-            }
+        std::vector<std::shared_ptr<Node>> MaximalNodes;
 
-            (*it)->set_NumRegenerators(X);
-            (*it)->set_NodeType(Node::TranslucentNode);
-            PossibleNodes.erase(it);
-            break;
+        for (auto node : NodeDegree) {
+            if (MaxDegree == node.second) {
+                MaximalNodes.push_back(node.first);
+            }
         }
+
+        std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
+        std::default_random_engine generator;
+
+        auto ChosenNode = MaximalNodes.begin();
+        std::advance(ChosenNode, dist(generator));
+        (*ChosenNode)->set_NumRegenerators(X);
+        (*ChosenNode)->set_NodeType(Node::TranslucentNode);
+
+        for (auto node = PossibleNodes.begin(); node != PossibleNodes.end(); ++node) {
+            if (*node == *ChosenNode) {
+                PossibleNodes.erase(node);
+                break;
+            }
+        }
+
     }
 }
