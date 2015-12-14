@@ -46,6 +46,9 @@ class Node {
     Node_Type get_NodeType();
     unsigned int get_NumRegenerators();
     unsigned int get_NumAvailableRegenerators();
+    unsigned long long get_TotalNumRequestedRegenerators();
+    unsigned int get_NumMaxSimultUsedRegenerators();
+
     void request_Regenerators(unsigned int);
     void free_Regenerators(unsigned int);
 
@@ -63,7 +66,9 @@ class Node {
     Node_Architecure Architecture;
     void create_Devices();
     unsigned int NumRegenerators;
-    unsigned int NumAvailableRegenerators;
+    unsigned int NumUsedRegenerators;
+    unsigned long long TotalNumRequestedRegenerators;
+    unsigned int MaxSimultUsedRegenerators;
 };
 
 #endif // NODE_H

@@ -10,13 +10,17 @@
 Node::Node(int ID, Node_Type T, Node_Architecure A) : ID(ID), Type(T) ,
     Architecture(A) {
     create_Devices();
+    TotalNumRequestedRegenerators =
+        MaxSimultUsedRegenerators =
+            NumUsedRegenerators = 0;
 }
 
 Node::Node(const Node &node) : ID(node.ID) {
     Type = node.Type;
     Architecture = node.Architecture;
     NumRegenerators = node.NumRegenerators;
-    NumAvailableRegenerators = NumRegenerators;
+    NumUsedRegenerators = 0;
+    TotalNumRequestedRegenerators = MaxSimultUsedRegenerators = 0;
 
     for (auto link : node.Links) {
         std::shared_ptr<Link> newlink = std::shared_ptr<Link>(new Link(*link));
@@ -79,7 +83,7 @@ unsigned int Node::get_NumAvailableRegenerators() {
         return std::numeric_limits<unsigned int>::max();
     }
 
-    return NumAvailableRegenerators;
+    return NumRegenerators - NumUsedRegenerators;
 }
 
 void Node::create_Devices() {
@@ -144,7 +148,7 @@ Signal &Node::add(Signal &S) {
 
 void Node::set_NumRegenerators(unsigned int NReg) {
     NumRegenerators = NReg;
-    NumAvailableRegenerators = NumRegenerators;
+    NumUsedRegenerators = 0;
 }
 
 bool Node::hasAsNeighbour(std::weak_ptr<Node> N) {
@@ -162,21 +166,33 @@ void Node::set_NodeType(Node_Type T) {
 }
 
 void Node::request_Regenerators(unsigned int NReg) {
-    if (Type == OpaqueNode) {
-        return;
-    }
+    TotalNumRequestedRegenerators += NReg;
 
-    BOOST_ASSERT_MSG(NReg <= NumAvailableRegenerators,
+    BOOST_ASSERT_MSG((Type == OpaqueNode) ||
+                     (NReg + NumUsedRegenerators <= NumRegenerators),
                      "Request to more regenerators than available.");
-    NumAvailableRegenerators -= NReg;
+
+    NumUsedRegenerators += NReg;
 }
 
 void Node::free_Regenerators(unsigned int NReg) {
+    if (MaxSimultUsedRegenerators < NumUsedRegenerators) {
+        MaxSimultUsedRegenerators = NumUsedRegenerators;
+    }
+
     if (Type == OpaqueNode) {
         return;
     }
 
-    BOOST_ASSERT_MSG(NReg + NumAvailableRegenerators <= NumRegenerators,
+    BOOST_ASSERT_MSG(NumUsedRegenerators >= NReg,
                      "Freed more regenerators than available.");
-    NumAvailableRegenerators += NReg;
+    NumUsedRegenerators -= NReg;
+}
+
+unsigned int Node::get_NumMaxSimultUsedRegenerators() {
+    return MaxSimultUsedRegenerators;
+}
+
+unsigned long long Node::get_TotalNumRequestedRegenerators() {
+    return TotalNumRequestedRegenerators;
 }
