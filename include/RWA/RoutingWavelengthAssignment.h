@@ -7,7 +7,7 @@
 
 class RoutingAlgorithm;
 class WavelengthAssignmentAlgorithm;
-class RegeneratorAssignment;
+class RegeneratorAssignmentAlgorithm;
 class ModulationScheme;
 class Topology;
 class Route;
@@ -16,7 +16,7 @@ class RoutingWavelengthAssignment {
   public:
     RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
-                                std::shared_ptr<RegeneratorAssignment> RA_Alg,
+                                std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
                                 std::vector<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
 
@@ -27,7 +27,7 @@ class RoutingWavelengthAssignment {
 
     std::shared_ptr<RoutingAlgorithm> R_Alg;
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg;
-    std::shared_ptr<RegeneratorAssignment> RA_Alg;
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
     std::vector<ModulationScheme> Schemes;
     std::shared_ptr<Topology> T;
 

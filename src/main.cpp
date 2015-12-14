@@ -1,22 +1,16 @@
-#include <Structure/Topology.h>
-#include <Calls/CallGenerator.h>
-#include <Calls/Call.h>
-#include <GeneralClasses/TransmissionBitrate.h>
-#include <RWA/RoutingWavelengthAssignment.h>
-#include <RWA/Routing/LengthOccupationRoutingContiguity.h>
-#include <RWA/Routing/StaticRouting/ShortestPath.h>
-#include <RWA/RegeneratorPlacement/NodalDegreeFirst.h>
-#include <RWA/RegeneratorAssignment/FirstLongestReach.h>
-#include <RWA/RegeneratorAssignment/FirstNarrowestSpectrum.h>
-#include <RWA/WavelengthAssignment/FirstFit.h>
-#include <SimulationTypes/NetworkSimulation.h>
-#include <RWA/Route.h>
+#include "GeneralClasses.h"
+#include "Devices.h"
+#include "Structure.h"
+#include "Calls.h"
+#include "RWA.h"
+#include "SimulationTypes.h"
+
 #include <iostream>
 
 int main(void) {
     std::shared_ptr<Topology> T = std::shared_ptr<Topology>(new Topology("NSFNet"));
 
-    std::shared_ptr<RegeneratorPlacement> NDF(new NodalDegreeFirst(T));
+    std::shared_ptr<RegeneratorPlacementAlgorithm> NDF(new NodalDegreeFirst(T));
     NDF->placeRegenerators(14, 20);
 
     std::vector<ModulationScheme> Schemes;
@@ -33,7 +27,7 @@ int main(void) {
 
     std::shared_ptr<RoutingAlgorithm> SP(new ShortestPath(T));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
-    std::shared_ptr<RegeneratorAssignment> FNS(new FirstNarrowestSpectrum(T,
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> FNS(new FirstNarrowestSpectrum(T,
             Schemes));
     std::shared_ptr<RoutingWavelengthAssignment>
     RWA(new RoutingWavelengthAssignment(SP, FF, FNS, Schemes, T));

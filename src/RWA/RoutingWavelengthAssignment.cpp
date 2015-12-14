@@ -2,16 +2,16 @@
 #include <algorithm>
 #include <GeneralClasses/ModulationScheme.h>
 #include <RWA/Route.h>
-#include <RWA/Routing/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacement/RegeneratorPlacement.h>
-#include <RWA/RegeneratorAssignment/RegeneratorAssignment.h>
+#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
+#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <Structure/Topology.h>
 
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm> R_Alg,
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
-    std::shared_ptr<RegeneratorAssignment> RA_Alg,
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
     std::vector<ModulationScheme> Schemes,
     std::shared_ptr<Topology> T) :
     R_Alg(R_Alg), WA_Alg(WA_Alg), RA_Alg(RA_Alg), Schemes(Schemes), T(T) {

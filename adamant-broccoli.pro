@@ -25,29 +25,29 @@ SOURCES += src/main.cpp \
     src/Structure/Topology.cpp \
     src/Devices/Amplifiers/EDFA.cpp \
     src/RWA/RoutingWavelengthAssignment.cpp \
-    src/RWA/Routing/RoutingAlgorithm.cpp \
-    src/RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.cpp \
+    src/RWA/RoutingAlgorithms/RoutingAlgorithm.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.cpp \
     src/RWA/Route.cpp \
-    src/RWA/Routing/DijkstraRoutingAlgorithm.cpp \
-    src/RWA/Routing/StaticRouting/StaticRoutingAlgorithm.cpp \
-    src/RWA/Routing/StaticRouting/MinimumHops.cpp \
-    src/RWA/Routing/StaticRouting/ShortestPath.cpp \
-    src/RWA/WavelengthAssignment/FirstFit.cpp \
-    src/RWA/RegeneratorPlacement/RegeneratorPlacement.cpp \
-    src/RWA/RegeneratorPlacement/NX_RegeneratorPlacement.cpp \
-    src/RWA/RegeneratorPlacement/NodalDegreeFirst.cpp \
+    src/RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.cpp \
+    src/RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.cpp \
+    src/RWA/RoutingAlgorithms/StaticRouting/MinimumHops.cpp \
+    src/RWA/RoutingAlgorithms/StaticRouting/ShortestPath.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/FirstFit.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.cpp \
     src/Devices/Amplifiers/InLineAmplifier.cpp \
-    src/RWA/RegeneratorAssignment/RegeneratorAssignment.cpp \
-    src/RWA/RegeneratorAssignment/FirstLongestReach.cpp \
+    src/RWA/RegeneratorAssignmentAlgorithms/FirstLongestReach.cpp \
     src/RWA/TransparentSegment.cpp \
     src/GeneralClasses/ModulationScheme.cpp \
     src/Devices/Device.cpp \
     src/SimulationTypes/SimulationType.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
-    src/RWA/Routing/LengthOccupationRoutingAvailability.cpp \
+    src/RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
     src/SimulationTypes/Simulation_NetworkLoad.cpp \
-    src/RWA/Routing/LengthOccupationRoutingContiguity.cpp \
-    src/RWA/RegeneratorAssignment/FirstNarrowestSpectrum.cpp
+    src/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
+    src/RWA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.cpp \
+    src/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp
 
 
 HEADERS += \
@@ -72,28 +72,39 @@ HEADERS += \
     include/Structure/Topology.h \
     include/Devices/Amplifiers/EDFA.h \
     include/RWA/RoutingWavelengthAssignment.h \
-    include/RWA/Routing/RoutingAlgorithm.h \
-    include/RWA/WavelengthAssignment/WavelengthAssignmentAlgorithm.h \
+    include/RWA/RoutingAlgorithms/RoutingAlgorithm.h \
+    include/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h \
     include/RWA/Route.h \
-    include/RWA/Routing/DijkstraRoutingAlgorithm.h \
-    include/RWA/Routing/StaticRouting/StaticRoutingAlgorithm.h \
-    include/RWA/Routing/StaticRouting/MinimumHops.h \
-    include/RWA/Routing/StaticRouting/ShortestPath.h \
-    include/RWA/WavelengthAssignment/FirstFit.h \
-    include/RWA/RegeneratorPlacement/RegeneratorPlacement.h \
-    include/RWA/RegeneratorPlacement/NX_RegeneratorPlacement.h \
-    include/RWA/RegeneratorPlacement/NodalDegreeFirst.h \
+    include/RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h \
+    include/RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h \
+    include/RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h \
+    include/RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h \
+    include/RWA/WavelengthAssignmentAlgorithms/FirstFit.h \
+    include/RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h \
+    include/RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h \
     include/Devices/Amplifiers/InLineAmplifier.h \
-    include/RWA/RegeneratorAssignment/RegeneratorAssignment.h \
-    include/RWA/RegeneratorAssignment/FirstLongestReach.h \
+    include/RWA/RegeneratorAssignmentAlgorithms/FirstLongestReach.h \
     include/RWA/TransparentSegment.h \
     include/GeneralClasses/ModulationScheme.h \
     include/SimulationTypes/SimulationType.h \
     include/SimulationTypes/NetworkSimulation.h \
-    include/RWA/Routing/LengthOccupationRoutingAvailability.h \
+    include/RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
     include/SimulationTypes/Simulation_NetworkLoad.h \
-    include/RWA/Routing/LengthOccupationRoutingContiguity.h \
-    include/RWA/RegeneratorAssignment/FirstNarrowestSpectrum.h
+    include/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \
+    include/RWA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.h \
+    include/Calls.h \
+    include/Devices.h \
+    include/Devices/Amplifiers.h \
+    include/GeneralClasses.h \
+    include/Structure.h \
+    include/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h \
+    include/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h \
+    include/RWA/RegeneratorAssignmentAlgorithms.h \
+    include/RWA/RegeneratorPlacementAlgorithms.h \
+    include/RWA/RoutingAlgorithms.h \
+    include/RWA/WavelengthAssignmentAlgorithms.h \
+    include/RWA.h \
+    include/SimulationTypes.h
 
 LIBS += -lboost_system -lboost_program_options
 
