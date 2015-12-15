@@ -3,8 +3,15 @@
 
 #include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 
+/**
+ * @brief The NX_RegeneratorPlacement class is a type of RegeneratorPlacementAlgorithm.
+ */
 class NX_RegeneratorPlacement : public RegeneratorPlacementAlgorithm {
   public:
+    /**
+     * @brief NX_RegeneratorPlacement is the standard constructor.
+     * @param T is a pointer to the Topology.
+     */
     NX_RegeneratorPlacement(std::shared_ptr<Topology> T);
 
     /**
