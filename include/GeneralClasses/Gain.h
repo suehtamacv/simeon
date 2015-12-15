@@ -20,6 +20,9 @@ class Gain {
      * @param Type is used to choose between value measured in linear or in dB units.
      */
     Gain(long double value, InitType Type = dB);
+    /**
+     * @brief Gain is the copy constructor of Gain.
+     */
     Gain(const Gain &);
 
     /**
@@ -29,9 +32,13 @@ class Gain {
     Gain operator -();
     /**
      * @brief operator + returns the net gain after summing two successive gains.
-     * @return net gain after summing two successive gains.
+     * @return the net gain after summing two successive gains.
      */
     Gain operator+(Gain &);
+    /**
+     * @brief operator - returns the net gain after subtracting two successive gains.
+     * @return the net gain after subtracting two successive gains.
+     */
     Gain operator-(Gain &);
 
     bool operator>(const Gain &) const;

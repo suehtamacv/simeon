@@ -4,7 +4,7 @@
 #include <Devices/Device.h>
 
 /**
- * @brief The Splitter class represents a Splitter. Is only used with the
+ * @brief The Splitter class represents a splitter. Is only used with the
  * Broadcast-And-Select node architecture.
  */
 class Splitter : public Device {
@@ -19,6 +19,11 @@ class Splitter : public Device {
     Power &get_Noise();
     std::shared_ptr<Device> clone();
 
+    /**
+     * @brief set_NumPorts is used to reconfigure the number of ports of this
+     * Splitter. Is called, for example, when a new link is added to the owner Node.
+     * @param NumPorts is the new number of ports of this Splitter.
+     */
     void set_NumPorts(int NumPorts);
 
   private:

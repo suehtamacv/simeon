@@ -22,21 +22,21 @@ int main(void) {
     Bitrates.push_back(TransmissionBitrate(160E9));
     Bitrates.push_back(TransmissionBitrate(400E9));
 
-    std::shared_ptr<RoutingAlgorithm> LORc(new LengthOccupationRoutingContiguity(T));
+    std::shared_ptr<RoutingAlgorithm> MH(new MinimumHops(T));
     std::shared_ptr<WavelengthAssignmentAlgorithm> FF(new FirstFit(T));
     std::shared_ptr<RegeneratorAssignmentAlgorithm> FLR(new FirstLongestReach(T,
             Schemes));
     std::shared_ptr<RoutingWavelengthAssignment>
-    RWA(new RoutingWavelengthAssignment(LORc, FF, Schemes, T));
+    RWA(new RoutingWavelengthAssignment(MH, FF, FLR, Schemes, T));
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> MSU(new MostSimultaneouslyUsed(T,
-    RWA, 80, 1E6,
+    RWA, 80, 1E4,
     Bitrates));
-    //MSU->placeRegenerators(200, 0);
+    MSU->placeRegenerators(200, 0);
 
-    for (long double load = 80; load <= 300; load += 10) {
+    for (long double load = 80; load <= 80; load += 10) {
         std::shared_ptr<CallGenerator> CG(new CallGenerator(T, load, Bitrates));
-        NetworkSimulation Sim(CG, RWA, 1E5);
+        NetworkSimulation Sim(CG, RWA, 1E4);
         std::cout << load << "\t" << Sim.get_CallBlockingProbability() << std::endl;
     }
 

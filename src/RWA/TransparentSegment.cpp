@@ -40,12 +40,18 @@ Signal TransparentSegment::bypass(Signal S) {
 
 unsigned int TransparentSegment::get_MaxContigSlots() {
 
-    std::vector<bool> SlotsAvailability(Link::NumSlots, true);
+    bool SlotsAvailability[Link::NumSlots];
+
+    for (unsigned i = 0; i < Link::NumSlots; i++) {
+        SlotsAvailability[i] = true;
+    }
 
     for (auto link : Links) {
+        auto linklock = link.lock();
+
         for (unsigned int i = 0; i < Link::NumSlots; i++) {
             SlotsAvailability[i] = SlotsAvailability[i] &&
-                                   link.lock()->isSlotFree(i);
+                                   linklock->isSlotFree(i);
         }
     }
 

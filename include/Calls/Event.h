@@ -27,6 +27,7 @@ class Event {
      * @brief Event is the constructor of a Event.
      * @param t is the instant of ocurral of the Event.
      * @param Type is the type of Event.
+     * @param Parent if a pointer to the owner Call of this Event.
      */
     Event(long double t, Event_Type Type, std::shared_ptr<Call> Parent);
 
@@ -40,8 +41,18 @@ class Event {
      * @brief t is the ocurring time of the event.
      */
     long double t;
+    /**
+     * @brief Type is the type of Event.
+     */
     Event_Type Type;
+    /**
+     * @brief Parent is a pointer to the Call that owns this Event.
+     */
     std::shared_ptr<Call> Parent;
+    /**
+     * @brief route is a pointer to the Route used to stablish the Parent Call.
+     * If did not succeeded to stablish, then this is a pointer to nullptr.
+     */
     std::shared_ptr<Route> route;
 };
 

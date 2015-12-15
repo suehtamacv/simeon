@@ -19,6 +19,11 @@
  */
 class CallGenerator {
   private:
+    /**
+     * @brief The EventCompare struct is used to compare two events. Associated
+     * with the priority_queue, this comparison organizes the events in increasing
+     * order of their occurral times.
+     */
     struct EventCompare {
         bool operator()(const std::shared_ptr<Event> a,
                         const std::shared_ptr<Event> b) const {
@@ -31,6 +36,7 @@ class CallGenerator {
      * @brief CallGenerator is the standard constructor for a CallGenerator.
      * @param T is the topology over which the calls are generated.
      * @param h is the parameter for the call interarrival time distribution.
+     * @param Bitrates is a vector with the possible transmission bitrates.
      */
     CallGenerator(std::shared_ptr<Topology> T, long double h,
                   std::vector<TransmissionBitrate> Bitrates);
@@ -66,7 +72,22 @@ class CallGenerator {
      * @brief Bitrates is a vector containing the possible bitrates.
      */
     std::vector<TransmissionBitrate> Bitrates;
+    /**
+     * @brief generate_Call chooses at random an origin, a destination, a bitrate
+     * and creates a call. Its arrival time and duration are chosen with the
+     * exponential distributions determined by h and mu.
+     *
+     * @return a shared_ptr to a Call.
+     */
+    std::shared_ptr<Call> generate_Call();
+    /**
+     * @brief set_Load is used to set a new value to the network load of this
+     * Generator.
+     * @param load is the new load, in Erlangs.
+     */
+    void set_Load(long double load);
 
+  private:
     static std::default_random_engine generator;
 
     //Distributions
@@ -75,8 +96,6 @@ class CallGenerator {
     std::exponential_distribution<long double> ExponentialDistributionMu;
     std::exponential_distribution<long double> ExponentialDistributionH;
 
-    std::shared_ptr<Call> generate_Call();
-    void set_Load(long double);
 };
 
 #endif // CALLGENERATOR_H

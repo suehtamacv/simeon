@@ -9,7 +9,8 @@
 class Fiber : public Device {
   public:
     /**
-     * @brief alphaFiber is the fiber loss coefficient, measured in dB per kilometer.
+     * @brief alphaFiber is the fiber loss coefficient, measured in dB per
+     * kilometer.
      */
     static long double alphaFiber;
     /**

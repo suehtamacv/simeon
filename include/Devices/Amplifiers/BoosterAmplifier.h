@@ -11,7 +11,13 @@
  */
 class BoosterAmplifier : public EDFA {
   public:
+    /**
+     * @brief AT is the type of amplifier.
+     */
     static constexpr AmplifierType AT = Amplifier::BoosterAmplifierType;
+    /**
+     * @brief BoosterAmplifier is the standard constructor for a BoosterAmplifier.
+     */
     BoosterAmplifier();
 
     Gain &get_Gain();

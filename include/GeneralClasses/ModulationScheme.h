@@ -9,18 +9,55 @@
  */
 class ModulationScheme {
   public:
+    /**
+     * @brief ModulationScheme is the standard constructor for a ModulationScheme.
+     * @param M is the number of points in the QAM constellation.
+     * @param SNR_Per_Bit is the minimum acceptable SNR per Bit in order to
+     * implement a call with this modulation scheme.
+     */
     ModulationScheme(unsigned int M, Gain SNR_Per_Bit);
-    ModulationScheme(const ModulationScheme &scheme);
+    /**
+     * @brief ModulationScheme is the copy constructor for a ModulationScheme.get_M()
+     */
+    ModulationScheme(const ModulationScheme &);
+    /**
+     * @brief get_M returns the number of points in the QAM constellation.
+     * @return the number of points in the QAM constellation.
+     */
     unsigned int get_M() const;
+    /**
+     * @brief get_SNR_Per_Bit returns the minimum acceptable SNR per Bit in order
+     * to implement a call with this modulation scheme.
+     * @return the minimum acceptable SNR per Bit in order to implement a call
+     * with this modulation scheme.
+     */
     Gain get_SNR_Per_Bit() const;
 
+    /**
+     * @brief operator = is the copy assignment of ModulationScheme.
+     * @return a pointer to this.
+     */
     ModulationScheme &operator=(const ModulationScheme &scheme);
 
     bool operator<(const ModulationScheme &scheme) const;
     bool operator>(const ModulationScheme &scheme) const;
     bool operator==(const ModulationScheme &scheme) const;
 
+    /**
+     * @brief get_ThresholdOSNR calculates the minimum OSNR acceptable to
+     * implement a Call with this scheme and a certain TransmissionBitrate.
+     * @param BitRate is the TransmissionBitrate of the Call.
+     * @return the minimum OSNR acceptable to implement a Call with this scheme
+     * and a certain TransmissionBitrate.
+     */
     Gain get_ThresholdOSNR(TransmissionBitrate &BitRate);
+    /**
+     * @brief get_NumSlots calculates the number of slots necessary to implement
+     * a Call with this scheme and a certain TransmissionBitrate.
+     * @param BitRate is the TransmissionBitrate of the Call.
+     * @return the number of slots necessary to implement a Call with this
+     * scheme and a certain TransmissionBitrate.
+     */
     unsigned int get_NumSlots(TransmissionBitrate &BitRate);
 
   private:

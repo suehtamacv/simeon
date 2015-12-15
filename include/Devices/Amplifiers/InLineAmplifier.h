@@ -13,7 +13,15 @@ class Fiber;
  */
 class InLineAmplifier : public EDFA {
   public:
+    /**
+     * @brief AT is the type of amplifier.
+     */
     static constexpr AmplifierType AT = Amplifier::InLineAmplifierType;
+    /**
+     * @brief InLineAmplifier is the standard constructor for a InLineAmplifier.
+     * @param Segment is a pointer to the precedent Fiber segment. This amplifier
+     * will compensate for the loss in such segment.
+     */
     InLineAmplifier(Fiber &Segment);
 
     Gain &get_Gain();

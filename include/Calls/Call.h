@@ -14,10 +14,14 @@ class Node;
  */
 class Call {
   public:
+    /**
+     * @brief The Call_Status enum is used to describe the current status
+     * of the call.
+     */
     enum Call_Status {
-        Implemented,
-        Blocked,
-        Not_Evaluated
+        Implemented, /*!< The RWA algorithm succeeded to find a route */
+        Blocked, /*!< The RWA algorithm could not find a route to stablish the call */
+        Not_Evaluated /*!< The RWA algorithm is running / will run over the call */
     };
 
     /**
@@ -50,7 +54,20 @@ class Call {
      * @brief Bitrate is a Transmission Bitrate.
      */
     TransmissionBitrate Bitrate;
+    /**
+     * @brief Status is the current status of the Call.
+     */
     Call_Status Status;
+    /**
+     * @brief Scheme is the modulation scheme used to stablish the connection,
+     * when applicable.
+     *
+     * This parameter only contains useful information when simulating transparent
+     * networks. In translucent networks, more than one scheme can be used and this
+     * parameter is not useful. Note that some algorithms, such as Length and Occu-
+     * pation Routing Contiguity require this parameter. This means that this routing
+     * algorithm is incompatible with translucent networks.
+     */
     ModulationScheme Scheme;
 };
 

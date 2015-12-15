@@ -15,10 +15,14 @@ class Fiber;
  */
 class PreAmplifier : public EDFA {
   public:
+    /**
+     * @brief AT is the type of amplifier.
+     */
     static constexpr AmplifierType AT = Amplifier::PreAmplifierType;
     /**
      * @brief PreAmplifier is the standard constructor for a pre-amplifier
-     * @param G is the Gain of the Amplifier
+     * @param Segment is the precedent fiber segment.
+     * @param Node is the owner Node of this PreAmplifier.
      */
     PreAmplifier(Fiber &Segment, Node &Node);
 

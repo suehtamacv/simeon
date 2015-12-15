@@ -4,7 +4,7 @@
 #include <Devices/Device.h>
 
 /**
- * @brief The SSS class represents a Spectrum Selective Switch.
+ * @brief The SSS class represents a spectrum selective switch.
  */
 class SSS : public Device {
   public:
@@ -13,7 +13,9 @@ class SSS : public Device {
      * the SSS devices.
      */
     static Gain SSSLoss;
-
+    /**
+     * @brief SSS is the standard constructor of a SSS.
+     */
     SSS();
 
     Gain &get_Gain();
