@@ -19,7 +19,7 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
      * distributed over the entire topology.
      *
      * Please note that MSU is not a NX Reg. Placement Algorithm. It's only parameter is
-     * the number of regenerators, @param NumTotalReg, and not the N-X pair.
+     * the number of regenerators, NumTotalReg, and not the N-X pair.
      *
      * @param NumTotalReg is the number of regenerators that will be distributed over the
      * topology.

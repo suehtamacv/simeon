@@ -16,7 +16,7 @@ class FirstLongestReach : public RegeneratorAssignmentAlgorithm {
     /**
      * @brief FirstLongestReach is the standard constructor.
      * @param T is a pointer to the Topology.
-     * @param Schemes is a vector containing the possible ModulationScheme.
+     * @param ModulationSchemes is a vector containing the possible ModulationScheme.
      */
     FirstLongestReach(std::shared_ptr<Topology> T,
                       std::vector<ModulationScheme> ModulationSchemes);

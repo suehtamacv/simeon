@@ -23,7 +23,7 @@ class Topology {
     Topology(const Topology &topology);
     /**
     * @brief Topology is the basic constructor for a Topology.
-    * @param TopologyFile is the file in which the Topology was stored.
+    * @param TopologyFileName is the file in which the Topology was stored.
     */
     Topology(std::string TopologyFileName);
 
