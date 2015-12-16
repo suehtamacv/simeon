@@ -5,6 +5,7 @@
 #include <vector>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <SimulationTypes/SimulationType.h>
+#include "RWA.h"
 
 class Simulation_NetworkLoad : public SimulationType {
   public:
@@ -22,6 +23,10 @@ class Simulation_NetworkLoad : public SimulationType {
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
     bool hasSimulated;
     bool hasLoaded;
+
+    long long NumCalls;
+
+    RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
 };
 
 #endif // SIMULATION_NETWORKLOAD_H

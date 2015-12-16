@@ -42,7 +42,65 @@ void Simulation_NetworkLoad::print() {
 void Simulation_NetworkLoad::load() {
     SimulationType::load();
 
-    hasLoaded = true;
+    std::cout << std::endl << "Choose a network type." << std::endl;
+
+    do {
+        for (auto nettype : NetworkTypes.left) {
+            std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
+        }
+
+        int Net_Type;
+        std::cin >> Net_Type;
+
+        if (std::cin.fail() || NetworkTypes.left.count((NetworkType) Net_Type) == 0) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid Network Type." << std::endl << std::endl;
+        } else {
+            Type = (NetworkType) Net_Type;
+            break;
+        }
+    } while (1);
+
+    std::cout << std::endl << "Choose a routing algorithm." << std::endl;
+
+    do {
+        for (auto routing : RoutingAlgorithm::RoutingAlgorithmNames.left) {
+            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
+        }
+
+        int Routing_Alg;
+        std::cin >> Routing_Alg;
+
+        if (std::cin.fail() ||
+                RoutingAlgorithm::RoutingAlgorithmNames.left.count
+                ((RoutingAlgorithm::RoutingAlgorithms) Routing_Alg) == 0) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid routing algorithm." << std::endl << std::endl;
+        } else {
+            Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) Routing_Alg;
+            break;
+        }
+    } while (1);
+
+    std::cout << std::endl << "Define the number of calls." << std::endl;
+
+    do {
+        std::cin >> NumCalls;
+
+        if (std::cin.fail() || NumCalls < 0) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid number of calls." << std::endl;
+            std::cout << std::endl << "Define the number of calls." << std::endl;
+        } else {
+            break;
+        }
+    } while (1);
 }
 
 void Simulation_NetworkLoad::save(std::ofstream) {
