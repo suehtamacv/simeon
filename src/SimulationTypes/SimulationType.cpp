@@ -17,7 +17,7 @@ void SimulationType::load() {
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
-    std::cout << std::endl << "Choose a topology." << std::endl;
+    std::cout << std::endl << "-> Choose a topology." << std::endl;
 
     do {
         for (auto topol : Topology::DefaultTopologiesNames.left) {
@@ -27,9 +27,13 @@ void SimulationType::load() {
         int Topol;
         std::cin >> Topol;
 
-        if (Topology::DefaultTopologiesNames.left.count(
+        if (std::cin.fail() || Topology::DefaultTopologiesNames.left.count(
                     (Topology::DefaultTopologies) Topol) == 0) {
-            std::cerr << "Invalid Topology." << std::endl << std::endl;
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid Topology." << std::endl;
+            std::cout << std::endl << "-> Choose a topology." << std::endl;
         } else {
             T = Topology(Topology::DefaultTopologiesPaths.left.at
                          ((Topology::DefaultTopologies) Topol));

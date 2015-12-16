@@ -40,9 +40,10 @@ void Simulation_NetworkLoad::print() {
 }
 
 void Simulation_NetworkLoad::load() {
+    //Generic readings.
     SimulationType::load();
 
-    std::cout << std::endl << "Choose a network type." << std::endl;
+    std::cout << std::endl << "-> Choose a network type." << std::endl;
 
     do {
         for (auto nettype : NetworkTypes.left) {
@@ -56,37 +57,21 @@ void Simulation_NetworkLoad::load() {
             std::cin.clear();
             std::cin.ignore();
 
-            std::cerr << "Invalid Network Type." << std::endl << std::endl;
+            std::cerr << "Invalid Network Type." << std::endl;
+            std::cout << std::endl << "-> Choose a network type." << std::endl;
         } else {
             Type = (NetworkType) Net_Type;
             break;
         }
     } while (1);
 
-    std::cout << std::endl << "Choose a routing algorithm." << std::endl;
+    //Routing Algorithm
+    Routing_Alg = RoutingAlgorithm::load();
 
-    do {
-        for (auto routing : RoutingAlgorithm::RoutingAlgorithmNames.left) {
-            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
-        }
+    //Wavelength Assignment Algorithm
+    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::load();
 
-        int Routing_Alg;
-        std::cin >> Routing_Alg;
-
-        if (std::cin.fail() ||
-                RoutingAlgorithm::RoutingAlgorithmNames.left.count
-                ((RoutingAlgorithm::RoutingAlgorithms) Routing_Alg) == 0) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid routing algorithm." << std::endl << std::endl;
-        } else {
-            Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) Routing_Alg;
-            break;
-        }
-    } while (1);
-
-    std::cout << std::endl << "Define the number of calls." << std::endl;
+    std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
     do {
         std::cin >> NumCalls;
@@ -96,7 +81,7 @@ void Simulation_NetworkLoad::load() {
             std::cin.ignore();
 
             std::cerr << "Invalid number of calls." << std::endl;
-            std::cout << std::endl << "Define the number of calls." << std::endl;
+            std::cout << std::endl << "-> Define the number of calls." << std::endl;
         } else {
             break;
         }

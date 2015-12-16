@@ -29,6 +29,8 @@ class RoutingAlgorithm {
     typedef boost::bimap<RoutingAlgorithms, std::string> RoutAlgNicknameBimap;
     static RoutAlgNicknameBimap RoutingAlgorithmNicknames;
 
+    static RoutingAlgorithms load();
+
     RoutingAlgorithm(std::shared_ptr<Topology> T);
 
     virtual std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C) = 0;

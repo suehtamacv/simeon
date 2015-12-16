@@ -26,7 +26,10 @@ class Simulation_NetworkLoad : public SimulationType {
 
     long long NumCalls;
 
-    RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    RoutingAlgorithm::RoutingAlgorithms
+    Routing_Algorithm;
+    WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    WavAssign_Algorithm;
 };
 
 #endif // SIMULATION_NETWORKLOAD_H

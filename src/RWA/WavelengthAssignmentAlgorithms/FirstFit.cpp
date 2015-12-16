@@ -1,4 +1,5 @@
 #include <RWA/WavelengthAssignmentAlgorithms/FirstFit.h>
+#include <Calls/Call.h>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
