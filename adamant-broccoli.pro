@@ -112,8 +112,12 @@ HEADERS += \
 
 LIBS += -lboost_system -lboost_program_options
 
+INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
+INSTALL_TOPOLOGIES.files = data/topologies/*
+
+INSTALLS += INSTALL_TOPOLOGIES
+
 OTHER_FILES += README.md \
                .astylerc
-
 
 INCLUDEPATH += include/

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <boost/bimap.hpp>
+#include <Structure/Topology.h>
 
 class SimulationType {
   public:
@@ -31,6 +32,7 @@ class SimulationType {
     virtual void help() = 0;
 
     NetworkType Type;
+    Topology T;
 };
 
 #endif // SIMULATIONTYPE_H

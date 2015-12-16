@@ -6,7 +6,16 @@
 #include <sstream>
 #include <Structure/Link.h>
 
+Topology::DefaultTopNamesBimap Topology::DefaultTopologiesNames;
+Topology::DefaultTopPathsBimap Topology::DefaultTopologiesPaths;
+
 Topology::Topology() {
+#define X(a,b,c) DefaultTopologiesNames.insert(DefaultTopNamesBimap::value_type(a,b));
+    DEFAULT_TOPOLOGIES
+#undef X
+#define X(a,b,c) DefaultTopologiesPaths.insert(DefaultTopPathsBimap::value_type(a,c));
+    DEFAULT_TOPOLOGIES
+#undef X
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
@@ -43,6 +52,14 @@ Topology::Topology(const Topology &topology) {
 }
 
 Topology::Topology(std::string TopologyFileName) {
+#define X(a,b,c) DefaultTopologiesNames.insert(DefaultTopNamesBimap::value_type(a,b));
+    DEFAULT_TOPOLOGIES
+#undef X
+#define X(a,b,c) DefaultTopologiesPaths.insert(DefaultTopPathsBimap::value_type(a,c));
+    DEFAULT_TOPOLOGIES
+#undef X
+#undef DEFAULT_TOPOLOGIES
+
     using namespace boost::program_options;
 
     Nodes.clear();

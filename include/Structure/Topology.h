@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <boost/bimap.hpp>
 #include <Structure/Node.h>
 
 typedef std::pair<int, int> OrigDestPair;
@@ -13,6 +14,26 @@ class Link;
 
 class Topology {
   public:
+#define DEFAULT_TOPOLOGIES \
+    X(European, "European", "data/topologies/European") \
+    X(German, "German", "data/topologies/German") \
+    X(NSFNet, "NSFNet", "data/topologies/NSFNet") \
+    X(NSFNetMod, "NSFNet Modified", "data/topologies/NSFNetModified") \
+    X(PacificBell, "Pacific Bell", "data/topologies/PacificBell") \
+    X(PacificBellMod, "Pacific Bell Modified", "data/topologies/PacificBellModified") \
+    X(USBackbone, "US Backbone", "data/topologies/USBackbone") //Code Name, Official Name, FilePath
+
+#define X(a,b,c) a,
+    enum DefaultTopologies {
+        DEFAULT_TOPOLOGIES
+    };
+#undef X
+
+    typedef boost::bimap<DefaultTopologies, std::string> DefaultTopNamesBimap;
+    static DefaultTopNamesBimap DefaultTopologiesNames;
+    typedef boost::bimap<DefaultTopologies, std::string> DefaultTopPathsBimap;
+    static DefaultTopPathsBimap DefaultTopologiesPaths;
+
     /**
      * @brief Topology is the constructor for a empty Topology.
      */

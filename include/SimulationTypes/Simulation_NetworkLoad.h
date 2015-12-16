@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 #include <SimulationTypes/NetworkSimulation.h>
-#include <Structure/Topology.h>
 #include <SimulationTypes/SimulationType.h>
 
 class Simulation_NetworkLoad : public SimulationType {

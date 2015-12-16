@@ -4,7 +4,6 @@
 #include "Calls.h"
 #include "RWA.h"
 #include "SimulationTypes.h"
-
 #include <iostream>
 
 int main(void) {
