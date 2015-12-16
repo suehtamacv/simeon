@@ -83,12 +83,16 @@ Topology::Topology(std::string TopologyFileName) {
         VariablesMap.find("nodes.node")->second.as<std::vector<std::string>>();
 
     for (auto node : NodesList) {
-        int NodeId, Type, Arch, NumReg;
+        int NodeId, NumReg;
+        std::string StrType, StrArch;
 
         std::istringstream NodeParameters(node);
-        NodeParameters >> NodeId >> Type >> Arch >> NumReg;
+        NodeParameters >> NodeId >> StrType >> StrArch >> NumReg;
 
-        add_Node(NodeId, (Node::NodeType) Type, (Node::NodeArchitecure) Arch, NumReg);
+        Node::NodeType Type = Node::NodeTypes.right.at(StrType);
+        Node::NodeArchitecture Arch = Node::NodeArchitectures.right.at(StrArch);
+
+        add_Node(NodeId, Type, Arch, NumReg);
     }
 
     //Reads links from configuration file.
@@ -127,7 +131,7 @@ Topology::Topology(std::string TopologyFileName) {
 }
 
 std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
-                                       Node::NodeArchitecure Arch, int NumReg) {
+                                       Node::NodeArchitecture Arch, int NumReg) {
 
     if (NodeID == -1) {
         NodeID = Nodes.size() + 1;
@@ -149,16 +153,21 @@ std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                           Destination.lock()->ID));
 }
 
-void Topology::save(std::ofstream TopologyFile) {
+void Topology::save(std::string TopologyFileName) {
+    std::ofstream TopologyFile(TopologyFileName,
+                               std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(TopologyFile.is_open(), "Output file is not open");
 
     TopologyFile << "  [nodes]" << std::endl << std::endl;
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
 
+
     for (auto it : Nodes) {
-        TopologyFile << "  node = " << it->ID << " " << it->get_NodeType() << " "
-                     << it->get_NodeArch() << " " << it->get_NumRegenerators() << std::endl;
+        TopologyFile << "  node = " << it->ID
+                     << " " << Node::NodeTypes.left.at(it->get_NodeType())
+                     << " " << Node::NodeArchitectures.left.at(it->get_NodeArch())
+                     << " " << it->get_NumRegenerators() << std::endl;
     }
 
     TopologyFile << std::endl;

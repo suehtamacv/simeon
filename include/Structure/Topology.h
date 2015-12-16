@@ -54,11 +54,11 @@ class Topology {
 
     std::weak_ptr<Node> add_Node(int NodeID = -1,
                                  Node::NodeType = Node::TransparentNode,
-                                 Node::NodeArchitecure = Node::SwitchingSelect, int NumReg = 0);
+                                 Node::NodeArchitecture = Node::SwitchingSelect, int NumReg = 0);
     std::weak_ptr<Link> add_Link(std::weak_ptr<Node> Origin,
                                  std::weak_ptr<Node> Destination, long double Length);
 
-    void save(std::ofstream TopologyFile);
+    void save(std::string TopologyFileName);
 
     long double get_LengthLongestLink();
   private:

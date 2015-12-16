@@ -42,15 +42,15 @@ class Node {
      * and SSS, and Switching Select, that only uses SSS devices.
      */
 #define X(a,b) a,
-    enum NodeArchitecure {
+    enum NodeArchitecture {
         NODEARCH
     };
 #undef X
-    typedef boost::bimap<NodeArchitecure, std::string> NodeArchBimap;
+    typedef boost::bimap<NodeArchitecture, std::string> NodeArchBimap;
     static NodeArchBimap NodeArchitectures;
 
     Node(int ID, NodeType T = TransparentNode,
-         NodeArchitecure A = SwitchingSelect);
+         NodeArchitecture A = SwitchingSelect);
     Node(const Node &node);
 
     bool operator==(const Node &) const;
@@ -61,7 +61,7 @@ class Node {
     std::vector<std::shared_ptr<Link>> Links;
     std::vector<std::shared_ptr<Device>> Devices;
 
-    NodeArchitecure get_NodeArch();
+    NodeArchitecture get_NodeArch();
     NodeType get_NodeType();
     unsigned int get_NumRegenerators();
     unsigned int get_NumAvailableRegenerators();
@@ -82,7 +82,7 @@ class Node {
     bool hasAsNeighbour(std::weak_ptr<Node>);
   private:
     NodeType Type;
-    NodeArchitecure Architecture;
+    NodeArchitecture Architecture;
     void create_Devices();
     unsigned int NumRegenerators;
     unsigned int NumUsedRegenerators;

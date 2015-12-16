@@ -10,7 +10,7 @@
 Node::NodeTypeBimap Node::NodeTypes;
 Node::NodeArchBimap Node::NodeArchitectures;
 
-Node::Node(int ID, NodeType T, NodeArchitecure A) : ID(ID), Type(T) ,
+Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
     Architecture(A) {
 
 #define X(a,b) NodeTypes.insert(NodeTypeBimap::value_type(a,b));
@@ -76,7 +76,7 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     }
 }
 
-Node::NodeArchitecure Node::get_NodeArch() {
+Node::NodeArchitecture Node::get_NodeArch() {
     return Architecture;
 }
 
