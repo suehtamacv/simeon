@@ -9,6 +9,8 @@
 
 int main(void) {
     std::shared_ptr<Topology> T = std::shared_ptr<Topology>(new Topology("NSFNet"));
+    Simulation_NetworkLoad Simulation(T);
+    Simulation.load();
 
     std::vector<ModulationScheme> Schemes;
     Schemes.push_back(ModulationScheme(4, Gain(6.8)));

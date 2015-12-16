@@ -7,8 +7,22 @@
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
-Node::Node(int ID, Node_Type T, Node_Architecure A) : ID(ID), Type(T) ,
+Node::NodeTypeBimap Node::NodeTypes;
+Node::NodeArchBimap Node::NodeArchitectures;
+
+Node::Node(int ID, NodeType T, NodeArchitecure A) : ID(ID), Type(T) ,
     Architecture(A) {
+
+#define X(a,b) NodeTypes.insert(NodeTypeBimap::value_type(a,b));
+    NODETYPE
+#undef X
+#undef NODETYPE
+
+#define X(a,b) NodeArchitectures.insert(NodeArchBimap::value_type(a,b));
+    NODEARCH
+#undef X
+#undef NODEARCH
+
     create_Devices();
     TotalNumRequestedRegenerators =
         MaxSimultUsedRegenerators =
@@ -62,11 +76,11 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     }
 }
 
-Node::Node_Architecure Node::get_NodeArch() {
+Node::NodeArchitecure Node::get_NodeArch() {
     return Architecture;
 }
 
-Node::Node_Type Node::get_NodeType() {
+Node::NodeType Node::get_NodeType() {
     return Type;
 }
 
@@ -161,7 +175,7 @@ bool Node::hasAsNeighbour(std::weak_ptr<Node> N) {
     return false;
 }
 
-void Node::set_NodeType(Node_Type T) {
+void Node::set_NodeType(NodeType T) {
     Type = T;
 }
 

@@ -71,7 +71,7 @@ Topology::Topology(std::string TopologyFileName) {
         std::istringstream NodeParameters(node);
         NodeParameters >> NodeId >> Type >> Arch >> NumReg;
 
-        add_Node(NodeId, (Node::Node_Type) Type, (Node::Node_Architecure) Arch, NumReg);
+        add_Node(NodeId, (Node::NodeType) Type, (Node::NodeArchitecure) Arch, NumReg);
     }
 
     //Reads links from configuration file.
@@ -109,8 +109,8 @@ Topology::Topology(std::string TopologyFileName) {
     }
 }
 
-std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::Node_Type Type,
-                                       Node::Node_Architecure Arch, int NumReg) {
+std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
+                                       Node::NodeArchitecure Arch, int NumReg) {
 
     if (NodeID == -1) {
         NodeID = Nodes.size() + 1;

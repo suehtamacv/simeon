@@ -40,6 +40,8 @@ void Simulation_NetworkLoad::print() {
 }
 
 void Simulation_NetworkLoad::load() {
+    SimulationType::load();
+
     hasLoaded = true;
 }
 
