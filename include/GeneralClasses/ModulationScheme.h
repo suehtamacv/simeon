@@ -3,12 +3,18 @@
 
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/TransmissionBitrate.h>
+#include <vector>
 
 /**
  * @brief The ModulationScheme class represents a modulation scheme.
  */
 class ModulationScheme {
   public:
+#define DEFAULT_MODULATIONSCHEMES \
+    X(4, Gain(6.8, Gain::dB)) \
+    X(16, Gain(10.5, Gain::dB)) \
+    X(64, Gain(14.8, Gain::dB)) //X Macros
+
     /**
      * @brief ModulationScheme is the standard constructor for a ModulationScheme.
      * @param M is the number of points in the QAM constellation.
@@ -59,6 +65,10 @@ class ModulationScheme {
      * scheme and a certain TransmissionBitrate.
      */
     unsigned int get_NumSlots(TransmissionBitrate &BitRate);
+    /**
+     * @brief DefaultSchemes is a vector with the default Modulation Schemes.
+     */
+    static std::vector<ModulationScheme> DefaultSchemes;
 
   private:
     unsigned int M;
