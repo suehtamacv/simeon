@@ -1,4 +1,5 @@
 #include <boost/assert.hpp>
+#include <boost/assign.hpp>
 #include <limits>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
@@ -7,22 +8,25 @@
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
-Node::NodeTypeBimap Node::NodeTypes;
-Node::NodeArchBimap Node::NodeArchitectures;
-
-Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
-    Architecture(A) {
-
-#define X(a,b) NodeTypes.insert(NodeTypeBimap::value_type(a,b));
+Node::NodeTypeBimap Node::NodeTypes =
+    boost::assign::list_of<Node::NodeTypeBimap::relation>
+#define X(a,b) (a,b)
     NODETYPE
 #undef X
 #undef NODETYPE
+    ;
 
-#define X(a,b) NodeArchitectures.insert(NodeArchBimap::value_type(a,b));
+Node::NodeArchBimap Node::NodeArchitectures =
+    boost::assign::list_of<Node::NodeArchBimap::relation>
+#define X(a,b) (a,b)
     NODEARCH
 #undef X
 #undef NODEARCH
+    ;
 
+
+Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
+    Architecture(A) {
     create_Devices();
     TotalNumRequestedRegenerators =
         MaxSimultUsedRegenerators =

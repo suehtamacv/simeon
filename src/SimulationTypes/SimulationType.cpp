@@ -1,13 +1,16 @@
 #include <SimulationTypes/SimulationType.h>
+#include <boost/assign.hpp>
 #include <iostream>
 
-SimulationType::NetworkTypeBimap SimulationType::NetworkTypes;
-
-SimulationType::SimulationType() {
-#define X(a,b) NetworkTypes.insert(NetworkTypeBimap::value_type(a,b));
+SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
+    boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
+#define X(a,b) (a,b)
     NETWORK_TYPE
 #undef X
 #undef NETWORK_TYPE
+    ;
+
+SimulationType::SimulationType() {
 }
 
 void SimulationType::load() {

@@ -1,21 +1,28 @@
 #include <Structure/Topology.h>
 #include <boost/assert.hpp>
+#include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <Structure/Link.h>
 
-Topology::DefaultTopNamesBimap Topology::DefaultTopologiesNames;
-Topology::DefaultTopPathsBimap Topology::DefaultTopologiesPaths;
+Topology::DefaultTopNamesBimap Topology::DefaultTopologiesNames =
+    boost::assign::list_of<Topology::DefaultTopNamesBimap::relation>
+#define X(a,b,c) (a,b)
+    DEFAULT_TOPOLOGIES
+#undef X
+    ;
+
+Topology::DefaultTopPathsBimap Topology::DefaultTopologiesPaths =
+    boost::assign::list_of<Topology::DefaultTopPathsBimap::relation>
+#define X(a,b,c) (a,c)
+    DEFAULT_TOPOLOGIES
+#undef X
+#undef DEFAULT_TOPOLOGIES
+    ;
 
 Topology::Topology() {
-#define X(a,b,c) DefaultTopologiesNames.insert(DefaultTopNamesBimap::value_type(a,b));
-    DEFAULT_TOPOLOGIES
-#undef X
-#define X(a,b,c) DefaultTopologiesPaths.insert(DefaultTopPathsBimap::value_type(a,c));
-    DEFAULT_TOPOLOGIES
-#undef X
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
@@ -52,14 +59,6 @@ Topology::Topology(const Topology &topology) {
 }
 
 Topology::Topology(std::string TopologyFileName) {
-#define X(a,b,c) DefaultTopologiesNames.insert(DefaultTopNamesBimap::value_type(a,b));
-    DEFAULT_TOPOLOGIES
-#undef X
-#define X(a,b,c) DefaultTopologiesPaths.insert(DefaultTopPathsBimap::value_type(a,c));
-    DEFAULT_TOPOLOGIES
-#undef X
-#undef DEFAULT_TOPOLOGIES
-
     using namespace boost::program_options;
 
     Nodes.clear();

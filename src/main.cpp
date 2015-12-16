@@ -7,8 +7,7 @@
 #include <iostream>
 
 int main(void) {
-    {Node(0);}
-    std::shared_ptr<Topology> T = std::shared_ptr<Topology>(new Topology("NSFNet"));
+    std::shared_ptr<Topology> T = std::shared_ptr<Topology>(new Topology("data/topologies/NSFNet"));
 
     Simulation_NetworkLoad Simulation(T);
     Simulation.load();
