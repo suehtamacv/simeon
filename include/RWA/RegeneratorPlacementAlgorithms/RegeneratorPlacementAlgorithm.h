@@ -44,6 +44,10 @@ class RegeneratorPlacementAlgorithm {
     virtual void placeRegenerators(unsigned, unsigned) = 0;
 
     static RegeneratorPlacementAlgorithms define_RegeneratorPlacementAlgorithm();
+    static std::shared_ptr<RegeneratorPlacementAlgorithm>
+    create_RegeneratorPlacementAlgorithm(RegeneratorPlacementAlgorithms,
+                                         std::shared_ptr<Topology>);
+    virtual void load() = 0;
 };
 
 #endif // REGENERATORPLACEMENTALGORITHM_H

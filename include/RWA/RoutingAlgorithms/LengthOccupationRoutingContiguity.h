@@ -6,7 +6,9 @@
 class LengthOccupationRoutingContiguity : public DijkstraRoutingAlgorithm {
   public:
     LengthOccupationRoutingContiguity(std::shared_ptr<Topology> T);
+
     long double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
+    void load() {}
 };
 
 #endif // LENGTHOCCUPATIONROUTINGCONTIGUITY_H

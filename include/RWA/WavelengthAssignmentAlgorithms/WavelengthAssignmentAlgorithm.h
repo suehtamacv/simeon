@@ -26,14 +26,17 @@ class WavelengthAssignmentAlgorithm {
     WavAssignAlgNicknameBimap;
     static WavAssignAlgNicknameBimap WavelengthAssignmentAlgorithmNicknames;
 
-    static WavelengthAssignmentAlgorithms define_WavelengthAssignmentAlgorithm();
-
     WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T);
 
     virtual std::map<std::weak_ptr<Link>,
             std::vector<std::weak_ptr<Slot>>,
             std::owner_less<std::weak_ptr<Link>>>
             assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) = 0;
+    static WavelengthAssignmentAlgorithms define_WavelengthAssignmentAlgorithm();
+    static std::shared_ptr<WavelengthAssignmentAlgorithm>
+    create_WavelengthAssignmentAlgorithm(WavelengthAssignmentAlgorithms,
+                                         std::shared_ptr<Topology>);
+    virtual void load() = 0;
 
     std::shared_ptr<Topology> T;
 };

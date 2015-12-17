@@ -1,4 +1,5 @@
 #include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RWA/RoutingAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
 
@@ -47,4 +48,34 @@ RoutingAlgorithm::define_RoutingAlgorithm() {
     } while (1);
 
     return (RoutingAlgorithms) - 1;
+}
+
+std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
+    RoutingAlgorithms Algorithm, std::shared_ptr<Topology> T) {
+    std::shared_ptr<RoutingAlgorithm> R_Alg;
+
+    switch (Algorithm) {
+        case LORa:
+            R_Alg = std::shared_ptr<RoutingAlgorithm>(
+                        new LengthOccupationRoutingAvailability(T));
+            break;
+
+        case LORc:
+            R_Alg = std::shared_ptr<RoutingAlgorithm>(
+                        new LengthOccupationRoutingContiguity(T));
+            break;
+
+        case MH:
+            R_Alg = std::shared_ptr<RoutingAlgorithm>(
+                        new MinimumHops(T));
+            break;
+
+        case SP:
+            R_Alg = std::shared_ptr<RoutingAlgorithm>(
+                        new ShortestPath(T));
+            break;
+    }
+
+    R_Alg->load();
+    return R_Alg;
 }

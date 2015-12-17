@@ -12,7 +12,7 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
                            std::shared_ptr<RoutingWavelengthAssignment> RWA,
                            long double NetworkLoad,
                            long long unsigned NumCalls,
-                           std::vector<TransmissionBitrate> Bitrates
+                           std::vector<TransmissionBitrate> Bitrates = TransmissionBitrate::DefaultBitrates
                           );
     /**
      * @brief placeRegenerators runs an opaque simulation and inserts NReg regenerators
@@ -25,7 +25,7 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
      * topology.
      */
     void placeRegenerators(unsigned NumTotalReg, unsigned);
-
+    void load() {}
 
   private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;

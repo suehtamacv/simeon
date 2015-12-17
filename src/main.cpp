@@ -12,6 +12,7 @@ int main(void) {
 
     Simulation_NetworkLoad Simulation;
     Simulation.load();
+    Simulation.print();
 
     return 0;
 }

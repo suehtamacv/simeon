@@ -1,4 +1,5 @@
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RWA/RegeneratorAssignmentAlgorithms.h>
 #include <cmath>
 #include <algorithm>
 #include <iostream>
@@ -135,7 +136,7 @@ RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm() {
               << std::endl;
 
     do {
-        for (auto rassign: RegeneratorAssignmentNames.left) {
+        for (auto rassign : RegeneratorAssignmentNames.left) {
             std::cout << "(" << rassign.first << ")\t" << rassign.second << std::endl;
         }
 
@@ -156,4 +157,25 @@ RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm() {
     } while (1);
 
     return (RegeneratorAssignmentAlgorithms) - 1;
+}
+
+std::shared_ptr<RegeneratorAssignmentAlgorithm>
+RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+    RegeneratorAssignmentAlgorithms Algorithm, std::shared_ptr<Topology> T) {
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
+
+    switch (Algorithm) {
+        case FLR:
+            RA_Alg = std::shared_ptr<RegeneratorAssignmentAlgorithm>(new FirstLongestReach(
+                         T, ModulationScheme::DefaultSchemes));
+            break;
+
+        case FNS:
+            RA_Alg = std::shared_ptr<RegeneratorAssignmentAlgorithm>
+                     (new FirstNarrowestSpectrum(T, ModulationScheme::DefaultSchemes));
+            break;
+    }
+
+    RA_Alg->load();
+    return RA_Alg;
 }

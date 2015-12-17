@@ -1,4 +1,5 @@
 #include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RWA/RegeneratorPlacementAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
 
@@ -51,4 +52,15 @@ RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm() {
     } while (1);
 
     return (RegeneratorPlacementAlgorithms) - 1;
+}
+
+std::shared_ptr<RegeneratorPlacementAlgorithm>
+RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
+    RegeneratorPlacementAlgorithms Algorithm,
+    std::shared_ptr<Topology> T) {
+    std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg;
+
+    switch (Algorithm) {
+
+    }
 }

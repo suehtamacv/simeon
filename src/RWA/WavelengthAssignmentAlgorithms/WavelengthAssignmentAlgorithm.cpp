@@ -1,4 +1,5 @@
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
+#include <RWA/WavelengthAssignmentAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
 
@@ -51,4 +52,23 @@ WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm() {
     } while (1);
 
     return (WavelengthAssignmentAlgorithms) - 1;
+}
+
+std::shared_ptr<WavelengthAssignmentAlgorithm>
+WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms Algorithm,
+    std::shared_ptr<Topology> T) {
+
+    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg;
+
+    switch (Algorithm) {
+        case FF:
+            WA_Alg = std::shared_ptr<WavelengthAssignmentAlgorithm>(
+                         new FirstFit(T));
+            break;
+    }
+
+    WA_Alg->load();
+    return WA_Alg;
+
 }
