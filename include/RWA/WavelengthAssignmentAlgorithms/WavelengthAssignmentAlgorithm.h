@@ -26,7 +26,7 @@ class WavelengthAssignmentAlgorithm {
     WavAssignAlgNicknameBimap;
     static WavAssignAlgNicknameBimap WavelengthAssignmentAlgorithmNicknames;
 
-    static WavelengthAssignmentAlgorithms load();
+    static WavelengthAssignmentAlgorithms define_WavelengthAssignmentAlgorithm();
 
     WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T);
 

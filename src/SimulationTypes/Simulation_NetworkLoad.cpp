@@ -66,10 +66,10 @@ void Simulation_NetworkLoad::load() {
     } while (1);
 
     //Routing Algorithm
-    Routing_Alg = RoutingAlgorithm::load();
+    Routing_Alg = RoutingAlgorithm::define_RoutingAlgorithm();
 
     //Wavelength Assignment Algorithm
-    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::load();
+    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 

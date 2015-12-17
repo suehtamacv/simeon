@@ -25,7 +25,7 @@ WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithm(
 }
 
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
-WavelengthAssignmentAlgorithm::load() {
+WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm() {
     std::cout << std::endl << "-> Choose a wavelength assignment algorithm."
               << std::endl;
 

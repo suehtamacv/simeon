@@ -23,7 +23,8 @@ RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T) : T(T) {
 
 }
 
-RoutingAlgorithm::RoutingAlgorithms RoutingAlgorithm::load() {
+RoutingAlgorithm::RoutingAlgorithms
+RoutingAlgorithm::define_RoutingAlgorithm() {
     std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
 
     do {
