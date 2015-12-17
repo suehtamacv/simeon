@@ -14,9 +14,6 @@ SimulationType::SimulationType() {
 }
 
 void SimulationType::load() {
-    std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
-              << std::endl;
-
     std::cout << std::endl << "-> Choose a topology." << std::endl;
 
     do {
@@ -35,8 +32,9 @@ void SimulationType::load() {
             std::cerr << "Invalid Topology." << std::endl;
             std::cout << std::endl << "-> Choose a topology." << std::endl;
         } else {
-            T = Topology(Topology::DefaultTopologiesPaths.left.at
-                         ((Topology::DefaultTopologies) Topol));
+            T = std::shared_ptr<Topology>(new Topology(
+                                              Topology::DefaultTopologiesPaths.left.at
+                                              ((Topology::DefaultTopologies) Topol)));
             break;
         }
     } while (1);

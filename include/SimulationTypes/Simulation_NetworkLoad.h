@@ -9,7 +9,7 @@
 
 class Simulation_NetworkLoad : public SimulationType {
   public:
-    Simulation_NetworkLoad(std::shared_ptr<Topology> T);
+    Simulation_NetworkLoad();
 
     void help();
     void run();
@@ -19,12 +19,12 @@ class Simulation_NetworkLoad : public SimulationType {
     void print();
 
   private:
-    std::shared_ptr<Topology> T;
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
     bool hasSimulated;
     bool hasLoaded;
 
-    long long NumCalls;
+    long double NumCalls;
+    long double NetworkLoadMin, NetworkLoadMax, NetworkLoadStep;
 
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
@@ -34,6 +34,8 @@ class Simulation_NetworkLoad : public SimulationType {
     RegPlacement_Algorithm;
     RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
+
+    void create_Simulations();
 };
 
 #endif // SIMULATION_NETWORKLOAD_H

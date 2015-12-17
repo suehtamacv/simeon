@@ -37,9 +37,7 @@ class SimulationType {
     virtual void help() = 0;
 
     NetworkType Type;
-    Topology T;
-
-    RoutingAlgorithm::RoutingAlgorithms Routing_Alg;
+    std::shared_ptr<Topology> T;
 };
 
 #endif // SIMULATIONTYPE_H

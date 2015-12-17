@@ -18,7 +18,6 @@ RoutingAlgorithm::RoutingAlgorithmNicknames =
 #undef ROUTING_ALGORITHM
     ;
 
-
 RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T) : T(T) {
 
 }

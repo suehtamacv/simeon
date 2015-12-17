@@ -1,9 +1,13 @@
 #include <SimulationTypes/Simulation_NetworkLoad.h>
 #include <iostream>
 
-Simulation_NetworkLoad::Simulation_NetworkLoad(std::shared_ptr<Topology>T) {
-    this->T = std::shared_ptr<Topology>(new Topology(*T));
+Simulation_NetworkLoad::Simulation_NetworkLoad() {
     hasSimulated = hasLoaded = false;
+
+    Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) -1;
+    WavAssign_Algorithm = (WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms) -1;
+    RegPlacement_Algorithm = (RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms) -1;
+    RegAssignment_Algorithm = (RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms) -1;
 }
 
 void Simulation_NetworkLoad::help() {
@@ -65,18 +69,21 @@ void Simulation_NetworkLoad::load() {
         }
     } while (1);
 
-    //Routing Algorithm
-    Routing_Alg = RoutingAlgorithm::define_RoutingAlgorithm();
+    //RWA Algorithms
+    {
+        //Routing Algorithm
+        Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
-    //Wavelength Assignment Algorithm
-    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+        //Wavelength Assignment Algorithm
+        WavAssign_Algorithm = WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
-    if (Type == TranslucentNetwork) {
-        //Regenerator Placement Algorithm
-        RegPlacement_Algorithm = RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
+        if (Type == TranslucentNetwork) {
+            //Regenerator Placement Algorithm
+            RegPlacement_Algorithm = RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
 
-        //Regenerator Assignment Algorithm
-        RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+            //Regenerator Assignment Algorithm
+            RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+        }
     }
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
@@ -94,6 +101,56 @@ void Simulation_NetworkLoad::load() {
             break;
         }
     } while (1);
+
+    std::cout << std::endl << "-> Define the minimum network load." << std::endl;
+
+    do {
+        std::cin >> NetworkLoadMin;
+
+        if (std::cin.fail() || NetworkLoadMin < 0) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the minimum network load." << std::endl;
+        } else {
+            break;
+        }
+    } while(1);
+
+    std::cout << std::endl << "-> Define the maximum network load." << std::endl;
+
+    do {
+        std::cin >> NetworkLoadMax;
+
+        if (std::cin.fail() || NetworkLoadMax < NetworkLoadMin) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the maximum network load." << std::endl;
+        } else {
+            break;
+        }
+    } while(1);
+
+    std::cout << std::endl << "-> Define the network load step." << std::endl;
+
+    do {
+        std::cin >> NetworkLoadStep;
+
+        if (std::cin.fail() || NetworkLoadStep < 0) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the network load step." << std::endl;
+        } else {
+            break;
+        }
+    } while(1);
+
+    create_Simulations();
 }
 
 void Simulation_NetworkLoad::save(std::ofstream) {
@@ -102,4 +159,12 @@ void Simulation_NetworkLoad::save(std::ofstream) {
 
 void Simulation_NetworkLoad::load_file(std::ifstream) {
     hasLoaded = true;
+}
+
+void Simulation_NetworkLoad::create_Simulations() {
+    for (long double load = NetworkLoadMin; load <= NetworkLoadMax; load += NetworkLoadStep) {
+        std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+        std::shared_ptr<CallGenerator>(
+            new CallGenerator(TopologyCopy, load, TransmissionBitrate::DefaultBitrates));
+    }
 }
