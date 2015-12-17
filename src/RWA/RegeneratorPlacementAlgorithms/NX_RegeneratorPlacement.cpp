@@ -10,11 +10,16 @@ void NX_RegeneratorPlacement::load() {
 
     int N;
 
-    do {
+    do {        
         std::cin >> N;
 
-        if(N < 1)
+        if(std::cin.fail() || N < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
             std::cerr << "Invalid number." << std::endl << std::endl;
+            std::cout << "Enter with the number of translucent nodes." << std::endl;
+        }
         else
             break;
 
@@ -27,8 +32,13 @@ void NX_RegeneratorPlacement::load() {
     do {
         std::cin >> X;
 
-        if(X < 1)
+        if(std::cin.fail() || X < 1 || N < X) {
+            std::cin.clear();
+            std::cin.ignore();
+
             std::cerr << "Invalid number." << std::endl << std::endl;
+            std::cout << "Enter with the number of regenerators per node." << std::endl;
+        }
         else
             break;
     } while(1);

@@ -139,16 +139,19 @@ long double Link::get_Contiguity(std::shared_ptr<Call> C) {
 }
 
 void Link::load() {
-
     std::cout << "Insert the number of slots per link." << std::endl;
 
-    int Num;
-
     do {
+        int Num;
         std::cin >> Num;
 
-        if(Num<1)
+        if(std::cin.fail() || Num < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
             std::cerr << "Invalid number." << std::endl << std::endl;
+            std::cout << "Insert the number of slots per link." << std::endl;
+        }
         else {
             NumSlots = Num;
             break;
@@ -158,14 +161,19 @@ void Link::load() {
     std::cout << "Insert the distance between amplifiers." << std::endl;
 
     do {
+        int Num;
         std::cin >> Num;
 
-        if(Num<1)
+        if(std::cin.fail() || Num < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
             std::cerr << "Invalid number." << std::endl << std::endl;
+            std::cout << "Insert the distance between amplifiers." << std::endl;
+        }
         else {
             AvgSpanLength = Num;
             break;
         }
-    } while(1);
-
+    } while(1);  
 }

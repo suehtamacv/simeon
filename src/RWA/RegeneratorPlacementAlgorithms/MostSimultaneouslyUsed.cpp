@@ -57,8 +57,13 @@ void MostSimultaneouslyUsed::load() {
     do {
         std::cin >> NumTotalReg;
 
-        if(NumTotalReg < 1)
+        if(std::cin.fail() || NumTotalReg < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
             std::cerr << "Invalid number." << std::endl << std::endl;
+            std::cout << "Enter with the number of regenerators to be distributed." << std::endl;
+        }
         else
             break;
 
@@ -71,8 +76,13 @@ void MostSimultaneouslyUsed::load() {
     do {
         std::cin >> X;
 
-        if(X < 1)
+        if(std::cin.fail() || X < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
             std::cerr << "Invalid number." << std::endl << std::endl;
+            std::cout << "Enter with the number of regenerators per node." << std::endl;
+        }
         else
             break;
     } while(1);
