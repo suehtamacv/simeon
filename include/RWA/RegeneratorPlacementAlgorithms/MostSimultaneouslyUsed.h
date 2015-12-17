@@ -26,7 +26,7 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
      */
     void placeRegenerators(unsigned NumTotalReg, unsigned);
 
-
+    void load();
   private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
     long double NetworkLoad;

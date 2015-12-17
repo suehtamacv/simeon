@@ -48,3 +48,34 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned) {
     }
 
 }
+
+void MostSimultaneouslyUsed::load() {
+    std::cout << "Enter with the number of regenerators to be distributed." << std::endl;
+
+    int NumTotalReg;
+
+    do {
+        std::cin >> NumTotalReg;
+
+        if(NumTotalReg < 1)
+            std::cerr << "Invalid number." << std::endl << std::endl;
+        else
+            break;
+
+    } while(1);
+
+    std::cout << "Enter with the number of regenerators per node." << std::endl;
+
+    int X;
+
+    do {
+        std::cin >> X;
+
+        if(X < 1)
+            std::cerr << "Invalid number." << std::endl << std::endl;
+        else
+            break;
+    } while(1);
+
+    placeRegenerators(NumTotalReg, X);
+}

@@ -20,6 +20,8 @@ class NX_RegeneratorPlacement : public RegeneratorPlacementAlgorithm {
      * @param X is the number of regenerators per translucent node.
      */
     virtual void placeRegenerators(unsigned N, unsigned X) = 0;
+
+    void load();
 };
 
 #endif // NX_REGENERATORPLACEMENT_H
