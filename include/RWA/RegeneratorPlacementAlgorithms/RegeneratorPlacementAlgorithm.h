@@ -3,6 +3,7 @@
 
 #include <Structure/Topology.h>
 #include <boost/bimap.hpp>
+#include <iostream>
 
 /**
  * @brief The RegeneratorPlacementAlgorithm class decides how to insert the

@@ -2,6 +2,8 @@
 #include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
 
+unsigned MostSimultaneouslyUsed::MSU_NumTotalReg;
+
 MostSimultaneouslyUsed::MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
         std::shared_ptr<RoutingWavelengthAssignment> RWA,
         long double NetworkLoad,
@@ -47,4 +49,27 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned) {
         }
     }
 
+}
+
+void MostSimultaneouslyUsed::load() {
+    std::cout << std::endl << "-> Define the total number of regenerators."
+              << std::endl;
+
+    do {
+        int NumTotalReg;
+        std::cin >> NumTotalReg;
+
+        if (std::cin.fail() || NumTotalReg < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid number." << std::endl;
+            std::cout << std::endl << "-> Define the total number of regenerators."
+                      << std::endl;
+        } else {
+            MSU_NumTotalReg = NumTotalReg;
+            break;
+        }
+
+    } while (1);
 }

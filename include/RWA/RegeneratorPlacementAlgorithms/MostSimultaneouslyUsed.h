@@ -24,14 +24,15 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
      * @param NumTotalReg is the number of regenerators that will be distributed over the
      * topology.
      */
-    void placeRegenerators(unsigned NumTotalReg, unsigned);
-    void load() {}
+    void placeRegenerators(unsigned NumTotalReg = MSU_NumTotalReg, unsigned = 0);
+    void load();
 
   private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
     long double NetworkLoad;
     long long unsigned NumCalls;
     std::vector<TransmissionBitrate> Bitrates;
+    static unsigned MSU_NumTotalReg;
 
 };
 

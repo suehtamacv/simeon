@@ -42,14 +42,14 @@ unsigned int TransparentSegment::get_MaxContigSlots() {
 
     bool SlotsAvailability[Link::NumSlots];
 
-    for (unsigned i = 0; i < Link::NumSlots; i++) {
+    for (int i = 0; i < Link::NumSlots; i++) {
         SlotsAvailability[i] = true;
     }
 
     for (auto link : Links) {
         auto linklock = link.lock();
 
-        for (unsigned int i = 0; i < Link::NumSlots; i++) {
+        for (int i = 0; i < Link::NumSlots; i++) {
             SlotsAvailability[i] = SlotsAvailability[i] &&
                                    linklock->isSlotFree(i);
         }
