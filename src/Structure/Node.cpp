@@ -211,3 +211,43 @@ unsigned int Node::get_NumMaxSimultUsedRegenerators() {
 unsigned long long Node::get_TotalNumRequestedRegenerators() {
     return TotalNumRequestedRegenerators;
 }
+
+void Node::load() {
+    std::cout << "Choose the architecture of the node." << std::endl;
+
+    int Arch;
+
+    do {
+        for (auto arc : NodeArchitectures.left) {
+            std::cout << "(" << arc.first << ")\t" << arc.second << std::endl;
+        }
+
+        std::cin >> Arch;
+
+        if (NodeArchitectures.left.count((NodeArchitecture) Arch) == 0) {
+            std::cerr << "Invalid Architecture." << std::endl << std::endl;
+        } else {
+            Architecture = (NodeArchitecture) Arch;
+            break;
+        }
+    } while(1);
+
+    int Typ;
+
+    std::cout << "Choose the type of the node." << std::endl;
+
+    do {
+        for (auto typ : NodeTypes.left) {
+            std::cout << "(" << typ.first << ")\t" << typ.second << std::endl;
+        }
+
+        std::cin >> Typ;
+
+        if (NodeTypes.left.count((NodeType) Typ) == 0) {
+            std::cerr << "Invalid Type." << std::endl << std::endl;
+        } else {
+            Type = (NodeType) Typ;
+            break;
+        }
+    } while (1);
+}

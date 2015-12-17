@@ -7,6 +7,9 @@
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 
+int Link::NumSlots = 64;
+long double Link::AvgSpanLength = 80;
+
 Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
            long double Length) {
@@ -133,4 +136,36 @@ long double Link::get_Contiguity(std::shared_ptr<Call> C) {
     }
 
     return Contiguity;
+}
+
+void Link::load() {
+
+    std::cout << "Insert the number of slots per link." << std::endl;
+
+    int Num;
+
+    do {
+        std::cin >> Num;
+
+        if(Num<1)
+            std::cerr << "Invalid number." << std::endl << std::endl;
+        else {
+            NumSlots = Num;
+            break;
+        }
+    } while(1);
+
+    std::cout << "Insert the distance between amplifiers." << std::endl;
+
+    do {
+        std::cin >> Num;
+
+        if(Num<1)
+            std::cerr << "Invalid number." << std::endl << std::endl;
+        else {
+            AvgSpanLength = Num;
+            break;
+        }
+    } while(1);
+
 }
