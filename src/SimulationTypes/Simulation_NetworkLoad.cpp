@@ -71,6 +71,14 @@ void Simulation_NetworkLoad::load() {
     //Wavelength Assignment Algorithm
     WavAssign_Algorithm = WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
+    if (Type == TranslucentNetwork) {
+        //Regenerator Placement Algorithm
+        RegPlacement_Algorithm = RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
+
+        //Regenerator Assignment Algorithm
+        RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+    }
+
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
     do {

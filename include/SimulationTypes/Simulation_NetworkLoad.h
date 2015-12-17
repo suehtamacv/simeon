@@ -30,6 +30,10 @@ class Simulation_NetworkLoad : public SimulationType {
     Routing_Algorithm;
     WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;
+    RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    RegPlacement_Algorithm;
+    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RegAssignment_Algorithm;
 };
 
 #endif // SIMULATION_NETWORKLOAD_H

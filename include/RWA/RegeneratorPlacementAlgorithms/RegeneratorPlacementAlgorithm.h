@@ -13,7 +13,7 @@ class RegeneratorPlacementAlgorithm {
 #define REGPLACEMENT_ALGORITHMS \
     X(MSU, "Most Simultaneously Used", "MSU") \
     X(MU, "Most Used", "MU") \
-    X(NDF, "Nodal Degree First", "NDF")
+    X(NDF, "Nodal Degree First", "NDF") //X Macros
 
 
 #define X(a,b,c) a,
@@ -43,7 +43,7 @@ class RegeneratorPlacementAlgorithm {
      */
     virtual void placeRegenerators(unsigned, unsigned) = 0;
 
-    RegeneratorPlacementAlgorithms define_RegeneratorPlacementAlgorithm();
+    static RegeneratorPlacementAlgorithms define_RegeneratorPlacementAlgorithm();
 };
 
 #endif // REGENERATORPLACEMENTALGORITHM_H
