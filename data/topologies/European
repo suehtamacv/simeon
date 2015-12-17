@@ -1,34 +1,34 @@
   [nodes]
 
 # node = ID TYPE ARCHITECTURE NUMREG
-  node = 1 0 1 0
-  node = 2 0 1 0
-  node = 3 0 1 0
-  node = 4 0 1 0
-  node = 5 0 1 0
-  node = 6 0 1 0
-  node = 7 0 1 0
-  node = 8 0 1 0
-  node = 9 0 1 0
-  node = 10 0 1 0
-  node = 11 0 1 0
-  node = 12 0 1 0
-  node = 13 0 1 0
-  node = 14 0 1 0
-  node = 15 0 1 0
-  node = 16 0 1 0
-  node = 17 0 1 0
-  node = 18 0 1 0
-  node = 19 0 1 0
-  node = 20 0 1 0
-  node = 21 0 1 0
-  node = 22 0 1 0
-  node = 23 0 1 0
-  node = 24 0 1 0
-  node = 25 0 1 0
-  node = 26 0 1 0
-  node = 27 0 1 0
-  node = 28 0 1 0
+  node = 1 transparent ss 0
+  node = 2 transparent ss 0
+  node = 3 transparent ss 0
+  node = 4 transparent ss 0
+  node = 5 transparent ss 0
+  node = 6 transparent ss 0
+  node = 7 transparent ss 0
+  node = 8 transparent ss 0
+  node = 9 transparent ss 0
+  node = 10 transparent ss 0
+  node = 11 transparent ss 0
+  node = 12 transparent ss 0
+  node = 13 transparent ss 0
+  node = 14 transparent ss 0
+  node = 15 transparent ss 0
+  node = 16 transparent ss 0
+  node = 17 transparent ss 0
+  node = 18 transparent ss 0
+  node = 19 transparent ss 0
+  node = 20 transparent ss 0
+  node = 21 transparent ss 0
+  node = 22 transparent ss 0
+  node = 23 transparent ss 0
+  node = 24 transparent ss 0
+  node = 25 transparent ss 0
+  node = 26 transparent ss 0
+  node = 27 transparent ss 0
+  node = 28 transparent ss 0
 
   [links]
 
