@@ -4,6 +4,7 @@
 #include <boost/bimap.hpp>
 #include <memory>
 #include <vector>
+#include <iostream>
 #include <GeneralClasses/Signal.h>
 #include <Devices/Device.h>
 
@@ -80,6 +81,8 @@ class Node {
     void set_NumRegenerators(unsigned int);
     void set_NodeType(NodeType);
     bool hasAsNeighbour(std::weak_ptr<Node>);
+
+    void load();
   private:
     NodeType Type;
     NodeArchitecture Architecture;
