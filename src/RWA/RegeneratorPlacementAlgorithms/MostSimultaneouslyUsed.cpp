@@ -21,6 +21,10 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned) {
     BOOST_ASSERT_MSG(RWA->RA_Alg != nullptr, "Regenerator Placement can only run"
                      " if a Regenerator Assignment Algorithm has been set.");
 
+    if (NumTotalReg == 0) {
+        NumTotalReg = MSU_NumTotalReg;
+    }
+
     for (auto node : T->Nodes) {
         node->set_NodeType(Node::OpaqueNode);
     }

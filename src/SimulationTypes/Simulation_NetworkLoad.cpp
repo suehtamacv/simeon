@@ -175,7 +175,11 @@ void Simulation_NetworkLoad::load_file(std::ifstream) {
 }
 
 void Simulation_NetworkLoad::create_Simulations() {
-	T = Topology::create_DefaultTopology(Chosen_Topology);
+    T = Topology::create_DefaultTopology(Chosen_Topology);
+
+    if (Type == TranslucentNetwork) {
+        place_Regenerators(T);
+    }
 
     for (long double load = NetworkLoadMin; load <= NetworkLoadMax;
             load += NetworkLoadStep) {
@@ -212,4 +216,26 @@ void Simulation_NetworkLoad::create_Simulations() {
                     Generator, RWA, NumCalls)));
 
     }
+}
+
+void Simulation_NetworkLoad::place_Regenerators(std::shared_ptr<Topology> T) {
+
+    std::shared_ptr<RoutingAlgorithm> R_Alg =
+        RoutingAlgorithm::create_RoutingAlgorithm(
+            Routing_Algorithm, T);
+    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
+        WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+            WavAssign_Algorithm, T);
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
+        RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+            RegAssignment_Algorithm, T);
+    std::shared_ptr<RoutingWavelengthAssignment> RWA(
+        new RoutingWavelengthAssignment(
+            R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
+
+    std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg =
+        RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
+            RegPlacement_Algorithm, T, RWA, NetworkLoadMin, NumCalls);
+
+    RP_Alg->placeRegenerators();
 }

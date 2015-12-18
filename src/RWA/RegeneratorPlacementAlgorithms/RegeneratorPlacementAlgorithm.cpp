@@ -57,10 +57,32 @@ RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm() {
 std::shared_ptr<RegeneratorPlacementAlgorithm>
 RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
     RegeneratorPlacementAlgorithms Algorithm,
-    std::shared_ptr<Topology> T) {
+    std::shared_ptr<Topology> T,
+    std::shared_ptr<RoutingWavelengthAssignment> RWA,
+    long double OptimizationLoad ,
+    long long NumCalls) {
+
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg;
 
     switch (Algorithm) {
+        case MSU:
+            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
+                         new MostSimultaneouslyUsed(
+                             T, RWA, OptimizationLoad, NumCalls));
+            break;
 
+        case MU:
+            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
+                         new MostUsed(
+                             T, RWA, OptimizationLoad, NumCalls));
+            break;
+
+        case NDF:
+            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
+                         new NodalDegreeFirst(T));
+            break;
     }
+
+    RP_Alg->load();
+    return RP_Alg;
 }

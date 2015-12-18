@@ -5,6 +5,8 @@
 #include <boost/bimap.hpp>
 #include <iostream>
 
+class RoutingWavelengthAssignment;
+
 /**
  * @brief The RegeneratorPlacementAlgorithm class decides how to insert the
  * regenerators over the network
@@ -42,12 +44,15 @@ class RegeneratorPlacementAlgorithm {
     /**
      * @brief placeRegenerators places the regenerators over the network.
      */
-    virtual void placeRegenerators(unsigned, unsigned) = 0;
+    virtual void placeRegenerators(unsigned = 0, unsigned = 0) = 0;
 
     static RegeneratorPlacementAlgorithms define_RegeneratorPlacementAlgorithm();
     static std::shared_ptr<RegeneratorPlacementAlgorithm>
     create_RegeneratorPlacementAlgorithm(RegeneratorPlacementAlgorithms,
-                                         std::shared_ptr<Topology>);
+                                         std::shared_ptr<Topology>,
+                                         std::shared_ptr<RoutingWavelengthAssignment> RWA,
+                                         long double OptimizationLoad ,
+                                         long long NumCalls);
     virtual void load() = 0;
 };
 

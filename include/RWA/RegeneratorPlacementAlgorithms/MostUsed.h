@@ -11,8 +11,8 @@ class MostUsed : public NX_RegeneratorPlacement {
     MostUsed(std::shared_ptr<Topology> T,
              std::shared_ptr<RoutingWavelengthAssignment> RWA,
              long double NetworkLoad,
-             long long unsigned NumCalls,
-             std::vector<TransmissionBitrate> Bitrates
+             long long unsigned NumCalls = 1E6,
+             std::vector<TransmissionBitrate> Bitrates = TransmissionBitrate::DefaultBitrates
             );
 
     void placeRegenerators(unsigned N, unsigned X);

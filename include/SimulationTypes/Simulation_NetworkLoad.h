@@ -36,6 +36,7 @@ class Simulation_NetworkLoad : public SimulationType {
     RegAssignment_Algorithm;
 
     void create_Simulations();
+    void place_Regenerators(std::shared_ptr<Topology> T);
 };
 
 #endif // SIMULATION_NETWORKLOAD_H

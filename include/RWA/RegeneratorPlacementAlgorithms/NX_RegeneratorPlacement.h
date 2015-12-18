@@ -23,7 +23,6 @@ class NX_RegeneratorPlacement : public RegeneratorPlacementAlgorithm {
 
     void load();
 
-  private:
     unsigned static NX_N;
     unsigned static NX_X;
 };

@@ -11,7 +11,7 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
     MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
                            std::shared_ptr<RoutingWavelengthAssignment> RWA,
                            long double NetworkLoad,
-                           long long unsigned NumCalls,
+                           long long unsigned NumCalls = 1E6,
                            std::vector<TransmissionBitrate> Bitrates = TransmissionBitrate::DefaultBitrates
                           );
     /**
