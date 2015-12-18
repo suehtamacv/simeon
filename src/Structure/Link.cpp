@@ -139,26 +139,6 @@ long double Link::get_Contiguity(std::shared_ptr<Call> C) {
 }
 
 void Link::load() {
-    std::cout << std::endl << "-> Define the number of slots per link."
-              << std::endl;
-
-    do {
-        int NSlots;
-        std::cin >> NSlots;
-
-        if (std::cin.fail() || NSlots < 1) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid number of slots." << std::endl;
-            std::cout << std::endl << "-> Define the number of slots per link."
-                      << std::endl;
-        } else {
-            NumSlots = NSlots;
-            break;
-        }
-    } while (1);
-
     std::cout << std::endl << "-> Define the distance between inline amplifiers."
               << std::endl;
 

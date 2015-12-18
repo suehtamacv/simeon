@@ -1,47 +1,51 @@
 #include <RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
+unsigned NX_RegeneratorPlacement::NX_N;
+unsigned NX_RegeneratorPlacement::NX_X;
+
 NX_RegeneratorPlacement::NX_RegeneratorPlacement(std::shared_ptr<Topology> T) :
     RegeneratorPlacementAlgorithm(T) {
 
 }
 
 void NX_RegeneratorPlacement::load() {
-    std::cout << "Enter with the number of translucent nodes." << std::endl;
-
-    int N;
-
-    do {        
-        std::cin >> N;
-
-        if(std::cin.fail() || N < 1) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid number." << std::endl << std::endl;
-            std::cout << "Enter with the number of translucent nodes." << std::endl;
-        }
-        else
-            break;
-
-    } while(1);
-
-    std::cout << "Enter with the number of regenerators per node." << std::endl;
-
-    int X;
+    std::cout << std::endl << "-> Define the number of translucent nodes."
+              << std::endl;
 
     do {
-        std::cin >> X;
+        unsigned N;
+        std::cin >> N;
 
-        if(std::cin.fail() || X < 1 || N < X) {
+        if (std::cin.fail() || N < 1 || N > T->Nodes.size()) {
             std::cin.clear();
             std::cin.ignore();
 
-            std::cerr << "Invalid number." << std::endl << std::endl;
-            std::cout << "Enter with the number of regenerators per node." << std::endl;
-        }
-        else
+            std::cerr << "Invalid number of translucent nodes." << std::endl;
+            std::cout << std::endl << "-> Define the number of translucent nodes."
+                      << std::endl;
+        } else {
+            NX_N = N;
             break;
-    } while(1);
+        }
+    } while (1);
 
-    placeRegenerators(N, X);
+    std::cout << std::endl << "-> Define the number of regenerators per node."
+              << std::endl;
+
+    do {
+        unsigned X;
+        std::cin >> X;
+
+        if (std::cin.fail() || X < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid number of regenerators per node." << std::endl;
+            std::cout << std::endl << "-> Define the number of regenerators per node."
+                      << std::endl;
+        } else {
+            NX_X = X;
+            break;
+        }
+    } while (1);
 }

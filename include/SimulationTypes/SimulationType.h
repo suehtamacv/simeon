@@ -37,6 +37,7 @@ class SimulationType {
     virtual void help() = 0;
 
     NetworkType Type;
+    Topology::DefaultTopologies Chosen_Topology;
     std::shared_ptr<Topology> T;
 };
 

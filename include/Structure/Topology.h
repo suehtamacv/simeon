@@ -58,6 +58,8 @@ class Topology {
     std::weak_ptr<Link> add_Link(std::weak_ptr<Node> Origin,
                                  std::weak_ptr<Node> Destination, long double Length);
 
+    static std::shared_ptr<Topology> create_DefaultTopology(DefaultTopologies);
+
     void save(std::string TopologyFileName);
 
     long double get_LengthLongestLink();

@@ -8,6 +8,8 @@
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
+Node::NodeArchitecture Node::Default_Arch;
+
 Node::NodeTypeBimap Node::NodeTypes =
     boost::assign::list_of<Node::NodeTypeBimap::relation>
 #define X(a,b) (a,b)
@@ -16,14 +18,20 @@ Node::NodeTypeBimap Node::NodeTypes =
 #undef NODETYPE
     ;
 
-Node::NodeArchBimap Node::NodeArchitectures =
-    boost::assign::list_of<Node::NodeArchBimap::relation>
-#define X(a,b) (a,b)
+Node::NodeArchNameBimap Node::NodeArchitecturesNames =
+    boost::assign::list_of<Node::NodeArchNameBimap::relation>
+#define X(a,b,c) (a,b)
+    NODEARCH
+#undef X
+    ;
+
+Node::NodeArchNicknameBimap Node::NodeArchitecturesNicknames =
+    boost::assign::list_of<Node::NodeArchNicknameBimap::relation>
+#define X(a,b,c) (a,c)
     NODEARCH
 #undef X
 #undef NODEARCH
     ;
-
 
 Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
     Architecture(A) {
@@ -210,50 +218,4 @@ unsigned int Node::get_NumMaxSimultUsedRegenerators() {
 
 unsigned long long Node::get_TotalNumRequestedRegenerators() {
     return TotalNumRequestedRegenerators;
-}
-
-void Node::load() {
-    std::cout << "Choose the architecture of the node." << std::endl;
-
-    do {
-        for (auto arc : NodeArchitectures.left) {
-            std::cout << "(" << arc.first << ")\t" << arc.second << std::endl;
-        }
-
-        int Arch;
-        std::cin >> Arch;
-
-        if (std::cin.fail() || NodeArchitectures.left.count((NodeArchitecture) Arch) == 0) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid Architecture." << std::endl << std::endl;
-            std::cout << "Choose the architecture of the node." << std::endl;
-        } else {
-            Architecture = (NodeArchitecture) Arch;
-            break;
-        }
-    } while(1);
-
-    std::cout << "Choose the type of the node." << std::endl;
-
-    do {
-        for (auto typ : NodeTypes.left) {
-            std::cout << "(" << typ.first << ")\t" << typ.second << std::endl;
-        }
-
-        int Typ;
-        std::cin >> Typ;
-
-        if (std::cin.fail() || NodeTypes.left.count((NodeType) Typ) == 0) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid Type." << std::endl << std::endl;
-            std::cout << "Choose the type of the node." << std::endl;
-        } else {
-            Type = (NodeType) Typ;
-            break;
-        }
-    } while (1);
 }

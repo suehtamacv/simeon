@@ -32,9 +32,7 @@ void SimulationType::load() {
             std::cerr << "Invalid Topology." << std::endl;
             std::cout << std::endl << "-> Choose a topology." << std::endl;
         } else {
-            T = std::shared_ptr<Topology>(new Topology(
-                                              Topology::DefaultTopologiesPaths.left.at
-                                              ((Topology::DefaultTopologies) Topol)));
+            Chosen_Topology = (Topology::DefaultTopologies) Topol;
             break;
         }
     } while (1);

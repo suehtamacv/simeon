@@ -1,4 +1,5 @@
 #include <SimulationTypes/Simulation_NetworkLoad.h>
+#include <Structure/Topology.h>
 #include <iostream>
 
 Simulation_NetworkLoad::Simulation_NetworkLoad() {
@@ -71,6 +72,10 @@ void Simulation_NetworkLoad::load() {
             break;
         }
     } while (1);
+
+    Node::load();
+
+    Link::load();
 
     //RWA Algorithms
     {
@@ -170,6 +175,8 @@ void Simulation_NetworkLoad::load_file(std::ifstream) {
 }
 
 void Simulation_NetworkLoad::create_Simulations() {
+	T = Topology::create_DefaultTopology(Chosen_Topology);
+
     for (long double load = NetworkLoadMin; load <= NetworkLoadMax;
             load += NetworkLoadStep) {
 

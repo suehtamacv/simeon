@@ -89,7 +89,8 @@ Topology::Topology(std::string TopologyFileName) {
         NodeParameters >> NodeId >> StrType >> StrArch >> NumReg;
 
         Node::NodeType Type = Node::NodeTypes.right.at(StrType);
-        Node::NodeArchitecture Arch = Node::NodeArchitectures.right.at(StrArch);
+        Node::NodeArchitecture Arch = Node::NodeArchitecturesNicknames.
+                                      right.at(StrArch);
 
         add_Node(NodeId, Type, Arch, NumReg);
     }
@@ -165,7 +166,7 @@ void Topology::save(std::string TopologyFileName) {
     for (auto it : Nodes) {
         TopologyFile << "  node = " << it->ID
                      << " " << Node::NodeTypes.left.at(it->get_NodeType())
-                     << " " << Node::NodeArchitectures.left.at(it->get_NodeArch())
+                     << " " << Node::NodeArchitecturesNicknames.left.at(it->get_NodeArch())
                      << " " << it->get_NumRegenerators() << std::endl;
     }
 
@@ -192,4 +193,10 @@ long double Topology::get_LengthLongestLink() {
     }
 
     return LongestLink;
+}
+
+std::shared_ptr<Topology>
+Topology::create_DefaultTopology(DefaultTopologies Top) {
+    return std::shared_ptr<Topology>(new Topology(
+                                         Topology::DefaultTopologiesPaths.left.at(Top)));
 }

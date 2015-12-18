@@ -18,8 +18,8 @@ class Node {
     X(OpaqueNode, "opaque") //X Macros
 
 #define NODEARCH \
-    X(BroadcastAndSelect, "bs") \
-    X(SwitchingSelect, "ss") //X Macros
+    X(BroadcastAndSelect, "Broadcast and Switch", "bs") \
+    X(SwitchingSelect, "Switching Select", "ss") //X Macros
 
     /**
     * @brief The NodeType enum is used to set the type of node.
@@ -42,16 +42,18 @@ class Node {
      * There are two architectures, Broadcast And Select, that uses splitters
      * and SSS, and Switching Select, that only uses SSS devices.
      */
-#define X(a,b) a,
+#define X(a,b,c) a,
     enum NodeArchitecture {
         NODEARCH
     };
 #undef X
-    typedef boost::bimap<NodeArchitecture, std::string> NodeArchBimap;
-    static NodeArchBimap NodeArchitectures;
+    typedef boost::bimap<NodeArchitecture, std::string> NodeArchNicknameBimap;
+    static NodeArchNicknameBimap NodeArchitecturesNicknames;
+    typedef boost::bimap<NodeArchitecture, std::string> NodeArchNameBimap;
+    static NodeArchNameBimap NodeArchitecturesNames;
 
     Node(int ID, NodeType T = TransparentNode,
-         NodeArchitecture A = SwitchingSelect);
+         NodeArchitecture A = Default_Arch);
     Node(const Node &node);
 
     bool operator==(const Node &) const;
@@ -82,7 +84,7 @@ class Node {
     void set_NodeType(NodeType);
     bool hasAsNeighbour(std::weak_ptr<Node>);
 
-    void load();
+    static void load() {}
   private:
     NodeType Type;
     NodeArchitecture Architecture;
@@ -91,6 +93,7 @@ class Node {
     unsigned int NumUsedRegenerators;
     unsigned long long TotalNumRequestedRegenerators;
     unsigned int MaxSimultUsedRegenerators;
+    static NodeArchitecture Default_Arch;
 };
 
 #endif // NODE_H
