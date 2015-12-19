@@ -1,4 +1,5 @@
 #include <boost/assert.hpp>
+#include <boost/assign.hpp>
 #include <limits>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
@@ -7,7 +8,32 @@
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
-Node::Node(int ID, Node_Type T, Node_Architecure A) : ID(ID), Type(T) ,
+Node::NodeArchitecture Node::Default_Arch;
+
+Node::NodeTypeBimap Node::NodeTypes =
+    boost::assign::list_of<Node::NodeTypeBimap::relation>
+#define X(a,b) (a,b)
+    NODETYPE
+#undef X
+#undef NODETYPE
+    ;
+
+Node::NodeArchNameBimap Node::NodeArchitecturesNames =
+    boost::assign::list_of<Node::NodeArchNameBimap::relation>
+#define X(a,b,c) (a,b)
+    NODEARCH
+#undef X
+    ;
+
+Node::NodeArchNicknameBimap Node::NodeArchitecturesNicknames =
+    boost::assign::list_of<Node::NodeArchNicknameBimap::relation>
+#define X(a,b,c) (a,c)
+    NODEARCH
+#undef X
+#undef NODEARCH
+    ;
+
+Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
     Architecture(A) {
     create_Devices();
     TotalNumRequestedRegenerators =
@@ -62,11 +88,11 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     }
 }
 
-Node::Node_Architecure Node::get_NodeArch() {
+Node::NodeArchitecture Node::get_NodeArch() {
     return Architecture;
 }
 
-Node::Node_Type Node::get_NodeType() {
+Node::NodeType Node::get_NodeType() {
     return Type;
 }
 
@@ -161,7 +187,7 @@ bool Node::hasAsNeighbour(std::weak_ptr<Node> N) {
     return false;
 }
 
-void Node::set_NodeType(Node_Type T) {
+void Node::set_NodeType(NodeType T) {
     Type = T;
 }
 

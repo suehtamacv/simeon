@@ -1,11 +1,20 @@
 #ifndef TRANSMISSIONBITRATE_H
 #define TRANSMISSIONBITRATE_H
 
+#include <vector>
+
 /**
  * @brief The TransmissionBitrate class represents a transmission bitrate.
  */
 class TransmissionBitrate {
   public:
+#define DEFAULT_TRANSMISSIONBITRATES \
+    X(10E9) \
+    X(40E9) \
+    X(100E9) \
+    X(160E9) \
+    X(400E9)
+
     /**
      * @brief TransmissionBitrate is the standard constructor for a TransmissionBitrate.
      * @param Bitrate is the bitrate, in bits per second.
@@ -16,6 +25,8 @@ class TransmissionBitrate {
      * @return the value of the bitrate, in bits per second.
      */
 	long double get_Bitrate();
+
+    static std::vector<TransmissionBitrate> DefaultBitrates;
   private:
 	long double Bitrate;
 };

@@ -3,6 +3,13 @@
 #include <GeneralClasses/PhysicalConstants.h>
 #include <Structure/Slot.h>
 
+std::vector<ModulationScheme> ModulationScheme::DefaultSchemes = {
+#define X(a,b)  ModulationScheme(a,b),
+    DEFAULT_MODULATIONSCHEMES
+#undef X
+#undef DEFAULT_MODULATIONSCHEMES
+};
+
 ModulationScheme::ModulationScheme(unsigned int M, Gain SNR_Per_Bit)
     : M(M), SNR_Per_Bit(SNR_Per_Bit) {
 }

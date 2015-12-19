@@ -11,8 +11,8 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
     MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
                            std::shared_ptr<RoutingWavelengthAssignment> RWA,
                            long double NetworkLoad,
-                           long long unsigned NumCalls,
-                           std::vector<TransmissionBitrate> Bitrates
+                           long long unsigned NumCalls = 1E6,
+                           std::vector<TransmissionBitrate> Bitrates = TransmissionBitrate::DefaultBitrates
                           );
     /**
      * @brief placeRegenerators runs an opaque simulation and inserts NReg regenerators
@@ -24,14 +24,15 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
      * @param NumTotalReg is the number of regenerators that will be distributed over the
      * topology.
      */
-    void placeRegenerators(unsigned NumTotalReg, unsigned);
-
+    void placeRegenerators(unsigned NumTotalReg = MSU_NumTotalReg, unsigned = 0);
+    void load();
 
   private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
     long double NetworkLoad;
     long long unsigned NumCalls;
     std::vector<TransmissionBitrate> Bitrates;
+    static unsigned MSU_NumTotalReg;
 
 };
 

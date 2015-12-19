@@ -11,6 +11,7 @@ class FirstFit : public WavelengthAssignmentAlgorithm {
         std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>>
         assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg);
+    void load() {}
 };
 
 #endif // FIRSTFIT_H

@@ -24,6 +24,11 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X) {
         node->set_NodeType(Node::OpaqueNode);
     }
 
+    if ((N == 0) && (X == 0)) {
+        N = NX_N;
+        X = NX_X;
+    }
+
     std::shared_ptr<CallGenerator> CG(new CallGenerator(T, NetworkLoad, Bitrates));
     std::shared_ptr<NetworkSimulation> Sim(
         new NetworkSimulation(CG, RWA, NumCalls));

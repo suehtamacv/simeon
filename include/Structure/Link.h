@@ -5,6 +5,7 @@
 #include <GeneralClasses/Signal.h>
 #include <memory>
 #include <vector>
+#include <iostream>
 #include <Structure/Slot.h>
 
 class Node;
@@ -12,8 +13,8 @@ class Call;
 
 class Link {
   public:
-    constexpr static int NumSlots = 64;
-    constexpr static long double AvgSpanLength = 80;
+    static int NumSlots;
+    static long double AvgSpanLength;
 
     Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination,
          long double Length);
@@ -29,7 +30,7 @@ class Link {
 
     bool operator==(const Link &) const;
     bool operator<(const Link &) const;
-    bool isSlotFree(unsigned int) const;
+    bool isSlotFree(int) const;
 
     Signal &bypass(Signal &);
 
@@ -37,6 +38,7 @@ class Link {
     long double get_Occupability();
     long double get_Contiguity(std::shared_ptr<Call> C);
 
+    static void load();
   private:
     void create_Slots();
     void create_Devices();

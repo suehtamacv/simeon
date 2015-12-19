@@ -5,6 +5,8 @@
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
 #include <RWA/Route.h>
+#include <boost/bimap.hpp>
+#include <GeneralClasses/ModulationScheme.h>
 
 /**
  * @brief The RegeneratorAssignmentAlgorithm class assigns which nodes will use
@@ -12,6 +14,23 @@
  */
 class RegeneratorAssignmentAlgorithm {
   public:
+#define REGASSIGNMENT_ALGORITHMS \
+    X(FLR, "First Longest Reach", "FLR") \
+    X(FNS, "First Narrowest Reach", "FNS") //X Macros
+
+#define X(a,b,c) a,
+    enum RegeneratorAssignmentAlgorithms {
+        REGASSIGNMENT_ALGORITHMS
+    };
+#undef X
+
+    typedef boost::bimap<RegeneratorAssignmentAlgorithms, std::string>
+    RegAssignNameBimap;
+    static RegAssignNameBimap RegeneratorAssignmentNames;
+    typedef boost::bimap<RegeneratorAssignmentAlgorithms, std::string>
+    RegAssignNicknameBimap;
+    static RegAssignNicknameBimap RegeneratorAssignmentNicknames;
+
     /**
      * @brief RegeneratorBitrate is the maximum bitrate that a single
      * Regenerator can regenerate. It's measured in bits per second.
@@ -25,7 +44,7 @@ class RegeneratorAssignmentAlgorithm {
      * @param Schemes is a vector containing the possible modulation schemes.
      */
     RegeneratorAssignmentAlgorithm(std::shared_ptr<Topology> T,
-                                   std::vector<ModulationScheme> Schemes);
+                                   std::vector<ModulationScheme> Schemes = ModulationScheme::DefaultSchemes);
 
     /**
      * @brief T is a pointer to the Topology.
@@ -101,6 +120,12 @@ class RegeneratorAssignmentAlgorithm {
             std::weak_ptr<Node> start,
             std::weak_ptr<Node> end,
             unsigned int NumRegUsed);
+
+    static RegeneratorAssignmentAlgorithms define_RegeneratorAssignmentAlgorithm();
+    static std::shared_ptr<RegeneratorAssignmentAlgorithm>
+    create_RegeneratorAssignmentAlgorithm(
+        RegeneratorAssignmentAlgorithms, std::shared_ptr<Topology>);
+    virtual void load() = 0;
   private:
     std::vector<std::weak_ptr<Link>> segmentLinks(
                                       std::vector<std::weak_ptr<Link>>Links,

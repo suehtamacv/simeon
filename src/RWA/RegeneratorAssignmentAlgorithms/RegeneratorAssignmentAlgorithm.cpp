@@ -1,8 +1,28 @@
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RWA/RegeneratorAssignmentAlgorithms.h>
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 #include <boost/assert.hpp>
+#include <boost/assign.hpp>
 #include <Structure/Link.h>
+
+RegeneratorAssignmentAlgorithm::RegAssignNameBimap
+RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames =
+    boost::assign::list_of<RegeneratorAssignmentAlgorithm::RegAssignNameBimap::relation>
+#define X(a,b,c) (a,b)
+    REGASSIGNMENT_ALGORITHMS
+#undef X
+    ;
+
+RegeneratorAssignmentAlgorithm::RegAssignNicknameBimap
+RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames =
+    boost::assign::list_of<RegeneratorAssignmentAlgorithm::RegAssignNameBimap::relation>
+#define X(a,b,c) (a,c)
+    REGASSIGNMENT_ALGORITHMS
+#undef X
+#undef REGASSIGNMENT_ALGORITHMS
+    ;
 
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithm(
     std::shared_ptr<Topology> T,
@@ -108,4 +128,54 @@ std::weak_ptr<Node> end) {
     }
 
     return SegmentLinks;
+}
+
+RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm() {
+    std::cout << std::endl << "-> Choose a regenerator assignment algorithm."
+              << std::endl;
+
+    do {
+        for (auto rassign : RegeneratorAssignmentNames.left) {
+            std::cout << "(" << rassign.first << ")\t" << rassign.second << std::endl;
+        }
+
+        int RegAssign_Alg;
+        std::cin >> RegAssign_Alg;
+
+        if (std::cin.fail() || RegeneratorAssignmentNames.left.count
+                ((RegeneratorAssignmentAlgorithms) RegAssign_Alg) == 0) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid regenerator assignment algorithm." << std::endl;
+            std::cout << std::endl << "-> Choose a regenerator assignment algorithm."
+                      << std::endl;
+        } else {
+            return (RegeneratorAssignmentAlgorithms) RegAssign_Alg;
+        }
+    } while (1);
+
+    return (RegeneratorAssignmentAlgorithms) - 1;
+}
+
+std::shared_ptr<RegeneratorAssignmentAlgorithm>
+RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+    RegeneratorAssignmentAlgorithms Algorithm, std::shared_ptr<Topology> T) {
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
+
+    switch (Algorithm) {
+        case FLR:
+            RA_Alg = std::shared_ptr<RegeneratorAssignmentAlgorithm>(new FirstLongestReach(
+                         T, ModulationScheme::DefaultSchemes));
+            break;
+
+        case FNS:
+            RA_Alg = std::shared_ptr<RegeneratorAssignmentAlgorithm>
+                     (new FirstNarrowestSpectrum(T, ModulationScheme::DefaultSchemes));
+            break;
+    }
+
+    RA_Alg->load();
+    return RA_Alg;
 }

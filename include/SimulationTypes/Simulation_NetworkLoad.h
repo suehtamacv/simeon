@@ -4,12 +4,12 @@
 #include <memory>
 #include <vector>
 #include <SimulationTypes/NetworkSimulation.h>
-#include <Structure/Topology.h>
 #include <SimulationTypes/SimulationType.h>
+#include "RWA.h"
 
 class Simulation_NetworkLoad : public SimulationType {
   public:
-    Simulation_NetworkLoad(std::shared_ptr<Topology> T);
+    Simulation_NetworkLoad();
 
     void help();
     void run();
@@ -19,10 +19,24 @@ class Simulation_NetworkLoad : public SimulationType {
     void print();
 
   private:
-    std::shared_ptr<Topology> T;
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
     bool hasSimulated;
     bool hasLoaded;
+
+    long double NumCalls;
+    long double NetworkLoadMin, NetworkLoadMax, NetworkLoadStep;
+
+    RoutingAlgorithm::RoutingAlgorithms
+    Routing_Algorithm;
+    WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    WavAssign_Algorithm;
+    RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    RegPlacement_Algorithm;
+    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RegAssignment_Algorithm;
+
+    void create_Simulations();
+    void place_Regenerators(std::shared_ptr<Topology> T);
 };
 
 #endif // SIMULATION_NETWORKLOAD_H

@@ -7,6 +7,9 @@
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 
+int Link::NumSlots = 64;
+long double Link::AvgSpanLength;
+
 Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
            long double Length) {
@@ -85,7 +88,7 @@ bool Link::operator <(const Link &L) const {
             (Length < L.Length));
 }
 
-bool Link::isSlotFree(unsigned int slot) const {
+bool Link::isSlotFree(int slot) const {
     BOOST_ASSERT_MSG(slot < NumSlots, "Invalid slot requested.");
     return (Slots[slot])->isFree;
 }
@@ -133,4 +136,26 @@ long double Link::get_Contiguity(std::shared_ptr<Call> C) {
     }
 
     return Contiguity;
+}
+
+void Link::load() {
+    std::cout << std::endl << "-> Define the distance between inline amplifiers."
+              << std::endl;
+
+    do {
+        long double SpanLeng;
+        std::cin >> SpanLeng;
+
+        if (std::cin.fail() || SpanLeng < 1) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid length." << std::endl;
+            std::cout << std::endl << "-> Define the distance between inline amplifiers."
+                      << std::endl;
+        } else {
+            AvgSpanLength = SpanLeng;
+            break;
+        }
+    } while (1);
 }

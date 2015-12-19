@@ -10,6 +10,12 @@ NodalDegreeFirst::NodalDegreeFirst(std::shared_ptr<Topology> T) :
 void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
     BOOST_ASSERT_MSG(N <= T->Nodes.size(), "Can't have more translucent nodes"
                      " than nodes");
+
+    if ((N == 0) && (X == 0)) {
+        N = NX_N;
+        X = NX_X;
+    }
+
     std::vector<std::shared_ptr<Node>> PossibleNodes;
 
     for (auto node : T->Nodes) {

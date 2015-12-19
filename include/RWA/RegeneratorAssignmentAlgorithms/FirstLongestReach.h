@@ -24,6 +24,7 @@ class FirstLongestReach : public RegeneratorAssignmentAlgorithm {
     std::vector<TransparentSegment> assignRegenerators(
         std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links);
+    void load() {}
 };
 
 #endif // FIRSTLONGESTREACH_H
