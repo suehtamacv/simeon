@@ -22,6 +22,7 @@ T PSO::PSO_Particle<T, Fit, Comp>::eval_Fitness() {
 
     if (Comp(currentFit, bestFit)) {
         bestFit = currentFit;
+        P = X;
     }
 
     return currentFit;
@@ -29,6 +30,8 @@ T PSO::PSO_Particle<T, Fit, Comp>::eval_Fitness() {
 
 template<class T, class Fit, class Comp>
 void PSO::PSO_Particle<T, Fit, Comp>::initialize(T XMin, T XMax) {
-    std::generate(X.begin(), X.end(),
-                  std::uniform_real_distribution<T>(XMin, XMax)(std::default_random_engine()));
+    std::uniform_real_distribution<T> distribution(XMin, XMax);
+    std::default_random_engine generator;
+
+    std::generate(X.begin(), X.end(), distribution(generator));
 }

@@ -27,15 +27,7 @@ namespace PSO {
         std::weak_ptr<PSO_Particle> Neighbour[2];
 
       private:
-
         unsigned int N;
-
-        static constexpr long double c1 = 2.05L;
-        static constexpr long double c2 = 2.05L;
-        static constexpr long double phi = c1 + c2;
-        static constexpr long double chi = 2.0L / fabs(2 - phi - sqrt(
-                                               phi * phi - 4 * phi));
-
     };
 
 }
