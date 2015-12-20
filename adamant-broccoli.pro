@@ -49,7 +49,9 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostUsed.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp
+    src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
+    src/GeneralPurposeAlgorithms/PSO/ParticleSwarmOptimization.cpp \
+    src/GeneralPurposeAlgorithms/PSO/PSO_Particle.cpp
 
 
 HEADERS += \
@@ -108,7 +110,9 @@ HEADERS += \
     include/RWA.h \
     include/SimulationTypes.h \
     include/RWA/RegeneratorPlacementAlgorithms/MostUsed.h \
-    include/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h
+    include/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h \
+    include/GeneralPurposeAlgorithms/PSO/ParticleSwarmOptimization.h \
+    include/GeneralPurposeAlgorithms/PSO/PSO_Particle.h
 
 LIBS += -lboost_system -lboost_program_options
 

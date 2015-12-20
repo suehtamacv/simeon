@@ -22,3 +22,4 @@
 
 --break-blocks
 --pad-header
+--keep-one-line-statements
