@@ -9,6 +9,7 @@ addons:
     - libboost-random-dev
     - gcc-4.8
     - g++-4.8
+    - armadillo-devel
 
 script:
   - qmake adamant-broccoli.pro

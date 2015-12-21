@@ -3,20 +3,38 @@
 
 #include <memory>
 #include <armadillo>
+#include <boost/bimap.hpp>
 
 class Link;
 class Call;
+class Topology;
 
 namespace PSR {
 
     class Cost {
       public:
-        Cost(int NMin, int NMax);
+#define POSSIBLECOSTS \
+	X(availability, "Availability", "availability") \
+	X(distance, "Normalized Distance", "distance")
+
+#define X(a,b,c) a,
+        enum PossibleCosts {
+            POSSIBLECOSTS
+        };
+#undef X
+
+        typedef boost::bimap<PossibleCosts, std::string> CostNameBimap;
+        static CostNameBimap CostsNames;
+        typedef boost::bimap<PossibleCosts, std::string> CostNicknameBimap;
+        static CostNicknameBimap CostsNicknames;
+
+        Cost(int NMin, int NMax, std::shared_ptr<Topology> T);
         virtual arma::rowvec getCost(std::weak_ptr<Link> link,
                                      std::shared_ptr<Call> C) = 0;
 
       protected:
         int NMin, NMax;
+        std::shared_ptr<Topology> T;
     };
 
 }

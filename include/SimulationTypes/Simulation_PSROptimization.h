@@ -18,15 +18,15 @@ class Simulation_PSROptimization : public SimulationType {
   private:
 
     class Compare {
-    public:
-    	bool operator()(long double a, long double b) {
-    		return a < b;
-    	}
+      public:
+        bool operator()(double a, double b) {
+            return a < b;
+        }
     };
 
     class Fitness {
-    public:
-    	long double operator()(std::shared_ptr<PSO::PSO_Particle<long double>>);
+      public:
+        long double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };
 };
 

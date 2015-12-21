@@ -15,6 +15,7 @@ class RoutingAlgorithm {
 #define ROUTING_ALGORITHM \
     X(LORa, "Length and Occupation Routing - Availability", "LORa") \
     X(LORc, "Length and Occupation Routing - Contiguity", "LORc") \
+	X(PSR, "Power Series Routing", "PSR") \
     X(MH, "Minimum Hops", "MH") \
     X(SP, "Shortest Path", "SP")
 

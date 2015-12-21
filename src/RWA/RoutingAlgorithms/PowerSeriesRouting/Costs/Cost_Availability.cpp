@@ -3,7 +3,9 @@
 #include <Calls/Call.h>
 #include <cmath>
 
-PSR::Availability::Availability(int NMin, int NMax) : Cost(NMin, NMax) {
+PSR::Availability::Availability(int NMin, int NMax,
+                                std::shared_ptr<Topology> T)
+    : Cost(NMin, NMax, T) {
     cache = arma::ones<arma::mat>(Link::NumSlots + 1, NMax - NMin + 1);
     createCache();
 }

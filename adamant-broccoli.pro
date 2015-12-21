@@ -52,7 +52,9 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.cpp
 
 
 HEADERS += \
@@ -118,7 +120,9 @@ HEADERS += \
     include/GeneralClasses/RandomGenerator.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
@@ -128,6 +132,8 @@ INSTALL_TOPOLOGIES.files = data/topologies/*
 INSTALLS += INSTALL_TOPOLOGIES
 
 OTHER_FILES += README.md \
-               .astylerc
+               .astylerc \
+               .travis.yml
+
 
 INCLUDEPATH += include/

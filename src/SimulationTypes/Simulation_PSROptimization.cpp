@@ -34,6 +34,6 @@ void Simulation_PSROptimization::run() {
 }
 
 long double Simulation_PSROptimization::Fitness::operator()(
-    std::shared_ptr<PSO::PSO_Particle<long double>>) {
+    std::shared_ptr<PSO::PSO_Particle<double>>) {
     return 1;
 }
