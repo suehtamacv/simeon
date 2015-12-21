@@ -31,6 +31,8 @@ namespace PSR {
         Cost(int NMin, int NMax, std::shared_ptr<Topology> T);
         virtual arma::rowvec getCost(std::weak_ptr<Link> link,
                                      std::shared_ptr<Call> C) = 0;
+        static std::shared_ptr<Cost> createCost(PossibleCosts, int NMin, int NMax,
+                                                std::shared_ptr<Topology>);
 
       protected:
         int NMin, NMax;

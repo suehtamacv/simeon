@@ -17,6 +17,8 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
   private:
     std::vector<std::shared_ptr<PSR::Cost>> Costs;
     arma::mat coefficients;
+    int NMin, NMax;
+    bool firstTimeRun;
 };
 
 #endif // POWERSERIESROUTING_H
