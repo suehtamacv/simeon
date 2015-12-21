@@ -88,8 +88,6 @@ class CallGenerator {
     void set_Load(long double load);
 
   private:
-    static std::default_random_engine generator;
-
     //Distributions
     std::uniform_int_distribution<int> UniformNodeDistribution;
     std::uniform_int_distribution<int> UniformBitrateDistribution;

@@ -35,16 +35,14 @@ void Simulation_NetworkLoad::print() {
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    if (!hasSimulated) {
-        for (auto simulation : simulations) {
+    for (auto simulation : simulations) {
+        if (!hasSimulated) {
             simulation->run();
-            simulation->print();
         }
-    } else {
-        for (auto simulation : simulations) {
-            simulation->print();
-        }
+
+        simulation->print();
     }
+
 }
 
 void Simulation_NetworkLoad::load() {

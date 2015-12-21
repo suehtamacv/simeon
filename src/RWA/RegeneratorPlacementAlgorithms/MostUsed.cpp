@@ -1,6 +1,7 @@
 #include <RWA/RegeneratorPlacementAlgorithms/MostUsed.h>
 #include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
+#include <GeneralClasses/RandomGenerator.h>
 
 MostUsed::MostUsed(std::shared_ptr<Topology> T,
                    std::shared_ptr<RoutingWavelengthAssignment> RWA,
@@ -60,10 +61,9 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X) {
         }
 
         std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
-        std::default_random_engine generator;
 
         auto ChosenNode = MaximalNodes.begin();
-        std::advance(ChosenNode, dist(generator));
+        std::advance(ChosenNode, dist(random_generator));
         (*ChosenNode)->set_NumRegenerators(X);
         (*ChosenNode)->set_NodeType(Node::TranslucentNode);
 

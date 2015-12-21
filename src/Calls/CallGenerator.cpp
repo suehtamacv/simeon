@@ -1,8 +1,7 @@
 #include <Calls/CallGenerator.h>
 #include <Calls/Call.h>
+#include <GeneralClasses/RandomGenerator.h>
 #include <boost/assert.hpp>
-
-std::default_random_engine CallGenerator::generator;
 
 CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
                              long double h,
@@ -20,18 +19,18 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
 }
 
 std::shared_ptr<Call> CallGenerator::generate_Call() {
-    long double ArrivalTime = simulationTime + ExponentialDistributionH(generator);
-    long double EndingTime = ArrivalTime + ExponentialDistributionMu(generator);
+    long double ArrivalTime = simulationTime + ExponentialDistributionH(random_generator);
+    long double EndingTime = ArrivalTime + ExponentialDistributionMu(random_generator);
     simulationTime = ArrivalTime;
 
-    int Origin = UniformNodeDistribution(generator);
-    int Destination = UniformNodeDistribution(generator);
+    int Origin = UniformNodeDistribution(random_generator);
+    int Destination = UniformNodeDistribution(random_generator);
 
     while (Origin == Destination) {
-        Destination = UniformNodeDistribution(generator);
+        Destination = UniformNodeDistribution(random_generator);
     }
 
-    int Bitrate = UniformBitrateDistribution(generator);
+    int Bitrate = UniformBitrateDistribution(random_generator);
 
     std::shared_ptr<Call> C(new Call(std::weak_ptr<Node>(T->Nodes[Origin]),
                                      std::weak_ptr<Node>(T->Nodes[Destination]),
