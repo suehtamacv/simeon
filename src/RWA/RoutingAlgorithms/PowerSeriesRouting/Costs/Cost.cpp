@@ -40,3 +40,15 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
 
     return Cost;
 }
+
+int PSR::Cost::get_NMin() {
+    return NMin;
+}
+
+int PSR::Cost::get_NMax() {
+    return NMax;
+}
+
+int PSR::Cost::get_N() {
+    return NMax - NMin + 1;
+}

@@ -68,6 +68,7 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
         case PSR:
             R_Alg = std::shared_ptr<RoutingAlgorithm>(
                         new PowerSeriesRouting(T));
+            break;
 
         case MH:
             R_Alg = std::shared_ptr<RoutingAlgorithm>(

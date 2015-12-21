@@ -34,6 +34,10 @@ namespace PSR {
         static std::shared_ptr<Cost> createCost(PossibleCosts, int NMin, int NMax,
                                                 std::shared_ptr<Topology>);
 
+        int get_NMin();
+        int get_NMax();
+        int get_N();
+
       protected:
         int NMin, NMax;
         std::shared_ptr<Topology> T;

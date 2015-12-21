@@ -5,6 +5,18 @@
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
     DijkstraRoutingAlgorithm(T) {
     firstTimeRun = false;
+    hasLoaded = false;
+}
+
+PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
+                                       std::vector<std::shared_ptr<PSR::Cost>> Costs) :
+    DijkstraRoutingAlgorithm(T), Costs(Costs) {
+
+    firstTimeRun = false;
+    hasLoaded = true;
+
+    NMin = Costs.front()->get_NMin();
+    NMax = Costs.front()->get_NMax();
 }
 
 long double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
@@ -16,7 +28,7 @@ long double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
     }
 
     if (!firstTimeRun) {
-        coefficients.resize(arma::size(cost_matrix));
+        coefficients.copy_size(cost_matrix);
         firstTimeRun = true;
     }
 
@@ -24,6 +36,10 @@ long double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
 }
 
 void PowerSeriesRouting::load() {
+    if (hasLoaded) {
+        return;
+    }
+
     std::cout << std::endl << "-> Define the minimum exponent." << std::endl;
 
     do {
@@ -95,13 +111,21 @@ void PowerSeriesRouting::load() {
                 }
 
                 std::cerr << "Invalid Cost." << std::endl;
-                std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
-            } else {
+            } else if (std::find(chosenCosts.begin(), chosenCosts.end(),
+                                 (PSR::Cost::PossibleCosts) Cost) == chosenCosts.end()) {
                 chosenCosts.push_back((PSR::Cost::PossibleCosts) Cost);
                 Costs.push_back(PSR::Cost::createCost(
                                     (PSR::Cost::PossibleCosts) Cost, NMin, NMax, T));
-            }
+            } //Verifies that the cost hasn't been chosen.
+
+            std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
         } while (1);
+
     } while (0); //Dummy do-while. Only to encapsulate reading.
 
+    hasLoaded = true;
+}
+
+void PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> particle) {
+    coefficients = arma::mat(particle.X);
 }
