@@ -4,6 +4,9 @@
 #include "Calls.h"
 #include "RWA.h"
 #include "SimulationTypes.h"
+
+#include "RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h"
+
 #include <iostream>
 
 int main(void) {

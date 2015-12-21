@@ -50,7 +50,9 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
-    src/SimulationTypes/Simulation_PSROptimization.cpp
+    src/SimulationTypes/Simulation_PSROptimization.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp
 
 
 HEADERS += \
@@ -113,9 +115,12 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/PSO/ParticleSwarmOptimization.h \
     include/GeneralPurposeAlgorithms/PSO/PSO_Particle.h \
     include/SimulationTypes/Simulation_PSROptimization.h \
-    include/GeneralClasses/RandomGenerator.h
+    include/GeneralClasses/RandomGenerator.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h
 
-LIBS += -lboost_system -lboost_program_options
+LIBS += -lboost_system -lboost_program_options -larmadillo
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*

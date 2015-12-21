@@ -94,7 +94,7 @@ bool Link::isSlotFree(int slot) const {
 }
 
 long double Link::get_Availability() {
-    long double FreeSlots = 0;
+    int FreeSlots = 0;
 
     for (auto slot : Slots) {
         if (slot->isFree) {
@@ -102,7 +102,7 @@ long double Link::get_Availability() {
         }
     }
 
-    return FreeSlots / Link::NumSlots;
+    return FreeSlots;
 }
 
 long double Link::get_Occupability() {
