@@ -60,7 +60,8 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.cpp
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp
 
 
 HEADERS += \
@@ -130,7 +131,8 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

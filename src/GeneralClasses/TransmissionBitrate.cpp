@@ -11,6 +11,14 @@ TransmissionBitrate::TransmissionBitrate(double Bitrate) {
     this->Bitrate = Bitrate;
 }
 
-double TransmissionBitrate::get_Bitrate() {
+TransmissionBitrate::TransmissionBitrate(const TransmissionBitrate &other) {
+    Bitrate = other.Bitrate;
+}
+
+double TransmissionBitrate::get_Bitrate() const {
     return Bitrate;
+}
+
+bool TransmissionBitrate::operator <(const TransmissionBitrate &other) const {
+    return Bitrate < other.get_Bitrate();
 }

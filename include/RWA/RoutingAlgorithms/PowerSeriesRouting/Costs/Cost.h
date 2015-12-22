@@ -14,7 +14,8 @@ namespace PSR {
     class Cost {
       public:
 #define POSSIBLECOSTS \
-	X(availability, "Availability", "availability") \
+    X(availability, "Availability", "availability") \
+    X(bitrate, "Normalized Bitrate", "bitrate") \
     X(contiguity, "Contiguity", "contiguity") \
     X(distance, "Normalized Distance", "distance") \
     X(occupability, "Occupability", "occupability")
