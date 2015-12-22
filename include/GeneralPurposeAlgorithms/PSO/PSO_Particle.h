@@ -31,8 +31,7 @@ namespace PSO {
     };
 
     template<class T>
-    PSO::PSO_Particle<T>::PSO_Particle(
-        unsigned int N, T XMin, T XMax) : N(N) {
+    PSO::PSO_Particle<T>::PSO_Particle(unsigned int N, T XMin, T XMax) : N(N) {
         X.resize(N);
         V.resize(N);
         P.resize(N);

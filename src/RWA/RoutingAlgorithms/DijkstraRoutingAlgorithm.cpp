@@ -22,10 +22,16 @@ std::shared_ptr<Call> C) {
     MinDistance[C->Origin.lock()->ID] = 0;
     ActiveVertices.insert({0, C->Origin.lock()});
 
+    unsigned int NumVisitedNodes = 0;
+
     while (!ActiveVertices.empty()) {
         std::shared_ptr<Node> CurrentNode = ActiveVertices.begin()->second;
 
         if (CurrentNode == C->Destination.lock()) {
+            break;
+        }
+
+        if (NumVisitedNodes++ > T->Nodes.size()) { //Found a negative loop
             break;
         }
 
@@ -48,12 +54,22 @@ std::shared_ptr<Call> C) {
     std::vector<int> NodesInRoute;
     std::vector<std::weak_ptr<Link>> RouteLinks;
 
-    unsigned int CurrentNode = C->Destination.lock()->ID;
+    int CurrentNode = C->Destination.lock()->ID;
     NodesInRoute.push_back(CurrentNode);
 
     while (Precedent[CurrentNode] != -1) {
         NodesInRoute.push_back(Precedent[CurrentNode]);
-        CurrentNode = Precedent[CurrentNode];
+
+        {
+            int CurNode = Precedent[CurrentNode];
+            Precedent[CurrentNode] = -1;
+            CurrentNode = CurNode;
+        } //Avoiding negative cost loops
+
+        if (CurrentNode == -1 || NumVisitedNodes > T->Nodes.size()) {
+            RouteLinks.clear(); //Could not find route. Returns empty vector.
+            return RouteLinks;
+        }
     }
 
     for (int i = NodesInRoute.size() - 1; i > 0; i--) {

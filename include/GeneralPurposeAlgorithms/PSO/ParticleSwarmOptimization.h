@@ -4,6 +4,7 @@
 #include <GeneralPurposeAlgorithms/PSO/PSO_Particle.h>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 namespace PSO {
     template<class T, class Fit, class Comp>
@@ -22,6 +23,9 @@ namespace PSO {
         unsigned int P;
         unsigned int G;
         unsigned int N;
+
+        int g;
+        int p;
 
         void updatePositions();
 
@@ -65,14 +69,22 @@ namespace PSO {
         }
 
         BestParticle = Particles[0];
+        p = g = 1;
     }
 
     template<class T, class Fit, class Comp>
     void PSO::ParticleSwarmOptimization<T, Fit, Comp>::run_generation() {
+        p = 1;
+
         for (auto particle : Particles) {
             particle->currentFit = Fit()(particle);
 
-            if (Comp()(particle->currentFit, particle->bestFit)) {
+#ifdef DEBUG
+            std::cout << "Particle " << p << " has fit " << particle->currentFit
+                      << std::endl;
+#endif
+
+            if (Comp()(particle->currentFit, particle->bestFit) || g == 1) {
                 particle->bestFit = particle->currentFit;
                 particle->P = particle->X;
             }
@@ -80,9 +92,11 @@ namespace PSO {
             if (Comp()(particle->bestFit, BestParticle->bestFit)) {
                 BestParticle = particle;
             }
+            p++;
         }
 
         updatePositions();
+        g++;
     }
 
     template<class T, class Fit, class Comp>
