@@ -38,7 +38,7 @@ namespace PSO {
         static constexpr double c2 = 2.05;
         static constexpr double phi = c1 + c2;
         static constexpr double chi = 2.0 / std::abs(2 - phi - sqrt(
-                                               phi * phi - 4 * phi));
+                                          phi * phi - 4 * phi));
 
     };
 
@@ -79,19 +79,18 @@ namespace PSO {
         for (auto particle : Particles) {
             particle->currentFit = Fit()(particle);
 
-#ifdef DEBUG
-            std::cout << "Particle " << p << " has fit " << particle->currentFit
-                      << std::endl;
-#endif
-
             if (Comp()(particle->currentFit, particle->bestFit) || g == 1) {
                 particle->bestFit = particle->currentFit;
                 particle->P = particle->X;
             }
 
             if (Comp()(particle->bestFit, BestParticle->bestFit)) {
+                std::clog << "New fitter particle found. Fit: " << particle->currentFit
+                          << std::endl;
+
                 BestParticle = particle;
             }
+
             p++;
         }
 

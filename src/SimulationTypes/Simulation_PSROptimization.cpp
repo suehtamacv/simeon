@@ -142,10 +142,10 @@ void Simulation_PSROptimization::print() {
         PSO_Optim(P, G, N, XMin, XMax, VMin, VMax);
 
         std::cout << std::endl << "* * RESULTS * *" << std::endl;
-        std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
 
         for (unsigned i = 1; i <= G; i++) {
             PSO_Optim.run_generation();
+            std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
             std::cout << i << "\t\t" << PSO_Optim.BestParticle->bestFit << std::endl;
         }
     }
