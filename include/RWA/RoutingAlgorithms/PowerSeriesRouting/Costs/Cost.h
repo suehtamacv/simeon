@@ -18,6 +18,7 @@ namespace PSR {
     X(bitrate, "Normalized Bitrate", "bitrate") \
     X(contiguity, "Contiguity", "contiguity") \
     X(distance, "Normalized Distance", "distance") \
+    X(scheme, "Normalized Modulation Scheme", "scheme") \
     X(occupability, "Occupability", "occupability")
 
 #define X(a,b,c) a,
