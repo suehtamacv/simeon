@@ -15,11 +15,12 @@ namespace PSR {
       public:
 #define POSSIBLECOSTS \
     X(availability, "Availability", "availability") \
-    X(bitrate, "Normalized Bitrate", "bitrate") \
+    X(bitrate, "Bitrate", "bitrate") \
     X(contiguity, "Contiguity", "contiguity") \
-    X(distance, "Normalized Distance", "distance") \
-    X(scheme, "Normalized Modulation Scheme", "scheme") \
-    X(occupability, "Occupability", "occupability")
+    X(distance, "Distance", "distance") \
+    X(normcontiguity, "Normalized Contiguity", "normcontiguity") \
+    X(occupability, "Occupability", "occupability") \
+    X(scheme, "Modulation Scheme", "scheme")
 
 #define X(a,b,c) a,
         enum PossibleCosts {

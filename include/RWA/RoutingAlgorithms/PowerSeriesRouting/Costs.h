@@ -6,6 +6,7 @@
 #include "Costs/Cost_Contiguity.h"
 #include "Costs/Cost_Distance.h"
 #include "Costs/Cost_ModulationScheme.h"
+#include "Costs/Cost_NormalizedContiguity.h"
 #include "Costs/Cost_Occupability.h"
 
 #endif // COSTS
