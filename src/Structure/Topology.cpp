@@ -101,7 +101,7 @@ Topology::Topology(std::string TopologyFileName) {
 
     for (auto link : LinksList) {
         int OriginID, DestinationID;
-        long double length;
+        double length;
         std::weak_ptr<Node> Origin, Destination;
 
         std::istringstream LinkParameters(link);
@@ -143,7 +143,7 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
 }
 
 std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
-                                       std::weak_ptr<Node> Destination, long double Length) {
+                                       std::weak_ptr<Node> Destination, double Length) {
     Links.emplace(OrigDestPair(Origin.lock()->ID, Destination.lock()->ID),
                   std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
     Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
@@ -183,7 +183,7 @@ void Topology::save(std::string TopologyFileName) {
 
 }
 
-long double Topology::get_LengthLongestLink() {
+double Topology::get_LengthLongestLink() {
     if (LongestLink == -1) {
         for (auto link : Links) {
             if (LongestLink < link.second->Length) {

@@ -8,11 +8,11 @@
 #include <Devices/Amplifiers/PreAmplifier.h>
 
 int Link::NumSlots = 64;
-long double Link::AvgSpanLength;
+double Link::AvgSpanLength;
 
 Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
-           long double Length) {
+           double Length) {
 
     BOOST_ASSERT_MSG(Length >= 0, "Length can't be negative.");
     this->Origin = Origin;
@@ -50,7 +50,7 @@ void Link::create_Devices() {
         numLineAmplifiers--;
     }
 
-    long double SpanLength = Length / (numLineAmplifiers + 1);
+    double SpanLength = Length / (numLineAmplifiers + 1);
 
     for (int i = 0; i < numLineAmplifiers; i++) {
         Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
@@ -93,7 +93,7 @@ bool Link::isSlotFree(int slot) const {
     return (Slots[slot])->isFree;
 }
 
-long double Link::get_Availability() {
+double Link::get_Availability() {
     int FreeSlots = 0;
 
     for (auto slot : Slots) {
@@ -105,11 +105,11 @@ long double Link::get_Availability() {
     return FreeSlots;
 }
 
-long double Link::get_Occupability() {
+double Link::get_Occupability() {
     return Link::NumSlots - get_Availability();
 }
 
-long double Link::get_Contiguity(std::shared_ptr<Call> C) {
+double Link::get_Contiguity(std::shared_ptr<Call> C) {
     BOOST_ASSERT_MSG(C->Scheme.get_M() != 0,
                      "Can't calculate contiguity without knowing the modulation"
                      " scheme. Either you forgot to set it or one of the chosen "
@@ -143,7 +143,7 @@ void Link::load() {
               << std::endl;
 
     do {
-        long double SpanLeng;
+        double SpanLeng;
         std::cin >> SpanLeng;
 
         if (std::cin.fail() || SpanLeng < 1) {

@@ -5,8 +5,8 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Link.h>
 
-long double Simulation_PSROptimization::NumCalls;
-long double Simulation_PSROptimization::OptimizationLoad;
+double Simulation_PSROptimization::NumCalls;
+double Simulation_PSROptimization::OptimizationLoad;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
 std::shared_ptr<PowerSeriesRouting> Simulation_PSROptimization::MasterPSR;
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
@@ -170,7 +170,7 @@ void Simulation_PSROptimization::run() {
     hasRun = true;
 }
 
-long double Simulation_PSROptimization::Fitness::operator()(
+double Simulation_PSROptimization::Fitness::operator()(
     std::shared_ptr<PSO::PSO_Particle<double>> particle) {
 
     //Creates a copy of the topology.

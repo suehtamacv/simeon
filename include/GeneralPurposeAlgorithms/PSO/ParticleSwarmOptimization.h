@@ -34,10 +34,10 @@ namespace PSO {
         T VMin;
         T VMax;
 
-        static constexpr long double c1 = 2.05L;
-        static constexpr long double c2 = 2.05L;
-        static constexpr long double phi = c1 + c2;
-        static constexpr long double chi = 2.0L / std::abs(2 - phi - sqrt(
+        static constexpr double c1 = 2.05;
+        static constexpr double c2 = 2.05;
+        static constexpr double phi = c1 + c2;
+        static constexpr double chi = 2.0 / std::abs(2 - phi - sqrt(
                                                phi * phi - 4 * phi));
 
     };
@@ -102,7 +102,7 @@ namespace PSO {
     template<class T, class Fit, class Comp>
     void PSO::ParticleSwarmOptimization<T, Fit, Comp>::updatePositions() {
 
-        std::uniform_real_distribution<long double> PSO_UnifDistribution(0, 1);
+        std::uniform_real_distribution<double> PSO_UnifDistribution(0, 1);
 
         for (auto particle : Particles) {
 
@@ -112,8 +112,8 @@ namespace PSO {
 
             //Calculate velocities
             for (unsigned i = 0; i < N; i++) {
-                long double Eps1 = PSO_UnifDistribution(random_generator);
-                long double Eps2 = PSO_UnifDistribution(random_generator);
+                double Eps1 = PSO_UnifDistribution(random_generator);
+                double Eps2 = PSO_UnifDistribution(random_generator);
 
                 particle->V[i] += c1 * Eps1 * (particle->P[i] - particle->X[i]);
                 particle->V[i] += c2 * Eps2 * (FitterNeigh->P[i] - particle->X[i]);

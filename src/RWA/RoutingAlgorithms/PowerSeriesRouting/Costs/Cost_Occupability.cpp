@@ -19,7 +19,7 @@ void PSR::Occupability::createCache() {
         int expo = 0;
 
         for (int n = NMin; n <= NMax; n++) {
-            cache(occup, expo++) = pow(occup / (long double) Link::NumSlots, n);
+            cache(occup, expo++) = pow(occup / (double) Link::NumSlots, n);
         }
     }
 }

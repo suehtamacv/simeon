@@ -10,7 +10,7 @@ class Slot {
     /**
      * @brief BSlot is the bandwidth of a single slot.
      */
-    constexpr static long double BSlot = 12.5E9;
+    constexpr static double BSlot = 12.5E9;
 
     Slot(int);
 

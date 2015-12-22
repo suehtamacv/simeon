@@ -19,16 +19,16 @@ class TransmissionBitrate {
      * @brief TransmissionBitrate is the standard constructor for a TransmissionBitrate.
      * @param Bitrate is the bitrate, in bits per second.
      */
-	TransmissionBitrate(long double Bitrate);
+	TransmissionBitrate(double Bitrate);
     /**
      * @brief get_Bitrate returns the value of the bitrate, in bits per second.
      * @return the value of the bitrate, in bits per second.
      */
-	long double get_Bitrate();
+	double get_Bitrate();
 
     static std::vector<TransmissionBitrate> DefaultBitrates;
   private:
-	long double Bitrate;
+	double Bitrate;
 };
 
 #endif // TRANSMISSIONBITRATE_H

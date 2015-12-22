@@ -79,7 +79,7 @@ void NetworkSimulation::print() {
     std::cout << get_Load() << "\t" << get_CallBlockingProbability() << std::endl;
 }
 
-long double NetworkSimulation::get_CallBlockingProbability() {
+double NetworkSimulation::get_CallBlockingProbability() {
     if (!hasSimulated) {
         run();
     }
@@ -87,6 +87,6 @@ long double NetworkSimulation::get_CallBlockingProbability() {
     return 1.0 * NumBlockedCalls / (1.0 * NumCalls);
 }
 
-long double NetworkSimulation::get_Load() {
+double NetworkSimulation::get_Load() {
     return Generator->h;
 }

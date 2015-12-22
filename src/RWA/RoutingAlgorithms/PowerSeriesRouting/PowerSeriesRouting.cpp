@@ -25,7 +25,7 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
     }
 }
 
-long double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
+double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
         std::shared_ptr<Call> C) {
     arma::mat cost_matrix = arma::ones(1);
 

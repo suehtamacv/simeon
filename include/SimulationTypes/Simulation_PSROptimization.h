@@ -28,8 +28,8 @@ class Simulation_PSROptimization : public SimulationType {
     static RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
-    static long double NumCalls;
-    static long double OptimizationLoad;
+    static double NumCalls;
+    static double OptimizationLoad;
 
     static constexpr unsigned int P = 50;
     static constexpr unsigned int G = 500;
@@ -48,7 +48,7 @@ class Simulation_PSROptimization : public SimulationType {
 
     struct Fitness {
         static std::shared_ptr<Topology> T;
-        long double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
+        double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };
 };
 

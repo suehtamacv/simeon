@@ -181,7 +181,7 @@ void Simulation_NetworkLoad::create_Simulations() {
         place_Regenerators(T);
     }
 
-    for (long double load = NetworkLoadMin; load <= NetworkLoadMax;
+    for (double load = NetworkLoadMin; load <= NetworkLoadMax;
             load += NetworkLoadStep) {
 
         //Creates a copy of the topology.

@@ -7,10 +7,10 @@ std::vector<TransmissionBitrate> TransmissionBitrate::DefaultBitrates = {
 #undef DEFAULT_TRANSMISSIONBITRATES
 };
 
-TransmissionBitrate::TransmissionBitrate(long double Bitrate) {
+TransmissionBitrate::TransmissionBitrate(double Bitrate) {
     this->Bitrate = Bitrate;
 }
 
-long double TransmissionBitrate::get_Bitrate() {
+double TransmissionBitrate::get_Bitrate() {
     return Bitrate;
 }

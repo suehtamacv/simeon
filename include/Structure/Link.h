@@ -14,10 +14,10 @@ class Call;
 class Link {
   public:
     static int NumSlots;
-    static long double AvgSpanLength;
+    static double AvgSpanLength;
 
     Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination,
-         long double Length);
+         double Length);
     Link(const Link &link);
 
     std::weak_ptr<Node> Origin;
@@ -25,7 +25,7 @@ class Link {
     std::vector<std::shared_ptr<Slot>> Slots;
     std::vector<std::shared_ptr<Device>> Devices;
 
-    long double Length;
+    double Length;
     int numLineAmplifiers;
 
     bool operator==(const Link &) const;
@@ -34,9 +34,9 @@ class Link {
 
     Signal &bypass(Signal &);
 
-    long double get_Availability();
-    long double get_Occupability();
-    long double get_Contiguity(std::shared_ptr<Call> C);
+    double get_Availability();
+    double get_Occupability();
+    double get_Contiguity(std::shared_ptr<Call> C);
 
     static void load();
   private:

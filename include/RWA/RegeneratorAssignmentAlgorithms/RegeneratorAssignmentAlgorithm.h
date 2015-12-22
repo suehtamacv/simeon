@@ -35,7 +35,7 @@ class RegeneratorAssignmentAlgorithm {
      * @brief RegeneratorBitrate is the maximum bitrate that a single
      * Regenerator can regenerate. It's measured in bits per second.
      */
-    constexpr static long double RegeneratorBitrate = 100E9;
+    constexpr static double RegeneratorBitrate = 100E9;
 
     /**
      * @brief RegeneratorAssignmentAlgorithm is the standard constructor for a

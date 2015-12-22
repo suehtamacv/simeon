@@ -38,7 +38,7 @@ class CallGenerator {
      * @param h is the parameter for the call interarrival time distribution.
      * @param Bitrates is a vector with the possible transmission bitrates.
      */
-    CallGenerator(std::shared_ptr<Topology> T, long double h,
+    CallGenerator(std::shared_ptr<Topology> T, double h,
                   std::vector<TransmissionBitrate> Bitrates);
 
     /**
@@ -58,16 +58,16 @@ class CallGenerator {
     /**
      * @brief mu is the parameter for the call duration exponential distribution.
      */
-    static constexpr long double mu = 1;
+    static constexpr double mu = 1;
     /**
      * @brief h is t parameter for the cl interarrival time exponential
      * distribution.
      */
-    long double h;
+    double h;
     /**
      * @brief simulationTime is the current time seen by the last call.
      */
-    long double simulationTime;
+    double simulationTime;
     /**
      * @brief Bitrates is a vector containing the possible bitrates.
      */
@@ -85,14 +85,14 @@ class CallGenerator {
      * Generator.
      * @param load is the new load, in Erlangs.
      */
-    void set_Load(long double load);
+    void set_Load(double load);
 
   private:
     //Distributions
     std::uniform_int_distribution<int> UniformNodeDistribution;
     std::uniform_int_distribution<int> UniformBitrateDistribution;
-    std::exponential_distribution<long double> ExponentialDistributionMu;
-    std::exponential_distribution<long double> ExponentialDistributionH;
+    std::exponential_distribution<double> ExponentialDistributionMu;
+    std::exponential_distribution<double> ExponentialDistributionH;
 
 };
 

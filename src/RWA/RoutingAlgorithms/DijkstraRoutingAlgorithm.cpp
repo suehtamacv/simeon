@@ -14,7 +14,7 @@ std::shared_ptr<Call> C) {
     /** Attention: this code breaks if there are nodes in the Topology with the
      * same ID. This should not happen. The nodes must have sequential ID. **/
 
-    std::vector<long double> MinDistance(T->Nodes.size() + 1,
+    std::vector<double> MinDistance(T->Nodes.size() + 1,
                                          std::numeric_limits<double>::max());
     std::set<std::pair<int, std::shared_ptr<Node>>> ActiveVertices;
     std::vector<int> Precedent(T->Nodes.size() + 1, -1);
@@ -39,7 +39,7 @@ std::shared_ptr<Call> C) {
 
         for (auto node : CurrentNode->Neighbours) {
             auto locknode = node.lock();
-            long double newLength = MinDistance[CurrentNode->ID] +
+            double newLength = MinDistance[CurrentNode->ID] +
                                     get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);
 
             if (MinDistance[locknode->ID] > newLength) {

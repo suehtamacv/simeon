@@ -5,7 +5,7 @@
 
 MostUsed::MostUsed(std::shared_ptr<Topology> T,
                    std::shared_ptr<RoutingWavelengthAssignment> RWA,
-                   long double NetworkLoad,
+                   double NetworkLoad,
                    long long unsigned NumCalls,
                    std::vector<TransmissionBitrate> Bitrates
                   ) :
