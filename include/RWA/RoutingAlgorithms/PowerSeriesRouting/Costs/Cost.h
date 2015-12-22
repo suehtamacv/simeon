@@ -28,7 +28,7 @@ namespace PSR {
         typedef boost::bimap<PossibleCosts, std::string> CostNicknameBimap;
         static CostNicknameBimap CostsNicknames;
 
-        Cost(int NMin, int NMax, std::shared_ptr<Topology> T);
+        Cost(int NMin, int NMax, std::shared_ptr<Topology> T, PossibleCosts Type);
         virtual arma::rowvec getCost(std::weak_ptr<Link> link,
                                      std::shared_ptr<Call> C) = 0;
         static std::shared_ptr<Cost> createCost(PossibleCosts, int NMin, int NMax,
@@ -37,6 +37,8 @@ namespace PSR {
         int get_NMin();
         int get_NMax();
         int get_N();
+
+        PossibleCosts Type;
 
       protected:
         int NMin, NMax;

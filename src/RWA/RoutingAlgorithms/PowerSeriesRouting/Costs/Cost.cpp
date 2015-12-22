@@ -19,8 +19,8 @@ PSR::Cost::CostNicknameBimap PSR::Cost::CostsNicknames =
 #undef POSSIBLECOSTS
     ;
 
-PSR::Cost::Cost(int NMin, int NMax, std::shared_ptr<Topology> T) :
-    NMin(NMin), NMax(NMax), T(T) {
+PSR::Cost::Cost(int NMin, int NMax, std::shared_ptr<Topology> T,
+                PossibleCosts Type) : Type(Type), NMin(NMin), NMax(NMax), T(T) {
 
 }
 

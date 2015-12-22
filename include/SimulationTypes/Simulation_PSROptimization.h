@@ -18,26 +18,36 @@ class Simulation_PSROptimization : public SimulationType {
 
   private:
     bool hasLoaded;
+    bool hasRun;
 
-    std::shared_ptr<PowerSeriesRouting> MasterPSR;
-    WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    static std::shared_ptr<PowerSeriesRouting> MasterPSR;
+    static WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;
-    RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    static RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    static RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
-    long double NumCalls;
-    long double OptimizationLoad;
+    static long double NumCalls;
+    static long double OptimizationLoad;
 
-    class Compare {
-      public:
+    static constexpr unsigned int P = 50;
+    static constexpr unsigned int G = 500;
+    static constexpr double XMin = -1;
+    static constexpr double XMax = 1;
+    static constexpr double VMin = -1;
+    static constexpr double VMax = 1;
+
+    void create_Simulation();
+
+    struct Compare {
         bool operator()(double a, double b) {
             return a < b;
         }
     };
 
     struct Fitness {
+        static std::shared_ptr<Topology> T;
         long double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };
 };

@@ -5,7 +5,7 @@
 
 PSR::Availability::Availability(int NMin, int NMax,
                                 std::shared_ptr<Topology> T)
-    : Cost(NMin, NMax, T) {
+    : Cost(NMin, NMax, T, Cost::availability) {
     cache = arma::ones<arma::mat>(Link::NumSlots + 1, NMax - NMin + 1);
     createCache();
 }

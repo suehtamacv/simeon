@@ -70,14 +70,14 @@ namespace PSO {
     template<class T, class Fit, class Comp>
     void PSO::ParticleSwarmOptimization<T, Fit, Comp>::run_generation() {
         for (auto particle : Particles) {
-            particle->currentFit = Fit(particle);
+            particle->currentFit = Fit()(particle);
 
-            if (Comp(particle->currentFit, particle->bestFit)) {
+            if (Comp()(particle->currentFit, particle->bestFit)) {
                 particle->bestFit = particle->currentFit;
                 particle->P = particle->X;
             }
 
-            if (Comp(particle->bestFit, BestParticle->bestFit)) {
+            if (Comp()(particle->bestFit, BestParticle->bestFit)) {
                 BestParticle = particle;
             }
         }
@@ -92,11 +92,12 @@ namespace PSO {
 
         for (auto particle : Particles) {
 
-            auto FitterNeigh = Comp(particle->Neighbour[0], particle->Neighbour[1]) ?
+            auto FitterNeigh = Comp()(particle->Neighbour[0].lock()->currentFit,
+                                      particle->Neighbour[1].lock()->currentFit) ?
                                particle->Neighbour[0].lock() : particle->Neighbour[1].lock();
 
             //Calculate velocities
-            for (int i = 0; i < N; i++) {
+            for (unsigned i = 0; i < N; i++) {
                 long double Eps1 = PSO_UnifDistribution(random_generator);
                 long double Eps2 = PSO_UnifDistribution(random_generator);
 
@@ -112,7 +113,7 @@ namespace PSO {
             }
 
             //Calculate positions
-            for (int i = 0; i < N; i++) {
+            for (unsigned i = 0; i < N; i++) {
                 particle->X[i] += particle->V[i];
 
                 if (particle->X[i] > XMax) {
@@ -120,7 +121,6 @@ namespace PSO {
                 } else if (particle->X[i] < XMin) {
                     particle->X[i] = XMin;
                 }
-
             }
         }
     }

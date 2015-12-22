@@ -1,10 +1,23 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
+#include "Calls.h"
 #include <GeneralPurposeAlgorithms/PSO.h>
-#include <Structure/Link.h>
 #include <RWA.h>
+#include <SimulationTypes/NetworkSimulation.h>
+#include <Structure/Link.h>
+
+long double Simulation_PSROptimization::NumCalls;
+long double Simulation_PSROptimization::OptimizationLoad;
+std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
+std::shared_ptr<PowerSeriesRouting> Simulation_PSROptimization::MasterPSR;
+WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+Simulation_PSROptimization::WavAssign_Algorithm;
+RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+Simulation_PSROptimization::RegPlacement_Algorithm;
+RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+Simulation_PSROptimization::RegAssignment_Algorithm;
 
 Simulation_PSROptimization::Simulation_PSROptimization() {
-    hasLoaded = false;
+    hasLoaded = hasRun = false;
 }
 
 void Simulation_PSROptimization::help() {
@@ -100,9 +113,11 @@ void Simulation_PSROptimization::load() {
         }
     } while (1);
 
-
-
     hasLoaded = true;
+}
+
+void Simulation_PSROptimization::create_Simulation() {
+
 }
 
 void Simulation_PSROptimization::save(std::ofstream) {
@@ -114,16 +129,81 @@ void Simulation_PSROptimization::load_file(std::ifstream) {
 }
 
 void Simulation_PSROptimization::print() {
+    if (!hasLoaded) {
+        load();
+    }
 
+    if (!hasRun) {
+        Fitness::T = T;
+        int N = std::pow(MasterPSR->get_Costs().front()->get_N(),
+                         MasterPSR->get_Costs().size());
+
+        PSO::ParticleSwarmOptimization<double, Fitness, Compare>
+        PSO_Optim(P, G, N, XMin, XMax, VMin, VMax);
+
+        std::cout << std::endl << "* * RESULTS * *" << std::endl;
+        std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
+
+        for (unsigned i = 0; i < G; i++) {
+            PSO_Optim.run_generation();
+            std::cout << i << "\t\t" << PSO_Optim.BestParticle->bestFit << std::endl;
+        }
+    }
 }
 
 void Simulation_PSROptimization::run() {
     if (!hasLoaded) {
         load();
     }
+
+    Fitness::T = T;
+    int N = std::pow(MasterPSR->get_Costs().front()->get_N(),
+                     MasterPSR->get_Costs().size());
+
+    PSO::ParticleSwarmOptimization<double, Fitness, Compare>
+    PSO_Optim(P, G, N, XMin, XMax, VMin, VMax);
+
+    for (unsigned i = 0; i < G; i++) {
+        PSO_Optim.run_generation();
+    }
+
+    hasRun = true;
 }
 
-long double Simulation_PSROptimization::Fitness::operator()(std::shared_ptr<PSO::PSO_Particle<double>> particle) {
+long double Simulation_PSROptimization::Fitness::operator()(
+    std::shared_ptr<PSO::PSO_Particle<double>> particle) {
 
-    return 1;
+    //Creates a copy of the topology.
+    std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+
+    //Creates the RWA Algorithms
+    std::shared_ptr<PowerSeriesRouting> R_Alg(new PowerSeriesRouting(TopologyCopy,
+            Simulation_PSROptimization::MasterPSR->get_Costs()));
+    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
+        WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+            Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
+    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
+
+    if (Simulation_PSROptimization::Type == TranslucentNetwork) {
+        RA_Alg = RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+                     Simulation_PSROptimization::RegAssignment_Algorithm, TopologyCopy);
+    } else {
+        RA_Alg = nullptr;
+    }
+
+    //Initializes routing algorithm with the particle.
+    R_Alg->initCoefficients(*particle);
+
+    //Creates the Call Generator and the RWA Object
+    std::shared_ptr<CallGenerator> Generator(
+        new CallGenerator(
+            TopologyCopy, Simulation_PSROptimization::OptimizationLoad,
+            TransmissionBitrate::DefaultBitrates));
+    std::shared_ptr<RoutingWavelengthAssignment> RWA(
+        new RoutingWavelengthAssignment(
+            R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+
+    return
+        NetworkSimulation(Generator, RWA, Simulation_PSROptimization::NumCalls).
+        get_CallBlockingProbability();
 }

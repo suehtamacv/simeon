@@ -5,8 +5,6 @@
 #include "RWA.h"
 #include "SimulationTypes.h"
 
-#include "RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h"
-
 #include <iostream>
 
 int main(void) {
@@ -14,7 +12,7 @@ int main(void) {
               << std::endl;
 
     Simulation_PSROptimization Simulation;
-    Simulation.run();
+    Simulation.print();
 
     return 0;
 }

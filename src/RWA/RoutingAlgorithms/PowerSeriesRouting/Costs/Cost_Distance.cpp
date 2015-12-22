@@ -4,8 +4,8 @@
 #include <Calls/Call.h>
 #include <cmath>
 
-PSR::Distance::Distance(int NMin, int NMax,
-                        std::shared_ptr<Topology> T) : Cost(NMin, NMax, T) {
+PSR::Distance::Distance(int NMin, int NMax, std::shared_ptr<Topology> T) :
+    Cost(NMin, NMax, T, Cost::distance) {
     createCache();
 }
 

@@ -36,7 +36,7 @@ void Simulation_NetworkLoad::print() {
     std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
 
     for (auto simulation : simulations) {
-        if (!hasSimulated) {
+        if (!simulation->hasSimulated) {
             simulation->run();
         }
 
@@ -173,8 +173,6 @@ void Simulation_NetworkLoad::load_file(std::ifstream) {
 }
 
 void Simulation_NetworkLoad::create_Simulations() {
-    T = Topology::create_DefaultTopology(Chosen_Topology);
-
     if (Type == TranslucentNetwork) {
         place_Regenerators(T);
     }

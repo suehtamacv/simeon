@@ -24,8 +24,9 @@ class NetworkSimulation {
     long double get_CallBlockingProbability();
     long double get_Load();
 
-  private:
     bool hasSimulated;
+
+  private:
     void implement_call(std::shared_ptr<Event> evt);
     void drop_call(std::shared_ptr<Event> evt);
 };

@@ -36,7 +36,7 @@ class SimulationType {
     virtual void load_file(std::ifstream) = 0;
     virtual void help() = 0;
 
-    NetworkType Type;
+    static NetworkType Type;
     Topology::DefaultTopologies Chosen_Topology;
     std::shared_ptr<Topology> T;
 };

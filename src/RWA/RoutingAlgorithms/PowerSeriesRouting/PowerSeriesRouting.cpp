@@ -10,13 +10,19 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
                                        std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    DijkstraRoutingAlgorithm(T), Costs(Costs) {
+    DijkstraRoutingAlgorithm(T) {
 
     firstTimeRun = false;
     hasLoaded = true;
 
     NMin = Costs.front()->get_NMin();
     NMax = Costs.front()->get_NMax();
+
+    //Copies the costs types, but not the costs themselves.
+    //It's therefore topology-independent.
+    for (auto cost : Costs) {
+        this->Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
+    }
 }
 
 long double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
@@ -128,4 +134,8 @@ void PowerSeriesRouting::load() {
 
 void PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> particle) {
     coefficients = arma::mat(particle.X);
+}
+
+std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::get_Costs() {
+    return Costs;
 }
