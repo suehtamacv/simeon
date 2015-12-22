@@ -106,7 +106,7 @@ long double Link::get_Availability() {
 }
 
 long double Link::get_Occupability() {
-    return 1 - get_Availability();
+    return Link::NumSlots - get_Availability();
 }
 
 long double Link::get_Contiguity(std::shared_ptr<Call> C) {

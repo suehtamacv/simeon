@@ -15,7 +15,8 @@ namespace PSR {
       public:
 #define POSSIBLECOSTS \
 	X(availability, "Availability", "availability") \
-	X(distance, "Normalized Distance", "distance")
+    X(distance, "Normalized Distance", "distance") \
+    X(occupability, "Occupability", "occupability")
 
 #define X(a,b,c) a,
         enum PossibleCosts {

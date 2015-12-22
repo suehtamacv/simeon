@@ -36,6 +36,10 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
         case distance:
             Cost = std::shared_ptr<PSR::Cost>(new PSR::Distance(NMin, NMax, T));
             break;
+
+        case occupability:
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::Occupability(NMin, NMax, T));
+            break;
     }
 
     return Cost;

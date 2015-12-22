@@ -70,7 +70,7 @@ void PowerSeriesRouting::load() {
         int nmax;
         std::cin >> nmax;
 
-        if (std::cin.fail() || NMax < NMin) {
+        if (std::cin.fail() || nmax < NMin) {
             std::cin.clear();
             std::cin.ignore();
 
