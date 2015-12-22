@@ -15,6 +15,7 @@ namespace PSR {
       public:
 #define POSSIBLECOSTS \
 	X(availability, "Availability", "availability") \
+    X(contiguity, "Contiguity", "contiguity") \
     X(distance, "Normalized Distance", "distance") \
     X(occupability, "Occupability", "occupability")
 

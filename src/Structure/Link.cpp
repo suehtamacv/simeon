@@ -93,7 +93,7 @@ bool Link::isSlotFree(int slot) const {
     return (Slots[slot])->isFree;
 }
 
-double Link::get_Availability() {
+int Link::get_Availability() {
     int FreeSlots = 0;
 
     for (auto slot : Slots) {
@@ -105,11 +105,11 @@ double Link::get_Availability() {
     return FreeSlots;
 }
 
-double Link::get_Occupability() {
+int Link::get_Occupability() {
     return Link::NumSlots - get_Availability();
 }
 
-double Link::get_Contiguity(std::shared_ptr<Call> C) {
+int Link::get_Contiguity(std::shared_ptr<Call> C) {
     BOOST_ASSERT_MSG(C->Scheme.get_M() != 0,
                      "Can't calculate contiguity without knowing the modulation"
                      " scheme. Either you forgot to set it or one of the chosen "

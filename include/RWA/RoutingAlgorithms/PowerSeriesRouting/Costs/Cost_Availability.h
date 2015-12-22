@@ -5,6 +5,10 @@
 
 namespace PSR {
 
+    /**
+    * @brief The Availability class has, as cost, the number of free slots on
+    * each link, normalized by the number of slots on each link.
+    */
     class Availability : public Cost {
       public:
         Availability(int NMin, int NMax, std::shared_ptr<Topology> T);

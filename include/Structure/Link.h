@@ -34,9 +34,9 @@ class Link {
 
     Signal &bypass(Signal &);
 
-    double get_Availability();
-    double get_Occupability();
-    double get_Contiguity(std::shared_ptr<Call> C);
+    int get_Availability();
+    int get_Occupability();
+    int get_Contiguity(std::shared_ptr<Call> C);
 
     static void load();
   private:

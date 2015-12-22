@@ -33,6 +33,10 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
             Cost = std::shared_ptr<PSR::Cost>(new PSR::Availability(NMin, NMax, T));
             break;
 
+        case contiguity:
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::Contiguity(NMin, NMax, T));
+            break;
+
         case distance:
             Cost = std::shared_ptr<PSR::Cost>(new PSR::Distance(NMin, NMax, T));
             break;
