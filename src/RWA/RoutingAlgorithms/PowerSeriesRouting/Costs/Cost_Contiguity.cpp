@@ -1,18 +1,18 @@
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h>
 #include <Structure/Link.h>
 
-PSR::Contiguity::Contiguity(int NMin, int NMax, std::shared_ptr<Topology> T) :
+PSR::cContiguity::cContiguity(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::contiguity) {
     cache = arma::ones<arma::mat>(Link::NumSlots + 1, NMax - NMin + 1);
     createCache();
 }
 
-arma::rowvec PSR::Contiguity::getCost(std::weak_ptr<Link> link,
+arma::rowvec PSR::cContiguity::getCost(std::weak_ptr<Link> link,
                                       std::shared_ptr<Call> C) {
     return cache.row(link.lock()->get_Contiguity(C));
 }
 
-void PSR::Contiguity::createCache() {
+void PSR::cContiguity::createCache() {
     for (int contig = 0; contig <= Link::NumSlots; contig++) {
         int expo = 0;
 

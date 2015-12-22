@@ -30,23 +30,23 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
 
     switch (cost) {
         case availability:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::Availability(NMin, NMax, T));
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cAvailability(NMin, NMax, T));
             break;
 
         case bitrate:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::Bitrate(NMin, NMax, T));
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cBitrate(NMin, NMax, T));
             break;
 
         case contiguity:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::Contiguity(NMin, NMax, T));
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cContiguity(NMin, NMax, T));
             break;
 
         case distance:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::Distance(NMin, NMax, T));
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cDistance(NMin, NMax, T));
             break;
 
         case occupability:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::Occupability(NMin, NMax, T));
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cOccupability(NMin, NMax, T));
             break;
     }
 

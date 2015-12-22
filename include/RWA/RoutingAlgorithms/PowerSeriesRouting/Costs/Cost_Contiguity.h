@@ -6,14 +6,14 @@
 namespace PSR {
 
     /**
-    * @brief The Contiguity class has, as cost, the contiguity measure of the
+    * @brief The cContiguity class has, as cost, the contiguity measure of the
     * link. It only works on transparent networks. If sr is the number of
     * possible allocations of the call C in the Link link, then this cost is
     * 1.0 / (sr + 1).
     */
-    class Contiguity : public Cost {
+    class cContiguity : public Cost {
       public:
-        Contiguity(int NMin, int NMax, std::shared_ptr<Topology> T);
+        cContiguity(int NMin, int NMax, std::shared_ptr<Topology> T);
         arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 
       private:

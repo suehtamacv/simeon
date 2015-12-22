@@ -2,17 +2,17 @@
 #include <algorithm>
 #include "Calls.h"
 
-PSR::Bitrate::Bitrate(int NMin, int NMax, std::shared_ptr<Topology> T) :
+PSR::cBitrate::cBitrate(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::bitrate) {
     createCache();
 }
 
-arma::rowvec PSR::Bitrate::getCost(std::weak_ptr<Link>,
+arma::rowvec PSR::cBitrate::getCost(std::weak_ptr<Link>,
                                    std::shared_ptr<Call> C) {
     return cache[C->Bitrate];
 }
 
-void PSR::Bitrate::createCache() {
+void PSR::cBitrate::createCache() {
     double maxBitrate = -1;
 
     for (auto bitrate : TransmissionBitrate::DefaultBitrates) {

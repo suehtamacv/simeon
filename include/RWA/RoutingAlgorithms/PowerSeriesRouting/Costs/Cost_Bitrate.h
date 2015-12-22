@@ -7,9 +7,9 @@
 
 namespace PSR {
 
-    class Bitrate : public Cost {
+    class cBitrate : public Cost {
       public:
-        Bitrate(int NMin, int NMax, std::shared_ptr<Topology> T);
+        cBitrate(int NMin, int NMax, std::shared_ptr<Topology> T);
         arma::rowvec getCost(std::weak_ptr<Link>, std::shared_ptr<Call> C);
 
       private:
