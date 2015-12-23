@@ -74,8 +74,8 @@ Topology::Topology(std::string TopologyFileName) {
 
     variables_map VariablesMap;
 
-    store(parse_config_file<char>(TopologyFileName.c_str(), TopologyDescription),
-          VariablesMap);
+    store(parse_config_file<char>(TopologyFileName.c_str(), TopologyDescription,
+                                  true), VariablesMap);
 
     //Reads nodes from configuration file.
     std::vector<std::string> NodesList =

@@ -12,15 +12,14 @@ class Simulation_PSROptimization : public SimulationType {
     void help();
     void run();
     void load();
-    void save(std::ofstream);
-    void load_file(std::ifstream);
+    void save(std::string);
+    void load_file(std::string);
     void print();
 
   private:
     bool hasLoaded;
     bool hasRun;
 
-    static std::shared_ptr<PowerSeriesRouting> MasterPSR;
     static WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;
     static RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
@@ -30,6 +29,12 @@ class Simulation_PSROptimization : public SimulationType {
 
     static double NumCalls;
     static double OptimizationLoad;
+
+    int NMin;
+    int NMax;
+    static std::vector<std::shared_ptr<PSR::Cost>> Costs;
+
+    std::string FileName;
 
     static constexpr unsigned int P = 50;
     static constexpr unsigned int G = 500;
@@ -50,6 +55,11 @@ class Simulation_PSROptimization : public SimulationType {
         static std::shared_ptr<Topology> T;
         double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };
+
+    std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
+            PSO_Optim;
+
+    void printCoefficients(std::string file, bool override = true);
 };
 
 #endif // SIMULATION_PSROPTIMIZATION_H

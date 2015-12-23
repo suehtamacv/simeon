@@ -32,8 +32,8 @@ class SimulationType {
     virtual void run() = 0;
     virtual void load() = 0;
     virtual void print() = 0;
-    virtual void save(std::ofstream) = 0;
-    virtual void load_file(std::ifstream) = 0;
+    virtual void save(std::string) = 0;
+    virtual void load_file(std::string) = 0;
     virtual void help() = 0;
 
     static NetworkType Type;

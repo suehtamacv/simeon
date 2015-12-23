@@ -14,8 +14,8 @@ class Simulation_NetworkLoad : public SimulationType {
     void help();
     void run();
     void load();
-    void save(std::ofstream);
-    void load_file(std::ifstream);
+    void save(std::string);
+    void load_file(std::string);
     void print();
 
   private:

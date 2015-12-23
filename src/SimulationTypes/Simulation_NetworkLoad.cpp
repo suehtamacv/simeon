@@ -168,11 +168,11 @@ void Simulation_NetworkLoad::load() {
     hasLoaded = true;
 }
 
-void Simulation_NetworkLoad::save(std::ofstream) {
+void Simulation_NetworkLoad::save(std::string) {
 
 }
 
-void Simulation_NetworkLoad::load_file(std::ifstream) {
+void Simulation_NetworkLoad::load_file(std::string) {
     hasLoaded = true;
 }
 

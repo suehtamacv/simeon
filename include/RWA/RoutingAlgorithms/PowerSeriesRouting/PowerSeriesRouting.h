@@ -14,9 +14,14 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
 
     void load();
     void initCoefficients(PSO::PSO_Particle<double> particle);
+    bool initCoefficients(std::string);
+
     double get_Cost(std::weak_ptr<Link> link,
                          std::shared_ptr<Call> C);
     std::vector<std::shared_ptr<PSR::Cost>> get_Costs();
+
+    int get_NMin() const;
+    int get_NMax() const;
 
   private:
     std::vector<std::shared_ptr<PSR::Cost>> Costs;

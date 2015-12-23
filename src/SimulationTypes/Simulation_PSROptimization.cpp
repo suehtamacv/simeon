@@ -7,8 +7,8 @@
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
+std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
-std::shared_ptr<PowerSeriesRouting> Simulation_PSROptimization::MasterPSR;
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
@@ -60,10 +60,6 @@ void Simulation_PSROptimization::load() {
 
     //RWA Algorithms
     {
-        //Routing Algorithm
-        MasterPSR = std::static_pointer_cast<PowerSeriesRouting>
-                    (RoutingAlgorithm::create_RoutingAlgorithm(RoutingAlgorithm::PSR, T));
-
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
             WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
@@ -78,6 +74,89 @@ void Simulation_PSROptimization::load() {
                 RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
         }
     }
+
+    std::cout << std::endl << "-> Define the minimum exponent." << std::endl;
+
+    do {
+        int nmin;
+        std::cin >> nmin;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid minimum exponent." << std::endl;
+            std::cout << std::endl << "-> Define the minimum exponent." << std::endl;
+        } else {
+            NMin = nmin;
+            break;
+        }
+    } while (1);
+
+    std::cout << std::endl << "-> Define the maximum exponent." << std::endl;
+
+    do {
+        int nmax;
+        std::cin >> nmax;
+
+        if (std::cin.fail() || nmax < NMin) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid maximum exponent." << std::endl;
+            std::cout << std::endl << "-> Define the maximum exponent." << std::endl;
+        } else {
+            NMax = nmax;
+            break;
+        }
+    } while (1);
+
+    std::cout << std::endl << "-> Choose the PSR Costs." << std::endl;
+
+    do {
+        std::vector<PSR::Cost::PossibleCosts> chosenCosts;
+
+        do {
+            int numPossibleCosts = 0;
+
+            for (auto cost : PSR::Cost::CostsNames.left) {
+                if (std::find(chosenCosts.begin(), chosenCosts.end(),
+                              cost.first) != chosenCosts.end()) {
+                    continue;
+                } //Verifies whether the cost has already been chosen.
+
+                std::cout << "(" << cost.first << ")\t" << cost.second << std::endl;
+                numPossibleCosts++;
+            }
+
+            if (numPossibleCosts == 0) {
+                break;
+            }
+
+            int Cost;
+            std::cin >> Cost;
+
+            if (std::cin.fail() ||
+                    PSR::Cost::CostsNames.left.count((PSR::Cost::PossibleCosts) Cost) == 0) {
+                std::cin.clear();
+                std::cin.ignore();
+
+                if (Cost == -1 && !chosenCosts.empty()) {
+                    break;
+                }
+
+                std::cerr << "Invalid Cost." << std::endl;
+            } else if (std::find(chosenCosts.begin(), chosenCosts.end(),
+                                 (PSR::Cost::PossibleCosts) Cost) == chosenCosts.end()) {
+                chosenCosts.push_back((PSR::Cost::PossibleCosts) Cost);
+                Costs.push_back(PSR::Cost::createCost(
+                                    (PSR::Cost::PossibleCosts) Cost, NMin, NMax, T));
+            } //Verifies that the cost hasn't been chosen.
+
+            std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
+        } while (1);
+
+    } while (0); //Dummy do-while. Only to encapsulate reading.
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
@@ -95,8 +174,8 @@ void Simulation_PSROptimization::load() {
         }
     } while (1);
 
-    std::cout << std::endl << "-> Define the optimization network load." <<
-              std::endl;
+    std::cout << std::endl << "-> Define the optimization network load."
+              << std::endl;
 
     do {
         std::cin >> OptimizationLoad;
@@ -113,6 +192,24 @@ void Simulation_PSROptimization::load() {
         }
     } while (1);
 
+    std::cout << std::endl << "-> Define the file where to store the coefficients."
+              << std::endl;
+
+    do {
+        std::cin >> FileName;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the coefficients."
+                      << std::endl;
+        } else {
+            break;
+        }
+    } while (1);
+
     hasLoaded = true;
 }
 
@@ -120,11 +217,11 @@ void Simulation_PSROptimization::create_Simulation() {
 
 }
 
-void Simulation_PSROptimization::save(std::ofstream) {
+void Simulation_PSROptimization::save(std::string) {
 
 }
 
-void Simulation_PSROptimization::load_file(std::ifstream) {
+void Simulation_PSROptimization::load_file(std::string) {
 
 }
 
@@ -135,18 +232,20 @@ void Simulation_PSROptimization::print() {
 
     if (!hasRun) {
         Fitness::T = T;
-        int N = std::pow(MasterPSR->get_Costs().front()->get_N(),
-                         MasterPSR->get_Costs().size());
+        int N = std::pow(NMax - NMin + 1, Costs.size());
 
-        PSO::ParticleSwarmOptimization<double, Fitness, Compare>
-        PSO_Optim(P, G, N, XMin, XMax, VMin, VMax);
+        PSO_Optim =
+            std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
+            (new PSO::ParticleSwarmOptimization<double, Fitness, Compare>
+             (P, G, N, XMin, XMax, VMin, VMax));
 
         std::cout << std::endl << "* * RESULTS * *" << std::endl;
 
         for (unsigned i = 1; i <= G; i++) {
-            PSO_Optim.run_generation();
+            PSO_Optim->run_generation();
             std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
-            std::cout << i << "\t\t" << PSO_Optim.BestParticle->bestFit << std::endl;
+            std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
+            printCoefficients(FileName);
         }
     }
 }
@@ -157,14 +256,15 @@ void Simulation_PSROptimization::run() {
     }
 
     Fitness::T = T;
-    int N = std::pow(MasterPSR->get_Costs().front()->get_N(),
-                     MasterPSR->get_Costs().size());
+    int N = std::pow(NMax - NMin + 1, Costs.size());
 
-    PSO::ParticleSwarmOptimization<double, Fitness, Compare>
-    PSO_Optim(P, G, N, XMin, XMax, VMin, VMax);
+    PSO_Optim =
+        std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
+        (new PSO::ParticleSwarmOptimization<double, Fitness, Compare>
+         (P, G, N, XMin, XMax, VMin, VMax));
 
     for (unsigned i = 0; i < G; i++) {
-        PSO_Optim.run_generation();
+        PSO_Optim->run_generation();
     }
 
     hasRun = true;
@@ -178,7 +278,7 @@ double Simulation_PSROptimization::Fitness::operator()(
 
     //Creates the RWA Algorithms
     std::shared_ptr<PowerSeriesRouting> R_Alg(new PowerSeriesRouting(TopologyCopy,
-            Simulation_PSROptimization::MasterPSR->get_Costs()));
+            Simulation_PSROptimization::Costs));
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
         WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
             Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
@@ -206,4 +306,44 @@ double Simulation_PSROptimization::Fitness::operator()(
     return
         NetworkSimulation(Generator, RWA, Simulation_PSROptimization::NumCalls).
         get_CallBlockingProbability();
+}
+
+void Simulation_PSROptimization::printCoefficients(std::string file,
+        bool override) {
+    std::ofstream OutFile;
+
+    if (override) {
+        OutFile.open(file);
+    } else {
+        OutFile.open(file, std::ofstream::out | std::ofstream::app);
+    }
+
+    OutFile << "  [PSR]" << std::endl << std::endl;
+
+    OutFile << "minexponent = " << NMin << std::endl;
+
+    OutFile << "maxexponent = " << NMax << std::endl;
+
+    OutFile << "costs =";
+
+    {
+        for (auto cost : Costs) {
+            OutFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
+        }
+
+        OutFile << std::endl;
+    }
+
+    OutFile << "coefficients =";
+
+    {
+        for (auto coef : PSO_Optim->BestParticle->P) {
+            OutFile << " " << coef;
+        }
+
+        OutFile << std::endl;
+    }
+
+    OutFile << "bestfit = " << PSO_Optim->BestParticle->bestFit << std::endl;
+
 }
