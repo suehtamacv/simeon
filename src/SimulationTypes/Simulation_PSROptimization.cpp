@@ -75,7 +75,7 @@ void Simulation_PSROptimization::load() {
         }
     }
 
-    std::cout << std::endl << "-> Define the minimum exponent." << std::endl;
+    std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
 
     do {
         int nmin;
@@ -86,14 +86,15 @@ void Simulation_PSROptimization::load() {
             std::cin.ignore();
 
             std::cerr << "Invalid minimum exponent." << std::endl;
-            std::cout << std::endl << "-> Define the minimum exponent." << std::endl;
+            std::cout << std::endl << "-> Define the minimum PSR Exponent."
+                      << std::endl;
         } else {
             NMin = nmin;
             break;
         }
     } while (1);
 
-    std::cout << std::endl << "-> Define the maximum exponent." << std::endl;
+    std::cout << std::endl << "-> Define the maximum PSR exponent." << std::endl;
 
     do {
         int nmax;
@@ -104,7 +105,7 @@ void Simulation_PSROptimization::load() {
             std::cin.ignore();
 
             std::cerr << "Invalid maximum exponent." << std::endl;
-            std::cout << std::endl << "-> Define the maximum exponent." << std::endl;
+            std::cout << std::endl << "-> Define the maximum PSR exponent." << std::endl;
         } else {
             NMax = nmax;
             break;

@@ -29,7 +29,7 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
     int NMin, NMax;
 
     bool firstTimeRun;
-    bool hasLoaded;
+    static bool hasLoaded;
 };
 
 #endif // POWERSERIESROUTING_H

@@ -11,8 +11,8 @@ int main(void) {
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
-    Simulation_NetworkLoad simulation;
-    simulation.print();
+    ///Simulation_NetworkLoad simulation;
+    ///simulation.print();
 
     Simulation_PSROptimization simulation2;
     simulation2.print();

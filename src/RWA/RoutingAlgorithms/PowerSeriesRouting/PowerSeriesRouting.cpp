@@ -3,10 +3,11 @@
 #include <algorithm>
 #include <boost/program_options.hpp>
 
+bool PowerSeriesRouting::hasLoaded = false;
+
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
     DijkstraRoutingAlgorithm(T) {
     firstTimeRun = false;
-    hasLoaded = false;
 }
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
@@ -47,7 +48,8 @@ void PowerSeriesRouting::load() {
         return;
     }
 
-    std::cout << std::endl << "-> Define the coefficients filepath." << std::endl;
+    std::cout << std::endl << "-> Define the PSR Coefficients filepath." <<
+              std::endl;
 
     do {
         std::string Filename;
@@ -59,7 +61,8 @@ void PowerSeriesRouting::load() {
             std::cin.ignore();
 
             std::cerr << "Invalid coefficients." << std::endl;
-            std::cout << std::endl << "-> Define the coefficients filepath." << std::endl;
+            std::cout << std::endl << "-> Define the PSR Coefficients filepath."
+                      << std::endl;
         } else {
             break;
         }
