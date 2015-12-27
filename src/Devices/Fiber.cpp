@@ -1,8 +1,8 @@
 #include <Devices/Fiber.h>
 
-long double Fiber::alphaFiber = 0.22;
+double Fiber::alphaFiber = 0.22;
 
-Fiber::Fiber(long double SpanLength) :
+Fiber::Fiber(double SpanLength) :
     Device(Device::FiberDevice), NetLoss(- SpanLength * alphaFiber, Gain::dB),
     NoisePower(0, Power::Watt) {
     this->SpanLength = SpanLength;

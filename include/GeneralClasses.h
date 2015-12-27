@@ -5,6 +5,7 @@
 #include <GeneralClasses/ModulationScheme.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Power.h>
+#include <GeneralClasses/RandomGenerator.h>
 #include <GeneralClasses/Signal.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 

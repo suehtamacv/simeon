@@ -32,19 +32,21 @@ void Simulation_NetworkLoad::run() {
 }
 
 void Simulation_NetworkLoad::print() {
+    if (!hasLoaded) {
+        load();
+    }
+
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    if (!hasSimulated) {
-        for (auto simulation : simulations) {
+    for (auto simulation : simulations) {
+        if (!simulation->hasSimulated) {
             simulation->run();
-            simulation->print();
         }
-    } else {
-        for (auto simulation : simulations) {
-            simulation->print();
-        }
+
+        simulation->print();
     }
+
 }
 
 void Simulation_NetworkLoad::load() {
@@ -166,22 +168,20 @@ void Simulation_NetworkLoad::load() {
     hasLoaded = true;
 }
 
-void Simulation_NetworkLoad::save(std::ofstream) {
+void Simulation_NetworkLoad::save(std::string) {
 
 }
 
-void Simulation_NetworkLoad::load_file(std::ifstream) {
+void Simulation_NetworkLoad::load_file(std::string) {
     hasLoaded = true;
 }
 
 void Simulation_NetworkLoad::create_Simulations() {
-    T = Topology::create_DefaultTopology(Chosen_Topology);
-
     if (Type == TranslucentNetwork) {
         place_Regenerators(T);
     }
 
-    for (long double load = NetworkLoadMin; load <= NetworkLoadMax;
+    for (double load = NetworkLoadMin; load <= NetworkLoadMax;
             load += NetworkLoadStep) {
 
         //Creates a copy of the topology.

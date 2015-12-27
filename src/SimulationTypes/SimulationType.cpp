@@ -2,6 +2,8 @@
 #include <boost/assign.hpp>
 #include <iostream>
 
+SimulationType::NetworkType SimulationType::Type;
+
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
     boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
 #define X(a,b) (a,b)
@@ -33,6 +35,7 @@ void SimulationType::load() {
             std::cout << std::endl << "-> Choose a topology." << std::endl;
         } else {
             Chosen_Topology = (Topology::DefaultTopologies) Topol;
+            T = Topology::create_DefaultTopology(Chosen_Topology);
             break;
         }
     } while (1);

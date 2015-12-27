@@ -4,6 +4,10 @@ CONFIG += console c++11
 CONFIG -= app_bundle qt
 
 QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS_RELEASE -= -O
+QMAKE_CXXFLAGS_RELEASE -= -O1
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_CXXFLAGS_RELEASE *= -O3
 
 SOURCES += src/main.cpp \
     src/GeneralClasses/TransmissionBitrate.cpp \
@@ -49,7 +53,17 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostUsed.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp
+    src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
+    src/SimulationTypes/Simulation_PSROptimization.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp
 
 
 HEADERS += \
@@ -108,9 +122,23 @@ HEADERS += \
     include/RWA.h \
     include/SimulationTypes.h \
     include/RWA/RegeneratorPlacementAlgorithms/MostUsed.h \
-    include/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h
+    include/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h \
+    include/GeneralPurposeAlgorithms/PSO/ParticleSwarmOptimization.h \
+    include/GeneralPurposeAlgorithms/PSO/PSO_Particle.h \
+    include/SimulationTypes/Simulation_PSROptimization.h \
+    include/GeneralClasses/RandomGenerator.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h
 
-LIBS += -lboost_system -lboost_program_options
+LIBS += -lboost_system -lboost_program_options -larmadillo
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*
@@ -118,6 +146,8 @@ INSTALL_TOPOLOGIES.files = data/topologies/*
 INSTALLS += INSTALL_TOPOLOGIES
 
 OTHER_FILES += README.md \
-               .astylerc
+               .astylerc \
+               .travis.yml
+
 
 INCLUDEPATH += include/

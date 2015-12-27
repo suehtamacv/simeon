@@ -19,7 +19,7 @@ class Gain {
      * @param value is the value of this object, either in linear or in dB units.
      * @param Type is used to choose between value measured in linear or in dB units.
      */
-    Gain(long double value, InitType Type = dB);
+    Gain(double value, InitType Type = dB);
     /**
      * @brief Gain is the copy constructor of Gain.
      */
@@ -51,16 +51,16 @@ class Gain {
      * @brief in_dB returns the value of this object in dB units.
      * @return the value of this object in dB units.
      */
-    long double in_dB() const;
+    double in_dB() const;
     /**
      * @brief in_Linear returns the value of this object in linear units.
      * @return the value of this object in linear units.
      */
-    long double in_Linear();
+    double in_Linear();
 
   private:
-    long double value_dB;
-    long double value_Linear;
+    double value_dB;
+    double value_Linear;
     bool calculatedLinear;
 };
 

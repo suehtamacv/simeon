@@ -1,6 +1,7 @@
 #include <RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h>
 #include <random>
 #include <boost/assert.hpp>
+#include <GeneralClasses/RandomGenerator.h>
 
 NodalDegreeFirst::NodalDegreeFirst(std::shared_ptr<Topology> T) :
     NX_RegeneratorPlacement(T) {
@@ -60,10 +61,9 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
         }
 
         std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
-        std::default_random_engine generator;
 
         auto ChosenNode = MaximalNodes.begin();
-        std::advance(ChosenNode, dist(generator));
+        std::advance(ChosenNode, dist(random_generator));
         (*ChosenNode)->set_NumRegenerators(X);
         (*ChosenNode)->set_NodeType(Node::TranslucentNode);
 

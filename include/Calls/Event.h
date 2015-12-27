@@ -29,7 +29,7 @@ class Event {
      * @param Type is the type of Event.
      * @param Parent if a pointer to the owner Call of this Event.
      */
-    Event(long double t, Event_Type Type, std::shared_ptr<Call> Parent);
+    Event(double t, Event_Type Type, std::shared_ptr<Call> Parent);
 
     /**
      * @brief operator > is used to compare the ocurral instants of two events.
@@ -40,7 +40,7 @@ class Event {
     /**
      * @brief t is the ocurring time of the event.
      */
-    long double t;
+    double t;
     /**
      * @brief Type is the type of Event.
      */

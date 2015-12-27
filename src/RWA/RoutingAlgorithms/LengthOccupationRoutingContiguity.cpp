@@ -6,7 +6,7 @@ LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
 
 }
 
-long double LengthOccupationRoutingContiguity::get_Cost(
+double LengthOccupationRoutingContiguity::get_Cost(
     std::weak_ptr<Link> link, std::shared_ptr<Call> C) {
     return 1 +
            (link.lock()->Length / T->get_LengthLongestLink()) +

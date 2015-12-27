@@ -65,6 +65,11 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
                         new LengthOccupationRoutingContiguity(T));
             break;
 
+        case PSR:
+            R_Alg = std::shared_ptr<RoutingAlgorithm>(
+                        new PowerSeriesRouting(T));
+            break;
+
         case MH:
             R_Alg = std::shared_ptr<RoutingAlgorithm>(
                         new MinimumHops(T));

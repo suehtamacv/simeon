@@ -20,7 +20,7 @@ class Power {
      * @param value is the value of the power, either in dBm or in Watts.
      * @param Type is the type of Power initialization, dBm or Watts.
      */
-    Power(long double value, InitType = dBm);
+    Power(double value, InitType = dBm);
     /**
      * @brief Power is the copy constructor for a Power.dBm
      */
@@ -35,14 +35,14 @@ class Power {
      * @brief in_dBm returns the value of this Power in dBm.
      * @return the value of this Power in dBm.
      */
-    long double in_dBm() const;
+    double in_dBm() const;
     /**
      * @brief in_Watts returns the value of this Power in Watts.
      * @return the value of this Power in Watts.
      */
-    long double in_Watts() const;
+    double in_Watts() const;
   private:
-    long double value_Watts;
+    double value_Watts;
 };
 
 #endif // POWER_H

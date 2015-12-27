@@ -10,7 +10,7 @@ class MostUsed : public NX_RegeneratorPlacement {
   public:
     MostUsed(std::shared_ptr<Topology> T,
              std::shared_ptr<RoutingWavelengthAssignment> RWA,
-             long double NetworkLoad,
+             double NetworkLoad,
              long long unsigned NumCalls = 1E6,
              std::vector<TransmissionBitrate> Bitrates = TransmissionBitrate::DefaultBitrates
             );
@@ -19,7 +19,7 @@ class MostUsed : public NX_RegeneratorPlacement {
 
   private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
-    long double NetworkLoad;
+    double NetworkLoad;
     long long unsigned NumCalls;
     std::vector<TransmissionBitrate> Bitrates;
 };

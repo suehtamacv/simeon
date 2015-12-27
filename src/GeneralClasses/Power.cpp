@@ -2,7 +2,7 @@
 #include <cmath>
 #include <GeneralClasses/Power.h>
 
-Power::Power(long double value, InitType Type) {
+Power::Power(double value, InitType Type) {
     if (Type == InitType::dBm) {
         value_Watts = 0.001L * pow(10, 0.1 * value);
     } else if (Type == InitType::Watt) {
@@ -33,10 +33,10 @@ Power &Power::operator +=(Power &P) {
     return *this;
 }
 
-long double Power::in_dBm() const {
+double Power::in_dBm() const {
     return 10 * log10(value_Watts) + 30;
 }
 
-long double Power::in_Watts() const {
+double Power::in_Watts() const {
     return value_Watts;
 }

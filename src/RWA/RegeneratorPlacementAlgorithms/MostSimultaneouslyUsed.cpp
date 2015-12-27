@@ -6,7 +6,7 @@ unsigned MostSimultaneouslyUsed::MSU_NumTotalReg;
 
 MostSimultaneouslyUsed::MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
         std::shared_ptr<RoutingWavelengthAssignment> RWA,
-        long double NetworkLoad,
+        double NetworkLoad,
         long long unsigned NumCalls,
         std::vector<TransmissionBitrate> Bitrates) :
     RegeneratorPlacementAlgorithm(T),
@@ -42,7 +42,7 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned) {
 
     for (auto node : T->Nodes) {
         int NumReg = round(NumTotalReg * node->get_NumMaxSimultUsedRegenerators() /
-                           (long double) TotalSimultaneousUsed);
+                           (double) TotalSimultaneousUsed);
 
         if (NumReg != 0) {
             node->set_NodeType(Node::TranslucentNode);

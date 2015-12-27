@@ -2,7 +2,7 @@
 #include <cmath>
 #include <GeneralClasses/Gain.h>
 
-Gain::Gain(long double value, InitType Type) : value_Linear(0),
+Gain::Gain(double value, InitType Type) : value_Linear(0),
     calculatedLinear(false) {
 
     if (Type == InitType::dB) {
@@ -37,11 +37,11 @@ Gain::Gain(const Gain &Value) {
     }
 }
 
-long double Gain::in_dB() const {
+double Gain::in_dB() const {
     return value_dB;
 }
 
-long double Gain::in_Linear() {
+double Gain::in_Linear() {
     if (!calculatedLinear) {
 
         value_Linear = pow10(0.1 * value_dB);

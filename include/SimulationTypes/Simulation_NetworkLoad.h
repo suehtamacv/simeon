@@ -14,8 +14,8 @@ class Simulation_NetworkLoad : public SimulationType {
     void help();
     void run();
     void load();
-    void save(std::ofstream);
-    void load_file(std::ifstream);
+    void save(std::string);
+    void load_file(std::string);
     void print();
 
   private:
@@ -23,8 +23,8 @@ class Simulation_NetworkLoad : public SimulationType {
     bool hasSimulated;
     bool hasLoaded;
 
-    long double NumCalls;
-    long double NetworkLoadMin, NetworkLoadMax, NetworkLoadStep;
+    double NumCalls;
+    double NetworkLoadMin, NetworkLoadMax, NetworkLoadStep;
 
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
