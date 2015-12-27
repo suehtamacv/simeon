@@ -1,7 +1,12 @@
 #ifndef PSO_H
 #define PSO_H
 
-#include <GeneralPurposeAlgorithms/PSO/PSO_Particle.h>
-#include <GeneralPurposeAlgorithms/PSO/ParticleSwarmOptimization.h>
+namespace PSO {
+
+#include "PSO/ParticleSwarmOptimization.h"
+#include "PSO/PSO_Particle.h"
+
+}
 
 #endif // PSO_H
+

@@ -138,7 +138,11 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
-    include/SimulationTypes/Simulation_StatisticalTrend.h
+    include/SimulationTypes/Simulation_StatisticalTrend.h \
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA-II.h \
+    include/GeneralPurposeAlgorithms/PSO.h \
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA-II_Individual.h \
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA-II_Parameter.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

@@ -2,7 +2,7 @@
 #define POWERSERIESROUTING_H
 
 #include <RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
-#include <GeneralPurposeAlgorithms/PSO/PSO_Particle.h>
+#include <GeneralPurposeAlgorithms/PSO.h>
 #include <vector>
 #include "Costs.h"
 
