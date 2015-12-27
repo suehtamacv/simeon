@@ -16,7 +16,7 @@ Simulation_NetworkLoad::Simulation_NetworkLoad() {
 
 void Simulation_NetworkLoad::help() {
     std::cout << "\t\tNETWORK LOAD SIMULATION" << std::endl << std::endl <<
-              "\tThis simulation varies the network load, and analyzes the"
+              "This simulation varies the network load, and analyzes the"
               " network performance in terms of predefined metrics, such"
               " as call blocking probability, or slot blocking probability." << std::endl;
 }
@@ -63,14 +63,14 @@ void Simulation_NetworkLoad::load() {
         int Net_Type;
         std::cin >> Net_Type;
 
-        if (std::cin.fail() || NetworkTypes.left.count((NetworkType) Net_Type) == 0) {
+        if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0) {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid Network Type." << std::endl;
             std::cout << std::endl << "-> Choose a network type." << std::endl;
         } else {
-            Type = (NetworkType) Net_Type;
+            Type = (Network_Type) Net_Type;
             break;
         }
     } while (1);

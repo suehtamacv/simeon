@@ -22,9 +22,9 @@ Simulation_PSROptimization::Simulation_PSROptimization() {
 
 void Simulation_PSROptimization::help() {
     std::cout << "\t\tPSR OPTIMIZATION SIMULATION" << std::endl << std::endl <<
-              "\tThis simulation runs the Particle Swarm Optimization algorithm"
+              "This simulation runs the Particle Swarm Optimization algorithm"
               " to find a set of coefficients that minimize the call blocking"
-              " probability of the network. Attention: this usually takes"
+              " probability of the network. Warning: this usually takes"
               " some time." << std::endl;
 }
 
@@ -42,14 +42,14 @@ void Simulation_PSROptimization::load() {
         int Net_Type;
         std::cin >> Net_Type;
 
-        if (std::cin.fail() || NetworkTypes.left.count((NetworkType) Net_Type) == 0) {
+        if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0) {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid Network Type." << std::endl;
             std::cout << std::endl << "-> Choose a network type." << std::endl;
         } else {
-            Type = (NetworkType) Net_Type;
+            Type = (Network_Type) Net_Type;
             break;
         }
     } while (1);

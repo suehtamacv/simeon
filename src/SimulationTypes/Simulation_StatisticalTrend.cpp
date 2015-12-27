@@ -8,7 +8,7 @@ Simulation_StatisticalTrend::Simulation_StatisticalTrend() {
 
 void Simulation_StatisticalTrend::help() {
     std::cout << "\t\tSTATISTICAL TREND SIMULATION" << std::endl << std::endl <<
-              "\tThis simulation repeats a fixed-parameter network simulation, "
+              "This simulation repeats a fixed-parameter network simulation, "
               "in order to evaluate any statistical trends on the results." << std::endl;
 }
 
@@ -26,14 +26,14 @@ void Simulation_StatisticalTrend::load() {
         int Net_Type;
         std::cin >> Net_Type;
 
-        if (std::cin.fail() || NetworkTypes.left.count((NetworkType) Net_Type) == 0) {
+        if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0) {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid Network Type." << std::endl;
             std::cout << std::endl << "-> Choose a network type." << std::endl;
         } else {
-            Type = (NetworkType) Net_Type;
+            Type = (Network_Type) Net_Type;
             break;
         }
     } while (1);
