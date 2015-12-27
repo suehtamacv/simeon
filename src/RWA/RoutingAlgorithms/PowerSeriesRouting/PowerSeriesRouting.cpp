@@ -82,7 +82,13 @@ void PowerSeriesRouting::load() {
 }
 
 bool PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> &particle) {
-    coefficients = arma::mat(particle.X);
+    coefficients = arma::mat(1, particle.X.size());
+    int it = 0;
+
+    for (auto x : particle.X) {
+        coefficients(0, it++) = x;
+    }
+
     return true;
 }
 
@@ -170,8 +176,14 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename) {
             read_coefficients.push_back(currentcoef);
         }
 
-        coefficients = arma::mat(read_coefficients);
-        defaultcoefficients = arma::mat(read_coefficients);
+        coefficients = arma::mat(1, read_coefficients.size());
+        defaultcoefficients = arma::mat(1, read_coefficients.size());
+        int it = 0;
+
+        for (auto x : read_coefficients) {
+            coefficients(0, it) = defaultcoefficients(0, it) = x;
+            it++;
+        }
     }
 
     return true;
