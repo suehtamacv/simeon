@@ -20,7 +20,6 @@ namespace PSO {
         std::vector<T> V; //Velocity
         std::vector<T> P; //Best position so far
 
-        bool operator >(const PSO_Particle &);
         T currentFit;
         T bestFit;
 
@@ -39,11 +38,6 @@ namespace PSO {
     }
 
     template<class T>
-    bool PSO::PSO_Particle<T>::operator >(const PSO_Particle &other) {
-        return Compare(currentFit, other.currentFit);
-    }
-
-    template<class T>
     void PSO::PSO_Particle<T>::initialize(T XMin, T XMax) {
         std::uniform_real_distribution<T> distribution(XMin, XMax);
 
@@ -51,8 +45,6 @@ namespace PSO {
             x = distribution(random_generator);
         }
     }
-
-
 }
 
 #endif // PSO_PARTICLE_H
