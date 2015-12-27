@@ -39,7 +39,8 @@ class CallGenerator {
      * @param Bitrates is a vector with the possible transmission bitrates.
      */
     CallGenerator(std::shared_ptr<Topology> T, double h,
-                  std::vector<TransmissionBitrate> Bitrates);
+                  std::vector<TransmissionBitrate> Bitrates
+                  = TransmissionBitrate::DefaultBitrates);
 
     /**
      * @brief Events is a priority queue.

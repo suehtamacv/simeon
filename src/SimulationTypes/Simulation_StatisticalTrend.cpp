@@ -1,55 +1,18 @@
-#include <SimulationTypes/Simulation_NetworkLoad.h>
-#include <Structure/Topology.h>
-#include <iostream>
+#include <SimulationTypes/Simulation_StatisticalTrend.h>
+#include <SimulationTypes/NetworkSimulation.h>
+#include <Structure/Link.h>
 
-Simulation_NetworkLoad::Simulation_NetworkLoad() {
-    hasSimulated = hasLoaded = false;
-
-    Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) - 1;
-    WavAssign_Algorithm =
-        (WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms) - 1;
-    RegPlacement_Algorithm =
-        (RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms) - 1;
-    RegAssignment_Algorithm =
-        (RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms) - 1;
+Simulation_StatisticalTrend::Simulation_StatisticalTrend() {
+    hasLoaded = false;
 }
 
-void Simulation_NetworkLoad::help() {
-    std::cout << "\t\tNETWORK LOAD SIMULATION" << std::endl << std::endl <<
-              "\tThis simulation varies the network load, and analyzes the"
-              " network performance in terms of predefined metrics, such"
-              " as call blocking probability, or slot blocking probability." << std::endl;
+void Simulation_StatisticalTrend::help() {
+    std::cout << "\t\tSTATISTICAL TREND SIMULATION" << std::endl << std::endl <<
+              "\tThis simulation repeats a fixed-parameter network simulation, "
+              "in order to evaluate any statistical trends on the results." << std::endl;
 }
 
-void Simulation_NetworkLoad::run() {
-    if (!hasLoaded) {
-        load();
-    }
-
-    for (auto simulation : simulations) {
-        simulation->run();
-    }
-}
-
-void Simulation_NetworkLoad::print() {
-    if (!hasLoaded) {
-        load();
-    }
-
-    std::cout << std::endl << "* * RESULTS * *" << std::endl;
-    std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
-
-    for (auto simulation : simulations) {
-        if (!simulation->hasSimulated) {
-            simulation->run();
-        }
-
-        simulation->print();
-    }
-
-}
-
-void Simulation_NetworkLoad::load() {
+void Simulation_StatisticalTrend::load() {
     //Generic readings.
     SimulationType::load();
 
@@ -115,49 +78,33 @@ void Simulation_NetworkLoad::load() {
         }
     } while (1);
 
-    std::cout << std::endl << "-> Define the minimum network load." << std::endl;
+    std::cout << std::endl << "-> Define the network load." << std::endl;
 
     do {
-        std::cin >> NetworkLoadMin;
+        std::cin >> NetworkLoad;
 
-        if (std::cin.fail() || NetworkLoadMin < 0) {
+        if (std::cin.fail() || NetworkLoad < 0) {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid network load." << std::endl;
-            std::cout << std::endl << "-> Define the minimum network load." << std::endl;
+            std::cout << std::endl << "-> Define the network load." << std::endl;
         } else {
             break;
         }
     } while (1);
 
-    std::cout << std::endl << "-> Define the maximum network load." << std::endl;
+    std::cout << std::endl << "-> Define the number of iterations." << std::endl;
 
     do {
-        std::cin >> NetworkLoadMax;
+        std::cin >> NumRepetitions;
 
-        if (std::cin.fail() || NetworkLoadMax < NetworkLoadMin) {
+        if (std::cin.fail() || NumRepetitions < 0) {
             std::cin.clear();
             std::cin.ignore();
 
-            std::cerr << "Invalid network load." << std::endl;
-            std::cout << std::endl << "-> Define the maximum network load." << std::endl;
-        } else {
-            break;
-        }
-    } while (1);
-
-    std::cout << std::endl << "-> Define the network load step." << std::endl;
-
-    do {
-        std::cin >> NetworkLoadStep;
-
-        if (std::cin.fail() || NetworkLoadStep < 0) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid network load." << std::endl;
-            std::cout << std::endl << "-> Define the network load step." << std::endl;
+            std::cerr << "Invalid number of repetitions." << std::endl;
+            std::cout << std::endl << "-> Define the number of iterations." << std::endl;
         } else {
             break;
         }
@@ -168,22 +115,12 @@ void Simulation_NetworkLoad::load() {
     hasLoaded = true;
 }
 
-void Simulation_NetworkLoad::save(std::string) {
-
-}
-
-void Simulation_NetworkLoad::load_file(std::string) {
-    hasLoaded = true;
-}
-
-void Simulation_NetworkLoad::create_Simulations() {
+void Simulation_StatisticalTrend::create_Simulations() {
     if (Type == TranslucentNetwork) {
         place_Regenerators(T);
     }
 
-    for (double load = NetworkLoadMin; load <= NetworkLoadMax;
-            load += NetworkLoadStep) {
-
+    for (int i = 0; i < NumRepetitions; i++) {
         //Creates a copy of the topology.
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
@@ -203,7 +140,8 @@ void Simulation_NetworkLoad::create_Simulations() {
         }
 
         //Creates the Call Generator and the RWA Object
-        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy, load));
+        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
+                NetworkLoad));
         std::shared_ptr<RoutingWavelengthAssignment> RWA(
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
@@ -212,11 +150,11 @@ void Simulation_NetworkLoad::create_Simulations() {
         simulations.push_back(
             std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
                     Generator, RWA, NumCalls)));
-
     }
 }
 
-void Simulation_NetworkLoad::place_Regenerators(std::shared_ptr<Topology> T) {
+void Simulation_StatisticalTrend::place_Regenerators(
+    std::shared_ptr<Topology> T) {
 
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
@@ -233,7 +171,45 @@ void Simulation_NetworkLoad::place_Regenerators(std::shared_ptr<Topology> T) {
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg =
         RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
-            RegPlacement_Algorithm, T, RWA, NetworkLoadMin, NumCalls);
+            RegPlacement_Algorithm, T, RWA, NetworkLoad, NumCalls);
 
     RP_Alg->placeRegenerators();
+
+}
+
+void Simulation_StatisticalTrend::print() {
+    if (!hasLoaded) {
+        load();
+    }
+
+    int Sim = 1;
+
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+    std::cout << "SIMULATION\tCALL BLOCKING PROBABILITY" << std::endl;
+
+    for (auto simulation : simulations) {
+        if (!simulation->hasSimulated) {
+            simulation->run();
+        }
+
+        std::cout << Sim++ << "\t\t" << simulation->get_CallBlockingProbability() << std::endl;
+    }
+}
+
+void Simulation_StatisticalTrend::save(std::string) {
+
+}
+
+void Simulation_StatisticalTrend::load_file(std::string) {
+
+}
+
+void Simulation_StatisticalTrend::run() {
+    if (!hasLoaded) {
+        load();
+    }
+
+    for (auto simulation : simulations) {
+        simulation->run();
+    }
 }

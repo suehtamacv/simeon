@@ -11,6 +11,9 @@ int main(void) {
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
+    Simulation_StatisticalTrend simtrend;
+    simtrend.print();
+
     Simulation_NetworkLoad simulation;
     simulation.print();
 
