@@ -13,7 +13,7 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
                        std::vector<std::shared_ptr<PSR::Cost>> Costs);
 
     void load();
-    void initCoefficients(PSO::PSO_Particle<double> particle);
+    bool initCoefficients(PSO::PSO_Particle<double> &particle);
     bool initCoefficients(std::string);
 
     double get_Cost(std::weak_ptr<Link> link,
@@ -30,6 +30,9 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
 
     bool firstTimeRun;
     static bool hasLoaded;
+
+    static arma::mat defaultcoefficients;
+    static std::vector<std::shared_ptr<PSR::Cost>> defaultcosts;
 };
 
 #endif // POWERSERIESROUTING_H

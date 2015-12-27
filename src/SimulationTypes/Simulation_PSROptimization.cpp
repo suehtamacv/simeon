@@ -1,9 +1,9 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
-#include "Calls.h"
 #include <GeneralPurposeAlgorithms/PSO.h>
+#include <Calls.h>
+#include <iomanip>
 #include <RWA.h>
 #include <SimulationTypes/NetworkSimulation.h>
-#include <Structure/Link.h>
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
@@ -335,16 +335,16 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
         OutFile << std::endl;
     }
 
+    OutFile << "bestfit = " << PSO_Optim->BestParticle->bestFit << std::endl;
+
     OutFile << "coefficients =";
 
     {
         for (auto coef : PSO_Optim->BestParticle->P) {
-            OutFile << " " << coef;
+            OutFile << " " << std::setprecision(15) << coef;
         }
 
         OutFile << std::endl;
     }
-
-    OutFile << "bestfit = " << PSO_Optim->BestParticle->bestFit << std::endl;
 
 }

@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <boost/program_options.hpp>
 
+arma::mat PowerSeriesRouting::defaultcoefficients;
 bool PowerSeriesRouting::hasLoaded = false;
+std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
     DijkstraRoutingAlgorithm(T) {
@@ -45,6 +47,14 @@ double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
 
 void PowerSeriesRouting::load() {
     if (hasLoaded) {
+        coefficients = defaultcoefficients;
+        NMin = defaultcosts.front()->get_NMin();
+        NMax = defaultcosts.front()->get_NMax();
+
+        for (auto cost : defaultcosts) {
+            Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
+        }
+
         return;
     }
 
@@ -71,8 +81,9 @@ void PowerSeriesRouting::load() {
     hasLoaded = true;
 }
 
-void PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> particle) {
+bool PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> &particle) {
     coefficients = arma::mat(particle.X);
+    return true;
 }
 
 bool PowerSeriesRouting::initCoefficients(std::string Filename) {
@@ -131,6 +142,9 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename) {
                 PSR::Cost::createCost(
                     PSR::Cost::CostsNicknames.right.at(currentcost), NMin, NMax, T)
             );
+            defaultcosts.push_back(PSR::Cost::createCost(
+                                       PSR::Cost::CostsNicknames.right.at(currentcost), NMin, NMax, T)
+                                  );
         }
 
         if (Costs.empty()) {
@@ -157,6 +171,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename) {
         }
 
         coefficients = arma::mat(read_coefficients);
+        defaultcoefficients = arma::mat(read_coefficients);
     }
 
     return true;
