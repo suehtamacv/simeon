@@ -1,6 +1,9 @@
 #include <RWA/RegeneratorPlacementAlgorithms/MostUsed.h>
 #include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
+#include <Calls/CallGenerator.h>
+#include <RWA/RoutingWavelengthAssignment.h>
+#include <Structure/Topology.h>
 #include <GeneralClasses/RandomGenerator.h>
 
 MostUsed::MostUsed(std::shared_ptr<Topology> T,

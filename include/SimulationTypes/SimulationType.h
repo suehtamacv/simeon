@@ -6,11 +6,6 @@
 #include <boost/bimap.hpp>
 #include <Structure/Topology.h>
 
-#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
-
 class SimulationType {
   public:
 #define NETWORK_TYPE \

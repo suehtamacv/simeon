@@ -1,5 +1,6 @@
 #include <RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h>
 #include <Structure/Link.h>
+#include <Structure/Topology.h>
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
     std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T) {

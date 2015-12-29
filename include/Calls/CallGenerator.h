@@ -4,9 +4,12 @@
 #include <memory>
 #include <random>
 #include <queue>
-#include <Calls/Event.h>
-#include <GeneralClasses/TransmissionBitrate.h>
 #include <Structure/Topology.h>
+#include <GeneralClasses/TransmissionBitrate.h>
+
+class Event;
+class Topology;
+class Call;
 
 /**
  * @brief The CallGenerator class implements methods to continuously generate
@@ -26,9 +29,7 @@ class CallGenerator {
      */
     struct EventCompare {
         bool operator()(const std::shared_ptr<Event> a,
-                        const std::shared_ptr<Event> b) const {
-            return *a > *b;
-        }
+                        const std::shared_ptr<Event> b) const;
     };
 
   public:

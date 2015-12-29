@@ -4,6 +4,9 @@
 #include <iomanip>
 #include <RWA.h>
 #include <SimulationTypes/NetworkSimulation.h>
+#include <RWA/RoutingWavelengthAssignment.h>
+#include <Structure/Link.h>
+#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;

@@ -11,7 +11,9 @@ class NSGA2_Individual {
   public:
     NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation);
 
-    virtual void create() = 0;
+    virtual void createIndividual() = 0;
+    virtual int createGene() = 0;
+
     void eval();
 
     double getParameterValue(unsigned int i) const;
@@ -27,6 +29,7 @@ class NSGA2_Individual {
 
   protected:
     bool isEvaluated;
+    bool isCreated;
 
     std::vector<int> Gene;
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;

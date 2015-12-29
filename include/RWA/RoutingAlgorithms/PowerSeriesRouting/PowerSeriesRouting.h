@@ -2,9 +2,13 @@
 #define POWERSERIESROUTING_H
 
 #include <RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
-#include <GeneralPurposeAlgorithms/PSO.h>
+#include <armadillo>
 #include <vector>
-#include "Costs.h"
+#include <GeneralPurposeAlgorithms/PSO.h>
+
+namespace PSR {
+    class Cost;
+}
 
 class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
   public:
@@ -17,7 +21,7 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
     bool initCoefficients(std::string);
 
     double get_Cost(std::weak_ptr<Link> link,
-                         std::shared_ptr<Call> C);
+                    std::shared_ptr<Call> C);
     std::vector<std::shared_ptr<PSR::Cost>> get_Costs();
 
     int get_NMin() const;

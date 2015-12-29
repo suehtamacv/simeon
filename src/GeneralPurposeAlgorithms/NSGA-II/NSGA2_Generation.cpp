@@ -124,3 +124,20 @@ NSGA2_Generation &NSGA2_Generation::operator +=(NSGA2_Generation &other) {
 
     return *this;
 }
+
+std::vector<std::shared_ptr<NSGA2_Individual>>
+NSGA2_Generation::getParetoFront(int i) {
+    if (!isEvaluated) {
+        eval();
+    }
+
+    std::vector<std::shared_ptr<NSGA2_Individual>> ParetoFront;
+
+    for (auto indiv : people) {
+        if (indiv->paretoFront == i) {
+            ParetoFront.push_back(indiv);
+        }
+    }
+
+    return ParetoFront;
+}

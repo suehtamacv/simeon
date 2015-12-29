@@ -1,5 +1,9 @@
 #include <SimulationTypes/Simulation_NetworkLoad.h>
 #include <Structure/Topology.h>
+#include <Structure/Link.h>
+#include <Structure/Node.h>
+#include <Calls/CallGenerator.h>
+#include <RWA/RoutingWavelengthAssignment.h>
 #include <iostream>
 
 Simulation_NetworkLoad::Simulation_NetworkLoad() {

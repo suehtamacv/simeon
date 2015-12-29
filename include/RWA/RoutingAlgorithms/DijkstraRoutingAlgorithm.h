@@ -2,7 +2,6 @@
 #define DIJKSTRAROUTINGALGORITHM_H
 
 #include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <GeneralClasses/ModulationScheme.h>
 
 /**
  * @brief The DijkstraRoutingAlgorithm class is a class of routing algorithms

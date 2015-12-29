@@ -2,6 +2,8 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
 #include <RWA/Route.h>
+#include <Calls.h>
+#include <RWA/RoutingWavelengthAssignment.h>
 #include <iostream>
 
 NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,

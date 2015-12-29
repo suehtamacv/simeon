@@ -1,6 +1,8 @@
 #include <RWA/RegeneratorAssignmentAlgorithms/FirstLongestReach.h>
+#include <RWA/TransparentSegment.h>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
+#include <Calls/Call.h>
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
                                      std::vector<ModulationScheme> ModulationSchemes) :

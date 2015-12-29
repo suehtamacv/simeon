@@ -1,4 +1,8 @@
 #include <RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
+#include <Calls/Call.h>
+#include <Structure/Node.h>
+#include <Structure/Link.h>
+#include <Structure/Topology.h>
 #include <algorithm>
 #include <limits>
 #include <map>

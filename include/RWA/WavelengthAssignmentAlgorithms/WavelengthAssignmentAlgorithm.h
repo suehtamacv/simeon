@@ -2,11 +2,12 @@
 #define WAVELENGTHASSIGNMENTALGORITHM_H
 
 #include <map>
-#include <Structure/Slot.h>
-#include <Structure/Topology.h>
+#include <boost/bimap.hpp>
 #include <RWA/TransparentSegment.h>
 
 class Call;
+class Slot;
+class Topology;
 
 class WavelengthAssignmentAlgorithm {
   public:

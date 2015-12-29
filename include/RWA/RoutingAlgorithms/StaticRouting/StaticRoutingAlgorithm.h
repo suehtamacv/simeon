@@ -2,8 +2,10 @@
 #define STATICROUTINGALGORITHM_H
 
 #include <RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
-#include <Structure/Link.h>
 #include <map>
+
+class Link;
+typedef std::pair<int, int> OrigDestPair;
 
 class StaticRoutingAlgorithm : public DijkstraRoutingAlgorithm {
   public:

@@ -1,5 +1,6 @@
 #include <RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h>
 #include <Structure/Link.h>
+#include <Structure/Topology.h>
 
 LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
     std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T) {

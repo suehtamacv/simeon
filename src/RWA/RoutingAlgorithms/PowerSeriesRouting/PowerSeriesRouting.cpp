@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <boost/program_options.hpp>
+#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
 
 arma::mat PowerSeriesRouting::defaultcoefficients;
 bool PowerSeriesRouting::hasLoaded = false;

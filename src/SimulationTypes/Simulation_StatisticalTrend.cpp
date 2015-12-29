@@ -1,6 +1,8 @@
 #include <SimulationTypes/Simulation_StatisticalTrend.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Link.h>
+#include <Calls/CallGenerator.h>
+#include <RWA/RoutingWavelengthAssignment.h>
 
 Simulation_StatisticalTrend::Simulation_StatisticalTrend() {
     hasLoaded = false;

@@ -1,4 +1,7 @@
 #include <RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h>
+#include <Calls/Call.h>
+#include <Structure/Node.h>
+#include <Structure/Topology.h>
 
 StaticRoutingAlgorithm::StaticRoutingAlgorithm(std::shared_ptr<Topology> T) :
     DijkstraRoutingAlgorithm(T) {

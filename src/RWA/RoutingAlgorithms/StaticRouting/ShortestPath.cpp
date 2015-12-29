@@ -1,4 +1,5 @@
 #include <RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <Structure/Link.h>
 
 ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
     StaticRoutingAlgorithm(T) {

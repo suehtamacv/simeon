@@ -8,11 +8,16 @@ NSGA2_Individual::NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation) :
     crowdingDistance(-1),
     paretoFront(-1),
     isEvaluated(false),
+    isCreated(false),
     generation(generation) {
 
 }
 
 void NSGA2_Individual::eval() {
+    if (!isCreated) {
+        createIndividual();
+    }
+
     for (auto &parameter : Parameters) {
         parameter->evaluate();
     }
@@ -57,7 +62,11 @@ NSGA2_Individual &NSGA2_Individual::mutate() {
     std::uniform_real_distribution<double> dist(0, 1);
 
     if (dist(random_generator) < NSGA2::mutationProb) { //mutates
-
+        for (unsigned int i = 0; i < Gene.size(); i++) {
+            if (dist(random_generator) < 0.5) {
+                Gene[i] = createGene();
+            }
+        }
     }
 
     return *this;

@@ -1,7 +1,7 @@
 #include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/RoutingAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
+#include <RWA/RoutingAlgorithms.h>
 
 RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
     boost::assign::list_of<RoutingAlgorithm::RoutAlgNameBimap::relation>

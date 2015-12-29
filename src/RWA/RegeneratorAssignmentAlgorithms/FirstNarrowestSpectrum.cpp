@@ -1,6 +1,9 @@
 #include <algorithm>
 #include <RWA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.h>
 #include <Structure/Link.h>
+#include <Structure/Node.h>
+#include <Calls/Call.h>
+#include <RWA/TransparentSegment.h>
 
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
         std::vector<ModulationScheme> Schemes) :

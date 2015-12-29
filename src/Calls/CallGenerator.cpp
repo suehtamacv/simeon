@@ -3,6 +3,11 @@
 #include <GeneralClasses/RandomGenerator.h>
 #include <boost/assert.hpp>
 
+bool CallGenerator::EventCompare::operator()(const std::shared_ptr<Event> a,
+        const std::shared_ptr<Event> b) const {
+    return *a > *b;
+}
+
 CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
                              double h,
                              std::vector<TransmissionBitrate> Bitrates) :
@@ -19,7 +24,8 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
 }
 
 std::shared_ptr<Call> CallGenerator::generate_Call() {
-    double ArrivalTime = simulationTime + ExponentialDistributionH(random_generator);
+    double ArrivalTime = simulationTime + ExponentialDistributionH(
+                             random_generator);
     double EndingTime = ArrivalTime + ExponentialDistributionMu(random_generator);
     simulationTime = ArrivalTime;
 

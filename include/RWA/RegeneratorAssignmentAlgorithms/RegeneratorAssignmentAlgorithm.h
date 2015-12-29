@@ -2,11 +2,15 @@
 #define REGENERATORASSIGNMENTALGORITHM_H
 
 #include <memory>
-#include <Structure/Topology.h>
-#include <Calls/Call.h>
-#include <RWA/Route.h>
 #include <boost/bimap.hpp>
 #include <GeneralClasses/ModulationScheme.h>
+
+class Topology;
+class Call;
+class Route;
+class TransparentSegment;
+class Link;
+class Node;
 
 /**
  * @brief The RegeneratorAssignmentAlgorithm class assigns which nodes will use

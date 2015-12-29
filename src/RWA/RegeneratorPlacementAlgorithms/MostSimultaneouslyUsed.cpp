@@ -1,6 +1,8 @@
 #include <RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h>
 #include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
+#include <Calls/CallGenerator.h>
+#include <RWA/RoutingWavelengthAssignment.h>
 
 unsigned MostSimultaneouslyUsed::MSU_NumTotalReg;
 

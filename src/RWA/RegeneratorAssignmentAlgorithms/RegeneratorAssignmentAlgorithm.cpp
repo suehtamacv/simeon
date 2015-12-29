@@ -6,6 +6,8 @@
 #include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
+#include <Calls/Call.h>
+#include <RWA/TransparentSegment.h>
 
 RegeneratorAssignmentAlgorithm::RegAssignNameBimap
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames =
