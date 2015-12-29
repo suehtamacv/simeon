@@ -23,6 +23,8 @@ class NSGA2_Individual {
     unsigned int getNumParameters() const;
     bool isDominated(const NSGA2_Individual &other) const;
 
+    NSGA2_Individual &mutate();
+
   protected:
     bool isEvaluated;
 

@@ -77,14 +77,14 @@ void NSGA2_Generation::evalParetoFront() {
     do {
         numNotInParetoFront = 0;
 
-        for (auto indiv : people) {
+        for (auto &indiv : people) {
             if (indiv->paretoFront != -1) {
                 continue;
             }
 
             bool isDominated = false;
 
-            for (auto other : people) {
+            for (auto &other : people) {
                 if (other->paretoFront != -1) {
                     continue;
                 }
@@ -105,4 +105,22 @@ void NSGA2_Generation::evalParetoFront() {
 
         currentParetoFront++;
     } while (numNotInParetoFront != 0);
+}
+
+NSGA2_Generation &NSGA2_Generation::operator +=
+(std::shared_ptr<NSGA2_Individual> &other) {
+    isEvaluated = false;
+
+    other->paretoFront = other->crowdingDistance = -1;
+    people.push_back(other);
+
+    return *this;
+}
+
+NSGA2_Generation &NSGA2_Generation::operator +=(NSGA2_Generation &other) {
+    for (auto individual : other.people) {
+        this->operator +=(individual);
+    }
+
+    return *this;
 }

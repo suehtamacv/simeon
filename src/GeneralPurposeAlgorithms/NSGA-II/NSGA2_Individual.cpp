@@ -1,5 +1,7 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.h>
+#include <GeneralPurposeAlgorithms/NSGA-II/NSGA2.h>
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h>
+#include <GeneralClasses/RandomGenerator.h>
 #include <boost/assert.hpp>
 
 NSGA2_Individual::NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation) :
@@ -50,3 +52,13 @@ bool NSGA2_Individual::isDominated(const NSGA2_Individual &other) const {
     return false;
 }
 
+NSGA2_Individual &NSGA2_Individual::mutate() {
+    crowdingDistance = paretoFront = -1;
+    std::uniform_real_distribution<double> dist(0, 1);
+
+    if (dist(random_generator) < NSGA2::mutationProb) { //mutates
+
+    }
+
+    return *this;
+}
