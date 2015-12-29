@@ -48,12 +48,12 @@ Node::Node(const Node &node) : ID(node.ID) {
     NumUsedRegenerators = 0;
     TotalNumRequestedRegenerators = MaxSimultUsedRegenerators = 0;
 
-    for (auto link : node.Links) {
+    for (auto &link : node.Links) {
         std::shared_ptr<Link> newlink = std::shared_ptr<Link>(new Link(*link));
         insert_Link(newlink->Destination, newlink);
     }
 
-    for (auto device : node.Devices) {
+    for (auto &device : node.Devices) {
         Devices.push_back(device->clone());
     }
 }
@@ -69,7 +69,7 @@ bool Node::operator <(const Node &N) const {
 void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     bool LinkExists = false;
 
-    for (auto it : Neighbours) {
+    for (auto &it : Neighbours) {
         if (it.lock() == N.lock()) {
             LinkExists = true;
             break;
@@ -132,16 +132,16 @@ void Node::create_Devices() {
 }
 
 Signal &Node::bypass(Signal &S) {
-    for (auto it = Devices.begin(); it != Devices.end(); ++it) {
-        S *= (*it)->get_Gain();
-        S += (*it)->get_Noise();
+    for (auto &it : Devices) {
+        S *= it->get_Gain();
+        S += it->get_Noise();
     }
 
     return S;
 }
 
 Signal &Node::drop(Signal &S) {
-    for (auto it : Devices) {
+    for (auto &it : Devices) {
         S *= it->get_Gain();
         S += it->get_Noise();
 
@@ -178,7 +178,7 @@ void Node::set_NumRegenerators(unsigned int NReg) {
 }
 
 bool Node::hasAsNeighbour(std::weak_ptr<Node> N) {
-    for (auto it : Neighbours) {
+    for (auto &it : Neighbours) {
         if (N.lock() == it.lock()) {
             return true;
         }

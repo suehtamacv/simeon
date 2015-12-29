@@ -5,7 +5,8 @@ ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
 
 }
 
-double ShortestPath::get_Cost(std::weak_ptr<Link> Link, std::shared_ptr<Call>) {
-    return Link.lock()->Length;
+double ShortestPath::get_Cost(
+    std::weak_ptr<Link> link,
+    std::shared_ptr<Call>) {
+    return link.lock()->Length;
 }
-

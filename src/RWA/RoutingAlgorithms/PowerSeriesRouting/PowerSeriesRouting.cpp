@@ -24,7 +24,7 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
 
     //Copies the costs types, but not the costs themselves.
     //It's therefore topology-independent.
-    for (auto cost : Costs) {
+    for (auto &cost : Costs) {
         this->Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
     }
 }
@@ -33,7 +33,7 @@ double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
                                     std::shared_ptr<Call> C) {
     arma::mat cost_matrix = arma::ones(1);
 
-    for (auto cost : Costs) {
+    for (auto &cost : Costs) {
         cost_matrix = arma::kron(cost_matrix, cost->getCost(link, C));
     }
 
@@ -51,7 +51,7 @@ void PowerSeriesRouting::load() {
         NMin = defaultcosts.front()->get_NMin();
         NMax = defaultcosts.front()->get_NMax();
 
-        for (auto cost : defaultcosts) {
+        for (auto &cost : defaultcosts) {
             Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
         }
 
@@ -85,7 +85,7 @@ bool PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> &particle) {
     coefficients = arma::mat(1, particle.X.size());
     int it = 0;
 
-    for (auto x : particle.X) {
+    for (auto &x : particle.X) {
         coefficients(0, it++) = x;
     }
 
@@ -160,7 +160,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename) {
 
         std::clog << "Its costs are:" << std::endl;
 
-        for (auto cost : Costs) {
+        for (auto &cost : Costs) {
             std::clog << "  - " << PSR::Cost::CostsNames.left.at(cost->Type) << std::endl;
         }
     }
@@ -180,7 +180,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename) {
         defaultcoefficients = arma::mat(1, read_coefficients.size());
         int it = 0;
 
-        for (auto x : read_coefficients) {
+        for (auto &x : read_coefficients) {
             coefficients(0, it) = defaultcoefficients(0, it) = x;
             it++;
         }

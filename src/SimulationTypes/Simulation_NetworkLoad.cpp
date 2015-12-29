@@ -26,7 +26,7 @@ void Simulation_NetworkLoad::run() {
         load();
     }
 
-    for (auto simulation : simulations) {
+    for (auto &simulation : simulations) {
         simulation->run();
     }
 }
@@ -39,7 +39,7 @@ void Simulation_NetworkLoad::print() {
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    for (auto simulation : simulations) {
+    for (auto &simulation : simulations) {
         if (!simulation->hasSimulated) {
             simulation->run();
         }
@@ -56,7 +56,7 @@ void Simulation_NetworkLoad::load() {
     std::cout << std::endl << "-> Choose a network type." << std::endl;
 
     do {
-        for (auto nettype : NetworkTypes.left) {
+        for (auto &nettype : NetworkTypes.left) {
             std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
         }
 

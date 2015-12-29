@@ -7,8 +7,12 @@ class NSGA2_Parameter {
   public:
     NSGA2_Parameter(std::vector<int> gene);
     virtual double evaluate() = 0;
+    virtual bool operator < (const NSGA2_Parameter &) const = 0;
+    bool operator == (const NSGA2_Parameter &other) const;
 
   protected:
+    bool isEvaluated;
+    double value;
     std::vector<int> gene;
 };
 

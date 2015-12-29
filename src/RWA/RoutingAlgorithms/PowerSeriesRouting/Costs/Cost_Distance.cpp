@@ -15,7 +15,7 @@ arma::rowvec PSR::cDistance::getCost(std::weak_ptr<Link> link,
 }
 
 void PSR::cDistance::createCache() {
-    for (auto link : T->Links) {
+    for (auto &link : T->Links) {
         cache.emplace(link.second, arma::ones<arma::rowvec>(NMax - NMin + 1));
         int expo = 0;
 

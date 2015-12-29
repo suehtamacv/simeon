@@ -14,14 +14,21 @@ class NSGA2_Individual {
     virtual void create() = 0;
     void eval();
 
+    double getParameterValue(unsigned int i) const;
+    std::shared_ptr<NSGA2_Parameter> getParameter(unsigned int i) const;
+
+    double crowdingDistance;
+    int paretoFront;
+
+    unsigned int getNumParameters() const;
+    bool isDominated(const NSGA2_Individual &other) const;
+
   protected:
     bool isEvaluated;
 
     std::vector<int> Gene;
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
 
-    double crowdingDistance;
-    int paretoFront;
     std::weak_ptr<NSGA2_Generation> generation;
 };
 

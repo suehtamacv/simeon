@@ -12,7 +12,7 @@ Route::Route(std::vector<TransparentSegment> Segments,
     Links.clear();
     Regenerators.clear();
 
-    for (auto segment : Segments) {
+    for (auto &segment : Segments) {
         Nodes.insert(Nodes.end(), segment.Nodes.begin(), segment.Nodes.end() - 1);
         BOOST_ASSERT_MSG((!segment.NumRegUsed) ||
                          (segment.Nodes.back().lock()->get_NodeType() != Node::TransparentNode),
@@ -28,23 +28,23 @@ Route::Route(std::vector<TransparentSegment> Segments,
 }
 
 Route::Route(const Route &route) {
-    for (auto segment : route.Segments) {
+    for (auto &segment : route.Segments) {
         Segments.push_back(segment);
     }
 
-    for (auto node : route.Nodes) {
+    for (auto &node : route.Nodes) {
         Nodes.push_back(node);
     }
 
-    for (auto link : route.Links) {
+    for (auto &link : route.Links) {
         Links.push_back(link);
     }
 
-    for (auto node : route.Regenerators) {
+    for (auto &node : route.Regenerators) {
         Regenerators.emplace(node.first, node.second);
     }
 
-    for (auto link : route.Slots) {
+    for (auto &link : route.Slots) {
         Slots.emplace(link.first, link.second);
     }
 }

@@ -36,8 +36,8 @@ class Simulation_PSROptimization : public SimulationType {
 
     std::string FileName;
 
-    static constexpr unsigned int P = 50;
-    static constexpr unsigned int G = 500;
+    static constexpr unsigned int P = 5;
+    static constexpr unsigned int G = 2;
     static constexpr double XMin = -1;
     static constexpr double XMax = 1;
     static constexpr double VMin = -1;

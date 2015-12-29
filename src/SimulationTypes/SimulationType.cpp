@@ -33,7 +33,7 @@ void SimulationType::load() {
     std::cout << std::endl << "-> Choose a topology." << std::endl;
 
     do {
-        for (auto topol : Topology::DefaultTopologiesNames.left) {
+        for (auto &topol : Topology::DefaultTopologiesNames.left) {
             std::cout << "(" << topol.first << ")\t" << topol.second << std::endl;
         }
 
@@ -60,7 +60,7 @@ std::shared_ptr<SimulationType> SimulationType::create() {
     std::cout << std::endl << "-> Define a simulation to run." << std::endl;
 
     do {
-        for (auto sim : SimulationTypeNames.left) {
+        for (auto &sim : SimulationTypeNames.left) {
             std::cout << "(" << sim.first << ")\t" << sim.second << std::endl;
         }
 

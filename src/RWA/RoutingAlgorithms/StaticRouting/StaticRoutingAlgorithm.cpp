@@ -15,8 +15,8 @@ std::shared_ptr<Call> C) {
 }
 
 void StaticRoutingAlgorithm::precalculate_Routes() {
-    for (auto orig : T->Nodes) {
-        for (auto dest : T->Nodes) {
+    for (auto &orig : T->Nodes) {
+        for (auto &dest : T->Nodes) {
             if (orig == dest) {
                 continue;
             }

@@ -12,8 +12,11 @@ class NSGA2_Generation {
     void eval();
 
   private:
+    bool isEvaluated;
+
     std::vector<std::shared_ptr<NSGA2_Individual>> people;
     void evalCrowdingDistances();
+    void evalParetoFront();
 };
 
 #endif // NSGA2_GENERATION_H

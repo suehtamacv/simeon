@@ -35,7 +35,7 @@ void Simulation_PSROptimization::load() {
     std::cout << std::endl << "-> Choose a network type." << std::endl;
 
     do {
-        for (auto nettype : NetworkTypes.left) {
+        for (auto &nettype : NetworkTypes.left) {
             std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
         }
 
@@ -120,7 +120,7 @@ void Simulation_PSROptimization::load() {
         do {
             int numPossibleCosts = 0;
 
-            for (auto cost : PSR::Cost::CostsNames.left) {
+            for (auto &cost : PSR::Cost::CostsNames.left) {
                 if (std::find(chosenCosts.begin(), chosenCosts.end(),
                               cost.first) != chosenCosts.end()) {
                     continue;
@@ -328,7 +328,7 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
     OutFile << "costs =";
 
     {
-        for (auto cost : Costs) {
+        for (auto &cost : Costs) {
             OutFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
         }
 
@@ -340,7 +340,7 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
     OutFile << "coefficients =";
 
     {
-        for (auto coef : PSO_Optim->BestParticle->P) {
+        for (auto &coef : PSO_Optim->BestParticle->P) {
             OutFile << " " << std::setprecision(15) << coef;
         }
 

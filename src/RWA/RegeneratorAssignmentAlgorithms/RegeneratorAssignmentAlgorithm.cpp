@@ -136,7 +136,7 @@ RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm() {
               << std::endl;
 
     do {
-        for (auto rassign : RegeneratorAssignmentNames.left) {
+        for (auto &rassign : RegeneratorAssignmentNames.left) {
             std::cout << "(" << rassign.first << ")\t" << rassign.second << std::endl;
         }
 
