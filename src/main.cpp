@@ -5,7 +5,7 @@
 #include "RWA.h"
 #include "SimulationTypes.h"
 
-#include "GeneralPurposeAlgorithms/NSGA-II/NSGA-II.h"
+#include "GeneralPurposeAlgorithms/NSGA-II/NSGA2.h"
 
 #include <iostream>
 

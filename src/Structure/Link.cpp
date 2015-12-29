@@ -28,11 +28,11 @@ Link::Link(const Link &link) {
     Origin = link.Origin;
     Destination = link.Destination;
 
-    for (auto slot : link.Slots) {
+    for (auto &slot : link.Slots) {
         Slots.push_back(std::shared_ptr<Slot>(new Slot(*slot)));
     }
 
-    for (auto device : link.Devices) {
+    for (auto &device : link.Devices) {
         Devices.push_back(device->clone());
     }
 }
@@ -68,7 +68,7 @@ void Link::create_Devices() {
 }
 
 Signal &Link::bypass(Signal &S) {
-    for (auto it : Devices) {
+    for (auto &it : Devices) {
         S *= it->get_Gain();
         S += it->get_Noise();
     }
@@ -96,7 +96,7 @@ bool Link::isSlotFree(int slot) const {
 int Link::get_Availability() {
     int FreeSlots = 0;
 
-    for (auto slot : Slots) {
+    for (auto &slot : Slots) {
         if (slot->isFree) {
             FreeSlots++;
         }

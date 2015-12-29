@@ -26,7 +26,7 @@ RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames =
 
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithm(
     std::shared_ptr<Topology> T,
-    std::vector<ModulationScheme> Schemes) :
+    std::vector<ModulationScheme> &Schemes) :
     T(T), ModulationSchemes(Schemes) {
 
 }
@@ -38,13 +38,13 @@ unsigned int RegeneratorAssignmentAlgorithm::get_NumNeededRegenerators(
 
 bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
     std::shared_ptr<Call> C,
-    std::vector<std::weak_ptr<Link> > Links,
+    std::vector<std::weak_ptr<Link>> &Links,
     std::weak_ptr<Node> start,
     std::weak_ptr<Node> end) {
 
     bool isThereScheme = false;
 
-    for (auto scheme : ModulationSchemes) {
+    for (auto &scheme : ModulationSchemes) {
         isThereScheme |= isThereSpectrumAndOSNR(C, Links, start, end, scheme);
 
         if (isThereScheme) {
@@ -78,7 +78,7 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
 
     std::sort(ModulationSchemes.rbegin(), ModulationSchemes.rend());
 
-    for (auto scheme : ModulationSchemes) {
+    for (auto &scheme : ModulationSchemes) {
         Segment.ModScheme = scheme;
 
         if (((S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
@@ -114,7 +114,7 @@ std::weak_ptr<Node> end) {
     std::vector<std::weak_ptr<Link>> SegmentLinks;
     bool foundNode = false;
 
-    for (auto link : Links) {
+    for (auto &link : Links) {
         if (link.lock()->Origin.lock() == start.lock()) {
             SegmentLinks.push_back(link);
             foundNode = true;

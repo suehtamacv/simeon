@@ -37,7 +37,7 @@ std::shared_ptr<Call> C) {
 
         ActiveVertices.erase(ActiveVertices.begin());
 
-        for (auto node : CurrentNode->Neighbours) {
+        for (auto &node : CurrentNode->Neighbours) {
             auto locknode = node.lock();
             double newLength = MinDistance[CurrentNode->ID] +
                                     get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);

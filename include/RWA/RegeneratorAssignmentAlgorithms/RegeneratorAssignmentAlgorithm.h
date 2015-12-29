@@ -44,7 +44,7 @@ class RegeneratorAssignmentAlgorithm {
      * @param Schemes is a vector containing the possible modulation schemes.
      */
     RegeneratorAssignmentAlgorithm(std::shared_ptr<Topology> T,
-                                   std::vector<ModulationScheme> Schemes = ModulationScheme::DefaultSchemes);
+                                   std::vector<ModulationScheme> &Schemes = ModulationScheme::DefaultSchemes);
 
     /**
      * @brief T is a pointer to the Topology.
@@ -85,7 +85,7 @@ class RegeneratorAssignmentAlgorithm {
      * @return true iff there's spectrum and OSNR enough to implement the Call.
      */
     bool isThereSpectrumAndOSNR(std::shared_ptr<Call> C,
-                                std::vector<std::weak_ptr<Link>> Links,
+                                std::vector<std::weak_ptr<Link>> &Links,
                                 std::weak_ptr<Node> start,
                                 std::weak_ptr<Node> end);
     /**

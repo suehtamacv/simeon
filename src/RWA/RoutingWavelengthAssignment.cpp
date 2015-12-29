@@ -40,7 +40,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     if (RA_Alg == nullptr) {
         std::sort(Schemes.rbegin(), Schemes.rend());
 
-        for (auto scheme : Schemes) {
+        for (auto &scheme : Schemes) {
             C->Scheme = scheme;
             Links = R_Alg->route(C);
 
@@ -87,7 +87,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             return nullptr;
         }
 
-        for (auto segment : Segments) {
+        for (auto &segment : Segments) {
             auto SegmentSlots = WA_Alg->assignSlots(C, segment);
 
             if (SegmentSlots.empty()) {

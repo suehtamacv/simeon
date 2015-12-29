@@ -55,10 +55,9 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
     //Create Particles
     Particles.resize(P);
 
-    for (auto particle = Particles.begin(); particle != Particles.end();
-            ++particle) {
-        *particle = std::shared_ptr<PSO_Particle<PositionType>>(
-                        new PSO_Particle<PositionType>(N, XMin, XMax));
+    for (auto &particle : Particles) {
+        particle = std::shared_ptr<PSO_Particle<PositionType>>(
+                       new PSO_Particle<PositionType>(N, XMin, XMax));
     }
 
     //Create ring topology
@@ -75,7 +74,7 @@ template<class PositionType, class Fit, class Comp>
 void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation() {
     p = 1;
 
-    for (auto particle : Particles) {
+    for (auto &particle : Particles) {
         particle->currentFit = Fit()(particle);
 
         if (Comp()(particle->currentFit, particle->bestFit) || g == 1) {
@@ -102,7 +101,7 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::updatePositions() {
 
     std::uniform_real_distribution<double> PSO_UnifDistribution(0, 1);
 
-    for (auto particle : Particles) {
+    for (auto &particle : Particles) {
 
         auto FitterNeigh = Comp()(particle->Neighbour[0].lock()->currentFit,
                                   particle->Neighbour[1].lock()->currentFit) ?

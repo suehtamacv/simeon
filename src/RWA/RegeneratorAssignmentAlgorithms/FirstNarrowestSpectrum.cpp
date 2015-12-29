@@ -20,7 +20,7 @@ std::vector<TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
     std::vector<TransparentSegment> TransparentSegments;
     std::vector<std::weak_ptr<Node>> Nodes;
 
-    for (auto link : Links) {
+    for (auto &link : Links) {
         Nodes.push_back(link.lock()->Origin);
     }
 

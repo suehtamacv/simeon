@@ -25,7 +25,7 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned) {
         NumTotalReg = MSU_NumTotalReg;
     }
 
-    for (auto node : T->Nodes) {
+    for (auto &node : T->Nodes) {
         node->set_NodeType(Node::OpaqueNode);
     }
 
@@ -36,11 +36,11 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned) {
 
     unsigned long long TotalSimultaneousUsed = 0;
 
-    for (auto node : T->Nodes) {
+    for (auto &node : T->Nodes) {
         TotalSimultaneousUsed += node->get_NumMaxSimultUsedRegenerators();
     }
 
-    for (auto node : T->Nodes) {
+    for (auto &node : T->Nodes) {
         int NumReg = round(NumTotalReg * node->get_NumMaxSimultUsedRegenerators() /
                            (double) TotalSimultaneousUsed);
 

@@ -24,10 +24,10 @@ FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) {
         SlotsAvailability[i] = true;
     }
 
-    for (auto link : Seg.Links) {
+    for (auto &link : Seg.Links) {
         auto locklink = link.lock();
 
-        for (auto slot : locklink->Slots) {
+        for (auto &slot : locklink->Slots) {
             SlotsAvailability[slot->numSlot] &= slot->isFree;
         }
     }
@@ -49,7 +49,7 @@ FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) {
     }
 
     if (si != -1) {
-        for (auto link : Seg.Links) {
+        for (auto &link : Seg.Links) {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>
                           (link.lock()->Slots.begin() + si,
                            link.lock()->Slots.begin() + sf + 1));

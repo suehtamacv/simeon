@@ -64,7 +64,11 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
-    src/SimulationTypes/Simulation_StatisticalTrend.cpp
+    src/SimulationTypes/Simulation_StatisticalTrend.cpp \
+    src/GeneralPurposeAlgorithms/NSGA-II/NSGA2.cpp \
+    src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.cpp \
+    src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.cpp \
+    src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.cpp
 
 
 HEADERS += \
@@ -139,10 +143,12 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/GeneralPurposeAlgorithms/NSGA-II/NSGA-II.h \
     include/GeneralPurposeAlgorithms/PSO.h \
-    include/GeneralPurposeAlgorithms/NSGA-II/NSGA-II_Individual.h \
-    include/GeneralPurposeAlgorithms/NSGA-II/NSGA-II_Parameter.h
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA2.h \
+    include/GeneralPurposeAlgorithms/NSGA-2.h \
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.h \
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h \
+    include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
