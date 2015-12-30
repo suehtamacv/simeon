@@ -169,6 +169,10 @@ void NSGA2_Generation::breed(
         }
     }
 
+    if (iterator_a == iterator_b) {
+        return;
+    }
+
     if (found == 2) {
         std::uniform_real_distribution<double> dist(0, 1);
         std::vector<int> GeneA = a.Gene, GeneB = b.Gene;
@@ -190,4 +194,23 @@ void NSGA2_Generation::breed(
         people.erase(iterator_a);
         people.erase(iterator_b);
     }
+}
+
+std::shared_ptr<NSGA2_Individual> NSGA2_Generation::binaryTournament() {
+    std::uniform_int_distribution<> dist(0, people.size());
+
+    //selects random Individual
+    auto individual = people.begin() + dist(random_generator);
+
+    //selects binaryTournamentParameter other individuals to "duel" with
+    //individual, in terms of Pareto Front.
+    for (unsigned selec = 0; selec < NSGA2::binaryTournamentParameter; selec++) {
+        auto adversary = people.begin() + dist(random_generator);
+
+        if ((*adversary)->paretoFront < (*individual)->paretoFront) {
+            individual = adversary;
+        }
+    }
+
+    return *individual;
 }

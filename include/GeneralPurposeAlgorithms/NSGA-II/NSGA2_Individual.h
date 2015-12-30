@@ -8,6 +8,8 @@ class NSGA2_Generation;
 class NSGA2_Parameter;
 
 class NSGA2_Individual {
+    friend class NSGA2;
+
   public:
     NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation);
 

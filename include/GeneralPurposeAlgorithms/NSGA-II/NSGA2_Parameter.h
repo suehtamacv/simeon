@@ -4,6 +4,8 @@
 #include <vector>
 
 class NSGA2_Parameter {
+    friend class NSGA2;
+
   public:
     NSGA2_Parameter(std::vector<int> gene);
     virtual double evaluate() = 0;
