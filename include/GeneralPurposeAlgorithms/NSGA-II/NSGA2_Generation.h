@@ -19,8 +19,10 @@ class NSGA2_Generation {
     bool isEvaluated;
 
     std::vector<std::shared_ptr<NSGA2_Individual>> people;
-    void evalCrowdingDistances();
+    void evalCrowdingDistances(int ParetoFront);
     void evalParetoFront();
+
+    void breed(NSGA2_Individual &a, NSGA2_Individual &b, NSGA2_Generation &dest);
 };
 
 #endif // NSGA2_GENERATION_H

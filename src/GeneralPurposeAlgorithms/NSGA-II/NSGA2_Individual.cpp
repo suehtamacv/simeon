@@ -13,6 +13,10 @@ NSGA2_Individual::NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation) :
 
 }
 
+bool NSGA2_Individual::operator ==(const NSGA2_Individual &other) const {
+    return (Gene == other.Gene);
+}
+
 void NSGA2_Individual::eval() {
     if (!isCreated) {
         createIndividual();
@@ -63,9 +67,7 @@ NSGA2_Individual &NSGA2_Individual::mutate() {
 
     if (dist(random_generator) < NSGA2::mutationProb) { //mutates
         for (unsigned int i = 0; i < Gene.size(); i++) {
-            if (dist(random_generator) < 0.5) {
-                Gene[i] = createGene();
-            }
+            Gene[i] = createGene();
         }
     }
 

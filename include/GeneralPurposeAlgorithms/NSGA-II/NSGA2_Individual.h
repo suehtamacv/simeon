@@ -13,6 +13,9 @@ class NSGA2_Individual {
 
     virtual void createIndividual() = 0;
     virtual int createGene() = 0;
+    virtual std::shared_ptr<NSGA2_Individual> clone() = 0;
+
+    bool operator==(const NSGA2_Individual &other) const;
 
     void eval();
 
@@ -21,6 +24,7 @@ class NSGA2_Individual {
 
     double crowdingDistance;
     int paretoFront;
+    std::vector<int> Gene;
 
     unsigned int getNumParameters() const;
     bool isDominated(const NSGA2_Individual &other) const;
@@ -31,7 +35,6 @@ class NSGA2_Individual {
     bool isEvaluated;
     bool isCreated;
 
-    std::vector<int> Gene;
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
 
     std::weak_ptr<NSGA2_Generation> generation;

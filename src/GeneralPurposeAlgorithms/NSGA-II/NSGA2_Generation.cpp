@@ -1,5 +1,7 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.h>
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.h>
+#include <GeneralPurposeAlgorithms/NSGA-II/NSGA2.h>
+#include <GeneralClasses/RandomGenerator.h>
 #include <algorithm>
 #include <limits>
 #include <set>
@@ -16,15 +18,16 @@ void NSGA2_Generation::eval() {
     isEvaluated = true;
 }
 
-void NSGA2_Generation::evalCrowdingDistances() {
+void NSGA2_Generation::evalCrowdingDistances(int ParetoFront) {
     if (!isEvaluated) {
         eval();
     }
 
+    auto front = getParetoFront(ParetoFront);
     unsigned int numParameters = people.front()->getNumParameters();
 
     //Initialize crowding distances
-    for (auto &individual : people) {
+    for (auto &individual : front) {
         individual->crowdingDistance = 0;
     }
 
@@ -41,7 +44,7 @@ void NSGA2_Generation::evalCrowdingDistances() {
 
         std::vector<Param> IndivList;
 
-        for (auto indiv : people) {
+        for (auto indiv : front) {
             IndivList.push_back(Param(indiv, indiv->getParameterValue(par)));
         }
 
@@ -140,4 +143,51 @@ NSGA2_Generation::getParetoFront(int i) {
     }
 
     return ParetoFront;
+}
+
+void NSGA2_Generation::breed(
+    NSGA2_Individual &a, NSGA2_Individual &b, NSGA2_Generation &dest) {
+    auto iterator_a = people.begin();
+    auto iterator_b = people.begin();
+
+    int found = 0;
+
+    //finds iterators to the two individuals
+    for (auto indiv = people.begin(); indiv != people.end(); ++indiv) {
+        if (**indiv == a) {
+            iterator_a = indiv;
+            found++;
+        }
+
+        if (**indiv == b) {
+            iterator_b = indiv;
+            found++;
+        }
+
+        if (found == 2) {
+            break;
+        }
+    }
+
+    if (found == 2) {
+        std::uniform_real_distribution<double> dist(0, 1);
+        std::vector<int> GeneA = a.Gene, GeneB = b.Gene;
+
+        if (dist(random_generator) < NSGA2::breedingProb) { //breeds
+            for (unsigned int i = 0; i < GeneA.size(); ++i) {
+                if (dist(random_generator) < 0.5) {
+                    std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
+                }
+            }
+        }
+
+        auto newIndivA = a.clone(), newIndivB = b.clone();
+        newIndivA->Gene = GeneA;
+        newIndivB->Gene = GeneB;
+        dest += newIndivA;
+        dest += newIndivB;
+
+        people.erase(iterator_a);
+        people.erase(iterator_b);
+    }
 }
