@@ -10,6 +10,9 @@ class NSGA2 {
   public:
     NSGA2();
 
+    void run();
+    virtual void createInitialGeneration() = 0;
+
     static constexpr double mutationProb = 0.1;
     static constexpr double breedingProb = 1;
     static constexpr unsigned int numGen = 300;

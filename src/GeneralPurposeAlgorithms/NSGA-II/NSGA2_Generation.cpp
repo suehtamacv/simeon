@@ -73,6 +73,14 @@ void NSGA2_Generation::evalCrowdingDistances(int ParetoFront) {
     }
 }
 
+void NSGA2_Generation::evalCrowdingDistances() {
+    int paretoFront = 1;
+
+    while (!getParetoFront(paretoFront).empty()) {
+        evalCrowdingDistances(paretoFront++);
+    }
+}
+
 void NSGA2_Generation::evalParetoFront() {
     int numNotInParetoFront = 0;
     int currentParetoFront = 1;

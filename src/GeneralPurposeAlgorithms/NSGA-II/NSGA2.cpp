@@ -35,3 +35,16 @@ void NSGA2::newGeneration(NSGA2_Generation &parent) {
 
     evolution.push_back(gen_q);
 }
+
+void NSGA2::run() {
+    createInitialGeneration();
+    unsigned generation = 1;
+
+    while (generation++ < numGen) {
+        evolution.back()->eval();
+        evolution.back()->evalParetoFront();
+        evolution.back()->evalCrowdingDistances();
+
+        newGeneration(*(evolution.back()));
+    }
+}
