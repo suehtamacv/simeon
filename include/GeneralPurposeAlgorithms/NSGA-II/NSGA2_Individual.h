@@ -11,7 +11,7 @@ class NSGA2_Individual {
     friend class NSGA2;
 
   public:
-    NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation);
+    NSGA2_Individual();
 
     virtual void createIndividual() = 0;
     virtual int createGene(unsigned int) = 0;
@@ -38,8 +38,6 @@ class NSGA2_Individual {
     bool isCreated;
 
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
-
-    std::weak_ptr<NSGA2_Generation> generation;
 };
 
 #endif // NSGA2_INDIVIDUAL_H

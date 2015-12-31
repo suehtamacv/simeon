@@ -69,8 +69,8 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegeneratorPlacement.cpp \
-    src/Devices/Regenerator.cpp
+    src/Devices/Regenerator.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlacement.cpp
 
 
 HEADERS += \
@@ -151,8 +151,8 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.h \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.h \
-    include/SimulationTypes/Simulation_NSGA2_RegeneratorPlacement.h \
-    include/Devices/Regenerator.h
+    include/Devices/Regenerator.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlacement.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

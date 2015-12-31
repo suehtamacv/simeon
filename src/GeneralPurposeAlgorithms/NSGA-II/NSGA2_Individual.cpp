@@ -4,12 +4,11 @@
 #include <GeneralClasses/RandomGenerator.h>
 #include <boost/assert.hpp>
 
-NSGA2_Individual::NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation) :
+NSGA2_Individual::NSGA2_Individual() :
     crowdingDistance(-1),
     paretoFront(-1),
     isEvaluated(false),
-    isCreated(false),
-    generation(generation) {
+    isCreated(false) {
 
 }
 

@@ -1,7 +1,7 @@
 #ifndef NSGA_II_H
 #define NSGA_II_H
 
-namespace NSGA2 {
+namespace NSGA_II {
 
 #include "NSGA-II/NSGA2.h"
 #include "NSGA-II/NSGA2_Generation.h"
