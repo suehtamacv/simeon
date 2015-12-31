@@ -16,6 +16,7 @@ class Device {
     enum DeviceType {
         AmplifierDevice, /*!< Amplifier */
         FiberDevice, /*!< Fiber Segment */
+        RegeneratorDevice, /*!< Regenerator */
         SplitterDevice, /*!< Splitter */
         SSSDevice, /*!< Selective Spectrum Switch */
         UndefinedDevice /*!< Undefined Device */

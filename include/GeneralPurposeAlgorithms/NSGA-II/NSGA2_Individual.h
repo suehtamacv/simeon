@@ -14,7 +14,7 @@ class NSGA2_Individual {
     NSGA2_Individual(std::weak_ptr<NSGA2_Generation> generation);
 
     virtual void createIndividual() = 0;
-    virtual int createGene() = 0;
+    virtual int createGene(unsigned int) = 0;
     virtual std::shared_ptr<NSGA2_Individual> clone() = 0;
 
     bool operator==(const NSGA2_Individual &other) const;

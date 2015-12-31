@@ -67,7 +67,7 @@ NSGA2_Individual &NSGA2_Individual::mutate() {
 
     if (dist(random_generator) < NSGA2::mutationProb) { //mutates
         for (unsigned int i = 0; i < Gene.size(); i++) {
-            Gene[i] = createGene();
+            Gene[i] = createGene(i);
         }
     }
 

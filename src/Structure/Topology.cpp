@@ -200,3 +200,31 @@ Topology::create_DefaultTopology(DefaultTopologies Top) {
     return std::shared_ptr<Topology>(new Topology(
                                          Topology::DefaultTopologiesPaths.left.at(Top)));
 }
+
+double Topology::get_CapEx() {
+    double CapEx = 0;
+
+    for (auto node : Nodes) {
+        CapEx += node->get_CapEx();
+    }
+
+    for (auto link : Links) {
+        CapEx += link.second->get_CapEx();
+    }
+
+    return CapEx;
+}
+
+double Topology::get_OpEx() {
+    double OpEx = 0;
+
+    for (auto node : Nodes) {
+        OpEx += node->get_OpEx();
+    }
+
+    for (auto link : Links) {
+        OpEx += link.second->get_OpEx();
+    }
+
+    return OpEx;
+}

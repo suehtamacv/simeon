@@ -5,6 +5,7 @@
 #include <Structure/Link.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 #include <Devices/Amplifiers/BoosterAmplifier.h>
+#include <Devices/Regenerator.h>
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
@@ -44,7 +45,6 @@ Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
 Node::Node(const Node &node) : ID(node.ID) {
     Type = node.Type;
     Architecture = node.Architecture;
-    NumRegenerators = node.NumRegenerators;
     NumUsedRegenerators = 0;
     TotalNumRequestedRegenerators = MaxSimultUsedRegenerators = 0;
 
@@ -56,6 +56,11 @@ Node::Node(const Node &node) : ID(node.ID) {
     for (auto &device : node.Devices) {
         Devices.push_back(device->clone());
     }
+
+    for (unsigned i = 0; i < node.Regenerators.size(); i++) {
+        Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
+    }
+
 }
 
 bool Node::operator ==(const Node &N) const {
@@ -79,12 +84,6 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link) {
     if (!LinkExists) {
         Neighbours.push_back(N);
         Links.push_back(Link);
-
-        if (Architecture == BroadcastAndSelect) {
-            BOOST_ASSERT_MSG((*Devices.front()).DevType == Device::SplitterDevice,
-                             "In a B&S node, the first device is a spliiter.");
-            static_cast<Splitter &>(*Devices.front()).set_NumPorts(Links.size());
-        }
     }
 }
 
@@ -101,7 +100,7 @@ unsigned int Node::get_NumRegenerators() {
         return std::numeric_limits<unsigned int>::max();
     }
 
-    return NumRegenerators;
+    return Regenerators.size();
 }
 
 unsigned int Node::get_NumAvailableRegenerators() {
@@ -109,7 +108,7 @@ unsigned int Node::get_NumAvailableRegenerators() {
         return std::numeric_limits<unsigned int>::max();
     }
 
-    return NumRegenerators - NumUsedRegenerators;
+    return Regenerators.size() - NumUsedRegenerators;
 }
 
 void Node::create_Devices() {
@@ -173,7 +172,12 @@ Signal &Node::add(Signal &S) {
 }
 
 void Node::set_NumRegenerators(unsigned int NReg) {
-    NumRegenerators = NReg;
+    Regenerators.clear();
+
+    for (unsigned i = 0; i < NReg; i++) {
+        Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
+    }
+
     NumUsedRegenerators = 0;
 }
 
@@ -195,7 +199,7 @@ void Node::request_Regenerators(unsigned int NReg) {
     TotalNumRequestedRegenerators += NReg;
 
     BOOST_ASSERT_MSG((Type == OpaqueNode) ||
-                     (NReg + NumUsedRegenerators <= NumRegenerators),
+                     (NReg + NumUsedRegenerators <= Regenerators.size()),
                      "Request to more regenerators than available.");
 
     NumUsedRegenerators += NReg;
@@ -218,4 +222,36 @@ unsigned int Node::get_NumMaxSimultUsedRegenerators() {
 
 unsigned long long Node::get_TotalNumRequestedRegenerators() {
     return TotalNumRequestedRegenerators;
+}
+
+double Node::get_CapEx() {
+    double CapEx = 0;
+
+    for (auto reg : Regenerators) {
+        CapEx += reg->get_CapEx();
+    }
+
+    for (auto device : Devices) {
+        //In the two architectures, each device in Devices is actually a
+        //representation of each one of the N (Num. of Neighb.) device.
+        CapEx += (Neighbours.size()) * device->get_CapEx();
+    }
+
+    return CapEx;
+}
+
+double Node::get_OpEx() {
+    double OpEx = 0;
+
+    for (auto reg : Regenerators) {
+        OpEx += reg->get_OpEx();
+    }
+
+    for (auto device : Devices) {
+        //In the two architectures, each device in Devices is actually a
+        //representation of each one of the N (Num. of Neighb.) device.
+        OpEx += (Neighbours.size()) * device->get_OpEx();
+    }
+
+    return OpEx;
 }

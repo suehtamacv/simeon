@@ -160,3 +160,23 @@ void Link::load() {
         }
     } while (1);
 }
+
+double Link::get_CapEx() {
+    double CapEx = 0;
+
+    for (auto device : Devices) {
+        CapEx += device->get_CapEx();
+    }
+
+    return CapEx;
+}
+
+double Link::get_OpEx() {
+    double OpEx = 0;
+
+    for (auto device : Devices) {
+        OpEx += device->get_OpEx();
+    }
+
+    return OpEx;
+}

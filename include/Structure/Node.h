@@ -63,6 +63,7 @@ class Node {
     std::vector<std::weak_ptr<Node>> Neighbours;
     std::vector<std::shared_ptr<Link>> Links;
     std::vector<std::shared_ptr<Device>> Devices;
+    std::vector<std::shared_ptr<Device>> Regenerators;
 
     NodeArchitecture get_NodeArch();
     NodeType get_NodeType();
@@ -84,12 +85,14 @@ class Node {
     void set_NodeType(NodeType);
     bool hasAsNeighbour(std::weak_ptr<Node>);
 
+    double get_CapEx();
+    double get_OpEx();
+
     static void load() {}
   private:
     NodeType Type;
     NodeArchitecture Architecture;
     void create_Devices();
-    unsigned int NumRegenerators;
     unsigned int NumUsedRegenerators;
     unsigned long long TotalNumRequestedRegenerators;
     unsigned int MaxSimultUsedRegenerators;

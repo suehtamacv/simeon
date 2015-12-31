@@ -37,6 +37,9 @@ class Link {
     int get_Occupability();
     int get_Contiguity(std::shared_ptr<Call> C);
 
+    double get_CapEx();
+    double get_OpEx();
+
     static void load();
   private:
     void create_Slots();
