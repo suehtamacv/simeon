@@ -42,6 +42,16 @@ class Device {
      */
     virtual Power &get_Noise() = 0;
     /**
+     * @brief get_CapEx returns the CapEx cost of the device.
+     * @return the CapEx cost of the device.
+     */
+    virtual double get_CapEx() = 0;
+    /**
+     * @brief get_OpEx returns the OpEx cost of the device.
+     * @return the OpEx cost of the device.
+     */
+    virtual double get_OpEx() = 0;
+    /**
      * @brief clone returns a pointer to a Device with the same content as this.
      * @return a pointer to a Device with the same content as this.
      */

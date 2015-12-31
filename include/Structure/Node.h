@@ -2,13 +2,13 @@
 #define NODE_H
 
 #include <boost/bimap.hpp>
+#include <GeneralClasses/Signal.h>
 #include <memory>
 #include <vector>
 #include <iostream>
-#include <GeneralClasses/Signal.h>
-#include <Devices/Device.h>
 
 class Link;
+class Device;
 
 class Node {
   public:

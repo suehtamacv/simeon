@@ -21,6 +21,9 @@ class Fiber : public Device {
 
     Gain &get_Gain();
     Power &get_Noise();
+    double get_CapEx();
+    double get_OpEx();
+
     std::shared_ptr<Device> clone();
 
   private:

@@ -1,15 +1,14 @@
 #ifndef LINK_H
 #define LINK_H
 
-#include <Devices/Device.h>
 #include <GeneralClasses/Signal.h>
 #include <memory>
 #include <vector>
-#include <iostream>
-#include <Structure/Slot.h>
 
 class Node;
 class Call;
+class Slot;
+class Device;
 
 class Link {
   public:

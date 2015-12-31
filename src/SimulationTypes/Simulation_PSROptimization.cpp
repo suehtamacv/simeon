@@ -1,12 +1,11 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
-#include <Calls.h>
 #include <iomanip>
-#include <RWA.h>
-#include <SimulationTypes/NetworkSimulation.h>
-#include <RWA/RoutingWavelengthAssignment.h>
-#include <Structure/Link.h>
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <SimulationTypes/NetworkSimulation.h>
+#include <Calls.h>
+#include <RWA.h>
+#include <Structure/Link.h>
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;

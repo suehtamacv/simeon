@@ -116,16 +116,16 @@ void Node::create_Devices() {
     //Switching element - entrance
     switch (Architecture) {
         case BroadcastAndSelect:
-            Devices.push_back(std::shared_ptr<Device>(new Splitter(Links.size())));
+            Devices.push_back(std::shared_ptr<Device>(new Splitter(this)));
             break;
 
         case SwitchingSelect:
-            Devices.push_back(std::shared_ptr<Device>(new SSS()));
+            Devices.push_back(std::shared_ptr<Device>(new SSS(this)));
             break;
     }
 
     //Switching element - exit
-    Devices.push_back(std::shared_ptr<Device>(new SSS()));
+    Devices.push_back(std::shared_ptr<Device>(new SSS(this)));
 
     //Booster Amplifier
     Devices.push_back(std::shared_ptr<Device>(new BoosterAmplifier()));
