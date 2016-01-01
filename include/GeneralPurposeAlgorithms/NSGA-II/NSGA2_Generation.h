@@ -11,10 +11,12 @@ class NSGA2_Generation {
 
   public:
     NSGA2_Generation();
-    void eval();
 
-    NSGA2_Generation &operator += (std::shared_ptr<NSGA2_Individual>);
-    NSGA2_Generation &operator += (NSGA2_Generation &);
+    void eval();
+    void print(int paretoFront = 1);
+
+    void operator +=(std::shared_ptr<NSGA2_Individual>);
+    void operator += (NSGA2_Generation &);
 
     std::vector<std::shared_ptr<NSGA2_Individual>> getParetoFront(int i);
     std::shared_ptr<NSGA2_Individual> binaryTournament();

@@ -3,7 +3,7 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.h>
 #include <GeneralClasses/RandomGenerator.h>
 
-NSGA2::NSGA2() {
+NSGA2::NSGA2() : generation(0) {
 
 }
 
@@ -36,15 +36,16 @@ void NSGA2::newGeneration(NSGA2_Generation &parent) {
     evolution.push_back(gen_q);
 }
 
-void NSGA2::run() {
-    createInitialGeneration();
-    unsigned generation = 1;
-
-    while (generation++ < numGen) {
-        evolution.back()->eval();
-        evolution.back()->evalParetoFront();
-        evolution.back()->evalCrowdingDistances();
-
-        newGeneration(*(evolution.back()));
+void NSGA2::run_Generation() {
+    if (evolution.empty()) {
+        createInitialGeneration();
     }
+
+    evolution.back()->eval();
+    evolution.back()->evalParetoFront();
+    evolution.back()->evalCrowdingDistances();
+
+    newGeneration(*evolution.back());
+
+    generation++;
 }

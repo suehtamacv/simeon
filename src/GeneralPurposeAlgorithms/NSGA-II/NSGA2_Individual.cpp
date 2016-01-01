@@ -3,6 +3,7 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h>
 #include <GeneralClasses/RandomGenerator.h>
 #include <boost/assert.hpp>
+#include <iostream>
 
 NSGA2_Individual::NSGA2_Individual() :
     crowdingDistance(-1),
@@ -26,6 +27,22 @@ void NSGA2_Individual::eval() {
     }
 }
 
+void NSGA2_Individual::print() {
+    std::cout << "Individual: ";
+
+    for (auto &g : Gene) {
+        std::cout << g << " ";
+    }
+
+    std::cout << std::endl;
+
+    for (auto &p : Parameters) {
+        std::cout << p->get_ParamName() << ": " << p->evaluate() << "  ";
+    }
+
+    std::cout << std::endl;
+}
+
 std::shared_ptr<NSGA2_Parameter> NSGA2_Individual::getParameter(
     unsigned int i) const {
     BOOST_ASSERT_MSG(i < Parameters.size(), "Invalid parameter requested");
@@ -44,7 +61,7 @@ unsigned int NSGA2_Individual::getNumParameters() const {
 
 bool NSGA2_Individual::isDominated(const NSGA2_Individual &other) const {
     for (unsigned int i = 0; i < Parameters.size(); i++) {
-        if (Parameters[i] < other.Parameters[i]) {
+        if (Parameters[i]->evaluate() < other.getParameter(i)->evaluate()) {
             bool Dominates = true;
 
             for (unsigned j = 0; j < Parameters.size(); j++) {

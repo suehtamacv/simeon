@@ -2,6 +2,7 @@
 #define NSGA2_PARAMETER_H
 
 #include <vector>
+#include <string>
 
 class NSGA2_Parameter {
     friend class NSGA2;
@@ -9,6 +10,7 @@ class NSGA2_Parameter {
   public:
     NSGA2_Parameter(std::vector<int> gene);
     virtual double evaluate() = 0;
+    virtual std::string get_ParamName() = 0;
     bool operator == (const NSGA2_Parameter &other) const;
 
   protected:

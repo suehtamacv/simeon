@@ -4,6 +4,7 @@
 #include <GeneralClasses/RandomGenerator.h>
 #include <algorithm>
 #include <limits>
+#include <iostream>
 #include <set>
 
 NSGA2_Generation::NSGA2_Generation() : isEvaluated(false) {
@@ -59,16 +60,14 @@ void NSGA2_Generation::evalCrowdingDistances(int ParetoFront) {
         IndivList.back().individual->crowdingDistance =
             std::numeric_limits<double>::max();
 
-        for (auto parameter = IndivList.begin() + 1;
-                parameter != IndivList.end() - 1;
-                ++parameter) {
-            if (parameter->individual->crowdingDistance ==
+        for (size_t i = 1; i < IndivList.size() - 1; i++) {
+            if (IndivList[i].individual->crowdingDistance ==
                     std::numeric_limits<double>::max()) {
                 continue;
             }
 
-            parameter->individual->crowdingDistance +=
-                ((parameter + 1)->value - (parameter - 1)->value) / (maxValue - minValue);
+            IndivList[i].individual->crowdingDistance +=
+                (IndivList[i + 1].value - IndivList[i - 1].value) / (maxValue - minValue);
         }
     }
 }
@@ -118,22 +117,18 @@ void NSGA2_Generation::evalParetoFront() {
     } while (numNotInParetoFront != 0);
 }
 
-NSGA2_Generation &NSGA2_Generation::operator +=
+void NSGA2_Generation::operator +=
 (std::shared_ptr<NSGA2_Individual> other) {
     isEvaluated = false;
 
     other->paretoFront = other->crowdingDistance = -1;
     people.push_back(other);
-
-    return *this;
 }
 
-NSGA2_Generation &NSGA2_Generation::operator +=(NSGA2_Generation &other) {
+void NSGA2_Generation::operator +=(NSGA2_Generation &other) {
     for (auto individual : other.people) {
         this->operator +=(individual);
     }
-
-    return *this;
 }
 
 std::vector<std::shared_ptr<NSGA2_Individual>>
@@ -151,6 +146,14 @@ NSGA2_Generation::getParetoFront(int i) {
     }
 
     return ParetoFront;
+}
+
+void NSGA2_Generation::print(int paretoFront) {
+    auto front = getParetoFront(paretoFront);
+
+    for (auto &indiv : front) {
+        indiv->print();
+    }
 }
 
 void NSGA2_Generation::breed(

@@ -3,6 +3,9 @@
 
 #include "SimulationType.h"
 #include <GeneralPurposeAlgorithms/NSGA-2.h>
+#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
+#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
 class Simulation_NSGA2_RegnPlac : public SimulationType {
   public:
@@ -15,7 +18,18 @@ class Simulation_NSGA2_RegnPlac : public SimulationType {
     void load_file(std::string);
     void print();
 
+    double NumCalls;
+    double NetworkLoad;
+
+    RoutingAlgorithm::RoutingAlgorithms
+    Routing_Algorithm;
+    WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    WavAssign_Algorithm;
+    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RegAssignment_Algorithm;
+
   private:
+    bool hasLoaded;
     static unsigned int RegnMax;
 
     class Individual;
@@ -47,9 +61,13 @@ class Simulation_NSGA2_RegnPlac::Param_BlockProb : public NSGA2_Parameter {
   public:
     Param_BlockProb(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
+    std::string get_ParamName() {
+        return "Blocking Probability";
+    }
 
   private:
     Simulation_NSGA2_RegnPlac &Sim;
+    double BlockProb;
 };
 
 class Simulation_NSGA2_RegnPlac::Param_CapEx : public NSGA2_Parameter {
@@ -58,9 +76,13 @@ class Simulation_NSGA2_RegnPlac::Param_CapEx : public NSGA2_Parameter {
   public:
     Param_CapEx(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
+    std::string get_ParamName() {
+        return "CapEx";
+    }
 
   private:
     Simulation_NSGA2_RegnPlac &Sim;
+    double CapEx;
 };
 
 class Simulation_NSGA2_RegnPlac::Param_OpEx : public NSGA2_Parameter {
@@ -69,9 +91,13 @@ class Simulation_NSGA2_RegnPlac::Param_OpEx : public NSGA2_Parameter {
   public:
     Param_OpEx(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
+    std::string get_ParamName() {
+        return "OpEx";
+    }
 
   private:
     Simulation_NSGA2_RegnPlac &Sim;
+    double OpEx;
 };
 
 class Simulation_NSGA2_RegnPlac::Sim_NSGA2 : public NSGA2 {

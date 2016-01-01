@@ -20,6 +20,7 @@ class NSGA2_Individual {
     bool operator==(const NSGA2_Individual &other) const;
 
     void eval();
+    void print();
 
     double getParameterValue(unsigned int i) const;
     std::shared_ptr<NSGA2_Parameter> getParameter(unsigned int i) const;

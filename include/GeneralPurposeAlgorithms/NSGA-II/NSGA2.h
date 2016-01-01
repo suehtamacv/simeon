@@ -10,7 +10,7 @@ class NSGA2 {
   public:
     NSGA2();
 
-    void run();
+    void run_Generation();
     virtual void createInitialGeneration() = 0;
 
     static constexpr double mutationProb = 0.1;
@@ -24,6 +24,8 @@ class NSGA2 {
     std::vector<std::shared_ptr<NSGA2_Generation>> evolution;
 
     void newGeneration(NSGA2_Generation &parent);
+
+    unsigned int generation;
 };
 
 #endif // NSGA2_H
