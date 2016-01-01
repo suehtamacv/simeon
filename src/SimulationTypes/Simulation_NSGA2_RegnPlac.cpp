@@ -204,7 +204,7 @@ void Simulation_NSGA2_RegnPlac::print() {
     Sim_NSGA2 Optimization(*this);
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
-    std::cout << "FIRST PARETO FRONT OF I-TH GENERATION" << std::endl << std::endl;
+    std::cout << "FIRST PARETO FRONT OF I-TH GENERATION" << std::endl;
 
     while (Optimization.generation < NSGA2::numGen) {
         Optimization.run_Generation();

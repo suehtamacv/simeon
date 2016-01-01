@@ -10,7 +10,7 @@ NSGA2::NSGA2() : generation(0) {
 void NSGA2::natural_selection(NSGA2_Generation &gen, NSGA2_Generation &dest) {
     dest.people.clear();
 
-    while (dest.people.size() < numGen)  {
+    while (dest.people.size() < numIndiv)  {
         dest.people.push_back(gen.binaryTournament());
     }
 }
@@ -22,7 +22,7 @@ void NSGA2::newGeneration(NSGA2_Generation &parent) {
     natural_selection(parent, *gen_r);
 
     while (!gen_r->people.empty()) {
-        std::uniform_int_distribution<> dist(0, gen_r->people.size());
+        std::uniform_int_distribution<> dist(0, gen_r->people.size() - 1);
 
         auto indiv_a = gen_r->people[dist(random_generator)];
         auto indiv_b = gen_r->people[dist(random_generator)];

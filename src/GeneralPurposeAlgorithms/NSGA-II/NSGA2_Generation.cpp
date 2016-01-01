@@ -16,6 +16,8 @@ void NSGA2_Generation::eval() {
         individual->eval();
     }
 
+    evalParetoFront();
+
     isEvaluated = true;
 }
 
@@ -84,6 +86,10 @@ void NSGA2_Generation::evalParetoFront() {
     int numNotInParetoFront = 0;
     int currentParetoFront = 1;
 
+    for (auto &indiv : people) {
+        indiv->crowdingDistance = indiv->paretoFront = -1;
+    }
+
     do {
         numNotInParetoFront = 0;
 
@@ -139,7 +145,7 @@ NSGA2_Generation::getParetoFront(int i) {
 
     std::vector<std::shared_ptr<NSGA2_Individual>> ParetoFront;
 
-    for (auto indiv : people) {
+    for (auto &indiv : people) {
         if (indiv->paretoFront == i) {
             ParetoFront.push_back(indiv);
         }
@@ -151,8 +157,16 @@ NSGA2_Generation::getParetoFront(int i) {
 void NSGA2_Generation::print(int paretoFront) {
     auto front = getParetoFront(paretoFront);
 
-    for (auto &indiv : front) {
-        indiv->print();
+    //Prints at most five elements
+    unsigned numElements = (front.size() < 5 ? front.size() : 5);
+
+    for (unsigned indiv = 0; indiv < numElements; indiv++) {
+        front[indiv]->print();
+    }
+
+    if (numElements < front.size()) {
+        std::cout << "[other " << front.size() - numElements << " elements suppressed]"
+                  << std::endl;
     }
 }
 
@@ -208,7 +222,7 @@ void NSGA2_Generation::breed(
 }
 
 std::shared_ptr<NSGA2_Individual> NSGA2_Generation::binaryTournament() {
-    std::uniform_int_distribution<> dist(0, people.size());
+    std::uniform_int_distribution<> dist(0, people.size() - 1);
 
     //selects random Individual
     auto individual = people.begin() + dist(random_generator);
@@ -217,6 +231,10 @@ std::shared_ptr<NSGA2_Individual> NSGA2_Generation::binaryTournament() {
     //individual, in terms of Pareto Front.
     for (unsigned selec = 0; selec < NSGA2::binaryTournamentParameter; selec++) {
         auto adversary = people.begin() + dist(random_generator);
+
+        while (adversary == individual) {
+            adversary = people.begin() + dist(random_generator);
+        }
 
         if ((*adversary)->paretoFront < (*individual)->paretoFront) {
             individual = adversary;
