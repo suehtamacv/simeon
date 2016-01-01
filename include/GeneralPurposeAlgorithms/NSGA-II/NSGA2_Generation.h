@@ -13,7 +13,7 @@ class NSGA2_Generation {
     NSGA2_Generation();
     void eval();
 
-    NSGA2_Generation &operator += (std::shared_ptr<NSGA2_Individual> &);
+    NSGA2_Generation &operator += (std::shared_ptr<NSGA2_Individual>);
     NSGA2_Generation &operator += (NSGA2_Generation &);
 
     std::vector<std::shared_ptr<NSGA2_Individual>> getParetoFront(int i);

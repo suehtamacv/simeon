@@ -48,7 +48,7 @@ bool NSGA2_Individual::isDominated(const NSGA2_Individual &other) const {
             bool Dominates = true;
 
             for (unsigned j = 0; j < Parameters.size(); j++) {
-                Dominates &= Parameters[j] <= other.getParameter(j);
+                Dominates &= Parameters[j]->evaluate() <= other.getParameter(j)->evaluate();
             }
 
             if (Dominates) {

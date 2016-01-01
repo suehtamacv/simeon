@@ -119,7 +119,7 @@ void NSGA2_Generation::evalParetoFront() {
 }
 
 NSGA2_Generation &NSGA2_Generation::operator +=
-(std::shared_ptr<NSGA2_Individual> &other) {
+(std::shared_ptr<NSGA2_Individual> other) {
     isEvaluated = false;
 
     other->paretoFront = other->crowdingDistance = -1;
