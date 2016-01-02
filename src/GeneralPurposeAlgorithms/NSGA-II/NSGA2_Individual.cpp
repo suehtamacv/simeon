@@ -17,14 +17,26 @@ bool NSGA2_Individual::operator ==(const NSGA2_Individual &other) const {
     return (Gene == other.Gene);
 }
 
+bool NSGA2_Individual::operator <(const NSGA2_Individual &other) const {
+    //This is less than other if its Pareto Front is inner, or iff they're in the
+    //same Pareto Front and this has smaller crowding Distance.
+    return ((paretoFront < other.paretoFront) ||
+            ((paretoFront == other.paretoFront) &&
+             (crowdingDistance < other.crowdingDistance)));
+}
+
 void NSGA2_Individual::eval() {
     if (!isCreated) {
         createIndividual();
     }
 
-    for (auto &parameter : Parameters) {
-        parameter->evaluate();
+    if (!isEvaluated) {
+        for (auto &parameter : Parameters) {
+            parameter->evaluate();
+        }
     }
+
+    isEvaluated = true;
 }
 
 void NSGA2_Individual::print() {

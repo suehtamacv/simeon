@@ -23,7 +23,7 @@ class NSGA2 {
     void natural_selection(NSGA2_Generation &gen, NSGA2_Generation &dest);
     std::vector<std::shared_ptr<NSGA2_Generation>> evolution;
 
-    void newGeneration(NSGA2_Generation &parent);
+    std::shared_ptr<NSGA2_Generation> newGeneration(NSGA2_Generation &prnt);
 
     unsigned int generation;
 };

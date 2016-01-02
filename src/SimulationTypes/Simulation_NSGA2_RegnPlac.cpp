@@ -127,6 +127,7 @@ void Simulation_NSGA2_RegnPlac::Individual::createIndividual() {
     }
 
     setGene(IndivGene);
+    isCreated = true;
 }
 
 int Simulation_NSGA2_RegnPlac::Individual::createGene(unsigned int) {
@@ -210,7 +211,7 @@ void Simulation_NSGA2_RegnPlac::print() {
         Optimization.run_Generation();
         std::cout << std::endl << "GENERATION " <<  Optimization.generation
                   << std::endl;
-        Optimization.evolution.back()->print();
+        Optimization.evolution.at(Optimization.generation - 1)->print();
     }
 }
 

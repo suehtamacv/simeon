@@ -18,6 +18,7 @@ class NSGA2_Individual {
     virtual std::shared_ptr<NSGA2_Individual> clone() = 0;
 
     bool operator==(const NSGA2_Individual &other) const;
+    bool operator<(const NSGA2_Individual &other) const;
 
     void eval();
     void print();
@@ -34,10 +35,9 @@ class NSGA2_Individual {
 
     NSGA2_Individual &mutate();
 
-  protected:
     bool isEvaluated;
     bool isCreated;
-
+  protected:
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
 };
 

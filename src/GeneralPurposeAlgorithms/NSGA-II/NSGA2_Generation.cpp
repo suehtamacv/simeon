@@ -12,18 +12,19 @@ NSGA2_Generation::NSGA2_Generation() : isEvaluated(false) {
 }
 
 void NSGA2_Generation::eval() {
-    for (auto &individual : people) {
+    for (auto individual : people) {
         individual->eval();
     }
 
     evalParetoFront();
+    evalCrowdingDistances();
 
     isEvaluated = true;
 }
 
 void NSGA2_Generation::evalCrowdingDistances(int ParetoFront) {
-    if (!isEvaluated) {
-        eval();
+    if (isEvaluated) {
+        return;
     }
 
     auto front = getParetoFront(ParetoFront);
@@ -75,6 +76,10 @@ void NSGA2_Generation::evalCrowdingDistances(int ParetoFront) {
 }
 
 void NSGA2_Generation::evalCrowdingDistances() {
+    if (isEvaluated) {
+        return;
+    }
+
     int paretoFront = 1;
 
     while (!getParetoFront(paretoFront).empty()) {
@@ -83,6 +88,10 @@ void NSGA2_Generation::evalCrowdingDistances() {
 }
 
 void NSGA2_Generation::evalParetoFront() {
+    if (isEvaluated) {
+        return;
+    }
+
     int numNotInParetoFront = 0;
     int currentParetoFront = 1;
 
@@ -123,29 +132,28 @@ void NSGA2_Generation::evalParetoFront() {
     } while (numNotInParetoFront != 0);
 }
 
-void NSGA2_Generation::operator +=
-(std::shared_ptr<NSGA2_Individual> other) {
+void NSGA2_Generation::operator += (std::shared_ptr<NSGA2_Individual> other) {
     isEvaluated = false;
 
     other->paretoFront = other->crowdingDistance = -1;
     people.push_back(other);
 }
 
-void NSGA2_Generation::operator +=(NSGA2_Generation &other) {
-    for (auto individual : other.people) {
+void NSGA2_Generation::operator +=(std::shared_ptr<NSGA2_Generation> other) {
+    for (auto individual : other->people) {
         this->operator +=(individual);
     }
 }
 
 std::vector<std::shared_ptr<NSGA2_Individual>>
 NSGA2_Generation::getParetoFront(int i) {
-    if (!isEvaluated) {
-        eval();
-    }
-
     std::vector<std::shared_ptr<NSGA2_Individual>> ParetoFront;
 
     for (auto &indiv : people) {
+        if (indiv->paretoFront == -1) {
+            evalParetoFront();
+        }
+
         if (indiv->paretoFront == i) {
             ParetoFront.push_back(indiv);
         }
@@ -213,6 +221,7 @@ void NSGA2_Generation::breed(
         auto newIndivA = a.clone(), newIndivB = b.clone();
         newIndivA->Gene = GeneA;
         newIndivB->Gene = GeneB;
+        newIndivA->isCreated = newIndivB->isCreated = true;
         dest += newIndivA;
         dest += newIndivB;
 
