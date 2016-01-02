@@ -127,17 +127,14 @@ void Simulation_NSGA2_RegnPlac::Individual::createIndividual() {
     }
 
     setGene(IndivGene);
-    isCreated = true;
 }
 
 int Simulation_NSGA2_RegnPlac::Individual::createGene(unsigned int) {
     std::uniform_real_distribution<double> isTranslucent(0, 1);
 
     if (isTranslucent(random_generator) < 0.5) {
-        std::uniform_int_distribution<unsigned int>
-        numReg(0, Simulation_NSGA2_RegnPlac::RegnMax);
-
-        return numReg(random_generator);
+        return std::uniform_int_distribution<unsigned int>
+               (0, Simulation_NSGA2_RegnPlac::RegnMax)(random_generator);
     } else {
         return 0;
     }
@@ -145,7 +142,6 @@ int Simulation_NSGA2_RegnPlac::Individual::createGene(unsigned int) {
 
 std::shared_ptr<NSGA2_Individual>
 Simulation_NSGA2_RegnPlac::Individual::clone() {
-
     std::shared_ptr<Individual> indiv(new Individual(Sim));
     indiv->setGene(Gene);
     return indiv;
@@ -164,7 +160,7 @@ void Simulation_NSGA2_RegnPlac::Individual::setGene(
 }
 
 Simulation_NSGA2_RegnPlac::Sim_NSGA2::Sim_NSGA2(Simulation_NSGA2_RegnPlac &Sim)
-    : Sim(Sim) {
+    : NSGA2(), Sim(Sim) {
 
 }
 

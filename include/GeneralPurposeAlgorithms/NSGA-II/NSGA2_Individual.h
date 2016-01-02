@@ -31,12 +31,11 @@ class NSGA2_Individual {
     std::vector<int> Gene;
 
     unsigned int getNumParameters() const;
-    bool isDominated(const NSGA2_Individual &other) const;
+    bool isDominated(const std::shared_ptr<NSGA2_Individual> other) const;
 
     NSGA2_Individual &mutate();
 
     bool isEvaluated;
-    bool isCreated;
   protected:
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
 };

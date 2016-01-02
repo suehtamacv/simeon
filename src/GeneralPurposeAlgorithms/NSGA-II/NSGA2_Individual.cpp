@@ -8,8 +8,7 @@
 NSGA2_Individual::NSGA2_Individual() :
     crowdingDistance(-1),
     paretoFront(-1),
-    isEvaluated(false),
-    isCreated(false) {
+    isEvaluated(false) {
 
 }
 
@@ -26,7 +25,7 @@ bool NSGA2_Individual::operator <(const NSGA2_Individual &other) const {
 }
 
 void NSGA2_Individual::eval() {
-    if (!isCreated) {
+    if (Gene.empty()) {
         createIndividual();
     }
 
@@ -71,13 +70,13 @@ unsigned int NSGA2_Individual::getNumParameters() const {
     return Parameters.size();
 }
 
-bool NSGA2_Individual::isDominated(const NSGA2_Individual &other) const {
+bool NSGA2_Individual::isDominated(const std::shared_ptr<NSGA2_Individual> other) const {
     for (unsigned int i = 0; i < Parameters.size(); i++) {
-        if (Parameters[i]->evaluate() < other.getParameter(i)->evaluate()) {
+        if (Parameters[i]->evaluate() < other->getParameter(i)->evaluate()) {
             bool Dominates = true;
 
             for (unsigned j = 0; j < Parameters.size(); j++) {
-                Dominates &= Parameters[j]->evaluate() <= other.getParameter(j)->evaluate();
+                Dominates &= (Parameters[j]->evaluate() <= other->getParameter(j)->evaluate());
             }
 
             if (Dominates) {
@@ -93,8 +92,9 @@ NSGA2_Individual &NSGA2_Individual::mutate() {
     crowdingDistance = paretoFront = -1;
     std::uniform_real_distribution<double> dist(0, 1);
 
-    if (dist(random_generator) < NSGA2::mutationProb) { //mutates
-        for (unsigned int i = 0; i < Gene.size(); i++) {
+
+    for (unsigned int i = 0; i < Gene.size(); i++) {
+        if (dist(random_generator) < NSGA2::mutationProb) { //mutates
             Gene[i] = createGene(i);
         }
     }

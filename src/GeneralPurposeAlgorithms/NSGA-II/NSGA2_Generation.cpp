@@ -95,7 +95,7 @@ void NSGA2_Generation::evalParetoFront() {
     int numNotInParetoFront = 0;
     int currentParetoFront = 1;
 
-    for (auto &indiv : people) {
+    for (auto indiv : people) {
         indiv->crowdingDistance = indiv->paretoFront = -1;
     }
 
@@ -109,12 +109,12 @@ void NSGA2_Generation::evalParetoFront() {
 
             bool isDominated = false;
 
-            for (auto &other : people) {
+            for (auto other : people) {
                 if (other->paretoFront != -1) {
                     continue;
                 }
 
-                isDominated |= indiv->isDominated(*other);
+                isDominated |= indiv->isDominated(other);
 
                 if (isDominated) {
                     break;
@@ -135,8 +135,10 @@ void NSGA2_Generation::evalParetoFront() {
 void NSGA2_Generation::operator += (std::shared_ptr<NSGA2_Individual> other) {
     isEvaluated = false;
 
-    other->paretoFront = other->crowdingDistance = -1;
-    people.push_back(other);
+    auto indiv = other->clone();
+    indiv->paretoFront = indiv->crowdingDistance = -1;
+    indiv->isEvaluated = false;
+    people.push_back(indiv);
 }
 
 void NSGA2_Generation::operator +=(std::shared_ptr<NSGA2_Generation> other) {
@@ -221,7 +223,6 @@ void NSGA2_Generation::breed(
         auto newIndivA = a.clone(), newIndivB = b.clone();
         newIndivA->Gene = GeneA;
         newIndivB->Gene = GeneB;
-        newIndivA->isCreated = newIndivB->isCreated = true;
         dest += newIndivA;
         dest += newIndivB;
 
