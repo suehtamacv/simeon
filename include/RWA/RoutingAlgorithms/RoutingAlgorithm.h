@@ -4,8 +4,10 @@
 #include <boost/bimap.hpp>
 #include <memory>
 #include <vector>
-#include <Calls/Call.h>
-#include <Structure/Topology.h>
+
+class Topology;
+class Call;
+class Link;
 
 /**
  * @brief The RoutingAlgorithm class searches for a route, given a Call.

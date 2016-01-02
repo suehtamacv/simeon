@@ -9,7 +9,7 @@ TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
 
     Nodes.push_back(Links.front().lock()->Origin);
 
-    for (auto it : Links) {
+    for (auto &it : Links) {
         Nodes.push_back(it.lock()->Destination);
     }
 
@@ -25,7 +25,7 @@ TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
 Signal TransparentSegment::bypass(Signal S) {
     S = Links.front().lock()->Origin.lock()->add(S);
 
-    for (auto it : Links) {
+    for (auto &it : Links) {
         S = it.lock()->bypass(S);
 
         if (it.lock() == Links.back().lock()) {
@@ -46,7 +46,7 @@ unsigned int TransparentSegment::get_MaxContigSlots() {
         SlotsAvailability[i] = true;
     }
 
-    for (auto link : Links) {
+    for (auto &link : Links) {
         auto linklock = link.lock();
 
         for (int i = 0; i < Link::NumSlots; i++) {
@@ -58,7 +58,7 @@ unsigned int TransparentSegment::get_MaxContigSlots() {
     unsigned MaxSlots = 0;
     unsigned CurrentFreeSlots = 0;
 
-    for (auto slot : SlotsAvailability) {
+    for (auto &slot : SlotsAvailability) {
         if (slot) {
             CurrentFreeSlots++;
         } else {

@@ -1,6 +1,8 @@
 #include <SimulationTypes/Simulation_StatisticalTrend.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Link.h>
+#include <Calls/CallGenerator.h>
+#include <RWA/RoutingWavelengthAssignment.h>
 
 Simulation_StatisticalTrend::Simulation_StatisticalTrend() {
     hasLoaded = false;
@@ -19,7 +21,7 @@ void Simulation_StatisticalTrend::load() {
     std::cout << std::endl << "-> Choose a network type." << std::endl;
 
     do {
-        for (auto nettype : NetworkTypes.left) {
+        for (auto &nettype : NetworkTypes.left) {
             std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
         }
 
@@ -187,7 +189,7 @@ void Simulation_StatisticalTrend::print() {
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "SIMULATION\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    for (auto simulation : simulations) {
+    for (auto &simulation : simulations) {
         if (!simulation->hasSimulated) {
             simulation->run();
         }
@@ -209,7 +211,7 @@ void Simulation_StatisticalTrend::run() {
         load();
     }
 
-    for (auto simulation : simulations) {
+    for (auto &simulation : simulations) {
         simulation->run();
     }
 }

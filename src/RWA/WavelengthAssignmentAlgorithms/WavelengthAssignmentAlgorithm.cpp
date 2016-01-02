@@ -31,7 +31,7 @@ WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm() {
               << std::endl;
 
     do {
-        for (auto wavasgn : WavelengthAssignmentAlgorithmNames.left) {
+        for (auto &wavasgn : WavelengthAssignmentAlgorithmNames.left) {
             std::cout << "(" << wavasgn.first << ")\t" << wavasgn.second << std::endl;
         }
 

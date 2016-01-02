@@ -1,6 +1,8 @@
 #include <RWA/RegeneratorAssignmentAlgorithms/FirstLongestReach.h>
+#include <RWA/TransparentSegment.h>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
+#include <Calls/Call.h>
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
                                      std::vector<ModulationScheme> ModulationSchemes) :
@@ -16,7 +18,7 @@ std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(
     std::vector<TransparentSegment> TransparentSegments;
     std::vector<std::weak_ptr<Node>> Nodes;
 
-    for (auto link : Links) {
+    for (auto &link : Links) {
         Nodes.push_back(link.lock()->Origin);
     }
 

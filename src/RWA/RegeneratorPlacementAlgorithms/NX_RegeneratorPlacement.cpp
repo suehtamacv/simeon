@@ -1,4 +1,5 @@
 #include <RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
+#include <Structure/Topology.h>
 
 unsigned NX_RegeneratorPlacement::NX_N;
 unsigned NX_RegeneratorPlacement::NX_X;

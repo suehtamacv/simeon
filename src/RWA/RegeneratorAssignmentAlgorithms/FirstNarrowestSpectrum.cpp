@@ -1,6 +1,9 @@
 #include <algorithm>
 #include <RWA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.h>
 #include <Structure/Link.h>
+#include <Structure/Node.h>
+#include <Calls/Call.h>
+#include <RWA/TransparentSegment.h>
 
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
         std::vector<ModulationScheme> Schemes) :
@@ -20,7 +23,7 @@ std::vector<TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
     std::vector<TransparentSegment> TransparentSegments;
     std::vector<std::weak_ptr<Node>> Nodes;
 
-    for (auto link : Links) {
+    for (auto &link : Links) {
         Nodes.push_back(link.lock()->Origin);
     }
 

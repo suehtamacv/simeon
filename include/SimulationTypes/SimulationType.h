@@ -6,11 +6,6 @@
 #include <boost/bimap.hpp>
 #include <Structure/Topology.h>
 
-#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
-
 class SimulationType {
   public:
 #define NETWORK_TYPE \
@@ -18,6 +13,7 @@ class SimulationType {
     X(TranslucentNetwork, "Translucent Network") //X Macros
 
 #define SIMULATION_TYPE \
+    X(morp3o, "MORP-3O Regenerator Placement", "morp3o") \
     X(networkload, "Network Load Variation", "networkload") \
     X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization") \
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")

@@ -3,6 +3,7 @@
 
 #include <SimulationTypes/Simulation_StatisticalTrend.h>
 #include <SimulationTypes/Simulation_NetworkLoad.h>
+#include <SimulationTypes/Simulation_NSGA2_RegnPlac.h>
 #include <SimulationTypes/Simulation_PSROptimization.h>
 
 #endif // SIMULATIONTYPES_H

@@ -3,6 +3,8 @@
 
 #include <Devices/Device.h>
 
+class Node;
+
 /**
  * @brief The Splitter class represents a splitter. Is only used with the
  * Broadcast-And-Select node architecture.
@@ -13,10 +15,13 @@ class Splitter : public Device {
      * @brief Splitter is the standard constructor for a splitter.
      * @param NumPorts is the number of ports of the splitter.
      */
-    Splitter(int NumPorts);
+    Splitter(Node *parent);
 
     Gain &get_Gain();
     Power &get_Noise();
+    double get_CapEx();
+    double get_OpEx();
+
     std::shared_ptr<Device> clone();
 
     /**
@@ -27,7 +32,8 @@ class Splitter : public Device {
     void set_NumPorts(int NumPorts);
 
   private:
-    int NumPorts;
+    Node *parent;
+    unsigned int NumPorts;
     Gain SplitterLoss;
     Power NoisePower;
 };

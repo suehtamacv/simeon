@@ -31,7 +31,7 @@ RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm() {
               << std::endl;
 
     do {
-        for (auto rplace : RegeneratorPlacementNames.left) {
+        for (auto &rplace : RegeneratorPlacementNames.left) {
             std::cout << "(" << rplace.first << ")\t" << rplace.second << std::endl;
         }
 

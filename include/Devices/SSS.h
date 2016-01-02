@@ -3,6 +3,8 @@
 
 #include <Devices/Device.h>
 
+class Node;
+
 /**
  * @brief The SSS class represents a spectrum selective switch.
  */
@@ -16,14 +18,18 @@ class SSS : public Device {
     /**
      * @brief SSS is the standard constructor of a SSS.
      */
-    SSS();
+    SSS(Node *parent);
 
     Gain &get_Gain();
     Power &get_Noise();
+    double get_CapEx();
+    double get_OpEx();
+
     std::shared_ptr<Device> clone();
 
   private:
     Power NoisePower;
+    Node *parent;
 };
 
 #endif // SSS_H

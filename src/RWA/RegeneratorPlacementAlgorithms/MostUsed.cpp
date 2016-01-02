@@ -1,6 +1,9 @@
 #include <RWA/RegeneratorPlacementAlgorithms/MostUsed.h>
 #include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
+#include <Calls/CallGenerator.h>
+#include <RWA/RoutingWavelengthAssignment.h>
+#include <Structure/Topology.h>
 #include <GeneralClasses/RandomGenerator.h>
 
 MostUsed::MostUsed(std::shared_ptr<Topology> T,
@@ -21,7 +24,7 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X) {
     BOOST_ASSERT_MSG(RWA->RA_Alg != nullptr, "Regenerator Placement can only run"
                      " if a Regenerator Assignment Algorithm has been set.");
 
-    for (auto node : T->Nodes) {
+    for (auto &node : T->Nodes) {
         node->set_NodeType(Node::OpaqueNode);
     }
 
@@ -37,7 +40,7 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X) {
 
     std::vector<std::shared_ptr<Node>> PossibleNodes;
 
-    for (auto node : T->Nodes) {
+    for (auto &node : T->Nodes) {
         node->set_NodeType(Node::TransparentNode);
         node->set_NumRegenerators(0);
         PossibleNodes.push_back(node);
@@ -46,7 +49,7 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X) {
     for (unsigned iter = 0; iter < N; iter++) {
         long long unsigned MaxUsed = 0;
 
-        for (auto node : PossibleNodes) {
+        for (auto &node : PossibleNodes) {
             if (MaxUsed < node->get_TotalNumRequestedRegenerators()) {
                 MaxUsed  = node->get_TotalNumRequestedRegenerators();
             }
@@ -54,7 +57,7 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X) {
 
         std::vector<std::shared_ptr<Node>> MaximalNodes;
 
-        for (auto node : PossibleNodes) {
+        for (auto &node : PossibleNodes) {
             if (MaxUsed  == node->get_TotalNumRequestedRegenerators()) {
                 MaximalNodes.push_back(node);
             }

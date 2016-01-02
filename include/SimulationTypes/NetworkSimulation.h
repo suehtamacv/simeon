@@ -2,8 +2,10 @@
 #define NETWORKSIMULATION_H
 
 #include <memory>
-#include <Calls/CallGenerator.h>
-#include <RWA/RoutingWavelengthAssignment.h>
+
+class CallGenerator;
+class RoutingWavelengthAssignment;
+class Event;
 
 class NetworkSimulation {
   public:

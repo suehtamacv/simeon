@@ -4,6 +4,7 @@
 #include <Devices/Amplifiers.h>
 #include <Devices/Device.h>
 #include <Devices/Fiber.h>
+#include <Devices/Regenerator.h>
 #include <Devices/Splitter.h>
 #include <Devices/SSS.h>
 

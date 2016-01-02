@@ -15,13 +15,13 @@ arma::rowvec PSR::cBitrate::getCost(std::weak_ptr<Link>,
 void PSR::cBitrate::createCache() {
     double maxBitrate = -1;
 
-    for (auto bitrate : TransmissionBitrate::DefaultBitrates) {
+    for (auto &bitrate : TransmissionBitrate::DefaultBitrates) {
         if (maxBitrate < bitrate.get_Bitrate()) {
             maxBitrate = bitrate.get_Bitrate();
         }
     }
 
-    for (auto bitrate : TransmissionBitrate::DefaultBitrates) {
+    for (auto &bitrate : TransmissionBitrate::DefaultBitrates) {
         cache.emplace(bitrate, arma::rowvec(NMax - NMin + 1));
         int expo = 0;
 

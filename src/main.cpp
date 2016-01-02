@@ -5,8 +5,6 @@
 #include "RWA.h"
 #include "SimulationTypes.h"
 
-#include <iostream>
-
 int main(void) {
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;

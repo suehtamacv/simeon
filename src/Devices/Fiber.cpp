@@ -19,3 +19,11 @@ Power &Fiber::get_Noise() {
 std::shared_ptr<Device> Fiber::clone() {
     return std::shared_ptr<Device>(new Fiber(*this));
 }
+
+double Fiber::get_CapEx() {
+    return 0;
+}
+
+double Fiber::get_OpEx() {
+    return 0;
+}

@@ -15,13 +15,13 @@ arma::rowvec PSR::cModulationScheme::getCost(std::weak_ptr<Link>,
 void PSR::cModulationScheme::createCache() {
     double maxScheme = -1;
 
-    for (auto scheme : ModulationScheme::DefaultSchemes) {
+    for (auto &scheme : ModulationScheme::DefaultSchemes) {
         if (maxScheme < scheme.get_M()) {
             maxScheme = scheme.get_M();
         }
     }
 
-    for (auto scheme : ModulationScheme::DefaultSchemes) {
+    for (auto &scheme : ModulationScheme::DefaultSchemes) {
         cache.emplace(scheme, arma::rowvec(NMax - NMin + 1));
         int expo = 0;
 

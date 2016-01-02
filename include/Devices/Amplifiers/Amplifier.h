@@ -25,6 +25,9 @@ class Amplifier : public Device {
     Amplifier(Gain G);
 
     Power &get_Noise();
+    double get_CapEx();
+    double get_OpEx();
+
     /**
      * @brief set_Gain is used to set a new gain of this Amplifier.
      * @param G is the new gain of this Amplifier.

@@ -4,6 +4,10 @@
 #include <SimulationTypes/SimulationType.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
+#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
 class Simulation_PSROptimization : public SimulationType {
   public:

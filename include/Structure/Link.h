@@ -1,15 +1,14 @@
 #ifndef LINK_H
 #define LINK_H
 
-#include <Devices/Device.h>
 #include <GeneralClasses/Signal.h>
 #include <memory>
 #include <vector>
-#include <iostream>
-#include <Structure/Slot.h>
 
 class Node;
 class Call;
+class Slot;
+class Device;
 
 class Link {
   public:
@@ -37,6 +36,9 @@ class Link {
     int get_Availability();
     int get_Occupability();
     int get_Contiguity(std::shared_ptr<Call> C);
+
+    double get_CapEx();
+    double get_OpEx();
 
     static void load();
   private:

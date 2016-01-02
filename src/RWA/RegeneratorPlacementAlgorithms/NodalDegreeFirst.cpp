@@ -2,6 +2,7 @@
 #include <random>
 #include <boost/assert.hpp>
 #include <GeneralClasses/RandomGenerator.h>
+#include <Structure/Topology.h>
 
 NodalDegreeFirst::NodalDegreeFirst(std::shared_ptr<Topology> T) :
     NX_RegeneratorPlacement(T) {
@@ -19,7 +20,7 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
 
     std::vector<std::shared_ptr<Node>> PossibleNodes;
 
-    for (auto node : T->Nodes) {
+    for (auto &node : T->Nodes) {
         node->set_NumRegenerators(0);
         node->set_NodeType(Node::TransparentNode);
         PossibleNodes.push_back(node);
@@ -28,12 +29,12 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
     for (unsigned iter = 0; iter < N; iter++) {
         std::map<std::shared_ptr<Node>, int> NodeDegree;
 
-        for (auto node : PossibleNodes) {
+        for (auto &node : PossibleNodes) {
             NodeDegree.emplace(node, 0);
         }
 
-        for (auto orig : PossibleNodes) {
-            for (auto dest : PossibleNodes) {
+        for (auto &orig : PossibleNodes) {
+            for (auto &dest : PossibleNodes) {
                 if (orig == dest) {
                     continue;
                 }
@@ -46,7 +47,7 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
 
         int MaxDegree = -1;
 
-        for (auto node : NodeDegree) {
+        for (auto &node : NodeDegree) {
             if (node.second > MaxDegree) {
                 MaxDegree = node.second;
             }
@@ -54,7 +55,7 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X) {
 
         std::vector<std::shared_ptr<Node>> MaximalNodes;
 
-        for (auto node : NodeDegree) {
+        for (auto &node : NodeDegree) {
             if (MaxDegree == node.second) {
                 MaximalNodes.push_back(node.first);
             }

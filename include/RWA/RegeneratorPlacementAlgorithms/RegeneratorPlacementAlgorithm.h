@@ -1,11 +1,11 @@
 #ifndef REGENERATORPLACEMENTALGORITHM_H
 #define REGENERATORPLACEMENTALGORITHM_H
 
-#include <Structure/Topology.h>
 #include <boost/bimap.hpp>
 #include <iostream>
 
 class RoutingWavelengthAssignment;
+class Topology;
 
 /**
  * @brief The RegeneratorPlacementAlgorithm class decides how to insert the

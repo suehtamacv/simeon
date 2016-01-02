@@ -33,14 +33,14 @@ Topology::Topology(const Topology &topology) {
     Links.clear();
     LongestLink = -1;
 
-    for (auto node : topology.Nodes) {
+    for (auto &node : topology.Nodes) {
         add_Node(node->ID,
                  node->get_NodeType(),
                  node->get_NodeArch(),
                  node->get_NumRegenerators());
     }
 
-    for (auto link : topology.Links) {
+    for (auto &link : topology.Links) {
         std::weak_ptr<Node> orig = Nodes.front();
         std::weak_ptr<Node> dest = Nodes.front();
 
@@ -81,7 +81,7 @@ Topology::Topology(std::string TopologyFileName) {
     std::vector<std::string> NodesList =
         VariablesMap.find("nodes.node")->second.as<std::vector<std::string>>();
 
-    for (auto node : NodesList) {
+    for (auto &node : NodesList) {
         int NodeId, NumReg;
         std::string StrType, StrArch;
 
@@ -99,7 +99,7 @@ Topology::Topology(std::string TopologyFileName) {
     std::vector<std::string> LinksList =
         VariablesMap.find("links.->")->second.as<std::vector<std::string>>();
 
-    for (auto link : LinksList) {
+    for (auto &link : LinksList) {
         int OriginID, DestinationID;
         double length;
         std::weak_ptr<Node> Origin, Destination;
@@ -111,7 +111,7 @@ Topology::Topology(std::string TopologyFileName) {
 
         int NodesFound = 0;
 
-        for (auto node : Nodes) {
+        for (auto &node : Nodes) {
             if (node->ID == OriginID) {
                 Origin = node;
                 NodesFound++;
@@ -163,7 +163,7 @@ void Topology::save(std::string TopologyFileName) {
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
 
 
-    for (auto it : Nodes) {
+    for (auto &it : Nodes) {
         TopologyFile << "  node = " << it->ID
                      << " " << Node::NodeTypes.left.at(it->get_NodeType())
                      << " " << Node::NodeArchitecturesNicknames.left.at(it->get_NodeArch())
@@ -185,7 +185,7 @@ void Topology::save(std::string TopologyFileName) {
 
 double Topology::get_LengthLongestLink() {
     if (LongestLink == -1) {
-        for (auto link : Links) {
+        for (auto &link : Links) {
             if (LongestLink < link.second->Length) {
                 LongestLink = link.second->Length;
             }
@@ -199,4 +199,32 @@ std::shared_ptr<Topology>
 Topology::create_DefaultTopology(DefaultTopologies Top) {
     return std::shared_ptr<Topology>(new Topology(
                                          Topology::DefaultTopologiesPaths.left.at(Top)));
+}
+
+double Topology::get_CapEx() {
+    double CapEx = 0;
+
+    for (auto node : Nodes) {
+        CapEx += node->get_CapEx();
+    }
+
+    for (auto link : Links) {
+        CapEx += link.second->get_CapEx();
+    }
+
+    return CapEx;
+}
+
+double Topology::get_OpEx() {
+    double OpEx = 0;
+
+    for (auto node : Nodes) {
+        OpEx += node->get_OpEx();
+    }
+
+    for (auto link : Links) {
+        OpEx += link.second->get_OpEx();
+    }
+
+    return OpEx;
 }

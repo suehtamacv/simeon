@@ -2,6 +2,10 @@
 #define SIMULATION_BOXPLOT_H
 
 #include "SimulationType.h"
+#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
+#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
 class NetworkSimulation;
 

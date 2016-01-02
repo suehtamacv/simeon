@@ -5,6 +5,8 @@ MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
 
 }
 
-double MinimumHops::get_Cost(std::weak_ptr<Link>, std::shared_ptr<Call>) {
+double MinimumHops::get_Cost(
+    std::weak_ptr<Link>,
+    std::shared_ptr<Call>) {
     return 1;
 }

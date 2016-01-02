@@ -7,43 +7,43 @@
 #include <cmath>
 #include <GeneralClasses/RandomGenerator.h>
 
-namespace PSO {
-    template<class T>
-    class PSO_Particle {
+template<class PositionType>
+class PSO_Particle {
 
-      public:
+  public:
 
-        PSO_Particle(unsigned int N, T XMin, T XMax);
-        void initialize(T XMin, T XMax);
+    PSO_Particle(unsigned int N, PositionType XMin, PositionType XMax);
+    void initialize(PositionType XMin, PositionType XMax);
 
-        std::vector<T> X; //Position
-        std::vector<T> V; //Velocity
-        std::vector<T> P; //Best position so far
+    std::vector<PositionType> X; //Position
+    std::vector<PositionType> V; //Velocity
+    std::vector<PositionType> P; //Best position so far
 
-        T currentFit;
-        T bestFit;
+    PositionType currentFit;
+    PositionType bestFit;
 
-        std::weak_ptr<PSO_Particle> Neighbour[2];
+    std::weak_ptr<PSO_Particle> Neighbour[2];
 
-      private:
-        unsigned int N;
-    };
+  private:
+    unsigned int N;
+};
 
-    template<class T>
-    PSO::PSO_Particle<T>::PSO_Particle(unsigned int N, T XMin, T XMax) : N(N) {
-        X.resize(N);
-        V.resize(N);
-        P.resize(N);
-        initialize(XMin, XMax);
-    }
+template<class PositionType>
+PSO_Particle<PositionType>::PSO_Particle(
+    unsigned int N, PositionType XMin, PositionType XMax) : N(N) {
+    X.resize(N);
+    V.resize(N);
+    P.resize(N);
+    initialize(XMin, XMax);
+}
 
-    template<class T>
-    void PSO::PSO_Particle<T>::initialize(T XMin, T XMax) {
-        std::uniform_real_distribution<T> distribution(XMin, XMax);
+template<class PositionType>
+void PSO_Particle<PositionType>::initialize(
+    PositionType XMin, PositionType XMax) {
 
-        for (auto &x : X) {
-            x = distribution(random_generator);
-        }
+    std::uniform_real_distribution<PositionType> distribution(XMin, XMax);
+    for (auto &x : X) {
+        x = distribution(random_generator);
     }
 }
 

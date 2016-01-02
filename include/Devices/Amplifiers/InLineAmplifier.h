@@ -25,6 +25,7 @@ class InLineAmplifier : public EDFA {
     InLineAmplifier(Fiber &Segment);
 
     Gain &get_Gain();
+
     std::shared_ptr<Device> clone();
 };
 

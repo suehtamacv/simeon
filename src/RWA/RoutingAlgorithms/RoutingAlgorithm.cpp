@@ -1,7 +1,7 @@
 #include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/RoutingAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
+#include <RWA/RoutingAlgorithms.h>
 
 RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
     boost::assign::list_of<RoutingAlgorithm::RoutAlgNameBimap::relation>
@@ -28,7 +28,7 @@ RoutingAlgorithm::define_RoutingAlgorithm() {
     std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
 
     do {
-        for (auto routing : RoutingAlgorithmNames.left) {
+        for (auto &routing : RoutingAlgorithmNames.left) {
             std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
         }
 
