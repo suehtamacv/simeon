@@ -70,7 +70,8 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.cpp \
     src/Devices/Regenerator.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac.cpp
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac.cpp \
+    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp
 
 
 HEADERS += \
@@ -152,7 +153,8 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.h \
     include/Devices/Regenerator.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac.h
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac.h \
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
