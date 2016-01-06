@@ -60,7 +60,7 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
     std::shared_ptr<Topology> T,
     std::shared_ptr<RoutingWavelengthAssignment> RWA,
     double OptimizationLoad ,
-    long long NumCalls) {
+    long long NumCalls, bool runLoad) {
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg;
 
@@ -83,6 +83,9 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
             break;
     }
 
-    RP_Alg->load();
+    if (runLoad) {
+        RP_Alg->load();
+    }
+
     return RP_Alg;
 }

@@ -53,8 +53,9 @@ class RegeneratorPlacementAlgorithm {
     create_RegeneratorPlacementAlgorithm(RegeneratorPlacementAlgorithms,
                                          std::shared_ptr<Topology>,
                                          std::shared_ptr<RoutingWavelengthAssignment> RWA,
-                                         double OptimizationLoad ,
-                                         long long NumCalls);
+                                         double OptimizationLoad,
+                                         long long NumCalls,
+                                         bool runLoad = true);
     virtual void load() = 0;
 };
 

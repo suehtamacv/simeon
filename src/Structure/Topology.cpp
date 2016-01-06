@@ -228,3 +228,13 @@ double Topology::get_OpEx() {
 
     return OpEx;
 }
+
+unsigned long Topology::get_NumRegenerators() {
+    unsigned long NReg = 0;
+
+    for (auto &node : Nodes) {
+        NReg += node->get_NumRegenerators();
+    }
+
+    return NReg;
+}

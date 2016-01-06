@@ -63,6 +63,7 @@ class Topology {
     void save(std::string TopologyFileName);
 
     double get_LengthLongestLink();
+    unsigned long get_NumRegenerators();
 
     double get_CapEx();
     double get_OpEx();
