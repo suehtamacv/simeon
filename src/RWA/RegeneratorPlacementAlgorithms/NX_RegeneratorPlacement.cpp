@@ -6,7 +6,7 @@ unsigned NX_RegeneratorPlacement::NX_X;
 
 NX_RegeneratorPlacement::NX_RegeneratorPlacement(std::shared_ptr<Topology> T) :
     RegeneratorPlacementAlgorithm(T) {
-
+    isNXAlgorithm = true;
 }
 
 void NX_RegeneratorPlacement::load() {

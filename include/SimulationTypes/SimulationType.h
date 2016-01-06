@@ -17,6 +17,7 @@ class SimulationType {
     X(morp3o, "MORP-3O Regenerator Placement", "morp3o") \
     X(networkload, "Network Load Variation", "networkload") \
     X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization") \
+    X(regnum, "Number of Regenerators", "regnum") \
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")
 
 #define X(a,b) a,

@@ -32,6 +32,8 @@ class RegeneratorPlacementAlgorithm {
     RegPlaceNicknameBimap;
     static RegPlaceNicknameBimap RegeneratorPlacementNicknames;
 
+    bool isNXAlgorithm;
+
     /**
      * @brief RegeneratorPlacementAlgorithm is the standard constructor.
      * @param T is a pointer to the Topology.

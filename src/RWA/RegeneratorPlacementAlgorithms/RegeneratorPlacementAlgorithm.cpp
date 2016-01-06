@@ -21,7 +21,7 @@ RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames =
     ;
 
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithm(
-    std::shared_ptr<Topology> T) : T(T) {
+    std::shared_ptr<Topology> T) : isNXAlgorithm(false), T(T) {
 
 }
 
