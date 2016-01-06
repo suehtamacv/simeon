@@ -22,7 +22,7 @@ class Simulation_RegeneratorNumber : public SimulationType {
     bool hasLoaded;
 
     double OptimizationLoad;
-    long NumCalls;
+    long double NumCalls;
 
     unsigned long minRegNumber;
     unsigned long maxRegNumber;
