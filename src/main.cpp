@@ -5,6 +5,8 @@
 #include "RWA.h"
 #include "SimulationTypes.h"
 
+bool parallelism_enabled = true;
+
 int main(void) {
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;

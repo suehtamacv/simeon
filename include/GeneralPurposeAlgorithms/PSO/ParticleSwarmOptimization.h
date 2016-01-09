@@ -74,19 +74,22 @@ template<class PositionType, class Fit, class Comp>
 void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation() {
     p = 1;
 
-    for (auto &particle : Particles) {
-        particle->currentFit = Fit()(particle);
+    #pragma omp parallel for ordered schedule(dynamic)
 
-        if (Comp()(particle->currentFit, particle->bestFit) || g == 1) {
-            particle->bestFit = particle->currentFit;
-            particle->P = particle->X;
+    for (unsigned i = 0; i < Particles.size(); i++) {
+        Particles[i]->currentFit = Fit()(Particles[i]);
+
+        if (Comp()(Particles[i]->currentFit, Particles[i]->bestFit) || g == 1) {
+            Particles[i]->bestFit = Particles[i]->currentFit;
+            Particles[i]->P = Particles[i]->X;
         }
 
-        if (Comp()(particle->bestFit, BestParticle->bestFit)) {
-            std::clog << "New fitter particle found. Fit: " << particle->currentFit
+        #pragma omp critical
+        if (Comp()(Particles[i]->bestFit, BestParticle->bestFit)) {
+            std::clog << "New fitter particle found. Fit: " << Particles[i]->currentFit
                       << std::endl;
 
-            BestParticle = particle;
+            BestParticle = Particles[i];
         }
 
         p++;

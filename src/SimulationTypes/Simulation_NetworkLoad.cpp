@@ -30,8 +30,11 @@ void Simulation_NetworkLoad::run() {
         load();
     }
 
-    for (auto &simulation : simulations) {
-        simulation->run();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++) {
+        simulations[i]->run();
     }
 }
 
@@ -43,12 +46,16 @@ void Simulation_NetworkLoad::print() {
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    for (auto &simulation : simulations) {
-        if (!simulation->hasSimulated) {
-            simulation->run();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++) {
+        if (!simulations[i]->hasSimulated) {
+            simulations[i]->run();
         }
 
-        simulation->print();
+        #pragma omp ordered
+        simulations[i]->print();
     }
 
 }

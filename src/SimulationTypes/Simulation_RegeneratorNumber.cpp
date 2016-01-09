@@ -21,9 +21,12 @@ void Simulation_RegeneratorNumber::run() {
         load();
     }
 
-    for (auto &sim : simulations) {
-        if (!sim->hasSimulated) {
-            sim->run();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++) {
+        if (!simulations[i]->hasSimulated) {
+            simulations[i]->run();
         }
     }
 }
@@ -183,13 +186,17 @@ void Simulation_RegeneratorNumber::print() {
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "NUM REGENERATORS\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    for (auto &sim : simulations) {
-        if (!sim->hasSimulated) {
-            sim->run();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++) {
+        if (!simulations[i]->hasSimulated) {
+            simulations[i]->run();
         }
 
-        std::cout << sim->Generator->T->get_NumRegenerators() << "\t\t\t"
-                  << sim->get_CallBlockingProbability() << std::endl;
+        #pragma omp ordered
+        std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
+                  << simulations[i]->get_CallBlockingProbability() << std::endl;
 
     }
 }

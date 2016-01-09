@@ -189,12 +189,19 @@ void Simulation_StatisticalTrend::print() {
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "SIMULATION\tCALL BLOCKING PROBABILITY" << std::endl;
 
-    for (auto &simulation : simulations) {
-        if (!simulation->hasSimulated) {
-            simulation->run();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++) {
+        simulations[i]->run();
+
+        if (!simulations[i]->hasSimulated) {
+            simulations[i]->run();
         }
 
-        std::cout << Sim++ << "\t\t" << simulation->get_CallBlockingProbability() << std::endl;
+        #pragma omp ordered
+        std::cout << Sim++ << "\t\t" << simulations[i]->get_CallBlockingProbability()
+                  << std::endl;
     }
 }
 
@@ -211,7 +218,10 @@ void Simulation_StatisticalTrend::run() {
         load();
     }
 
-    for (auto &simulation : simulations) {
-        simulation->run();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++) {
+        simulations[i]->run();
     }
 }

@@ -241,15 +241,18 @@ void Simulation_PSROptimization::print() {
             std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
             (new PSO::ParticleSwarmOptimization<double, Fitness, Compare>
              (P, G, N, XMin, XMax, VMin, VMax));
+    }
 
-        std::cout << std::endl << "* * RESULTS * *" << std::endl;
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
 
-        for (unsigned i = 1; i <= G; i++) {
+    for (unsigned i = 1; i <= G; i++) {
+        if (!hasRun) {
             PSO_Optim->run_generation();
-            std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
-            std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
-            printCoefficients(FileName);
         }
+
+        std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
+        std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
+        printCoefficients(FileName);
     }
 }
 

@@ -12,8 +12,11 @@ NSGA2_Generation::NSGA2_Generation() : isEvaluated(false) {
 }
 
 void NSGA2_Generation::eval() {
-    for (auto individual : people) {
-        individual->eval();
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < people.size(); i++) {
+        people[i]->eval();
     }
 
     evalParetoFront();
