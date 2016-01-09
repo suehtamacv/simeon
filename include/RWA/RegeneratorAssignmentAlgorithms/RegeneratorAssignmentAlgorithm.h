@@ -20,7 +20,7 @@ class RegeneratorAssignmentAlgorithm {
   public:
 #define REGASSIGNMENT_ALGORITHMS \
     X(FLR, "First Longest Reach", "FLR") \
-    X(FNS, "First Narrowest Reach", "FNS") //X Macros
+    X(FNS, "First Narrowest Spectrum", "FNS") //X Macros
 
 #define X(a,b,c) a,
     enum RegeneratorAssignmentAlgorithms {
