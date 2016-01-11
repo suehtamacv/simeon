@@ -42,7 +42,7 @@ void Simulation_StatisticalTrend::load() {
 
     Node::load();
 
-    Link::load();
+    Link::load(T);
 
     //RWA Algorithms
     {

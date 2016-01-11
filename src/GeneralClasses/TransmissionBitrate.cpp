@@ -22,3 +22,7 @@ double TransmissionBitrate::get_Bitrate() const {
 bool TransmissionBitrate::operator <(const TransmissionBitrate &other) const {
     return Bitrate < other.get_Bitrate();
 }
+
+bool TransmissionBitrate::operator ==(const TransmissionBitrate &other) const {
+    return Bitrate == other.get_Bitrate();
+}

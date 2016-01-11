@@ -217,7 +217,7 @@ void Simulation_NSGA2_RegnPlac::load() {
 
     Node::load();
 
-    Link::load();
+    Link::load(T);
 
     //RWA Algorithms
     {

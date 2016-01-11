@@ -41,6 +41,11 @@ class Signal {
      * @return the Signal-To-Noise Ratio of the Signal.
      */
     Gain get_OSNR();
+    /**
+     * @brief get_NoisePower returns the Noise Power of the Signal.
+     * @return the Noise Power of the Signal.
+     */
+    Power get_NoisePower();
 
   private:
     Power SignalPower;

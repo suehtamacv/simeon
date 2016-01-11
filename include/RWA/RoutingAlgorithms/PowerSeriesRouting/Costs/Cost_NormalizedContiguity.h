@@ -6,14 +6,14 @@
 namespace PSR {
 
     /**
-    * @brief The cNormalizedContiguity class has, as cost, the contiguity
+    * @brief The cNormContiguity class has, as cost, the contiguity
     * measure of the link. It only works on transparent networks. If sr is the
     * number of possible allocations of the call C in the Link link, then this
     * cost is sr / SR.
     */
-    class cNormalizedContiguity : public Cost {
+    class cNormContiguity : public Cost {
       public:
-        cNormalizedContiguity(int NMin, int NMax, std::shared_ptr<Topology> T);
+        cNormContiguity(int NMin, int NMax, std::shared_ptr<Topology> T);
         arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 
       private:

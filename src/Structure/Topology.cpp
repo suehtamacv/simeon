@@ -238,3 +238,9 @@ unsigned long Topology::get_NumRegenerators() {
 
     return NReg;
 }
+
+void Topology::set_avgSpanLength(double avgSpanLength) {
+    for (auto &link : Links) {
+        link.second->set_AvgSpanLength(avgSpanLength);
+    }
+}

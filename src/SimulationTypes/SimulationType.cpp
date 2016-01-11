@@ -79,8 +79,7 @@ std::shared_ptr<SimulationType> SimulationType::create() {
 
             switch ((Simulation_Type) simul) {
                 case transparency:
-                    simulation = std::shared_ptr<SimulationType>(new
-                                 Simulation_TransparencyAnalysis());
+                    simulation = std::shared_ptr<SimulationType>(new Simulation_TransparencyAnalysis());
                     break;
 
                 case morp3o:

@@ -43,12 +43,11 @@ void Simulation_TransparencyAnalysis::run() {
 
     for (double avgSpan = minAvgLinkSpan; avgSpan <= maxAvgLinkSpan;
             avgSpan += stepAvgLinkSpan) {
-        Link::AvgSpanLength = avgSpan;
-
         for (double inOSNR = minOSNR; inOSNR <= maxOSNR; inOSNR += stepOSNR) {
             Signal::InputOSNR = Gain(inOSNR, Gain::dB);
 
             std::shared_ptr<Topology> TopCopy(new Topology(*T));
+            TopCopy->set_avgSpanLength(avgSpan);
             std::weak_ptr<Node> origin, destination;
 
             for (auto node : TopCopy->Nodes) {

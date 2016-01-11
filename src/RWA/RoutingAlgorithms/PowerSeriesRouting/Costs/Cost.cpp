@@ -45,8 +45,12 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
             Cost = std::shared_ptr<PSR::Cost>(new PSR::cDistance(NMin, NMax, T));
             break;
 
+        case noise:
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cNoise(NMin, NMax, T));
+            break;
+
         case normcontiguity:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cNormalizedContiguity(NMin, NMax, T));
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cNormContiguity(NMin, NMax, T));
             break;
 
         case occupability:

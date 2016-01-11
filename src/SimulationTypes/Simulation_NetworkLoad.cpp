@@ -88,7 +88,7 @@ void Simulation_NetworkLoad::load() {
 
     Node::load();
 
-    Link::load();
+    Link::load(T);
 
     //RWA Algorithms
     {

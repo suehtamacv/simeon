@@ -37,7 +37,7 @@ void Simulation_RegeneratorNumber::load() {
 
     Node::load();
 
-    Link::load();
+    Link::load(T);
 
     //RWA Algorithms
     {

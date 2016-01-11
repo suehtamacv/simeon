@@ -28,6 +28,7 @@ class TransmissionBitrate {
     double get_Bitrate() const;
 
     bool operator <(const TransmissionBitrate &) const;
+    bool operator ==(const TransmissionBitrate &) const;
 
     static std::vector<TransmissionBitrate> DefaultBitrates;
   private:

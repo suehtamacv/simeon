@@ -73,7 +73,8 @@ SOURCES += src/main.cpp \
     src/Devices/Regenerator.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
-    src/SimulationTypes/Simulation_RegeneratorNumber.cpp
+    src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp
 
 
 HEADERS += \
@@ -157,7 +158,8 @@ HEADERS += \
     include/Devices/Regenerator.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac.h \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/SimulationTypes/Simulation_RegeneratorNumber.h
+    include/SimulationTypes/Simulation_RegeneratorNumber.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

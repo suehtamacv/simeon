@@ -3,13 +3,14 @@
 #include <iostream>
 #include <Calls/Call.h>
 #include <Structure/Link.h>
+#include <Structure/Topology.h>
 #include <Structure/Slot.h>
 #include <Devices/Fiber.h>
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 
 int Link::NumSlots = 64;
-double Link::AvgSpanLength;
+double Link::DefaultAvgSpanLength = -1;
 
 Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
@@ -19,6 +20,7 @@ Link::Link(std::weak_ptr<Node> Origin,
     this->Origin = Origin;
     this->Destination = Destination;
     this->Length = Length;
+    AvgSpanLength = DefaultAvgSpanLength;
 
     create_Slots();
     create_Devices();
@@ -28,6 +30,7 @@ Link::Link(const Link &link) {
     Length = link.Length;
     Origin = link.Origin;
     Destination = link.Destination;
+    AvgSpanLength = link.AvgSpanLength;
 
     for (auto &slot : link.Slots) {
         Slots.push_back(std::shared_ptr<Slot>(new Slot(*slot)));
@@ -45,6 +48,11 @@ void Link::create_Slots() {
 }
 
 void Link::create_Devices() {
+    if (AvgSpanLength < 0) {
+        return;
+    }
+
+    Devices.clear();
     numLineAmplifiers = floor(Length / AvgSpanLength);
 
     if (ceil(Length / AvgSpanLength) == numLineAmplifiers) {
@@ -139,7 +147,7 @@ int Link::get_Contiguity(std::shared_ptr<Call> C) {
     return Contiguity;
 }
 
-void Link::load() {
+void Link::load(std::shared_ptr<Topology> T) {
     std::cout << std::endl << "-> Define the distance between inline amplifiers."
               << std::endl;
 
@@ -155,10 +163,12 @@ void Link::load() {
             std::cout << std::endl << "-> Define the distance between inline amplifiers."
                       << std::endl;
         } else {
-            AvgSpanLength = SpanLeng;
+            DefaultAvgSpanLength = SpanLeng;
             break;
         }
     } while (1);
+
+    T->set_avgSpanLength(DefaultAvgSpanLength);
 }
 
 double Link::get_CapEx() {
@@ -179,4 +189,9 @@ double Link::get_OpEx() {
     }
 
     return OpEx;
+}
+
+void Link::set_AvgSpanLength(double avgSpanLength) {
+    AvgSpanLength = avgSpanLength;
+    create_Devices();
 }

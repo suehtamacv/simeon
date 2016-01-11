@@ -9,11 +9,14 @@ class Node;
 class Call;
 class Slot;
 class Device;
+class Topology;
 
 class Link {
   public:
     static int NumSlots;
-    static double AvgSpanLength;
+    static double DefaultAvgSpanLength;
+
+    double AvgSpanLength;
 
     Link(std::weak_ptr<Node> Origin, std::weak_ptr<Node> Destination,
          double Length);
@@ -40,7 +43,9 @@ class Link {
     double get_CapEx();
     double get_OpEx();
 
-    static void load();
+    static void load(std::shared_ptr<Topology> T);
+    void set_AvgSpanLength(double avgSpanLength);
+
   private:
     void create_Slots();
     void create_Devices();

@@ -21,3 +21,6 @@ Gain Signal::get_OSNR() {
     return Gain(SignalPower.in_dBm() - NoisePower.in_dBm());
 }
 
+Power Signal::get_NoisePower() {
+    return Power(NoisePower);
+}

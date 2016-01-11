@@ -10,12 +10,12 @@ PSR::cDistance::cDistance(int NMin, int NMax, std::shared_ptr<Topology> T) :
 }
 
 arma::rowvec PSR::cDistance::getCost(std::weak_ptr<Link> link,
-                                    std::shared_ptr<Call>) {
+                                     std::shared_ptr<Call>) {
     return cache.at(link.lock());
 }
 
 void PSR::cDistance::createCache() {
-    for (auto &link : T->Links) {
+    for (auto link : T->Links) {
         cache.emplace(link.second, arma::ones<arma::rowvec>(NMax - NMin + 1));
         int expo = 0;
 

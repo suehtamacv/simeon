@@ -58,7 +58,7 @@ void Simulation_PSROptimization::load() {
 
     Node::load();
 
-    Link::load();
+    Link::load(T);
 
     //RWA Algorithms
     {
@@ -96,7 +96,7 @@ void Simulation_PSROptimization::load() {
         }
     } while (1);
 
-    std::cout << std::endl << "-> Define the maximum PSR exponent." << std::endl;
+    std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
 
     do {
         int nmax;
@@ -107,7 +107,7 @@ void Simulation_PSROptimization::load() {
             std::cin.ignore();
 
             std::cerr << "Invalid maximum exponent." << std::endl;
-            std::cout << std::endl << "-> Define the maximum PSR exponent." << std::endl;
+            std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
         } else {
             NMax = nmax;
             break;
