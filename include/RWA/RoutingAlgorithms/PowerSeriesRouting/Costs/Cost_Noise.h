@@ -25,10 +25,10 @@ private:
 
         bool operator <(const CallProperties &other) const
         {
-            return ((link.lock() < other.link.lock()) ||
-                    ((link.lock() == other.link.lock()) && (bitrate < other.bitrate)) ||
-                    ((link.lock() == other.link.lock()) && (bitrate == other.bitrate) &&
-                     (scheme < other.scheme)));
+            return ((bitrate < other.bitrate) ||
+                    ((bitrate == other.bitrate) && (scheme < other.scheme)) ||
+                    ((bitrate == other.bitrate) && (scheme == other.scheme) &&
+                     (link.lock() < other.link.lock())));
         }
     };
 
