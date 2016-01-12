@@ -59,15 +59,15 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
 
     for (auto &particle : Particles)
         {
-            particle = std::shared_ptr<PSO_Particle<PositionType>>(
-                           new PSO_Particle<PositionType>(N, XMin, XMax));
+        particle = std::shared_ptr<PSO_Particle<PositionType>>(
+                       new PSO_Particle<PositionType>(N, XMin, XMax));
         }
 
     //Create ring topology
     for (unsigned particle = 0; particle < Particles.size(); ++particle)
         {
-            Particles[particle]->Neighbour[0] = Particles[(particle + 1) % P];
-            Particles[particle]->Neighbour[1] = Particles[(particle - 1) % P];
+        Particles[particle]->Neighbour[0] = Particles[(particle + 1) % P];
+        Particles[particle]->Neighbour[1] = Particles[(particle - 1) % P];
         }
 
     BestParticle = Particles[0];
@@ -83,24 +83,24 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
 
     for (unsigned i = 0; i < Particles.size(); i++)
         {
-            Particles[i]->currentFit = Fit()(Particles[i]);
+        Particles[i]->currentFit = Fit()(Particles[i]);
 
-            if (Comp()(Particles[i]->currentFit, Particles[i]->bestFit) || g == 1)
-                {
-                    Particles[i]->bestFit = Particles[i]->currentFit;
-                    Particles[i]->P = Particles[i]->X;
-                }
+        if (Comp()(Particles[i]->currentFit, Particles[i]->bestFit) || g == 1)
+            {
+            Particles[i]->bestFit = Particles[i]->currentFit;
+            Particles[i]->P = Particles[i]->X;
+            }
 
-            #pragma omp critical
-            if (Comp()(Particles[i]->bestFit, BestParticle->bestFit))
-                {
-                    std::clog << "New fitter particle found. Fit: " << Particles[i]->currentFit
-                              << std::endl;
+        #pragma omp critical
+        if (Comp()(Particles[i]->bestFit, BestParticle->bestFit))
+            {
+            std::clog << "New fitter particle found. Fit: " << Particles[i]->currentFit
+                      << std::endl;
 
-                    BestParticle = Particles[i];
-                }
+            BestParticle = Particles[i];
+            }
 
-            p++;
+        p++;
         }
 
     updatePositions();
@@ -116,44 +116,44 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::updatePositions()
     for (auto &particle : Particles)
         {
 
-            auto FitterNeigh = Comp()(particle->Neighbour[0].lock()->currentFit,
-                                      particle->Neighbour[1].lock()->currentFit) ?
-                               particle->Neighbour[0].lock() : particle->Neighbour[1].lock();
+        auto FitterNeigh = Comp()(particle->Neighbour[0].lock()->currentFit,
+                                  particle->Neighbour[1].lock()->currentFit) ?
+                           particle->Neighbour[0].lock() : particle->Neighbour[1].lock();
 
-            //Calculate velocities
-            for (unsigned i = 0; i < N; i++)
+        //Calculate velocities
+        for (unsigned i = 0; i < N; i++)
+            {
+            double Eps1 = PSO_UnifDistribution(random_generator);
+            double Eps2 = PSO_UnifDistribution(random_generator);
+
+            particle->V[i] += c1 * Eps1 * (particle->P[i] - particle->X[i]);
+            particle->V[i] += c2 * Eps2 * (FitterNeigh->P[i] - particle->X[i]);
+            particle->V[i] *= chi;
+
+            if (particle->V[i] > VMax)
                 {
-                    double Eps1 = PSO_UnifDistribution(random_generator);
-                    double Eps2 = PSO_UnifDistribution(random_generator);
-
-                    particle->V[i] += c1 * Eps1 * (particle->P[i] - particle->X[i]);
-                    particle->V[i] += c2 * Eps2 * (FitterNeigh->P[i] - particle->X[i]);
-                    particle->V[i] *= chi;
-
-                    if (particle->V[i] > VMax)
-                        {
-                            particle->V[i] = VMax;
-                        }
-                    else if (particle->V[i] < VMin)
-                        {
-                            particle->V[i] = VMin;
-                        }
+                particle->V[i] = VMax;
                 }
-
-            //Calculate positions
-            for (unsigned i = 0; i < N; i++)
+            else if (particle->V[i] < VMin)
                 {
-                    particle->X[i] += particle->V[i];
-
-                    if (particle->X[i] > XMax)
-                        {
-                            particle->X[i] = XMax;
-                        }
-                    else if (particle->X[i] < XMin)
-                        {
-                            particle->X[i] = XMin;
-                        }
+                particle->V[i] = VMin;
                 }
+            }
+
+        //Calculate positions
+        for (unsigned i = 0; i < N; i++)
+            {
+            particle->X[i] += particle->V[i];
+
+            if (particle->X[i] > XMax)
+                {
+                particle->X[i] = XMax;
+                }
+            else if (particle->X[i] < XMin)
+                {
+                particle->X[i] = XMin;
+                }
+            }
         }
 }
 

@@ -21,11 +21,11 @@ void PSR::cAvailability::createCache()
 {
     for (int avail = 0; avail <= Link::NumSlots; avail++)
         {
-            int expo = 0;
+        int expo = 0;
 
-            for (int n = NMin; n <= NMax; n++)
-                {
-                    cache(avail, expo++) = pow(avail / (double) Link::NumSlots, n);
-                }
+        for (int n = NMin; n <= NMax; n++)
+            {
+            cache(avail, expo++) = pow(avail / (double) Link::NumSlots, n);
+            }
         }
 }

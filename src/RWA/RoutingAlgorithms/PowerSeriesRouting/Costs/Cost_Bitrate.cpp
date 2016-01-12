@@ -20,20 +20,20 @@ void PSR::cBitrate::createCache()
 
     for (auto &bitrate : TransmissionBitrate::DefaultBitrates)
         {
-            if (maxBitrate < bitrate.get_Bitrate())
-                {
-                    maxBitrate = bitrate.get_Bitrate();
-                }
+        if (maxBitrate < bitrate.get_Bitrate())
+            {
+            maxBitrate = bitrate.get_Bitrate();
+            }
         }
 
     for (auto &bitrate : TransmissionBitrate::DefaultBitrates)
         {
-            cache.emplace(bitrate, arma::rowvec(NMax - NMin + 1));
-            int expo = 0;
+        cache.emplace(bitrate, arma::rowvec(NMax - NMin + 1));
+        int expo = 0;
 
-            for (int n = NMin; n <= NMax; n++)
-                {
-                    cache.at(bitrate)(expo++) = pow(bitrate.get_Bitrate() / maxBitrate, n);
-                }
+        for (int n = NMin; n <= NMax; n++)
+            {
+            cache.at(bitrate)(expo++) = pow(bitrate.get_Bitrate() / maxBitrate, n);
+            }
         }
 }

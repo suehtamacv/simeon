@@ -52,18 +52,18 @@ Node::Node(const Node &node) : ID(node.ID)
 
     for (auto &link : node.Links)
         {
-            std::shared_ptr<Link> newlink = std::shared_ptr<Link>(new Link(*link));
-            insert_Link(newlink->Destination, newlink);
+        std::shared_ptr<Link> newlink = std::shared_ptr<Link>(new Link(*link));
+        insert_Link(newlink->Destination, newlink);
         }
 
     for (auto &device : node.Devices)
         {
-            Devices.push_back(device->clone());
+        Devices.push_back(device->clone());
         }
 
     for (unsigned i = 0; i < node.Regenerators.size(); i++)
         {
-            Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
+        Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
         }
 
 }
@@ -84,17 +84,17 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
 
     for (auto &it : Neighbours)
         {
-            if (it.lock() == N.lock())
-                {
-                    LinkExists = true;
-                    break;
-                }
+        if (it.lock() == N.lock())
+            {
+            LinkExists = true;
+            break;
+            }
         }
 
     if (!LinkExists)
         {
-            Neighbours.push_back(N);
-            Links.push_back(Link);
+        Neighbours.push_back(N);
+        Links.push_back(Link);
         }
 }
 
@@ -112,7 +112,7 @@ unsigned int Node::get_NumRegenerators()
 {
     if (Type == OpaqueNode)
         {
-            return std::numeric_limits<unsigned int>::max();
+        return std::numeric_limits<unsigned int>::max();
         }
 
     return Regenerators.size();
@@ -122,7 +122,7 @@ unsigned int Node::get_NumAvailableRegenerators()
 {
     if (Type == OpaqueNode)
         {
-            return std::numeric_limits<unsigned int>::max();
+        return std::numeric_limits<unsigned int>::max();
         }
 
     return Regenerators.size() - NumUsedRegenerators;
@@ -153,8 +153,8 @@ Signal &Node::bypass(Signal &S)
 {
     for (auto &it : Devices)
         {
-            S *= it->get_Gain();
-            S += it->get_Noise();
+        S *= it->get_Gain();
+        S += it->get_Noise();
         }
 
     return S;
@@ -164,14 +164,14 @@ Signal &Node::drop(Signal &S)
 {
     for (auto &it : Devices)
         {
-            S *= it->get_Gain();
-            S += it->get_Noise();
+        S *= it->get_Gain();
+        S += it->get_Noise();
 
-            if ((it->DevType == Device::SplitterDevice) ||
-                    (it->DevType == Device::SSSDevice))
-                {
-                    break;
-                }
+        if ((it->DevType == Device::SplitterDevice) ||
+                (it->DevType == Device::SSSDevice))
+            {
+            break;
+            }
         }
 
     return S;
@@ -184,15 +184,15 @@ Signal &Node::add(Signal &S)
     while (((*it)->DevType != Device::SplitterDevice) &&
             ((*it)->DevType != Device::SSSDevice))
         {
-            it++;
+        it++;
         }
 
     it++;
 
     for (; it != Devices.end(); ++it)
         {
-            S *= (*it)->get_Gain();
-            S += (*it)->get_Noise();
+        S *= (*it)->get_Gain();
+        S += (*it)->get_Noise();
         }
 
     return S;
@@ -204,7 +204,7 @@ void Node::set_NumRegenerators(unsigned int NReg)
 
     for (unsigned i = 0; i < NReg; i++)
         {
-            Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
+        Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
         }
 
     NumUsedRegenerators = 0;
@@ -214,10 +214,10 @@ bool Node::hasAsNeighbour(std::weak_ptr<Node> N)
 {
     for (auto &it : Neighbours)
         {
-            if (N.lock() == it.lock())
-                {
-                    return true;
-                }
+        if (N.lock() == it.lock())
+            {
+            return true;
+            }
         }
 
     return false;
@@ -246,7 +246,7 @@ void Node::free_Regenerators(unsigned int NReg)
 
     if (MaxSimultUsedRegenerators < NumUsedRegenerators)
         {
-            MaxSimultUsedRegenerators = NumUsedRegenerators;
+        MaxSimultUsedRegenerators = NumUsedRegenerators;
         }
 
     NumUsedRegenerators -= NReg;
@@ -268,14 +268,14 @@ double Node::get_CapEx()
 
     for (auto reg : Regenerators)
         {
-            CapEx += reg->get_CapEx();
+        CapEx += reg->get_CapEx();
         }
 
     for (auto device : Devices)
         {
-            //In the two architectures, each device in Devices is actually a
-            //representation of each one of the N (Num. of Neighb.) device.
-            CapEx += (Neighbours.size()) * device->get_CapEx();
+        //In the two architectures, each device in Devices is actually a
+        //representation of each one of the N (Num. of Neighb.) device.
+        CapEx += (Neighbours.size()) * device->get_CapEx();
         }
 
     return CapEx;
@@ -287,14 +287,14 @@ double Node::get_OpEx()
 
     for (auto reg : Regenerators)
         {
-            OpEx += reg->get_OpEx();
+        OpEx += reg->get_OpEx();
         }
 
     for (auto device : Devices)
         {
-            //In the two architectures, each device in Devices is actually a
-            //representation of each one of the N (Num. of Neighb.) device.
-            OpEx += (Neighbours.size()) * device->get_OpEx();
+        //In the two architectures, each device in Devices is actually a
+        //representation of each one of the N (Num. of Neighb.) device.
+        OpEx += (Neighbours.size()) * device->get_OpEx();
         }
 
     return OpEx;

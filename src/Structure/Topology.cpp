@@ -37,31 +37,31 @@ Topology::Topology(const Topology &topology)
 
     for (auto &node : topology.Nodes)
         {
-            add_Node(node->ID,
-                     node->get_NodeType(),
-                     node->get_NodeArch(),
-                     node->get_NumRegenerators());
+        add_Node(node->ID,
+                 node->get_NodeType(),
+                 node->get_NodeArch(),
+                 node->get_NumRegenerators());
         }
 
     for (auto &link : topology.Links)
         {
-            std::weak_ptr<Node> orig = Nodes.front();
-            std::weak_ptr<Node> dest = Nodes.front();
+        std::weak_ptr<Node> orig = Nodes.front();
+        std::weak_ptr<Node> dest = Nodes.front();
 
-            for (auto node = Nodes.begin(); node != Nodes.end(); ++node)
+        for (auto node = Nodes.begin(); node != Nodes.end(); ++node)
+            {
+            if (*(*node) == *(link.second->Origin.lock()))
                 {
-                    if (*(*node) == *(link.second->Origin.lock()))
-                        {
-                            orig = *node;
-                        }
-
-                    if (*(*node) == *(link.second->Destination.lock()))
-                        {
-                            dest = *node;
-                        }
+                orig = *node;
                 }
 
-            add_Link(orig, dest, link.second->Length);
+            if (*(*node) == *(link.second->Destination.lock()))
+                {
+                dest = *node;
+                }
+            }
+
+        add_Link(orig, dest, link.second->Length);
         }
 }
 
@@ -91,17 +91,17 @@ Topology::Topology(std::string TopologyFileName)
 
     for (auto &node : NodesList)
         {
-            int NodeId, NumReg;
-            std::string StrType, StrArch;
+        int NodeId, NumReg;
+        std::string StrType, StrArch;
 
-            std::istringstream NodeParameters(node);
-            NodeParameters >> NodeId >> StrType >> StrArch >> NumReg;
+        std::istringstream NodeParameters(node);
+        NodeParameters >> NodeId >> StrType >> StrArch >> NumReg;
 
-            Node::NodeType Type = Node::NodeTypes.right.at(StrType);
-            Node::NodeArchitecture Arch = Node::NodeArchitecturesNicknames.
-                                          right.at(StrArch);
+        Node::NodeType Type = Node::NodeTypes.right.at(StrType);
+        Node::NodeArchitecture Arch = Node::NodeArchitecturesNicknames.
+                                      right.at(StrArch);
 
-            add_Node(NodeId, Type, Arch, NumReg);
+        add_Node(NodeId, Type, Arch, NumReg);
         }
 
     //Reads links from configuration file.
@@ -110,36 +110,36 @@ Topology::Topology(std::string TopologyFileName)
 
     for (auto &link : LinksList)
         {
-            int OriginID, DestinationID;
-            double length;
-            std::weak_ptr<Node> Origin, Destination;
+        int OriginID, DestinationID;
+        double length;
+        std::weak_ptr<Node> Origin, Destination;
 
-            std::istringstream LinkParameters(link);
-            LinkParameters >> OriginID >> DestinationID >> length;
-            BOOST_ASSERT_MSG(OriginID != DestinationID,
-                             "Link can't have the same Origin and Destination.");
+        std::istringstream LinkParameters(link);
+        LinkParameters >> OriginID >> DestinationID >> length;
+        BOOST_ASSERT_MSG(OriginID != DestinationID,
+                         "Link can't have the same Origin and Destination.");
 
-            int NodesFound = 0;
+        int NodesFound = 0;
 
-            for (auto &node : Nodes)
+        for (auto &node : Nodes)
+            {
+            if (node->ID == OriginID)
                 {
-                    if (node->ID == OriginID)
-                        {
-                            Origin = node;
-                            NodesFound++;
-                        }
-
-                    if (node->ID == DestinationID)
-                        {
-                            Destination = node;
-                            NodesFound++;
-                        }
+                Origin = node;
+                NodesFound++;
                 }
 
-            BOOST_ASSERT_MSG(NodesFound == 2,
-                             "Link with invalid origin and/or destination.");
+            if (node->ID == DestinationID)
+                {
+                Destination = node;
+                NodesFound++;
+                }
+            }
 
-            add_Link(Origin, Destination, length);
+        BOOST_ASSERT_MSG(NodesFound == 2,
+                         "Link with invalid origin and/or destination.");
+
+        add_Link(Origin, Destination, length);
         }
 }
 
@@ -149,7 +149,7 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
 
     if (NodeID == -1)
         {
-            NodeID = Nodes.size() + 1;
+        NodeID = Nodes.size() + 1;
         }
 
     Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
@@ -182,10 +182,10 @@ void Topology::save(std::string TopologyFileName)
 
     for (auto &it : Nodes)
         {
-            TopologyFile << "  node = " << it->ID
-                         << " " << Node::NodeTypes.left.at(it->get_NodeType())
-                         << " " << Node::NodeArchitecturesNicknames.left.at(it->get_NodeArch())
-                         << " " << it->get_NumRegenerators() << std::endl;
+        TopologyFile << "  node = " << it->ID
+                     << " " << Node::NodeTypes.left.at(it->get_NodeType())
+                     << " " << Node::NodeArchitecturesNicknames.left.at(it->get_NodeArch())
+                     << " " << it->get_NumRegenerators() << std::endl;
         }
 
     TopologyFile << std::endl;
@@ -195,9 +195,9 @@ void Topology::save(std::string TopologyFileName)
 
     for (auto it : Links)
         {
-            TopologyFile << "  -> = " << it.second->Origin.lock().get()->ID << " " <<
-                         it.second->Destination.lock().get()->ID << " " <<
-                         it.second->Length << std::endl;
+        TopologyFile << "  -> = " << it.second->Origin.lock().get()->ID << " " <<
+                     it.second->Destination.lock().get()->ID << " " <<
+                     it.second->Length << std::endl;
         }
 
 }
@@ -206,13 +206,13 @@ double Topology::get_LengthLongestLink()
 {
     if (LongestLink == -1)
         {
-            for (auto &link : Links)
+        for (auto &link : Links)
+            {
+            if (LongestLink < link.second->Length)
                 {
-                    if (LongestLink < link.second->Length)
-                        {
-                            LongestLink = link.second->Length;
-                        }
+                LongestLink = link.second->Length;
                 }
+            }
         }
 
     return LongestLink;
@@ -231,12 +231,12 @@ double Topology::get_CapEx()
 
     for (auto node : Nodes)
         {
-            CapEx += node->get_CapEx();
+        CapEx += node->get_CapEx();
         }
 
     for (auto link : Links)
         {
-            CapEx += link.second->get_CapEx();
+        CapEx += link.second->get_CapEx();
         }
 
     return CapEx;
@@ -248,12 +248,12 @@ double Topology::get_OpEx()
 
     for (auto node : Nodes)
         {
-            OpEx += node->get_OpEx();
+        OpEx += node->get_OpEx();
         }
 
     for (auto link : Links)
         {
-            OpEx += link.second->get_OpEx();
+        OpEx += link.second->get_OpEx();
         }
 
     return OpEx;
@@ -265,7 +265,7 @@ unsigned long Topology::get_NumRegenerators()
 
     for (auto &node : Nodes)
         {
-            NReg += node->get_NumRegenerators();
+        NReg += node->get_NumRegenerators();
         }
 
     return NReg;
@@ -275,6 +275,6 @@ void Topology::set_avgSpanLength(double avgSpanLength)
 {
     for (auto &link : Links)
         {
-            link.second->set_AvgSpanLength(avgSpanLength);
+        link.second->set_AvgSpanLength(avgSpanLength);
         }
 }

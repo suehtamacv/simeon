@@ -29,7 +29,7 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
     //It's therefore topology-independent.
     for (auto &cost : Costs)
         {
-            this->Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
+        this->Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
         }
 }
 
@@ -40,13 +40,13 @@ double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
 
     for (auto &cost : Costs)
         {
-            cost_matrix = arma::kron(cost_matrix, cost->getCost(link, C));
+        cost_matrix = arma::kron(cost_matrix, cost->getCost(link, C));
         }
 
     if (!firstTimeRun)
         {
-            coefficients.copy_size(cost_matrix);
-            firstTimeRun = true;
+        coefficients.copy_size(cost_matrix);
+        firstTimeRun = true;
         }
 
     return arma::accu(coefficients % cost_matrix);
@@ -56,16 +56,16 @@ void PowerSeriesRouting::load()
 {
     if (hasLoaded)
         {
-            coefficients = defaultcoefficients;
-            NMin = defaultcosts.front()->get_NMin();
-            NMax = defaultcosts.front()->get_NMax();
+        coefficients = defaultcoefficients;
+        NMin = defaultcosts.front()->get_NMin();
+        NMax = defaultcosts.front()->get_NMax();
 
-            for (auto &cost : defaultcosts)
-                {
-                    Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
-                }
+        for (auto &cost : defaultcosts)
+            {
+            Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
+            }
 
-            return;
+        return;
         }
 
     std::cout << std::endl << "-> Define the PSR Coefficients filepath." <<
@@ -73,23 +73,23 @@ void PowerSeriesRouting::load()
 
     do
         {
-            std::string Filename;
+        std::string Filename;
 
-            std::cin >> Filename;
+        std::cin >> Filename;
 
-            if (std::cin.fail() || !initCoefficients(Filename))
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || !initCoefficients(Filename))
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid coefficients." << std::endl;
-                    std::cout << std::endl << "-> Define the PSR Coefficients filepath."
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid coefficients." << std::endl;
+            std::cout << std::endl << "-> Define the PSR Coefficients filepath."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -103,7 +103,7 @@ bool PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> &particle)
 
     for (auto &x : particle.X)
         {
-            coefficients(0, it++) = x;
+        coefficients(0, it++) = x;
         }
 
     return true;
@@ -113,15 +113,15 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
 {
     using namespace boost::program_options;
 
-    {
+        {
         std::ifstream File(Filename);
 
         if (!File.is_open())
             {
-                std::cerr << "Could not find file." << std::endl;
-                return false;
+            std::cerr << "Could not find file." << std::endl;
+            return false;
             }
-    }
+        }
 
     Costs.clear();
 
@@ -147,50 +147,50 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
 
     if (NMax < NMin)
         {
-            std::cerr << "The max. exponent must be greater than the min. exponent"
-                      << std::endl;
-            return false;
+        std::cerr << "The max. exponent must be greater than the min. exponent"
+                  << std::endl;
+        return false;
         }
 
     //Reads the PSR costs
-    {
+        {
         std::istringstream PSRCosts(
             VariablesMap.find("PSR.costs")->second.as<std::string>());
         std::string currentcost;
 
         while (PSRCosts >> currentcost)
             {
-                if (PSR::Cost::CostsNicknames.right.count(currentcost) == 0)
-                    {
-                        std::cerr << "Invalid PSR cost \"" << currentcost << "\"." << std::endl;
-                        return false;
-                    }
+            if (PSR::Cost::CostsNicknames.right.count(currentcost) == 0)
+                {
+                std::cerr << "Invalid PSR cost \"" << currentcost << "\"." << std::endl;
+                return false;
+                }
 
-                Costs.push_back(
-                    PSR::Cost::createCost(
-                        PSR::Cost::CostsNicknames.right.at(currentcost), NMin, NMax, T)
-                );
-                defaultcosts.push_back(PSR::Cost::createCost(
-                                           PSR::Cost::CostsNicknames.right.at(currentcost), NMin, NMax, T)
-                                      );
+            Costs.push_back(
+                PSR::Cost::createCost(
+                    PSR::Cost::CostsNicknames.right.at(currentcost), NMin, NMax, T)
+            );
+            defaultcosts.push_back(PSR::Cost::createCost(
+                                       PSR::Cost::CostsNicknames.right.at(currentcost), NMin, NMax, T)
+                                  );
             }
 
         if (Costs.empty())
             {
-                std::cerr << "No costs defined." << std::endl;
-                return false;
+            std::cerr << "No costs defined." << std::endl;
+            return false;
             }
 
         std::clog << "Its costs are:" << std::endl;
 
         for (auto &cost : Costs)
             {
-                std::clog << "  - " << PSR::Cost::CostsNames.left.at(cost->Type) << std::endl;
+            std::clog << "  - " << PSR::Cost::CostsNames.left.at(cost->Type) << std::endl;
             }
-    }
+        }
 
     //Reads the PSR Coefficients
-    {
+        {
         std::istringstream PSRCoeffs(
             VariablesMap.find("PSR.coefficients")->second.as<std::string>());
         std::vector<double> read_coefficients;
@@ -198,7 +198,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
 
         while (PSRCoeffs >> currentcoef)
             {
-                read_coefficients.push_back(currentcoef);
+            read_coefficients.push_back(currentcoef);
             }
 
         coefficients = arma::mat(1, read_coefficients.size());
@@ -207,10 +207,10 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
 
         for (auto &x : read_coefficients)
             {
-                coefficients(0, it) = defaultcoefficients(0, it) = x;
-                it++;
+            coefficients(0, it) = defaultcoefficients(0, it) = x;
+            it++;
             }
-    }
+        }
 
     return true;
 }

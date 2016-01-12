@@ -12,9 +12,9 @@ class ModulationScheme
 {
 public:
 #define DEFAULT_MODULATIONSCHEMES \
-    X(4, Gain(6.8, Gain::dB)) \
-    X(16, Gain(10.5, Gain::dB)) \
-    X(64, Gain(14.8, Gain::dB)) //X Macros
+  X(4, Gain(6.8, Gain::dB)) \
+  X(16, Gain(10.5, Gain::dB)) \
+  X(64, Gain(14.8, Gain::dB)) //X Macros
 
     /**
      * @brief ModulationScheme is the standard constructor for a ModulationScheme.

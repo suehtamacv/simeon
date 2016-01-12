@@ -27,7 +27,7 @@ std::vector<TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
 
     for (auto &link : Links)
         {
-            Nodes.push_back(link.lock()->Origin);
+        Nodes.push_back(link.lock()->Origin);
         }
 
     Nodes.push_back(Links.back().lock()->Destination);
@@ -36,60 +36,60 @@ std::vector<TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
 
     for (auto s = Nodes.begin(); s != Nodes.end(); ++s)
         {
-            for (auto x = s + 1; x != Nodes.end(); ++x)
+        for (auto x = s + 1; x != Nodes.end(); ++x)
+            {
+            if (((*x).lock()->get_NumAvailableRegenerators() >= NeededRegenerators) ||
+                    ((*x).lock() == C->Destination.lock()))
                 {
-                    if (((*x).lock()->get_NumAvailableRegenerators() >= NeededRegenerators) ||
-                            ((*x).lock() == C->Destination.lock()))
+
+                if (isThereSpectrumAndOSNR(C, Links, *s, *x, *scheme))
+                    {
+                    if ((*x).lock() == C->Destination.lock())
                         {
-
-                            if (isThereSpectrumAndOSNR(C, Links, *s, *x, *scheme))
-                                {
-                                    if ((*x).lock() == C->Destination.lock())
-                                        {
-                                            TransparentSegments.push_back(
-                                                createTransparentSegment(C, Links, *s, *x, 0));
-                                            return TransparentSegments;
-                                        }
-                                    else
-                                        {
-                                            if (scheme != ModulationSchemes.begin())
-                                                {
-                                                    TransparentSegments.push_back(
-                                                        createTransparentSegment(C, Links, *s, *x, NeededRegenerators));
-                                                    s = x;
-                                                    r = x;
-                                                    scheme = ModulationSchemes.begin();
-                                                }
-                                            else
-                                                {
-                                                    r = x;
-                                                }
-                                        }
-                                }
-                            else
-                                {
-                                    if (r != s)
-                                        {
-                                            TransparentSegments.push_back(
-                                                createTransparentSegment(C, Links, *s, *r, NeededRegenerators));
-                                            s = r;
-                                            x = r;
-                                        }
-                                    else
-                                        {
-                                            --x;
-                                            ++scheme;
-
-                                            if (scheme == ModulationSchemes.end())
-                                                {
-                                                    TransparentSegments.clear();
-                                                    return TransparentSegments;
-                                                }
-                                        }
-                                }
-
+                        TransparentSegments.push_back(
+                            createTransparentSegment(C, Links, *s, *x, 0));
+                        return TransparentSegments;
                         }
+                    else
+                        {
+                        if (scheme != ModulationSchemes.begin())
+                            {
+                            TransparentSegments.push_back(
+                                createTransparentSegment(C, Links, *s, *x, NeededRegenerators));
+                            s = x;
+                            r = x;
+                            scheme = ModulationSchemes.begin();
+                            }
+                        else
+                            {
+                            r = x;
+                            }
+                        }
+                    }
+                else
+                    {
+                    if (r != s)
+                        {
+                        TransparentSegments.push_back(
+                            createTransparentSegment(C, Links, *s, *r, NeededRegenerators));
+                        s = r;
+                        x = r;
+                        }
+                    else
+                        {
+                        --x;
+                        ++scheme;
+
+                        if (scheme == ModulationSchemes.end())
+                            {
+                            TransparentSegments.clear();
+                            return TransparentSegments;
+                            }
+                        }
+                    }
+
                 }
+            }
         }
 
     TransparentSegments.clear();

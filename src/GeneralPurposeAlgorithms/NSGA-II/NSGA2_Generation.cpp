@@ -19,7 +19,7 @@ void NSGA2_Generation::eval()
 
     for (unsigned i = 0; i < people.size(); i++)
         {
-            people[i]->eval();
+        people[i]->eval();
         }
 
     evalParetoFront();
@@ -32,7 +32,7 @@ void NSGA2_Generation::evalCrowdingDistances(int ParetoFront)
 {
     if (isEvaluated)
         {
-            return;
+        return;
         }
 
     auto front = getParetoFront(ParetoFront);
@@ -41,52 +41,52 @@ void NSGA2_Generation::evalCrowdingDistances(int ParetoFront)
     //Initialize crowding distances
     for (auto &individual : front)
         {
-            individual->crowdingDistance = 0;
+        individual->crowdingDistance = 0;
         }
 
     for (unsigned int par = 0; par < numParameters; par++)
         {
-            struct Param
+        struct Param
             {
-                Param(std::shared_ptr<NSGA2_Individual> individual, double value) :
-                    individual(individual), value(value) {}
-                std::shared_ptr<NSGA2_Individual> individual;
-                double value;
-                bool operator < (const Param &other) const
+            Param(std::shared_ptr<NSGA2_Individual> individual, double value) :
+                individual(individual), value(value) {}
+            std::shared_ptr<NSGA2_Individual> individual;
+            double value;
+            bool operator < (const Param &other) const
                 {
-                    return value < other.value;
+                return value < other.value;
                 }
             };
 
-            std::vector<Param> IndivList;
+        std::vector<Param> IndivList;
 
-            for (auto indiv : front)
+        for (auto indiv : front)
+            {
+            IndivList.push_back(Param(indiv, indiv->getParameterValue(par)));
+            }
+
+        std::sort(IndivList.begin(), IndivList.end());
+
+        double minValue = IndivList.front().value;
+        double maxValue = IndivList.back().value;
+
+        //Extreme values have infinite crowding distance
+        IndivList.front().individual->crowdingDistance =
+            std::numeric_limits<double>::max();
+        IndivList.back().individual->crowdingDistance =
+            std::numeric_limits<double>::max();
+
+        for (size_t i = 1; i < IndivList.size() - 1; i++)
+            {
+            if (IndivList[i].individual->crowdingDistance ==
+                    std::numeric_limits<double>::max())
                 {
-                    IndivList.push_back(Param(indiv, indiv->getParameterValue(par)));
+                continue;
                 }
 
-            std::sort(IndivList.begin(), IndivList.end());
-
-            double minValue = IndivList.front().value;
-            double maxValue = IndivList.back().value;
-
-            //Extreme values have infinite crowding distance
-            IndivList.front().individual->crowdingDistance =
-                std::numeric_limits<double>::max();
-            IndivList.back().individual->crowdingDistance =
-                std::numeric_limits<double>::max();
-
-            for (size_t i = 1; i < IndivList.size() - 1; i++)
-                {
-                    if (IndivList[i].individual->crowdingDistance ==
-                            std::numeric_limits<double>::max())
-                        {
-                            continue;
-                        }
-
-                    IndivList[i].individual->crowdingDistance +=
-                        (IndivList[i + 1].value - IndivList[i - 1].value) / (maxValue - minValue);
-                }
+            IndivList[i].individual->crowdingDistance +=
+                (IndivList[i + 1].value - IndivList[i - 1].value) / (maxValue - minValue);
+            }
         }
 }
 
@@ -94,14 +94,14 @@ void NSGA2_Generation::evalCrowdingDistances()
 {
     if (isEvaluated)
         {
-            return;
+        return;
         }
 
     int paretoFront = 1;
 
     while (!getParetoFront(paretoFront).empty())
         {
-            evalCrowdingDistances(paretoFront++);
+        evalCrowdingDistances(paretoFront++);
         }
 }
 
@@ -109,7 +109,7 @@ void NSGA2_Generation::evalParetoFront()
 {
     if (isEvaluated)
         {
-            return;
+        return;
         }
 
     int numNotInParetoFront = 0;
@@ -117,46 +117,46 @@ void NSGA2_Generation::evalParetoFront()
 
     for (auto indiv : people)
         {
-            indiv->crowdingDistance = indiv->paretoFront = -1;
+        indiv->crowdingDistance = indiv->paretoFront = -1;
         }
 
     do
         {
-            numNotInParetoFront = 0;
+        numNotInParetoFront = 0;
 
-            for (auto &indiv : people)
+        for (auto &indiv : people)
+            {
+            if (indiv->paretoFront != -1)
                 {
-                    if (indiv->paretoFront != -1)
-                        {
-                            continue;
-                        }
-
-                    bool isDominated = false;
-
-                    for (auto other : people)
-                        {
-                            if (other->paretoFront != -1)
-                                {
-                                    continue;
-                                }
-
-                            isDominated |= indiv->isDominated(other);
-
-                            if (isDominated)
-                                {
-                                    break;
-                                }
-                        }
-
-                    if (!isDominated)
-                        {
-                            indiv->paretoFront = currentParetoFront;
-                        }
-
-                    numNotInParetoFront++;
+                continue;
                 }
 
-            currentParetoFront++;
+            bool isDominated = false;
+
+            for (auto other : people)
+                {
+                if (other->paretoFront != -1)
+                    {
+                    continue;
+                    }
+
+                isDominated |= indiv->isDominated(other);
+
+                if (isDominated)
+                    {
+                    break;
+                    }
+                }
+
+            if (!isDominated)
+                {
+                indiv->paretoFront = currentParetoFront;
+                }
+
+            numNotInParetoFront++;
+            }
+
+        currentParetoFront++;
         }
     while (numNotInParetoFront != 0);
 }
@@ -175,7 +175,7 @@ void NSGA2_Generation::operator +=(std::shared_ptr<NSGA2_Generation> other)
 {
     for (auto individual : other->people)
         {
-            this->operator +=(individual);
+        this->operator +=(individual);
         }
 }
 
@@ -186,15 +186,15 @@ std::vector<std::shared_ptr<NSGA2_Individual>>
 
     for (auto &indiv : people)
         {
-            if (indiv->paretoFront == -1)
-                {
-                    evalParetoFront();
-                }
+        if (indiv->paretoFront == -1)
+            {
+            evalParetoFront();
+            }
 
-            if (indiv->paretoFront == i)
-                {
-                    ParetoFront.push_back(indiv);
-                }
+        if (indiv->paretoFront == i)
+            {
+            ParetoFront.push_back(indiv);
+            }
         }
 
     return ParetoFront;
@@ -209,13 +209,13 @@ void NSGA2_Generation::print(int paretoFront)
 
     for (unsigned indiv = 0; indiv < numElements; indiv++)
         {
-            front[indiv]->print();
+        front[indiv]->print();
         }
 
     if (numElements < front.size())
         {
-            std::cout << "[other " << front.size() - numElements << " elements suppressed]"
-                      << std::endl;
+        std::cout << "[other " << front.size() - numElements << " elements suppressed]"
+                  << std::endl;
         }
 }
 
@@ -230,53 +230,53 @@ void NSGA2_Generation::breed(
     //finds iterators to the two individuals
     for (auto indiv = people.begin(); indiv != people.end(); ++indiv)
         {
-            if (**indiv == a)
-                {
-                    iterator_a = indiv;
-                    found++;
-                }
+        if (**indiv == a)
+            {
+            iterator_a = indiv;
+            found++;
+            }
 
-            if (**indiv == b)
-                {
-                    iterator_b = indiv;
-                    found++;
-                }
+        if (**indiv == b)
+            {
+            iterator_b = indiv;
+            found++;
+            }
 
-            if (found == 2)
-                {
-                    break;
-                }
+        if (found == 2)
+            {
+            break;
+            }
         }
 
     if (iterator_a == iterator_b)
         {
-            return;
+        return;
         }
 
     if (found == 2)
         {
-            std::uniform_real_distribution<double> dist(0, 1);
-            std::vector<int> GeneA = a.Gene, GeneB = b.Gene;
+        std::uniform_real_distribution<double> dist(0, 1);
+        std::vector<int> GeneA = a.Gene, GeneB = b.Gene;
 
-            if (dist(random_generator) < NSGA2::breedingProb)   //breeds
+        if (dist(random_generator) < NSGA2::breedingProb)   //breeds
+            {
+            for (unsigned int i = 0; i < GeneA.size(); ++i)
                 {
-                    for (unsigned int i = 0; i < GeneA.size(); ++i)
-                        {
-                            if (dist(random_generator) < 0.5)
-                                {
-                                    std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
-                                }
-                        }
+                if (dist(random_generator) < 0.5)
+                    {
+                    std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
+                    }
                 }
+            }
 
-            auto newIndivA = a.clone(), newIndivB = b.clone();
-            newIndivA->Gene = GeneA;
-            newIndivB->Gene = GeneB;
-            dest += newIndivA;
-            dest += newIndivB;
+        auto newIndivA = a.clone(), newIndivB = b.clone();
+        newIndivA->Gene = GeneA;
+        newIndivB->Gene = GeneB;
+        dest += newIndivA;
+        dest += newIndivB;
 
-            people.erase(iterator_a);
-            people.erase(iterator_b);
+        people.erase(iterator_a);
+        people.erase(iterator_b);
         }
 }
 
@@ -291,17 +291,17 @@ std::shared_ptr<NSGA2_Individual> NSGA2_Generation::binaryTournament()
     //individual, in terms of Pareto Front.
     for (unsigned selec = 0; selec < NSGA2::binaryTournamentParameter; selec++)
         {
-            auto adversary = people.begin() + dist(random_generator);
+        auto adversary = people.begin() + dist(random_generator);
 
-            while (adversary == individual)
-                {
-                    adversary = people.begin() + dist(random_generator);
-                }
+        while (adversary == individual)
+            {
+            adversary = people.begin() + dist(random_generator);
+            }
 
-            if ((*adversary)->paretoFront < (*individual)->paretoFront)
-                {
-                    individual = adversary;
-                }
+        if ((*adversary)->paretoFront < (*individual)->paretoFront)
+            {
+            individual = adversary;
+            }
         }
 
     return *individual;

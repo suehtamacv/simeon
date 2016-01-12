@@ -51,12 +51,12 @@ bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
 
     for (auto &scheme : ModulationSchemes)
         {
-            isThereScheme |= isThereSpectrumAndOSNR(C, Links, start, end, scheme);
+        isThereScheme |= isThereSpectrumAndOSNR(C, Links, start, end, scheme);
 
-            if (isThereScheme)
-                {
-                    break;
-                }
+        if (isThereScheme)
+            {
+            break;
+            }
         }
 
     return isThereScheme;
@@ -89,14 +89,14 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
 
     for (auto &scheme : ModulationSchemes)
         {
-            Segment.ModScheme = scheme;
+        Segment.ModScheme = scheme;
 
-            if (((S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
-                    ((Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate))))
-                {
-                    return scheme;
+        if (((S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
+                ((Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate))))
+            {
+            return scheme;
 
-                }
+            }
         }
 
     BOOST_ASSERT_MSG(false, "No Scheme can implement Call in Transparent Segment.");
@@ -129,21 +129,21 @@ std::vector<std::weak_ptr<Link>> RegeneratorAssignmentAlgorithm::segmentLinks(
 
     for (auto &link : Links)
         {
-            if (link.lock()->Origin.lock() == start.lock())
-                {
-                    SegmentLinks.push_back(link);
-                    foundNode = true;
-                    continue;
-                }
-            else if (foundNode && (link.lock()->Origin.lock() == end.lock()))
-                {
-                    break;
-                }
-            else if (foundNode)
-                {
-                    SegmentLinks.push_back(link);
-                    continue;
-                }
+        if (link.lock()->Origin.lock() == start.lock())
+            {
+            SegmentLinks.push_back(link);
+            foundNode = true;
+            continue;
+            }
+        else if (foundNode && (link.lock()->Origin.lock() == end.lock()))
+            {
+            break;
+            }
+        else if (foundNode)
+            {
+            SegmentLinks.push_back(link);
+            continue;
+            }
         }
 
     return SegmentLinks;
@@ -157,28 +157,28 @@ RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm()
 
     do
         {
-            for (auto &rassign : RegeneratorAssignmentNames.left)
-                {
-                    std::cout << "(" << rassign.first << ")\t" << rassign.second << std::endl;
-                }
+        for (auto &rassign : RegeneratorAssignmentNames.left)
+            {
+            std::cout << "(" << rassign.first << ")\t" << rassign.second << std::endl;
+            }
 
-            int RegAssign_Alg;
-            std::cin >> RegAssign_Alg;
+        int RegAssign_Alg;
+        std::cin >> RegAssign_Alg;
 
-            if (std::cin.fail() || RegeneratorAssignmentNames.left.count
-                    ((RegeneratorAssignmentAlgorithms) RegAssign_Alg) == 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || RegeneratorAssignmentNames.left.count
+                ((RegeneratorAssignmentAlgorithms) RegAssign_Alg) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid regenerator assignment algorithm." << std::endl;
-                    std::cout << std::endl << "-> Choose a regenerator assignment algorithm."
-                              << std::endl;
-                }
-            else
-                {
-                    return (RegeneratorAssignmentAlgorithms) RegAssign_Alg;
-                }
+            std::cerr << "Invalid regenerator assignment algorithm." << std::endl;
+            std::cout << std::endl << "-> Choose a regenerator assignment algorithm."
+                      << std::endl;
+            }
+        else
+            {
+            return (RegeneratorAssignmentAlgorithms) RegAssign_Alg;
+            }
         }
     while (1);
 

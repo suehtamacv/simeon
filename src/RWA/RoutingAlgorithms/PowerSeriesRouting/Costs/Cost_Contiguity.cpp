@@ -18,11 +18,11 @@ void PSR::cContiguity::createCache()
 {
     for (int contig = 0; contig <= Link::NumSlots; contig++)
         {
-            int expo = 0;
+        int expo = 0;
 
-            for (int n = NMin; n <= NMax; n++)
-                {
-                    cache(contig, expo++) = pow(1.0 / (contig + 1), n);
-                }
+        for (int n = NMin; n <= NMax; n++)
+            {
+            cache(contig, expo++) = pow(1.0 / (contig + 1), n);
+            }
         }
 }

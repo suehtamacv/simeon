@@ -34,28 +34,28 @@ RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm()
 
     do
         {
-            for (auto &rplace : RegeneratorPlacementNames.left)
-                {
-                    std::cout << "(" << rplace.first << ")\t" << rplace.second << std::endl;
-                }
+        for (auto &rplace : RegeneratorPlacementNames.left)
+            {
+            std::cout << "(" << rplace.first << ")\t" << rplace.second << std::endl;
+            }
 
-            int RegPlace_Alg;
-            std::cin >> RegPlace_Alg;
+        int RegPlace_Alg;
+        std::cin >> RegPlace_Alg;
 
-            if (std::cin.fail() || RegeneratorPlacementNames.left.count
-                    ((RegeneratorPlacementAlgorithms) RegPlace_Alg) == 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || RegeneratorPlacementNames.left.count
+                ((RegeneratorPlacementAlgorithms) RegPlace_Alg) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid regenerator placement algorithm." << std::endl;
-                    std::cout << std::endl << "-> Choose a regenerator placement algorithm."
-                              << std::endl;
-                }
-            else
-                {
-                    return (RegeneratorPlacementAlgorithms) RegPlace_Alg;
-                }
+            std::cerr << "Invalid regenerator placement algorithm." << std::endl;
+            std::cout << std::endl << "-> Choose a regenerator placement algorithm."
+                      << std::endl;
+            }
+        else
+            {
+            return (RegeneratorPlacementAlgorithms) RegPlace_Alg;
+            }
         }
     while (1);
 
@@ -95,7 +95,7 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
 
     if (runLoad)
         {
-            RP_Alg->load();
+        RP_Alg->load();
         }
 
     return RP_Alg;

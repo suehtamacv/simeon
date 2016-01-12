@@ -31,7 +31,7 @@ void Simulation_NetworkLoad::run()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     extern bool parallelism_enabled;
@@ -39,7 +39,7 @@ void Simulation_NetworkLoad::run()
 
     for (unsigned i = 0; i < simulations.size(); i++)
         {
-            simulations[i]->run();
+        simulations[i]->run();
         }
 }
 
@@ -47,7 +47,7 @@ void Simulation_NetworkLoad::print()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
@@ -58,13 +58,13 @@ void Simulation_NetworkLoad::print()
 
     for (unsigned i = 0; i < simulations.size(); i++)
         {
-            if (!simulations[i]->hasSimulated)
-                {
-                    simulations[i]->run();
-                }
+        if (!simulations[i]->hasSimulated)
+            {
+            simulations[i]->run();
+            }
 
-            #pragma omp ordered
-            simulations[i]->print();
+        #pragma omp ordered
+        simulations[i]->print();
         }
 
 }
@@ -78,27 +78,27 @@ void Simulation_NetworkLoad::load()
 
     do
         {
-            for (auto &nettype : NetworkTypes.left)
-                {
-                    std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
-                }
+        for (auto &nettype : NetworkTypes.left)
+            {
+            std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
+            }
 
-            int Net_Type;
-            std::cin >> Net_Type;
+        int Net_Type;
+        std::cin >> Net_Type;
 
-            if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid Network Type." << std::endl;
-                    std::cout << std::endl << "-> Choose a network type." << std::endl;
-                }
-            else
-                {
-                    Type = (Network_Type) Net_Type;
-                    break;
-                }
+            std::cerr << "Invalid Network Type." << std::endl;
+            std::cout << std::endl << "-> Choose a network type." << std::endl;
+            }
+        else
+            {
+            Type = (Network_Type) Net_Type;
+            break;
+            }
         }
     while (1);
 
@@ -107,7 +107,7 @@ void Simulation_NetworkLoad::load()
     Link::load(T);
 
     //RWA Algorithms
-    {
+        {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
@@ -117,34 +117,34 @@ void Simulation_NetworkLoad::load()
 
         if (Type == TranslucentNetwork)
             {
-                //Regenerator Placement Algorithm
-                RegPlacement_Algorithm =
-                    RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
+            //Regenerator Placement Algorithm
+            RegPlacement_Algorithm =
+                RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
 
-                //Regenerator Assignment Algorithm
-                RegAssignment_Algorithm =
-                    RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+            //Regenerator Assignment Algorithm
+            RegAssignment_Algorithm =
+                RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
             }
-    }
+        }
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
     do
         {
-            std::cin >> NumCalls;
+        std::cin >> NumCalls;
 
-            if (std::cin.fail() || NumCalls < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NumCalls < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of calls." << std::endl;
-                    std::cout << std::endl << "-> Define the number of calls." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of calls." << std::endl;
+            std::cout << std::endl << "-> Define the number of calls." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -152,20 +152,20 @@ void Simulation_NetworkLoad::load()
 
     do
         {
-            std::cin >> NetworkLoadMin;
+        std::cin >> NetworkLoadMin;
 
-            if (std::cin.fail() || NetworkLoadMin < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkLoadMin < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid network load." << std::endl;
-                    std::cout << std::endl << "-> Define the minimum network load." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the minimum network load." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -173,20 +173,20 @@ void Simulation_NetworkLoad::load()
 
     do
         {
-            std::cin >> NetworkLoadMax;
+        std::cin >> NetworkLoadMax;
 
-            if (std::cin.fail() || NetworkLoadMax < NetworkLoadMin)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkLoadMax < NetworkLoadMin)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid network load." << std::endl;
-                    std::cout << std::endl << "-> Define the maximum network load." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the maximum network load." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -194,20 +194,20 @@ void Simulation_NetworkLoad::load()
 
     do
         {
-            std::cin >> NetworkLoadStep;
+        std::cin >> NetworkLoadStep;
 
-            if (std::cin.fail() || NetworkLoadStep < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkLoadStep < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid network load." << std::endl;
-                    std::cout << std::endl << "-> Define the network load step." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the network load step." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -230,44 +230,44 @@ void Simulation_NetworkLoad::create_Simulations()
 {
     if (Type == TranslucentNetwork)
         {
-            place_Regenerators(T);
+        place_Regenerators(T);
         }
 
     for (double load = NetworkLoadMin; load <= NetworkLoadMax;
             load += NetworkLoadStep)
         {
 
-            //Creates a copy of the topology.
-            std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+        //Creates a copy of the topology.
+        std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
-            //Creates the RWA Algorithms
-            std::shared_ptr<RoutingAlgorithm> R_Alg =
-                RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
-            std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-                WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
-                    WavAssign_Algorithm, TopologyCopy);
-            std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
+        //Creates the RWA Algorithms
+        std::shared_ptr<RoutingAlgorithm> R_Alg =
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
+            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+                WavAssign_Algorithm, TopologyCopy);
+        std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
-            if (Type == TranslucentNetwork)
-                {
-                    RA_Alg = RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
-                                 RegAssignment_Algorithm, TopologyCopy);
-                }
-            else
-                {
-                    RA_Alg = nullptr;
-                }
+        if (Type == TranslucentNetwork)
+            {
+            RA_Alg = RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+                         RegAssignment_Algorithm, TopologyCopy);
+            }
+        else
+            {
+            RA_Alg = nullptr;
+            }
 
-            //Creates the Call Generator and the RWA Object
-            std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy, load));
-            std::shared_ptr<RoutingWavelengthAssignment> RWA(
-                new RoutingWavelengthAssignment(
-                    R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+        //Creates the Call Generator and the RWA Object
+        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy, load));
+        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+            new RoutingWavelengthAssignment(
+                R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
 
-            //Push simulation into stack
-            simulations.push_back(
-                std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
-                        Generator, RWA, NumCalls)));
+        //Push simulation into stack
+        simulations.push_back(
+            std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
+                    Generator, RWA, NumCalls)));
 
         }
 }

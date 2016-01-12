@@ -12,7 +12,7 @@ TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
 
     for (auto &it : Links)
         {
-            Nodes.push_back(it.lock()->Destination);
+        Nodes.push_back(it.lock()->Destination);
         }
 
 }
@@ -31,16 +31,16 @@ Signal TransparentSegment::bypass(Signal S)
 
     for (auto &it : Links)
         {
-            S = it.lock()->bypass(S);
+        S = it.lock()->bypass(S);
 
-            if (it.lock() == Links.back().lock())
-                {
-                    S = it.lock()->Destination.lock()->drop(S);
-                }
-            else
-                {
-                    S = it.lock()->Destination.lock()->bypass(S);
-                }
+        if (it.lock() == Links.back().lock())
+            {
+            S = it.lock()->Destination.lock()->drop(S);
+            }
+        else
+            {
+            S = it.lock()->Destination.lock()->bypass(S);
+            }
         }
 
     return S;
@@ -53,18 +53,18 @@ unsigned int TransparentSegment::get_MaxContigSlots()
 
     for (int i = 0; i < Link::NumSlots; i++)
         {
-            SlotsAvailability[i] = true;
+        SlotsAvailability[i] = true;
         }
 
     for (auto &link : Links)
         {
-            auto linklock = link.lock();
+        auto linklock = link.lock();
 
-            for (int i = 0; i < Link::NumSlots; i++)
-                {
-                    SlotsAvailability[i] = SlotsAvailability[i] &&
-                                           linklock->isSlotFree(i);
-                }
+        for (int i = 0; i < Link::NumSlots; i++)
+            {
+            SlotsAvailability[i] = SlotsAvailability[i] &&
+                                   linklock->isSlotFree(i);
+            }
         }
 
     unsigned MaxSlots = 0;
@@ -72,19 +72,19 @@ unsigned int TransparentSegment::get_MaxContigSlots()
 
     for (auto &slot : SlotsAvailability)
         {
-            if (slot)
-                {
-                    CurrentFreeSlots++;
-                }
-            else
-                {
-                    CurrentFreeSlots = 0;
-                }
+        if (slot)
+            {
+            CurrentFreeSlots++;
+            }
+        else
+            {
+            CurrentFreeSlots = 0;
+            }
 
-            if (CurrentFreeSlots > MaxSlots)
-                {
-                    MaxSlots = CurrentFreeSlots;
-                }
+        if (CurrentFreeSlots > MaxSlots)
+            {
+            MaxSlots = CurrentFreeSlots;
+            }
         }
 
     return MaxSlots;

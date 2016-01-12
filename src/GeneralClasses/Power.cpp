@@ -6,12 +6,12 @@ Power::Power(double value, InitType Type)
 {
     if (Type == InitType::dBm)
         {
-            value_Watts = 0.001L * pow(10, 0.1 * value);
+        value_Watts = 0.001L * pow(10, 0.1 * value);
         }
     else if (Type == InitType::Watt)
         {
-            BOOST_ASSERT_MSG(value >= 0, "A power, in Watts, can't be negative.");
-            value_Watts = value;
+        BOOST_ASSERT_MSG(value >= 0, "A power, in Watts, can't be negative.");
+        value_Watts = value;
         }
 }
 

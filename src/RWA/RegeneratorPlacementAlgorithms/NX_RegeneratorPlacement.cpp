@@ -17,23 +17,23 @@ void NX_RegeneratorPlacement::load()
 
     do
         {
-            unsigned N;
-            std::cin >> N;
+        unsigned N;
+        std::cin >> N;
 
-            if (std::cin.fail() || N < 1 || N > T->Nodes.size())
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || N < 1 || N > T->Nodes.size())
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of translucent nodes." << std::endl;
-                    std::cout << std::endl << "-> Define the number of translucent nodes."
-                              << std::endl;
-                }
-            else
-                {
-                    NX_N = N;
-                    break;
-                }
+            std::cerr << "Invalid number of translucent nodes." << std::endl;
+            std::cout << std::endl << "-> Define the number of translucent nodes."
+                      << std::endl;
+            }
+        else
+            {
+            NX_N = N;
+            break;
+            }
         }
     while (1);
 
@@ -42,23 +42,23 @@ void NX_RegeneratorPlacement::load()
 
     do
         {
-            unsigned X;
-            std::cin >> X;
+        unsigned X;
+        std::cin >> X;
 
-            if (std::cin.fail() || X < 1)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || X < 1)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of regenerators per node." << std::endl;
-                    std::cout << std::endl << "-> Define the number of regenerators per node."
-                              << std::endl;
-                }
-            else
-                {
-                    NX_X = X;
-                    break;
-                }
+            std::cerr << "Invalid number of regenerators per node." << std::endl;
+            std::cout << std::endl << "-> Define the number of regenerators per node."
+                      << std::endl;
+            }
+        else
+            {
+            NX_X = X;
+            break;
+            }
         }
     while (1);
 }

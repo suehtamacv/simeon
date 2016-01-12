@@ -37,7 +37,7 @@ std::shared_ptr<Call> CallGenerator::generate_Call()
 
     while (Origin == Destination)
         {
-            Destination = UniformNodeDistribution(random_generator);
+        Destination = UniformNodeDistribution(random_generator);
         }
 
     int Bitrate = UniformBitrateDistribution(random_generator);

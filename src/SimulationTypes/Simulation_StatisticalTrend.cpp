@@ -25,27 +25,27 @@ void Simulation_StatisticalTrend::load()
 
     do
         {
-            for (auto &nettype : NetworkTypes.left)
-                {
-                    std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
-                }
+        for (auto &nettype : NetworkTypes.left)
+            {
+            std::cout << "(" << nettype.first << ")\t" << nettype.second << std::endl;
+            }
 
-            int Net_Type;
-            std::cin >> Net_Type;
+        int Net_Type;
+        std::cin >> Net_Type;
 
-            if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkTypes.left.count((Network_Type) Net_Type) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid Network Type." << std::endl;
-                    std::cout << std::endl << "-> Choose a network type." << std::endl;
-                }
-            else
-                {
-                    Type = (Network_Type) Net_Type;
-                    break;
-                }
+            std::cerr << "Invalid Network Type." << std::endl;
+            std::cout << std::endl << "-> Choose a network type." << std::endl;
+            }
+        else
+            {
+            Type = (Network_Type) Net_Type;
+            break;
+            }
         }
     while (1);
 
@@ -54,7 +54,7 @@ void Simulation_StatisticalTrend::load()
     Link::load(T);
 
     //RWA Algorithms
-    {
+        {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
@@ -64,34 +64,34 @@ void Simulation_StatisticalTrend::load()
 
         if (Type == TranslucentNetwork)
             {
-                //Regenerator Placement Algorithm
-                RegPlacement_Algorithm =
-                    RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
+            //Regenerator Placement Algorithm
+            RegPlacement_Algorithm =
+                RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm();
 
-                //Regenerator Assignment Algorithm
-                RegAssignment_Algorithm =
-                    RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+            //Regenerator Assignment Algorithm
+            RegAssignment_Algorithm =
+                RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
             }
-    }
+        }
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
     do
         {
-            std::cin >> NumCalls;
+        std::cin >> NumCalls;
 
-            if (std::cin.fail() || NumCalls < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NumCalls < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of calls." << std::endl;
-                    std::cout << std::endl << "-> Define the number of calls." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of calls." << std::endl;
+            std::cout << std::endl << "-> Define the number of calls." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -99,20 +99,20 @@ void Simulation_StatisticalTrend::load()
 
     do
         {
-            std::cin >> NetworkLoad;
+        std::cin >> NetworkLoad;
 
-            if (std::cin.fail() || NetworkLoad < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkLoad < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid network load." << std::endl;
-                    std::cout << std::endl << "-> Define the network load." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the network load." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -120,20 +120,20 @@ void Simulation_StatisticalTrend::load()
 
     do
         {
-            std::cin >> NumRepetitions;
+        std::cin >> NumRepetitions;
 
-            if (std::cin.fail() || NumRepetitions < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NumRepetitions < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of repetitions." << std::endl;
-                    std::cout << std::endl << "-> Define the number of iterations." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of repetitions." << std::endl;
+            std::cout << std::endl << "-> Define the number of iterations." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -146,43 +146,43 @@ void Simulation_StatisticalTrend::create_Simulations()
 {
     if (Type == TranslucentNetwork)
         {
-            place_Regenerators(T);
+        place_Regenerators(T);
         }
 
     for (int i = 0; i < NumRepetitions; i++)
         {
-            //Creates a copy of the topology.
-            std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+        //Creates a copy of the topology.
+        std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
-            //Creates the RWA Algorithms
-            std::shared_ptr<RoutingAlgorithm> R_Alg =
-                RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
-            std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-                WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
-                    WavAssign_Algorithm, TopologyCopy);
-            std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
+        //Creates the RWA Algorithms
+        std::shared_ptr<RoutingAlgorithm> R_Alg =
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
+            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+                WavAssign_Algorithm, TopologyCopy);
+        std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
-            if (Type == TranslucentNetwork)
-                {
-                    RA_Alg = RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
-                                 RegAssignment_Algorithm, TopologyCopy);
-                }
-            else
-                {
-                    RA_Alg = nullptr;
-                }
+        if (Type == TranslucentNetwork)
+            {
+            RA_Alg = RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+                         RegAssignment_Algorithm, TopologyCopy);
+            }
+        else
+            {
+            RA_Alg = nullptr;
+            }
 
-            //Creates the Call Generator and the RWA Object
-            std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
-                    NetworkLoad));
-            std::shared_ptr<RoutingWavelengthAssignment> RWA(
-                new RoutingWavelengthAssignment(
-                    R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+        //Creates the Call Generator and the RWA Object
+        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
+                NetworkLoad));
+        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+            new RoutingWavelengthAssignment(
+                R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
 
-            //Push simulation into stack
-            simulations.push_back(
-                std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
-                        Generator, RWA, NumCalls)));
+        //Push simulation into stack
+        simulations.push_back(
+            std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
+                    Generator, RWA, NumCalls)));
         }
 }
 
@@ -215,7 +215,7 @@ void Simulation_StatisticalTrend::print()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     int Sim = 1;
@@ -228,16 +228,16 @@ void Simulation_StatisticalTrend::print()
 
     for (unsigned i = 0; i < simulations.size(); i++)
         {
+        simulations[i]->run();
+
+        if (!simulations[i]->hasSimulated)
+            {
             simulations[i]->run();
+            }
 
-            if (!simulations[i]->hasSimulated)
-                {
-                    simulations[i]->run();
-                }
-
-            #pragma omp ordered
-            std::cout << Sim++ << "\t\t" << simulations[i]->get_CallBlockingProbability()
-                      << std::endl;
+        #pragma omp ordered
+        std::cout << Sim++ << "\t\t" << simulations[i]->get_CallBlockingProbability()
+                  << std::endl;
         }
 }
 
@@ -255,7 +255,7 @@ void Simulation_StatisticalTrend::run()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     extern bool parallelism_enabled;
@@ -263,6 +263,6 @@ void Simulation_StatisticalTrend::run()
 
     for (unsigned i = 0; i < simulations.size(); i++)
         {
-            simulations[i]->run();
+        simulations[i]->run();
         }
 }

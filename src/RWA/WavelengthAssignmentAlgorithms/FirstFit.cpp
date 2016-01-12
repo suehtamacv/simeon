@@ -24,17 +24,17 @@ std::map<std::weak_ptr<Link>,
 
     for (int i = 0; i < Link::NumSlots; i++)
         {
-            SlotsAvailability[i] = true;
+        SlotsAvailability[i] = true;
         }
 
     for (auto &link : Seg.Links)
         {
-            auto locklink = link.lock();
+        auto locklink = link.lock();
 
-            for (auto &slot : locklink->Slots)
-                {
-                    SlotsAvailability[slot->numSlot] &= slot->isFree;
-                }
+        for (auto &slot : locklink->Slots)
+            {
+            SlotsAvailability[slot->numSlot] &= slot->isFree;
+            }
         }
 
     unsigned int CurrentFreeSlots = 0;
@@ -42,30 +42,30 @@ std::map<std::weak_ptr<Link>,
 
     for (sf = 0; sf < Link::NumSlots; sf++)
         {
-            if (SlotsAvailability[sf])
-                {
-                    CurrentFreeSlots++;
-                }
-            else
-                {
-                    CurrentFreeSlots = 0;
-                }
+        if (SlotsAvailability[sf])
+            {
+            CurrentFreeSlots++;
+            }
+        else
+            {
+            CurrentFreeSlots = 0;
+            }
 
-            if (CurrentFreeSlots == RequiredSlots)
-                {
-                    si = sf - RequiredSlots + 1;
-                    break;
-                }
+        if (CurrentFreeSlots == RequiredSlots)
+            {
+            si = sf - RequiredSlots + 1;
+            break;
+            }
         }
 
     if (si != -1)
         {
-            for (auto &link : Seg.Links)
-                {
-                    Slots.emplace(link, std::vector<std::weak_ptr<Slot>>
-                                  (link.lock()->Slots.begin() + si,
-                                   link.lock()->Slots.begin() + sf + 1));
-                }
+        for (auto &link : Seg.Links)
+            {
+            Slots.emplace(link, std::vector<std::weak_ptr<Slot>>
+                          (link.lock()->Slots.begin() + si,
+                           link.lock()->Slots.begin() + sf + 1));
+            }
         }
 
     return Slots;

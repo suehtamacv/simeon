@@ -42,84 +42,84 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
     if (RA_Alg == nullptr)
         {
-            std::sort(Schemes.rbegin(), Schemes.rend());
+        std::sort(Schemes.rbegin(), Schemes.rend());
 
-            for (auto &scheme : Schemes)
-                {
-                    C->Scheme = scheme;
-                    Links = R_Alg->route(C);
-
-                    if (Links.empty())
-                        {
-                            C->Status = Call::Blocked;
-                            return nullptr;
-                        }
-
-                    TransparentSegment Segment(Links, scheme, 0);
-                    Signal S;
-
-                    if (Segment.bypass(S).get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))
-                        {
-                            Segments.push_back(Segment);
-                            auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
-
-                            if (SegmentSlots.empty())
-                                {
-                                    if (scheme == Schemes.back())
-                                        {
-                                            C->Status = Call::Blocked;
-                                            return nullptr;
-                                        }
-
-                                    continue;
-                                }
-
-                            Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
-                            break;
-                        }
-                    else if (scheme == Schemes.back())
-                        {
-                            C->Status = Call::Blocked;
-                            return nullptr;
-                        }
-                }
-        }
-    else
-        {
+        for (auto &scheme : Schemes)
+            {
+            C->Scheme = scheme;
             Links = R_Alg->route(C);
 
             if (Links.empty())
                 {
-                    C->Status = Call::Blocked;
-                    return nullptr;
+                C->Status = Call::Blocked;
+                return nullptr;
                 }
 
-            Segments = RA_Alg->assignRegenerators(C, Links);
+            TransparentSegment Segment(Links, scheme, 0);
+            Signal S;
 
-            if (Segments.empty())
+            if (Segment.bypass(S).get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))
                 {
-                    C->Status = Call::Blocked;
-                    return nullptr;
-                }
+                Segments.push_back(Segment);
+                auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
 
-            for (auto &segment : Segments)
-                {
-                    auto SegmentSlots = WA_Alg->assignSlots(C, segment);
-
-                    if (SegmentSlots.empty())
+                if (SegmentSlots.empty())
+                    {
+                    if (scheme == Schemes.back())
                         {
-                            C->Status = Call::Blocked;
-                            Slots.clear();
-                            return nullptr;
+                        C->Status = Call::Blocked;
+                        return nullptr;
                         }
 
-                    Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+                    continue;
+                    }
+
+                Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+                break;
                 }
+            else if (scheme == Schemes.back())
+                {
+                C->Status = Call::Blocked;
+                return nullptr;
+                }
+            }
+        }
+    else
+        {
+        Links = R_Alg->route(C);
+
+        if (Links.empty())
+            {
+            C->Status = Call::Blocked;
+            return nullptr;
+            }
+
+        Segments = RA_Alg->assignRegenerators(C, Links);
+
+        if (Segments.empty())
+            {
+            C->Status = Call::Blocked;
+            return nullptr;
+            }
+
+        for (auto &segment : Segments)
+            {
+            auto SegmentSlots = WA_Alg->assignSlots(C, segment);
+
+            if (SegmentSlots.empty())
+                {
+                C->Status = Call::Blocked;
+                Slots.clear();
+                return nullptr;
+                }
+
+            Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+            }
         }
 
     if (C->Status == Call::Not_Evaluated)
         {
-            C->Status = Call::Implemented;
+        C->Status = Call::Implemented;
         }
 
     return std::shared_ptr<Route>(new Route(Segments, Slots));

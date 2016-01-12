@@ -28,13 +28,13 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X)
 
     for (auto &node : T->Nodes)
         {
-            node->set_NodeType(Node::OpaqueNode);
+        node->set_NodeType(Node::OpaqueNode);
         }
 
     if ((N == 0) && (X == 0))
         {
-            N = NX_N;
-            X = NX_X;
+        N = NX_N;
+        X = NX_X;
         }
 
     std::shared_ptr<CallGenerator> CG(new CallGenerator(T, NetworkLoad, Bitrates));
@@ -46,48 +46,48 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X)
 
     for (auto &node : T->Nodes)
         {
-            node->set_NodeType(Node::TransparentNode);
-            node->set_NumRegenerators(0);
-            PossibleNodes.push_back(node);
+        node->set_NodeType(Node::TransparentNode);
+        node->set_NumRegenerators(0);
+        PossibleNodes.push_back(node);
         }
 
     for (unsigned iter = 0; iter < N; iter++)
         {
-            long long unsigned MaxUsed = 0;
+        long long unsigned MaxUsed = 0;
 
-            for (auto &node : PossibleNodes)
+        for (auto &node : PossibleNodes)
+            {
+            if (MaxUsed < node->get_TotalNumRequestedRegenerators())
                 {
-                    if (MaxUsed < node->get_TotalNumRequestedRegenerators())
-                        {
-                            MaxUsed  = node->get_TotalNumRequestedRegenerators();
-                        }
+                MaxUsed  = node->get_TotalNumRequestedRegenerators();
                 }
+            }
 
-            std::vector<std::shared_ptr<Node>> MaximalNodes;
+        std::vector<std::shared_ptr<Node>> MaximalNodes;
 
-            for (auto &node : PossibleNodes)
+        for (auto &node : PossibleNodes)
+            {
+            if (MaxUsed  == node->get_TotalNumRequestedRegenerators())
                 {
-                    if (MaxUsed  == node->get_TotalNumRequestedRegenerators())
-                        {
-                            MaximalNodes.push_back(node);
-                        }
+                MaximalNodes.push_back(node);
                 }
+            }
 
-            std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
+        std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
 
-            auto ChosenNode = MaximalNodes.begin();
-            std::advance(ChosenNode, dist(random_generator));
-            (*ChosenNode)->set_NumRegenerators(X);
-            (*ChosenNode)->set_NodeType(Node::TranslucentNode);
+        auto ChosenNode = MaximalNodes.begin();
+        std::advance(ChosenNode, dist(random_generator));
+        (*ChosenNode)->set_NumRegenerators(X);
+        (*ChosenNode)->set_NodeType(Node::TranslucentNode);
 
-            for (auto node = PossibleNodes.begin(); node != PossibleNodes.end(); ++node)
+        for (auto node = PossibleNodes.begin(); node != PossibleNodes.end(); ++node)
+            {
+            if (*node == *ChosenNode)
                 {
-                    if (*node == *ChosenNode)
-                        {
-                            PossibleNodes.erase(node);
-                            break;
-                        }
+                PossibleNodes.erase(node);
+                break;
                 }
+            }
 
         }
 }

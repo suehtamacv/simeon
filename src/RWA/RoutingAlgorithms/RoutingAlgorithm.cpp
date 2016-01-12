@@ -31,27 +31,27 @@ RoutingAlgorithm::define_RoutingAlgorithm()
 
     do
         {
-            for (auto &routing : RoutingAlgorithmNames.left)
-                {
-                    std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
-                }
+        for (auto &routing : RoutingAlgorithmNames.left)
+            {
+            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
+            }
 
-            int Routing_Alg;
-            std::cin >> Routing_Alg;
+        int Routing_Alg;
+        std::cin >> Routing_Alg;
 
-            if (std::cin.fail() || RoutingAlgorithmNames.left.count
-                    ((RoutingAlgorithms) Routing_Alg) == 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || RoutingAlgorithmNames.left.count
+                ((RoutingAlgorithms) Routing_Alg) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid routing algorithm." << std::endl;
-                    std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
-                }
-            else
-                {
-                    return (RoutingAlgorithms) Routing_Alg;
-                }
+            std::cerr << "Invalid routing algorithm." << std::endl;
+            std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
+            }
+        else
+            {
+            return (RoutingAlgorithms) Routing_Alg;
+            }
         }
     while (1);
 

@@ -28,8 +28,8 @@ Slot &Slot::operator =(const Slot &slot)
 {
     if (this != &slot)
         {
-            numSlot = slot.numSlot;
-            isFree = slot.isFree;
+        numSlot = slot.numSlot;
+        isFree = slot.isFree;
         }
 
     return *this;

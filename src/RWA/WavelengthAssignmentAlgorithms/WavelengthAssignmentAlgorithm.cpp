@@ -34,28 +34,28 @@ WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm()
 
     do
         {
-            for (auto &wavasgn : WavelengthAssignmentAlgorithmNames.left)
-                {
-                    std::cout << "(" << wavasgn.first << ")\t" << wavasgn.second << std::endl;
-                }
+        for (auto &wavasgn : WavelengthAssignmentAlgorithmNames.left)
+            {
+            std::cout << "(" << wavasgn.first << ")\t" << wavasgn.second << std::endl;
+            }
 
-            int WavAssgn_Alg;
-            std::cin >> WavAssgn_Alg;
+        int WavAssgn_Alg;
+        std::cin >> WavAssgn_Alg;
 
-            if (std::cin.fail() || WavelengthAssignmentAlgorithmNames.left.count
-                    ((WavelengthAssignmentAlgorithms) WavAssgn_Alg) == 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || WavelengthAssignmentAlgorithmNames.left.count
+                ((WavelengthAssignmentAlgorithms) WavAssgn_Alg) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid wavelength assignment algorithm." << std::endl;
-                    std::cout << std::endl << "-> Choose a wavelength assignment algorithm."
-                              << std::endl;
-                }
-            else
-                {
-                    return (WavelengthAssignmentAlgorithms) WavAssgn_Alg;
-                }
+            std::cerr << "Invalid wavelength assignment algorithm." << std::endl;
+            std::cout << std::endl << "-> Choose a wavelength assignment algorithm."
+                      << std::endl;
+            }
+        else
+            {
+            return (WavelengthAssignmentAlgorithms) WavAssgn_Alg;
+            }
         }
     while (1);
 

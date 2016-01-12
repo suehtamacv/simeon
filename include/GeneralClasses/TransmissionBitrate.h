@@ -10,11 +10,11 @@ class TransmissionBitrate
 {
 public:
 #define DEFAULT_TRANSMISSIONBITRATES \
-    X(10E9) \
-    X(40E9) \
-    X(100E9) \
-    X(160E9) \
-    X(400E9)
+  X(10E9) \
+  X(40E9) \
+  X(100E9) \
+  X(160E9) \
+  X(400E9)
 
     /**
      * @brief TransmissionBitrate is the standard constructor for a TransmissionBitrate.

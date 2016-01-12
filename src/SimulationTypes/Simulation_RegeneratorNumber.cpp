@@ -22,7 +22,7 @@ void Simulation_RegeneratorNumber::run()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     extern bool parallelism_enabled;
@@ -30,10 +30,10 @@ void Simulation_RegeneratorNumber::run()
 
     for (unsigned i = 0; i < simulations.size(); i++)
         {
-            if (!simulations[i]->hasSimulated)
-                {
-                    simulations[i]->run();
-                }
+        if (!simulations[i]->hasSimulated)
+            {
+            simulations[i]->run();
+            }
         }
 }
 
@@ -47,7 +47,7 @@ void Simulation_RegeneratorNumber::load()
     Link::load(T);
 
     //RWA Algorithms
-    {
+        {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
@@ -62,26 +62,26 @@ void Simulation_RegeneratorNumber::load()
         //Regenerator Assignment Algorithm
         RegAssignment_Algorithm =
             RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
-    }
+        }
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
     do
         {
-            std::cin >> NumCalls;
+        std::cin >> NumCalls;
 
-            if (std::cin.fail() || NumCalls < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NumCalls < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of calls." << std::endl;
-                    std::cout << std::endl << "-> Define the number of calls." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of calls." << std::endl;
+            std::cout << std::endl << "-> Define the number of calls." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -89,20 +89,20 @@ void Simulation_RegeneratorNumber::load()
 
     do
         {
-            std::cin >> OptimizationLoad;
+        std::cin >> OptimizationLoad;
 
-            if (std::cin.fail() || OptimizationLoad < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || OptimizationLoad < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid network load." << std::endl;
-                    std::cout << std::endl << "-> Define the network load." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the network load." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -112,22 +112,22 @@ void Simulation_RegeneratorNumber::load()
 
     do
         {
-            std::cin >> minRegNumber;
+        std::cin >> minRegNumber;
 
-            if (std::cin.fail())
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of regenerators." << std::endl;
-                    std::cout << std::endl <<
-                              "-> Define the minimum number of regenerators per node"
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of regenerators." << std::endl;
+            std::cout << std::endl <<
+                      "-> Define the minimum number of regenerators per node"
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -137,22 +137,22 @@ void Simulation_RegeneratorNumber::load()
 
     do
         {
-            std::cin >> maxRegNumber;
+        std::cin >> maxRegNumber;
 
-            if (std::cin.fail() || maxRegNumber < minRegNumber)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || maxRegNumber < minRegNumber)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of regenerators." << std::endl;
-                    std::cout << std::endl <<
-                              "-> Define the maximum number of regenerators per node"
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of regenerators." << std::endl;
+            std::cout << std::endl <<
+                      "-> Define the maximum number of regenerators per node"
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -161,21 +161,21 @@ void Simulation_RegeneratorNumber::load()
 
     do
         {
-            std::cin >> stepRegNumber;
+        std::cin >> stepRegNumber;
 
-            if (std::cin.fail())
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of regenerators." << std::endl;
-                    std::cout << std::endl << "-> Define the number of regenerators per node step"
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of regenerators." << std::endl;
+            std::cout << std::endl << "-> Define the number of regenerators per node step"
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -184,21 +184,21 @@ void Simulation_RegeneratorNumber::load()
 
     do
         {
-            std::cin >> numTranslucentNodes;
+        std::cin >> numTranslucentNodes;
 
-            if (std::cin.fail() || numTranslucentNodes > T->Nodes.size())
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || numTranslucentNodes > T->Nodes.size())
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of translucent nodes."  << std::endl;
-                    std::cout << std::endl << "-> Define the number of translucent nodes"
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of translucent nodes."  << std::endl;
+            std::cout << std::endl << "-> Define the number of translucent nodes"
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -221,7 +221,7 @@ void Simulation_RegeneratorNumber::print()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
@@ -232,14 +232,14 @@ void Simulation_RegeneratorNumber::print()
 
     for (unsigned i = 0; i < simulations.size(); i++)
         {
-            if (!simulations[i]->hasSimulated)
-                {
-                    simulations[i]->run();
-                }
+        if (!simulations[i]->hasSimulated)
+            {
+            simulations[i]->run();
+            }
 
-            #pragma omp ordered
-            std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
-                      << simulations[i]->get_CallBlockingProbability() << std::endl;
+        #pragma omp ordered
+        std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
+                  << simulations[i]->get_CallBlockingProbability() << std::endl;
 
         }
 }
@@ -251,35 +251,35 @@ void Simulation_RegeneratorNumber::createSimulations()
     for (unsigned long nreg = minRegNumber; nreg <= maxRegNumber;
             nreg += stepRegNumber)
         {
-            //Creates a copy of the Topology
-            std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+        //Creates a copy of the Topology
+        std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
-            //Reallocates the regenerators
-            refreshRegenerators(TopologyCopy, nreg * numTranslucentNodes);
+        //Reallocates the regenerators
+        refreshRegenerators(TopologyCopy, nreg * numTranslucentNodes);
 
-            //Creates the RWA Algorithms
-            std::shared_ptr<RoutingAlgorithm> R_Alg =
-                RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+        //Creates the RWA Algorithms
+        std::shared_ptr<RoutingAlgorithm> R_Alg =
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
 
-            std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-                WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
-                    WavAssign_Algorithm, TopologyCopy);
+        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
+            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+                WavAssign_Algorithm, TopologyCopy);
 
-            std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
-                RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
-                    RegAssignment_Algorithm, TopologyCopy);
+        std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
+            RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+                RegAssignment_Algorithm, TopologyCopy);
 
-            //Creates the Call Generator and the RWA Object
-            std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
-                    OptimizationLoad));
-            std::shared_ptr<RoutingWavelengthAssignment> RWA(
-                new RoutingWavelengthAssignment(
-                    R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+        //Creates the Call Generator and the RWA Object
+        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
+                OptimizationLoad));
+        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+            new RoutingWavelengthAssignment(
+                R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
 
-            //Push simulation into stack
-            simulations.push_back(
-                std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
-                        Generator, RWA, NumCalls)));
+        //Push simulation into stack
+        simulations.push_back(
+            std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
+                    Generator, RWA, NumCalls)));
         }
 }
 
@@ -305,11 +305,11 @@ void Simulation_RegeneratorNumber::placeRegenerators(
 
     if (RP_Alg->isNXAlgorithm)
         {
-            RP_Alg->placeRegenerators(numTranslucentNodes, 100);
+        RP_Alg->placeRegenerators(numTranslucentNodes, 100);
         }
     else
         {
-            RP_Alg->placeRegenerators(numTranslucentNodes * 100);
+        RP_Alg->placeRegenerators(numTranslucentNodes * 100);
         }
 }
 
@@ -320,11 +320,11 @@ void Simulation_RegeneratorNumber::refreshRegenerators(
 
     for (auto &node : Top->Nodes)
         {
-            unsigned long nodeNumReg = node->get_NumRegenerators();
+        unsigned long nodeNumReg = node->get_NumRegenerators();
 
-            if (nodeNumReg != 0)
-                {
-                    node->set_NumRegenerators(std::round(nodeNumReg * numReg / (1.0 * totalReg)));
-                }
+        if (nodeNumReg != 0)
+            {
+            node->set_NumRegenerators(std::round(nodeNumReg * numReg / (1.0 * totalReg)));
+            }
         }
 }

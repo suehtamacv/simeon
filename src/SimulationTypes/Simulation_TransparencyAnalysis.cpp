@@ -38,54 +38,54 @@ void Simulation_TransparencyAnalysis::run()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     if (hasRun)
         {
-            return;
+        return;
         }
 
     for (double avgSpan = minAvgLinkSpan; avgSpan <= maxAvgLinkSpan;
             avgSpan += stepAvgLinkSpan)
         {
-            for (double inOSNR = minOSNR; inOSNR <= maxOSNR; inOSNR += stepOSNR)
+        for (double inOSNR = minOSNR; inOSNR <= maxOSNR; inOSNR += stepOSNR)
+            {
+            Signal::InputOSNR = Gain(inOSNR, Gain::dB);
+
+            std::shared_ptr<Topology> TopCopy(new Topology(*T));
+            TopCopy->set_avgSpanLength(avgSpan);
+            std::weak_ptr<Node> origin, destination;
+
+            for (auto node : TopCopy->Nodes)
                 {
-                    Signal::InputOSNR = Gain(inOSNR, Gain::dB);
+                if (node->ID == Orig_Origin->ID)
+                    {
+                    origin = node;
+                    }
 
-                    std::shared_ptr<Topology> TopCopy(new Topology(*T));
-                    TopCopy->set_avgSpanLength(avgSpan);
-                    std::weak_ptr<Node> origin, destination;
-
-                    for (auto node : TopCopy->Nodes)
-                        {
-                            if (node->ID == Orig_Origin->ID)
-                                {
-                                    origin = node;
-                                }
-
-                            if (node->ID == Orig_Destination->ID)
-                                {
-                                    destination = node;
-                                }
-                        }
-
-                    std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
-                    std::shared_ptr<FirstFit> FF(new FirstFit(TopCopy));
-
-                    RoutingWavelengthAssignment RWA(SP, FF, ModulationScheme::DefaultSchemes,
-                                                    TopCopy);
-                    std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
-
-                    if (RWA.routeCall(C) != nullptr)
-                        {
-                            TransparentPoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
-                        }
-                    else
-                        {
-                            OpaquePoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
-                        }
+                if (node->ID == Orig_Destination->ID)
+                    {
+                    destination = node;
+                    }
                 }
+
+            std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
+            std::shared_ptr<FirstFit> FF(new FirstFit(TopCopy));
+
+            RoutingWavelengthAssignment RWA(SP, FF, ModulationScheme::DefaultSchemes,
+                                            TopCopy);
+            std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
+
+            if (RWA.routeCall(C) != nullptr)
+                {
+                TransparentPoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
+                }
+            else
+                {
+                OpaquePoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
+                }
+            }
         }
 
     hasRun = true;
@@ -102,22 +102,22 @@ void Simulation_TransparencyAnalysis::load()
 
     do
         {
-            std::cin >> minAvgLinkSpan;
+        std::cin >> minAvgLinkSpan;
 
-            if (std::cin.fail() || minAvgLinkSpan < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || minAvgLinkSpan < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid distance." << std::endl;
-                    std::cout << std::endl <<
-                              "-> Define the minimum average distance between in-line amplifiers" <<
-                              std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid distance." << std::endl;
+            std::cout << std::endl <<
+                      "-> Define the minimum average distance between in-line amplifiers" <<
+                      std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -127,22 +127,22 @@ void Simulation_TransparencyAnalysis::load()
 
     do
         {
-            std::cin >> maxAvgLinkSpan;
+        std::cin >> maxAvgLinkSpan;
 
-            if (std::cin.fail() || maxAvgLinkSpan < minAvgLinkSpan)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || maxAvgLinkSpan < minAvgLinkSpan)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid distance." << std::endl;
-                    std::cout << std::endl <<
-                              "-> Define the maximum average distance between in-line amplifiers"
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid distance." << std::endl;
+            std::cout << std::endl <<
+                      "-> Define the maximum average distance between in-line amplifiers"
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -152,22 +152,22 @@ void Simulation_TransparencyAnalysis::load()
 
     do
         {
-            std::cin >> stepAvgLinkSpan;
+        std::cin >> stepAvgLinkSpan;
 
-            if (std::cin.fail() || stepAvgLinkSpan < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || stepAvgLinkSpan < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid distance." << std::endl;
-                    std::cout << std::endl <<
-                              "-> Define the average distance between in-line amplifiers step."
-                              << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid distance." << std::endl;
+            std::cout << std::endl <<
+                      "-> Define the average distance between in-line amplifiers step."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -175,20 +175,20 @@ void Simulation_TransparencyAnalysis::load()
 
     do
         {
-            std::cin >> minOSNR;
+        std::cin >> minOSNR;
 
-            if (std::cin.fail())
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid OSNR." << std::endl;
-                    std::cout << "-> Define the minimum input OSNR" << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid OSNR." << std::endl;
+            std::cout << "-> Define the minimum input OSNR" << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -196,20 +196,20 @@ void Simulation_TransparencyAnalysis::load()
 
     do
         {
-            std::cin >> maxOSNR;
+        std::cin >> maxOSNR;
 
-            if (std::cin.fail() || maxOSNR < minOSNR)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || maxOSNR < minOSNR)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid OSNR." << std::endl;
-                    std::cout << "-> Define the maximum input OSNR" << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid OSNR." << std::endl;
+            std::cout << "-> Define the maximum input OSNR" << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -217,20 +217,20 @@ void Simulation_TransparencyAnalysis::load()
 
     do
         {
-            std::cin >> stepOSNR;
+        std::cin >> stepOSNR;
 
-            if (std::cin.fail() || stepOSNR < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || stepOSNR < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid OSNR." << std::endl;
-                    std::cout << "-> Define the input OSNR step." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid OSNR." << std::endl;
+            std::cout << "-> Define the input OSNR step." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -253,34 +253,34 @@ void Simulation_TransparencyAnalysis::print()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     if (!hasRun)
         {
-            run();
+        run();
         }
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
 
     if (!TransparentPoints.empty())
         {
-            std::cout << std::endl << "Transparent Points: " << std::endl;
+        std::cout << std::endl << "Transparent Points: " << std::endl;
 
-            for (auto &pair : TransparentPoints)
-                {
-                    std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
-                }
+        for (auto &pair : TransparentPoints)
+            {
+            std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
+            }
         }
 
     if (!OpaquePoints.empty())
         {
-            std::cout << std::endl << "Opaque Points: " << std::endl;
+        std::cout << std::endl << "Opaque Points: " << std::endl;
 
-            for (auto &pair : OpaquePoints)
-                {
-                    std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
-                }
+        for (auto &pair : OpaquePoints)
+            {
+            std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
+            }
         }
 }
 
@@ -291,28 +291,28 @@ void Simulation_TransparencyAnalysis::find_OriginDestination()
 
     for (auto orig : T->Nodes)
         {
-            for (auto dest : T->Nodes)
+        for (auto dest : T->Nodes)
+            {
+            if (orig == dest)
                 {
-                    if (orig == dest)
-                        {
-                            continue;
-                        }
-
-                    std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-                    auto links = SP.route(DummyCall);
-                    double length = 0;
-
-                    for (auto link : links)
-                        {
-                            length += link.lock()->Length;
-                        }
-
-                    if (maxLength < length)
-                        {
-                            maxLength = length;
-                            Orig_Origin = orig;
-                            Orig_Destination = dest;
-                        }
+                continue;
                 }
+
+            std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
+            auto links = SP.route(DummyCall);
+            double length = 0;
+
+            for (auto link : links)
+                {
+                length += link.lock()->Length;
+                }
+
+            if (maxLength < length)
+                {
+                maxLength = length;
+                Orig_Origin = orig;
+                Orig_Destination = dest;
+                }
+            }
         }
 }

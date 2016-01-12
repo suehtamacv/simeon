@@ -20,13 +20,13 @@ void PSR::cDistance::createCache()
 {
     for (auto link : T->Links)
         {
-            cache.emplace(link.second, arma::ones<arma::rowvec>(NMax - NMin + 1));
-            int expo = 0;
+        cache.emplace(link.second, arma::ones<arma::rowvec>(NMax - NMin + 1));
+        int expo = 0;
 
-            for (int n = NMin; n <= NMax; n++)
-                {
-                    cache.at(link.second)(expo++) = pow(link.second->Length /
-                                                        T->get_LengthLongestLink(), n);
-                }
+        for (int n = NMin; n <= NMax; n++)
+            {
+            cache.at(link.second)(expo++) = pow(link.second->Length /
+                                                T->get_LengthLongestLink(), n);
+            }
         }
 }

@@ -45,7 +45,7 @@ void PSO_Particle<PositionType>::initialize(
     std::uniform_real_distribution<PositionType> distribution(XMin, XMax);
     for (auto &x : X)
         {
-            x = distribution(random_generator);
+        x = distribution(random_generator);
         }
 }
 

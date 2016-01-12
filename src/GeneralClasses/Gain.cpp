@@ -8,12 +8,12 @@ Gain::Gain(double value, InitType Type) : value_Linear(0),
 
     if (Type == InitType::dB)
         {
-            value_dB = value;
+        value_dB = value;
         }
     else if (Type == InitType::Linear)
         {
-            BOOST_ASSERT_MSG(value > 0, "There's no dB value for something negative.");
-            value_dB = 10 * log10(value);
+        BOOST_ASSERT_MSG(value > 0, "There's no dB value for something negative.");
+        value_dB = 10 * log10(value);
         }
 
 }
@@ -39,12 +39,12 @@ Gain::Gain(const Gain &Value)
 
     if (Value.calculatedLinear)
         {
-            value_Linear = Value.value_Linear;
-            calculatedLinear = true;
+        value_Linear = Value.value_Linear;
+        calculatedLinear = true;
         }
     else
         {
-            calculatedLinear = false;
+        calculatedLinear = false;
         }
 }
 
@@ -58,8 +58,8 @@ double Gain::in_Linear()
     if (!calculatedLinear)
         {
 
-            value_Linear = pow10(0.1 * value_dB);
-            calculatedLinear = true;
+        value_Linear = pow10(0.1 * value_dB);
+        calculatedLinear = true;
         }
 
     return value_Linear;

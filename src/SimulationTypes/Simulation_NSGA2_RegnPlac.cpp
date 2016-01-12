@@ -33,24 +33,24 @@ double Simulation_NSGA2_RegnPlac::Param_CapEx::evaluate()
 {
     if (!isEvaluated)
         {
-            Topology T(*Sim.T);
+        Topology T(*Sim.T);
 
-            for (unsigned int i = 0; i < gene.size(); i++)
+        for (unsigned int i = 0; i < gene.size(); i++)
+            {
+            if (gene[i] != 0)
                 {
-                    if (gene[i] != 0)
-                        {
-                            T.Nodes[i]->set_NodeType(Node::TranslucentNode);
-                        }
-                    else
-                        {
-                            T.Nodes[i]->set_NodeType(Node::TransparentNode);
-                        }
-
-                    T.Nodes[i]->set_NumRegenerators(gene[i]);
+                T.Nodes[i]->set_NodeType(Node::TranslucentNode);
+                }
+            else
+                {
+                T.Nodes[i]->set_NodeType(Node::TransparentNode);
                 }
 
-            CapEx = T.get_CapEx();
-            isEvaluated = true;
+            T.Nodes[i]->set_NumRegenerators(gene[i]);
+            }
+
+        CapEx = T.get_CapEx();
+        isEvaluated = true;
         }
 
     return CapEx;
@@ -67,24 +67,24 @@ double Simulation_NSGA2_RegnPlac::Param_OpEx::evaluate()
 {
     if (!isEvaluated)
         {
-            Topology T(*Sim.T);
+        Topology T(*Sim.T);
 
-            for (unsigned int i = 0; i < gene.size(); i++)
+        for (unsigned int i = 0; i < gene.size(); i++)
+            {
+            if (gene[i] != 0)
                 {
-                    if (gene[i] != 0)
-                        {
-                            T.Nodes[i]->set_NodeType(Node::TranslucentNode);
-                        }
-                    else
-                        {
-                            T.Nodes[i]->set_NodeType(Node::TransparentNode);
-                        }
-
-                    T.Nodes[i]->set_NumRegenerators(gene[i]);
+                T.Nodes[i]->set_NodeType(Node::TranslucentNode);
+                }
+            else
+                {
+                T.Nodes[i]->set_NodeType(Node::TransparentNode);
                 }
 
-            OpEx = T.get_OpEx();
-            isEvaluated = true;
+            T.Nodes[i]->set_NumRegenerators(gene[i]);
+            }
+
+        OpEx = T.get_OpEx();
+        isEvaluated = true;
         }
 
     return OpEx;
@@ -101,41 +101,41 @@ double Simulation_NSGA2_RegnPlac::Param_BlockProb::evaluate()
 {
     if (!isEvaluated)
         {
-            std::shared_ptr<Topology> T(new Topology(*Sim.T));
+        std::shared_ptr<Topology> T(new Topology(*Sim.T));
 
-            for (unsigned int i = 0; i < gene.size(); i++)
+        for (unsigned int i = 0; i < gene.size(); i++)
+            {
+            if (gene[i] != 0)
                 {
-                    if (gene[i] != 0)
-                        {
-                            T->Nodes[i]->set_NodeType(Node::TranslucentNode);
-                        }
-                    else
-                        {
-                            T->Nodes[i]->set_NodeType(Node::TransparentNode);
-                        }
-
-                    T->Nodes[i]->set_NumRegenerators(gene[i]);
+                T->Nodes[i]->set_NodeType(Node::TranslucentNode);
+                }
+            else
+                {
+                T->Nodes[i]->set_NodeType(Node::TransparentNode);
                 }
 
-            std::shared_ptr<RoutingAlgorithm> R_Alg =
-                RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
-            std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-                WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
-                    Sim.WavAssign_Algorithm, T);
-            std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
-                RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
-                    Sim.RegAssignment_Algorithm, T);
+            T->Nodes[i]->set_NumRegenerators(gene[i]);
+            }
 
-            //Creates the Call Generator and the RWA Object
-            std::shared_ptr<CallGenerator> Generator(new CallGenerator(T,
-                    Sim.NetworkLoad));
-            std::shared_ptr<RoutingWavelengthAssignment> RWA(
-                new RoutingWavelengthAssignment(
-                    R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
+        std::shared_ptr<RoutingAlgorithm> R_Alg =
+            RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
+        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
+            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+                Sim.WavAssign_Algorithm, T);
+        std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
+            RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+                Sim.RegAssignment_Algorithm, T);
 
-            BlockProb = NetworkSimulation(Generator, RWA, Sim.NumCalls)
-                        .get_CallBlockingProbability();
-            isEvaluated = true;
+        //Creates the Call Generator and the RWA Object
+        std::shared_ptr<CallGenerator> Generator(new CallGenerator(T,
+                Sim.NetworkLoad));
+        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+            new RoutingWavelengthAssignment(
+                R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
+
+        BlockProb = NetworkSimulation(Generator, RWA, Sim.NumCalls)
+                    .get_CallBlockingProbability();
+        isEvaluated = true;
         }
 
     return BlockProb;
@@ -147,7 +147,7 @@ void Simulation_NSGA2_RegnPlac::Individual::createIndividual()
 
     for (unsigned int gene = 0; gene < Sim.T->Nodes.size(); gene++)
         {
-            IndivGene.push_back(createGene(gene));
+        IndivGene.push_back(createGene(gene));
         }
 
     setGene(IndivGene);
@@ -159,12 +159,12 @@ int Simulation_NSGA2_RegnPlac::Individual::createGene(unsigned int)
 
     if (isTranslucent(random_generator) < 0.5)
         {
-            return std::uniform_int_distribution<unsigned int>
-                   (0, Simulation_NSGA2_RegnPlac::RegnMax)(random_generator);
+        return std::uniform_int_distribution<unsigned int>
+               (0, Simulation_NSGA2_RegnPlac::RegnMax)(random_generator);
         }
     else
         {
-            return 0;
+        return 0;
         }
 }
 
@@ -201,10 +201,10 @@ void Simulation_NSGA2_RegnPlac::Sim_NSGA2::createInitialGeneration()
 
     for (unsigned i = 0; i < NSGA2::numIndiv; i++)
         {
-            std::shared_ptr<Individual> indiv(new Individual(Sim));
-            indiv->createIndividual();
+        std::shared_ptr<Individual> indiv(new Individual(Sim));
+        indiv->createIndividual();
 
-            gen->operator +=(indiv);
+        gen->operator +=(indiv);
         }
 
     evolution.push_back(gen);
@@ -233,7 +233,7 @@ void Simulation_NSGA2_RegnPlac::print()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     Sim_NSGA2 Optimization(*this);
@@ -243,10 +243,10 @@ void Simulation_NSGA2_RegnPlac::print()
 
     while (Optimization.generation < NSGA2::numGen)
         {
-            Optimization.run_Generation();
-            std::cout << std::endl << "GENERATION " <<  Optimization.generation
-                      << std::endl;
-            Optimization.evolution.at(Optimization.generation - 1)->print();
+        Optimization.run_Generation();
+        std::cout << std::endl << "GENERATION " <<  Optimization.generation
+                  << std::endl;
+        Optimization.evolution.at(Optimization.generation - 1)->print();
         }
 }
 
@@ -260,7 +260,7 @@ void Simulation_NSGA2_RegnPlac::load()
     Link::load(T);
 
     //RWA Algorithms
-    {
+        {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
@@ -271,26 +271,26 @@ void Simulation_NSGA2_RegnPlac::load()
         //Regenerator Assignment Algorithm
         RegAssignment_Algorithm =
             RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
-    }
+        }
 
     std::cout << std::endl << "-> Define the number of calls." << std::endl;
 
     do
         {
-            std::cin >> NumCalls;
+        std::cin >> NumCalls;
 
-            if (std::cin.fail() || NumCalls < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NumCalls < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid number of calls." << std::endl;
-                    std::cout << std::endl << "-> Define the number of calls." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid number of calls." << std::endl;
+            std::cout << std::endl << "-> Define the number of calls." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -298,20 +298,20 @@ void Simulation_NSGA2_RegnPlac::load()
 
     do
         {
-            std::cin >> NetworkLoad;
+        std::cin >> NetworkLoad;
 
-            if (std::cin.fail() || NetworkLoad < 0)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || NetworkLoad < 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid network load." << std::endl;
-                    std::cout << std::endl << "-> Define the network load." << std::endl;
-                }
-            else
-                {
-                    break;
-                }
+            std::cerr << "Invalid network load." << std::endl;
+            std::cout << std::endl << "-> Define the network load." << std::endl;
+            }
+        else
+            {
+            break;
+            }
         }
     while (1);
 
@@ -322,13 +322,13 @@ void Simulation_NSGA2_RegnPlac::run()
 {
     if (!hasLoaded)
         {
-            load();
+        load();
         }
 
     Sim_NSGA2 Optimization(*this);
 
     while (Optimization.generation < NSGA2::numGen)
         {
-            Optimization.run_Generation();
+        Optimization.run_Generation();
         }
 }

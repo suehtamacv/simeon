@@ -20,21 +20,21 @@ void PSR::cModulationScheme::createCache()
 
     for (auto &scheme : ModulationScheme::DefaultSchemes)
         {
-            if (maxScheme < scheme.get_M())
-                {
-                    maxScheme = scheme.get_M();
-                }
+        if (maxScheme < scheme.get_M())
+            {
+            maxScheme = scheme.get_M();
+            }
         }
 
     for (auto &scheme : ModulationScheme::DefaultSchemes)
         {
-            cache.emplace(scheme, arma::rowvec(NMax - NMin + 1));
-            int expo = 0;
+        cache.emplace(scheme, arma::rowvec(NMax - NMin + 1));
+        int expo = 0;
 
-            for (int n = NMin; n <= NMax; n++)
-                {
-                    cache.at(scheme)(expo++) = pow(scheme.get_M() / maxScheme, n);
-                }
+        for (int n = NMin; n <= NMax; n++)
+            {
+            cache.at(scheme)(expo++) = pow(scheme.get_M() / maxScheme, n);
+            }
         }
 }
 

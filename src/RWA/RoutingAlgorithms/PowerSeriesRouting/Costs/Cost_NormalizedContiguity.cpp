@@ -19,11 +19,11 @@ void PSR::cNormContiguity::createCache()
 {
     for (int contig = 0; contig <= Link::NumSlots; contig++)
         {
-            int expo = 0;
+        int expo = 0;
 
-            for (int n = NMin; n <= NMax; n++)
-                {
-                    cache(contig, expo++) = pow(contig / (1.0 * Link::NumSlots), n);
-                }
+        for (int n = NMin; n <= NMax; n++)
+            {
+            cache(contig, expo++) = pow(contig / (1.0 * Link::NumSlots), n);
+            }
         }
 }

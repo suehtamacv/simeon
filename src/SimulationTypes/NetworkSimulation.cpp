@@ -23,17 +23,17 @@ void NetworkSimulation::run()
 
     while (!Generator->Events.empty())
         {
-            std::shared_ptr<Event> evt(Generator->Events.top());
-            Generator->Events.pop();
+        std::shared_ptr<Event> evt(Generator->Events.top());
+        Generator->Events.pop();
 
-            if (evt->Type == Event::CallRequisition)
-                {
-                    implement_call(evt);
-                }
-            else if (evt->Type == Event::CallEnding)
-                {
-                    drop_call(evt);
-                }
+        if (evt->Type == Event::CallRequisition)
+            {
+            implement_call(evt);
+            }
+        else if (evt->Type == Event::CallEnding)
+            {
+            drop_call(evt);
+            }
         }
 
     hasSimulated = true;
@@ -49,27 +49,27 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 
     if (evt->Parent->Status == Call::Blocked)
         {
-            NumBlockedCalls++;
+        NumBlockedCalls++;
         }
     else
         {
-            for (auto &node : route->Slots)
+        for (auto &node : route->Slots)
+            {
+            for (auto &slot : node.second)
                 {
-                    for (auto &slot : node.second)
-                        {
-                            slot.lock()->useSlot();
-                        }
+                slot.lock()->useSlot();
                 }
+            }
 
-            for (auto &reg : route->Regenerators)
-                {
-                    reg.first.lock()->request_Regenerators(reg.second);
-                }
+        for (auto &reg : route->Regenerators)
+            {
+            reg.first.lock()->request_Regenerators(reg.second);
+            }
         }
 
     if (NumCalls++ < NumMaxCalls)
         {
-            Generator->generate_Call();
+        Generator->generate_Call();
         }
 }
 
@@ -77,18 +77,18 @@ void NetworkSimulation::drop_call(std::shared_ptr<Event> evt)
 {
     if (evt->Parent->Status == Call::Implemented)
         {
-            for (auto &node : evt->route->Slots)
+        for (auto &node : evt->route->Slots)
+            {
+            for (auto &slot : node.second)
                 {
-                    for (auto &slot : node.second)
-                        {
-                            slot.lock()->freeSlot();
-                        }
+                slot.lock()->freeSlot();
                 }
+            }
 
-            for (auto &reg : evt->route->Regenerators)
-                {
-                    reg.first.lock()->free_Regenerators(reg.second);
-                }
+        for (auto &reg : evt->route->Regenerators)
+            {
+            reg.first.lock()->free_Regenerators(reg.second);
+            }
         }
 }
 
@@ -96,7 +96,7 @@ void NetworkSimulation::print()
 {
     if (!hasSimulated)
         {
-            run();
+        run();
         }
 
     std::cout << get_Load() << "\t" << get_CallBlockingProbability() << std::endl;
@@ -106,7 +106,7 @@ double NetworkSimulation::get_CallBlockingProbability()
 {
     if (!hasSimulated)
         {
-            run();
+        run();
         }
 
     return 1.0 * NumBlockedCalls / (1.0 * NumCalls);

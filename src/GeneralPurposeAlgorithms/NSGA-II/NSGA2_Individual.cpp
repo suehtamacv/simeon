@@ -31,15 +31,15 @@ void NSGA2_Individual::eval()
 {
     if (Gene.empty())
         {
-            createIndividual();
+        createIndividual();
         }
 
     if (!isEvaluated)
         {
-            for (auto &parameter : Parameters)
-                {
-                    parameter->evaluate();
-                }
+        for (auto &parameter : Parameters)
+            {
+            parameter->evaluate();
+            }
         }
 
     isEvaluated = true;
@@ -51,14 +51,14 @@ void NSGA2_Individual::print()
 
     for (auto &g : Gene)
         {
-            std::cout << g << " ";
+        std::cout << g << " ";
         }
 
     std::cout << std::endl;
 
     for (auto &p : Parameters)
         {
-            std::cout << p->get_ParamName() << ": " << p->evaluate() << "  ";
+        std::cout << p->get_ParamName() << ": " << p->evaluate() << "  ";
         }
 
     std::cout << std::endl;
@@ -88,20 +88,20 @@ bool NSGA2_Individual::isDominated(const std::shared_ptr<NSGA2_Individual>
 {
     for (unsigned int i = 0; i < Parameters.size(); i++)
         {
-            if (Parameters[i]->evaluate() < other->getParameter(i)->evaluate())
+        if (Parameters[i]->evaluate() < other->getParameter(i)->evaluate())
+            {
+            bool Dominates = true;
+
+            for (unsigned j = 0; j < Parameters.size(); j++)
                 {
-                    bool Dominates = true;
-
-                    for (unsigned j = 0; j < Parameters.size(); j++)
-                        {
-                            Dominates &= (Parameters[j]->evaluate() <= other->getParameter(j)->evaluate());
-                        }
-
-                    if (Dominates)
-                        {
-                            return true;
-                        }
+                Dominates &= (Parameters[j]->evaluate() <= other->getParameter(j)->evaluate());
                 }
+
+            if (Dominates)
+                {
+                return true;
+                }
+            }
         }
 
     return false;
@@ -115,10 +115,10 @@ NSGA2_Individual &NSGA2_Individual::mutate()
 
     for (unsigned int i = 0; i < Gene.size(); i++)
         {
-            if (dist(random_generator) < NSGA2::mutationProb)   //mutates
-                {
-                    Gene[i] = createGene(i);
-                }
+        if (dist(random_generator) < NSGA2::mutationProb)   //mutates
+            {
+            Gene[i] = createGene(i);
+            }
         }
 
     return *this;

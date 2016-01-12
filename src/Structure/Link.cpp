@@ -36,12 +36,12 @@ Link::Link(const Link &link)
 
     for (auto &slot : link.Slots)
         {
-            Slots.push_back(std::shared_ptr<Slot>(new Slot(*slot)));
+        Slots.push_back(std::shared_ptr<Slot>(new Slot(*slot)));
         }
 
     for (auto &device : link.Devices)
         {
-            Devices.push_back(device->clone());
+        Devices.push_back(device->clone());
         }
 }
 
@@ -49,7 +49,7 @@ void Link::create_Slots()
 {
     for (int i = 0; i < NumSlots; i++)
         {
-            Slots.push_back(std::shared_ptr<Slot>(new Slot(i)));
+        Slots.push_back(std::shared_ptr<Slot>(new Slot(i)));
         }
 }
 
@@ -57,7 +57,7 @@ void Link::create_Devices()
 {
     if (AvgSpanLength < 0)
         {
-            return;
+        return;
         }
 
     Devices.clear();
@@ -65,16 +65,16 @@ void Link::create_Devices()
 
     if (ceil(Length / AvgSpanLength) == numLineAmplifiers)
         {
-            numLineAmplifiers--;
+        numLineAmplifiers--;
         }
 
     double SpanLength = Length / (numLineAmplifiers + 1);
 
     for (int i = 0; i < numLineAmplifiers; i++)
         {
-            Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
-            Devices.push_back(std::shared_ptr<InLineAmplifier>(
-                                  new InLineAmplifier((Fiber &)*Devices.back())));
+        Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
+        Devices.push_back(std::shared_ptr<InLineAmplifier>(
+                              new InLineAmplifier((Fiber &)*Devices.back())));
         }
 
     //There's an extra fiber segment in the end of the link
@@ -90,8 +90,8 @@ Signal &Link::bypass(Signal &S)
 {
     for (auto &it : Devices)
         {
-            S *= it->get_Gain();
-            S += it->get_Noise();
+        S *= it->get_Gain();
+        S += it->get_Noise();
         }
 
     return S;
@@ -123,10 +123,10 @@ int Link::get_Availability()
 
     for (auto &slot : Slots)
         {
-            if (slot->isFree)
-                {
-                    FreeSlots++;
-                }
+        if (slot->isFree)
+            {
+            FreeSlots++;
+            }
         }
 
     return FreeSlots;
@@ -150,24 +150,24 @@ int Link::get_Contiguity(std::shared_ptr<Call> C)
 
     for (int i = 0; i < Link::NumSlots; i++)
         {
-            SlotsAvailability[i] = Slots[i]->isFree;
+        SlotsAvailability[i] = Slots[i]->isFree;
         }
 
     for (int sf = 0; sf < Link::NumSlots; sf++)
         {
-            if (SlotsAvailability[sf])
-                {
-                    CurrentFreeSlots++;
-                }
-            else
-                {
-                    CurrentFreeSlots = 0;
-                }
+        if (SlotsAvailability[sf])
+            {
+            CurrentFreeSlots++;
+            }
+        else
+            {
+            CurrentFreeSlots = 0;
+            }
 
-            if (CurrentFreeSlots >= NumRequiredSlots)
-                {
-                    Contiguity++;
-                }
+        if (CurrentFreeSlots >= NumRequiredSlots)
+            {
+            Contiguity++;
+            }
         }
 
     return Contiguity;
@@ -180,23 +180,23 @@ void Link::load(std::shared_ptr<Topology> T)
 
     do
         {
-            double SpanLeng;
-            std::cin >> SpanLeng;
+        double SpanLeng;
+        std::cin >> SpanLeng;
 
-            if (std::cin.fail() || SpanLeng < 1)
-                {
-                    std::cin.clear();
-                    std::cin.ignore();
+        if (std::cin.fail() || SpanLeng < 1)
+            {
+            std::cin.clear();
+            std::cin.ignore();
 
-                    std::cerr << "Invalid length." << std::endl;
-                    std::cout << std::endl << "-> Define the distance between inline amplifiers."
-                              << std::endl;
-                }
-            else
-                {
-                    DefaultAvgSpanLength = SpanLeng;
-                    break;
-                }
+            std::cerr << "Invalid length." << std::endl;
+            std::cout << std::endl << "-> Define the distance between inline amplifiers."
+                      << std::endl;
+            }
+        else
+            {
+            DefaultAvgSpanLength = SpanLeng;
+            break;
+            }
         }
     while (1);
 
@@ -209,7 +209,7 @@ double Link::get_CapEx()
 
     for (auto device : Devices)
         {
-            CapEx += device->get_CapEx();
+        CapEx += device->get_CapEx();
         }
 
     return CapEx;
@@ -221,7 +221,7 @@ double Link::get_OpEx()
 
     for (auto device : Devices)
         {
-            OpEx += device->get_OpEx();
+        OpEx += device->get_OpEx();
         }
 
     return OpEx;
