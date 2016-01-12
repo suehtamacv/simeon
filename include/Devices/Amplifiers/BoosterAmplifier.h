@@ -9,8 +9,9 @@
  *
  * This amplifier compensates for the loss on the SSS device in the node's exit.
  */
-class BoosterAmplifier : public EDFA {
-  public:
+class BoosterAmplifier : public EDFA
+{
+public:
     /**
      * @brief AT is the type of amplifier.
      */

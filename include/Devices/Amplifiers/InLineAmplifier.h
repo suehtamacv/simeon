@@ -11,8 +11,9 @@ class Fiber;
  * Those amplifiers are scattered through the fiber. Each amplifier compensates
  * for the loss in the precedent fiber segment.
  */
-class InLineAmplifier : public EDFA {
-  public:
+class InLineAmplifier : public EDFA
+{
+public:
     /**
      * @brief AT is the type of amplifier.
      */

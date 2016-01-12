@@ -7,10 +7,11 @@
 class NSGA2_Generation;
 class NSGA2_Parameter;
 
-class NSGA2_Individual {
+class NSGA2_Individual
+{
     friend class NSGA2;
 
-  public:
+public:
     NSGA2_Individual();
 
     virtual void createIndividual() = 0;
@@ -36,7 +37,7 @@ class NSGA2_Individual {
     NSGA2_Individual &mutate();
 
     bool isEvaluated;
-  protected:
+protected:
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
 };
 

@@ -7,29 +7,34 @@
 #include <map>
 #include <tuple>
 
-namespace PSR {
+namespace PSR
+{
 
-    class cNoise : public Cost {
-      public:
-        cNoise(int NMin, int NMax, std::shared_ptr<Topology> T);
-        arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
+class cNoise : public Cost
+{
+public:
+    cNoise(int NMin, int NMax, std::shared_ptr<Topology> T);
+    arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 
-      private:
-        struct CallProperties {
-            std::weak_ptr<Link> link;
-            TransmissionBitrate bitrate;
-            ModulationScheme scheme;
+private:
+    struct CallProperties
+    {
+        std::weak_ptr<Link> link;
+        TransmissionBitrate bitrate;
+        ModulationScheme scheme;
 
-            bool operator <(const CallProperties &other) const {
-                return ((link.lock() < other.link.lock()) ||
-                       ((link.lock() == other.link.lock()) && (bitrate < other.bitrate)) ||
-                       ((link.lock() == other.link.lock()) && (bitrate == other.bitrate) && (scheme < other.scheme)));
-            }
-        };
-
-        void createCache();
-        std::map <CallProperties, arma::rowvec> cache;
+        bool operator <(const CallProperties &other) const
+        {
+            return ((link.lock() < other.link.lock()) ||
+                    ((link.lock() == other.link.lock()) && (bitrate < other.bitrate)) ||
+                    ((link.lock() == other.link.lock()) && (bitrate == other.bitrate) &&
+                     (scheme < other.scheme)));
+        }
     };
+
+    void createCache();
+    std::map <CallProperties, arma::rowvec> cache;
+};
 
 }
 

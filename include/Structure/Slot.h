@@ -5,8 +5,9 @@
 
 class Link;
 
-class Slot {
-  public:
+class Slot
+{
+public:
     /**
      * @brief BSlot is the bandwidth of a single slot.
      */

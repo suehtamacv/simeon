@@ -4,12 +4,14 @@
 /**
  * @brief The Gain class provides a interface to gain variables that are measured in dB units or in linear units.
  */
-class Gain {
-  public:
+class Gain
+{
+public:
     /**
      * @brief The InitType enum is used to choose how to init the object.
      */
-    enum InitType {
+    enum InitType
+    {
         dB, /*!< Use dB to provide an initial value in dB */
         Linear /*!< Use Linear to provide an initial value in linear units */
     };
@@ -58,7 +60,7 @@ class Gain {
      */
     double in_Linear();
 
-  private:
+private:
     double value_dB;
     double value_Linear;
     bool calculatedLinear;

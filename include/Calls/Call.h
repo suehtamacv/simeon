@@ -12,13 +12,15 @@ class Node;
  * @brief The Call class is the standard object representing a connection
  * between two nodes.
  */
-class Call {
-  public:
+class Call
+{
+public:
     /**
      * @brief The Call_Status enum is used to describe the current status
      * of the call.
      */
-    enum Call_Status {
+    enum Call_Status
+    {
         Implemented, /*!< The RWA algorithm succeeded to find a route */
         Blocked, /*!< The RWA algorithm could not find a route to stablish the call */
         Not_Evaluated /*!< The RWA algorithm is running / will run over the call */

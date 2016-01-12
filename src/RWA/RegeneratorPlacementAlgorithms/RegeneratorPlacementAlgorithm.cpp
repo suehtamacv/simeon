@@ -21,35 +21,43 @@ RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames =
     ;
 
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithm(
-    std::shared_ptr<Topology> T) : isNXAlgorithm(false), T(T) {
+    std::shared_ptr<Topology> T) : isNXAlgorithm(false), T(T)
+{
 
 }
 
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
-RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm() {
+RegeneratorPlacementAlgorithm::define_RegeneratorPlacementAlgorithm()
+{
     std::cout << std::endl << "-> Choose a regenerator placement algorithm."
               << std::endl;
 
-    do {
-        for (auto &rplace : RegeneratorPlacementNames.left) {
-            std::cout << "(" << rplace.first << ")\t" << rplace.second << std::endl;
+    do
+        {
+            for (auto &rplace : RegeneratorPlacementNames.left)
+                {
+                    std::cout << "(" << rplace.first << ")\t" << rplace.second << std::endl;
+                }
+
+            int RegPlace_Alg;
+            std::cin >> RegPlace_Alg;
+
+            if (std::cin.fail() || RegeneratorPlacementNames.left.count
+                    ((RegeneratorPlacementAlgorithms) RegPlace_Alg) == 0)
+                {
+                    std::cin.clear();
+                    std::cin.ignore();
+
+                    std::cerr << "Invalid regenerator placement algorithm." << std::endl;
+                    std::cout << std::endl << "-> Choose a regenerator placement algorithm."
+                              << std::endl;
+                }
+            else
+                {
+                    return (RegeneratorPlacementAlgorithms) RegPlace_Alg;
+                }
         }
-
-        int RegPlace_Alg;
-        std::cin >> RegPlace_Alg;
-
-        if (std::cin.fail() || RegeneratorPlacementNames.left.count
-                ((RegeneratorPlacementAlgorithms) RegPlace_Alg) == 0) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid regenerator placement algorithm." << std::endl;
-            std::cout << std::endl << "-> Choose a regenerator placement algorithm."
-                      << std::endl;
-        } else {
-            return (RegeneratorPlacementAlgorithms) RegPlace_Alg;
-        }
-    } while (1);
+    while (1);
 
     return (RegeneratorPlacementAlgorithms) - 1;
 }
@@ -60,11 +68,13 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
     std::shared_ptr<Topology> T,
     std::shared_ptr<RoutingWavelengthAssignment> RWA,
     double OptimizationLoad ,
-    long long NumCalls, bool runLoad) {
+    long long NumCalls, bool runLoad)
+{
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg;
 
-    switch (Algorithm) {
+    switch (Algorithm)
+        {
         case MSU:
             RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
                          new MostSimultaneouslyUsed(
@@ -81,11 +91,12 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
             RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
                          new NodalDegreeFirst(T));
             break;
-    }
+        }
 
-    if (runLoad) {
-        RP_Alg->load();
-    }
+    if (runLoad)
+        {
+            RP_Alg->load();
+        }
 
     return RP_Alg;
 }

@@ -7,8 +7,9 @@ class CallGenerator;
 class RoutingWavelengthAssignment;
 class Event;
 
-class NetworkSimulation {
-  public:
+class NetworkSimulation
+{
+public:
     NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                       std::shared_ptr<RoutingWavelengthAssignment> RWA,
                       long unsigned NumMaxCalls);
@@ -28,7 +29,7 @@ class NetworkSimulation {
 
     bool hasSimulated;
 
-  private:
+private:
     void implement_call(std::shared_ptr<Event> evt);
     void drop_call(std::shared_ptr<Event> evt);
 };

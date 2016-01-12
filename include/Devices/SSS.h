@@ -8,8 +8,9 @@ class Node;
 /**
  * @brief The SSS class represents a spectrum selective switch.
  */
-class SSS : public Device {
-  public:
+class SSS : public Device
+{
+public:
     /**
      * @brief SSSLoss is the loss of a SSS. Is considered constant for all
      * the SSS devices.
@@ -27,7 +28,7 @@ class SSS : public Device {
 
     std::shared_ptr<Device> clone();
 
-  private:
+private:
     Power NoisePower;
     Node *parent;
 };

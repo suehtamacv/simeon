@@ -11,8 +11,9 @@ class Topology;
  * @brief The RegeneratorPlacementAlgorithm class decides how to insert the
  * regenerators over the network
  */
-class RegeneratorPlacementAlgorithm {
-  public:
+class RegeneratorPlacementAlgorithm
+{
+public:
 #define REGPLACEMENT_ALGORITHMS \
     X(MSU, "Most Simultaneously Used", "MSU") \
     X(MU, "Most Used", "MU") \
@@ -20,7 +21,8 @@ class RegeneratorPlacementAlgorithm {
 
 
 #define X(a,b,c) a,
-    enum RegeneratorPlacementAlgorithms {
+    enum RegeneratorPlacementAlgorithms
+    {
         REGPLACEMENT_ALGORITHMS
     };
 #undef X

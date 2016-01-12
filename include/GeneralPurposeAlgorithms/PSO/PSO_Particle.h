@@ -8,10 +8,9 @@
 #include <GeneralClasses/RandomGenerator.h>
 
 template<class PositionType>
-class PSO_Particle {
-
-  public:
-
+class PSO_Particle
+{
+public:
     PSO_Particle(unsigned int N, PositionType XMin, PositionType XMax);
     void initialize(PositionType XMin, PositionType XMax);
 
@@ -24,13 +23,14 @@ class PSO_Particle {
 
     std::weak_ptr<PSO_Particle> Neighbour[2];
 
-  private:
+private:
     unsigned int N;
 };
 
 template<class PositionType>
 PSO_Particle<PositionType>::PSO_Particle(
-    unsigned int N, PositionType XMin, PositionType XMax) : N(N) {
+    unsigned int N, PositionType XMin, PositionType XMax) : N(N)
+{
     X.resize(N);
     V.resize(N);
     P.resize(N);
@@ -39,12 +39,14 @@ PSO_Particle<PositionType>::PSO_Particle(
 
 template<class PositionType>
 void PSO_Particle<PositionType>::initialize(
-    PositionType XMin, PositionType XMax) {
+    PositionType XMin, PositionType XMax)
+{
 
     std::uniform_real_distribution<PositionType> distribution(XMin, XMax);
-    for (auto &x : X) {
-        x = distribution(random_generator);
-    }
+    for (auto &x : X)
+        {
+            x = distribution(random_generator);
+        }
 }
 
 #endif // PSO_PARTICLE_H

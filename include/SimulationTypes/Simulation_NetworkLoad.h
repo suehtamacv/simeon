@@ -7,8 +7,9 @@
 #include <SimulationTypes/SimulationType.h>
 #include "RWA.h"
 
-class Simulation_NetworkLoad : public SimulationType {
-  public:
+class Simulation_NetworkLoad : public SimulationType
+{
+public:
     Simulation_NetworkLoad();
 
     void help();
@@ -18,7 +19,7 @@ class Simulation_NetworkLoad : public SimulationType {
     void load_file(std::string);
     void print();
 
-  private:
+private:
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
     bool hasSimulated;
     bool hasLoaded;

@@ -7,8 +7,9 @@
 #include <vector>
 #include "RWA.h"
 
-class Simulation_RegeneratorNumber : public SimulationType {
-  public:
+class Simulation_RegeneratorNumber : public SimulationType
+{
+public:
     Simulation_RegeneratorNumber();
 
     void help();
@@ -18,7 +19,7 @@ class Simulation_RegeneratorNumber : public SimulationType {
     void load_file(std::string);
     void print();
 
-  private:
+private:
     bool hasLoaded;
 
     double OptimizationLoad;

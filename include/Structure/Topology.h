@@ -12,19 +12,19 @@ typedef std::pair<int, int> OrigDestPair;
 
 class Link;
 
-class Topology {
-  public:
+class Topology
+{
+public:
 #define DEFAULT_TOPOLOGIES \
     X(European, "European", "data/topologies/European") \
     X(German, "German", "data/topologies/German") \
     X(NSFNet, "NSFNet", "data/topologies/NSFNet") \
-    X(NSFNetMod, "NSFNet Modified", "data/topologies/NSFNetModified") \
     X(PacificBell, "Pacific Bell", "data/topologies/PacificBell") \
-    X(PacificBellMod, "Pacific Bell Modified", "data/topologies/PacificBellModified") \
     X(USBackbone, "US Backbone", "data/topologies/USBackbone") //Code Name, Official Name, FilePath
 
 #define X(a,b,c) a,
-    enum DefaultTopologies {
+    enum DefaultTopologies
+    {
         DEFAULT_TOPOLOGIES
     };
 #undef X
@@ -69,7 +69,7 @@ class Topology {
 
     double get_CapEx();
     double get_OpEx();
-  private:
+private:
     double LongestLink;
 };
 

@@ -9,10 +9,12 @@ class Link;
 class Call;
 class Topology;
 
-namespace PSR {
+namespace PSR
+{
 
-    class Cost {
-      public:
+class Cost
+{
+public:
 #define POSSIBLECOSTS \
     X(availability, "Availability", "availability") \
     X(bitrate, "Bitrate", "bitrate") \
@@ -24,32 +26,33 @@ namespace PSR {
     X(scheme, "Modulation Scheme", "scheme")
 
 #define X(a,b,c) a,
-        enum PossibleCosts {
-            POSSIBLECOSTS
-        };
+    enum PossibleCosts
+    {
+        POSSIBLECOSTS
+    };
 #undef X
 
-        typedef boost::bimap<PossibleCosts, std::string> CostNameBimap;
-        static CostNameBimap CostsNames;
-        typedef boost::bimap<PossibleCosts, std::string> CostNicknameBimap;
-        static CostNicknameBimap CostsNicknames;
+    typedef boost::bimap<PossibleCosts, std::string> CostNameBimap;
+    static CostNameBimap CostsNames;
+    typedef boost::bimap<PossibleCosts, std::string> CostNicknameBimap;
+    static CostNicknameBimap CostsNicknames;
 
-        Cost(int NMin, int NMax, std::shared_ptr<Topology> T, PossibleCosts Type);
-        virtual arma::rowvec getCost(std::weak_ptr<Link> link,
-                                     std::shared_ptr<Call> C) = 0;
-        static std::shared_ptr<Cost> createCost(PossibleCosts, int NMin, int NMax,
-                                                std::shared_ptr<Topology>);
+    Cost(int NMin, int NMax, std::shared_ptr<Topology> T, PossibleCosts Type);
+    virtual arma::rowvec getCost(std::weak_ptr<Link> link,
+                                 std::shared_ptr<Call> C) = 0;
+    static std::shared_ptr<Cost> createCost(PossibleCosts, int NMin, int NMax,
+                                            std::shared_ptr<Topology>);
 
-        int get_NMin();
-        int get_NMax();
-        int get_N();
+    int get_NMin();
+    int get_NMax();
+    int get_N();
 
-        PossibleCosts Type;
+    PossibleCosts Type;
 
-      protected:
-        int NMin, NMax;
-        std::shared_ptr<Topology> T;
-    };
+protected:
+    int NMin, NMax;
+    std::shared_ptr<Topology> T;
+};
 
 }
 

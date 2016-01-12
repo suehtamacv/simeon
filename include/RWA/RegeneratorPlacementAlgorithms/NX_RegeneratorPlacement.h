@@ -6,8 +6,9 @@
 /**
  * @brief The NX_RegeneratorPlacement class is a type of RegeneratorPlacementAlgorithm.
  */
-class NX_RegeneratorPlacement : public RegeneratorPlacementAlgorithm {
-  public:
+class NX_RegeneratorPlacement : public RegeneratorPlacementAlgorithm
+{
+public:
     /**
      * @brief NX_RegeneratorPlacement is the standard constructor.
      * @param T is a pointer to the Topology.

@@ -22,43 +22,51 @@ Topology::DefaultTopPathsBimap Topology::DefaultTopologiesPaths =
 #undef DEFAULT_TOPOLOGIES
     ;
 
-Topology::Topology() {
+Topology::Topology()
+{
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
 }
 
-Topology::Topology(const Topology &topology) {
+Topology::Topology(const Topology &topology)
+{
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
 
-    for (auto &node : topology.Nodes) {
-        add_Node(node->ID,
-                 node->get_NodeType(),
-                 node->get_NodeArch(),
-                 node->get_NumRegenerators());
-    }
-
-    for (auto &link : topology.Links) {
-        std::weak_ptr<Node> orig = Nodes.front();
-        std::weak_ptr<Node> dest = Nodes.front();
-
-        for (auto node = Nodes.begin(); node != Nodes.end(); ++node) {
-            if (*(*node) == *(link.second->Origin.lock())) {
-                orig = *node;
-            }
-
-            if (*(*node) == *(link.second->Destination.lock())) {
-                dest = *node;
-            }
+    for (auto &node : topology.Nodes)
+        {
+            add_Node(node->ID,
+                     node->get_NodeType(),
+                     node->get_NodeArch(),
+                     node->get_NumRegenerators());
         }
 
-        add_Link(orig, dest, link.second->Length);
-    }
+    for (auto &link : topology.Links)
+        {
+            std::weak_ptr<Node> orig = Nodes.front();
+            std::weak_ptr<Node> dest = Nodes.front();
+
+            for (auto node = Nodes.begin(); node != Nodes.end(); ++node)
+                {
+                    if (*(*node) == *(link.second->Origin.lock()))
+                        {
+                            orig = *node;
+                        }
+
+                    if (*(*node) == *(link.second->Destination.lock()))
+                        {
+                            dest = *node;
+                        }
+                }
+
+            add_Link(orig, dest, link.second->Length);
+        }
 }
 
-Topology::Topology(std::string TopologyFileName) {
+Topology::Topology(std::string TopologyFileName)
+{
     using namespace boost::program_options;
 
     Nodes.clear();
@@ -81,61 +89,68 @@ Topology::Topology(std::string TopologyFileName) {
     std::vector<std::string> NodesList =
         VariablesMap.find("nodes.node")->second.as<std::vector<std::string>>();
 
-    for (auto &node : NodesList) {
-        int NodeId, NumReg;
-        std::string StrType, StrArch;
+    for (auto &node : NodesList)
+        {
+            int NodeId, NumReg;
+            std::string StrType, StrArch;
 
-        std::istringstream NodeParameters(node);
-        NodeParameters >> NodeId >> StrType >> StrArch >> NumReg;
+            std::istringstream NodeParameters(node);
+            NodeParameters >> NodeId >> StrType >> StrArch >> NumReg;
 
-        Node::NodeType Type = Node::NodeTypes.right.at(StrType);
-        Node::NodeArchitecture Arch = Node::NodeArchitecturesNicknames.
-                                      right.at(StrArch);
+            Node::NodeType Type = Node::NodeTypes.right.at(StrType);
+            Node::NodeArchitecture Arch = Node::NodeArchitecturesNicknames.
+                                          right.at(StrArch);
 
-        add_Node(NodeId, Type, Arch, NumReg);
-    }
+            add_Node(NodeId, Type, Arch, NumReg);
+        }
 
     //Reads links from configuration file.
     std::vector<std::string> LinksList =
         VariablesMap.find("links.->")->second.as<std::vector<std::string>>();
 
-    for (auto &link : LinksList) {
-        int OriginID, DestinationID;
-        double length;
-        std::weak_ptr<Node> Origin, Destination;
+    for (auto &link : LinksList)
+        {
+            int OriginID, DestinationID;
+            double length;
+            std::weak_ptr<Node> Origin, Destination;
 
-        std::istringstream LinkParameters(link);
-        LinkParameters >> OriginID >> DestinationID >> length;
-        BOOST_ASSERT_MSG(OriginID != DestinationID,
-                         "Link can't have the same Origin and Destination.");
+            std::istringstream LinkParameters(link);
+            LinkParameters >> OriginID >> DestinationID >> length;
+            BOOST_ASSERT_MSG(OriginID != DestinationID,
+                             "Link can't have the same Origin and Destination.");
 
-        int NodesFound = 0;
+            int NodesFound = 0;
 
-        for (auto &node : Nodes) {
-            if (node->ID == OriginID) {
-                Origin = node;
-                NodesFound++;
-            }
+            for (auto &node : Nodes)
+                {
+                    if (node->ID == OriginID)
+                        {
+                            Origin = node;
+                            NodesFound++;
+                        }
 
-            if (node->ID == DestinationID) {
-                Destination = node;
-                NodesFound++;
-            }
+                    if (node->ID == DestinationID)
+                        {
+                            Destination = node;
+                            NodesFound++;
+                        }
+                }
+
+            BOOST_ASSERT_MSG(NodesFound == 2,
+                             "Link with invalid origin and/or destination.");
+
+            add_Link(Origin, Destination, length);
         }
-
-        BOOST_ASSERT_MSG(NodesFound == 2,
-                         "Link with invalid origin and/or destination.");
-
-        add_Link(Origin, Destination, length);
-    }
 }
 
 std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
-                                       Node::NodeArchitecture Arch, int NumReg) {
+                                       Node::NodeArchitecture Arch, int NumReg)
+{
 
-    if (NodeID == -1) {
-        NodeID = Nodes.size() + 1;
-    }
+    if (NodeID == -1)
+        {
+            NodeID = Nodes.size() + 1;
+        }
 
     Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
     Nodes.back()->set_NumRegenerators(NumReg);
@@ -143,7 +158,8 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
 }
 
 std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
-                                       std::weak_ptr<Node> Destination, double Length) {
+                                       std::weak_ptr<Node> Destination, double Length)
+{
     Links.emplace(OrigDestPair(Origin.lock()->ID, Destination.lock()->ID),
                   std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
     Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
@@ -153,7 +169,8 @@ std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                           Destination.lock()->ID));
 }
 
-void Topology::save(std::string TopologyFileName) {
+void Topology::save(std::string TopologyFileName)
+{
     std::ofstream TopologyFile(TopologyFileName,
                                std::ofstream::out | std::ofstream::app);
 
@@ -163,84 +180,101 @@ void Topology::save(std::string TopologyFileName) {
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
 
 
-    for (auto &it : Nodes) {
-        TopologyFile << "  node = " << it->ID
-                     << " " << Node::NodeTypes.left.at(it->get_NodeType())
-                     << " " << Node::NodeArchitecturesNicknames.left.at(it->get_NodeArch())
-                     << " " << it->get_NumRegenerators() << std::endl;
-    }
+    for (auto &it : Nodes)
+        {
+            TopologyFile << "  node = " << it->ID
+                         << " " << Node::NodeTypes.left.at(it->get_NodeType())
+                         << " " << Node::NodeArchitecturesNicknames.left.at(it->get_NodeArch())
+                         << " " << it->get_NumRegenerators() << std::endl;
+        }
 
     TopologyFile << std::endl;
 
     TopologyFile << "  [links]" << std::endl << std::endl;
     TopologyFile << "# -> = ORIGIN DESTINATION LENGTH" << std::endl;
 
-    for (auto it : Links) {
-        TopologyFile << "  -> = " << it.second->Origin.lock().get()->ID << " " <<
-                     it.second->Destination.lock().get()->ID << " " <<
-                     it.second->Length << std::endl;
-    }
+    for (auto it : Links)
+        {
+            TopologyFile << "  -> = " << it.second->Origin.lock().get()->ID << " " <<
+                         it.second->Destination.lock().get()->ID << " " <<
+                         it.second->Length << std::endl;
+        }
 
 }
 
-double Topology::get_LengthLongestLink() {
-    if (LongestLink == -1) {
-        for (auto &link : Links) {
-            if (LongestLink < link.second->Length) {
-                LongestLink = link.second->Length;
-            }
+double Topology::get_LengthLongestLink()
+{
+    if (LongestLink == -1)
+        {
+            for (auto &link : Links)
+                {
+                    if (LongestLink < link.second->Length)
+                        {
+                            LongestLink = link.second->Length;
+                        }
+                }
         }
-    }
 
     return LongestLink;
 }
 
 std::shared_ptr<Topology>
-Topology::create_DefaultTopology(DefaultTopologies Top) {
+Topology::create_DefaultTopology(DefaultTopologies Top)
+{
     return std::shared_ptr<Topology>(new Topology(
                                          Topology::DefaultTopologiesPaths.left.at(Top)));
 }
 
-double Topology::get_CapEx() {
+double Topology::get_CapEx()
+{
     double CapEx = 0;
 
-    for (auto node : Nodes) {
-        CapEx += node->get_CapEx();
-    }
+    for (auto node : Nodes)
+        {
+            CapEx += node->get_CapEx();
+        }
 
-    for (auto link : Links) {
-        CapEx += link.second->get_CapEx();
-    }
+    for (auto link : Links)
+        {
+            CapEx += link.second->get_CapEx();
+        }
 
     return CapEx;
 }
 
-double Topology::get_OpEx() {
+double Topology::get_OpEx()
+{
     double OpEx = 0;
 
-    for (auto node : Nodes) {
-        OpEx += node->get_OpEx();
-    }
+    for (auto node : Nodes)
+        {
+            OpEx += node->get_OpEx();
+        }
 
-    for (auto link : Links) {
-        OpEx += link.second->get_OpEx();
-    }
+    for (auto link : Links)
+        {
+            OpEx += link.second->get_OpEx();
+        }
 
     return OpEx;
 }
 
-unsigned long Topology::get_NumRegenerators() {
+unsigned long Topology::get_NumRegenerators()
+{
     unsigned long NReg = 0;
 
-    for (auto &node : Nodes) {
-        NReg += node->get_NumRegenerators();
-    }
+    for (auto &node : Nodes)
+        {
+            NReg += node->get_NumRegenerators();
+        }
 
     return NReg;
 }
 
-void Topology::set_avgSpanLength(double avgSpanLength) {
-    for (auto &link : Links) {
-        link.second->set_AvgSpanLength(avgSpanLength);
-    }
+void Topology::set_avgSpanLength(double avgSpanLength)
+{
+    for (auto &link : Links)
+        {
+            link.second->set_AvgSpanLength(avgSpanLength);
+        }
 }

@@ -3,8 +3,9 @@
 
 #include "Device.h"
 
-class Regenerator : public Device {
-  public:
+class Regenerator : public Device
+{
+public:
     Regenerator();
 
     Gain &get_Gain();
@@ -14,7 +15,7 @@ class Regenerator : public Device {
 
     std::shared_ptr<Device> clone();
 
-  private:
+private:
     Gain RegeneratorGain;
     Power RegeneratorNoise;
 };

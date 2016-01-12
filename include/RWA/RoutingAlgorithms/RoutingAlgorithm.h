@@ -12,8 +12,9 @@ class Link;
 /**
  * @brief The RoutingAlgorithm class searches for a route, given a Call.
  */
-class RoutingAlgorithm {
-  public:
+class RoutingAlgorithm
+{
+public:
 #define ROUTING_ALGORITHM \
     X(LORa, "Length and Occupation Routing - Availability", "LORa") \
     X(LORc, "Length and Occupation Routing - Contiguity", "LORc") \
@@ -22,7 +23,8 @@ class RoutingAlgorithm {
     X(SP, "Shortest Path", "SP")
 
 #define X(a,b,c) a,
-    enum RoutingAlgorithms {
+    enum RoutingAlgorithms
+    {
         ROUTING_ALGORITHM
     };
 #undef X

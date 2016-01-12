@@ -9,17 +9,19 @@
 #include <set>
 
 DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T)
-    : RoutingAlgorithm(T) {
+    : RoutingAlgorithm(T)
+{
 
 }
 
 std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
-std::shared_ptr<Call> C) {
+                                  std::shared_ptr<Call> C)
+{
     /** Attention: this code breaks if there are nodes in the Topology with the
      * same ID. This should not happen. The nodes must have sequential ID. **/
 
     std::vector<double> MinDistance(T->Nodes.size() + 1,
-                                         std::numeric_limits<double>::max());
+                                    std::numeric_limits<double>::max());
     std::set<std::pair<int, std::shared_ptr<Node>>> ActiveVertices;
     std::vector<int> Precedent(T->Nodes.size() + 1, -1);
 
@@ -28,32 +30,37 @@ std::shared_ptr<Call> C) {
 
     unsigned int NumVisitedNodes = 0;
 
-    while (!ActiveVertices.empty()) {
-        std::shared_ptr<Node> CurrentNode = ActiveVertices.begin()->second;
+    while (!ActiveVertices.empty())
+        {
+            std::shared_ptr<Node> CurrentNode = ActiveVertices.begin()->second;
 
-        if (CurrentNode == C->Destination.lock()) {
-            break;
+            if (CurrentNode == C->Destination.lock())
+                {
+                    break;
+                }
+
+            if (NumVisitedNodes++ > T->Nodes.size())   //Found a negative loop
+                {
+                    break;
+                }
+
+            ActiveVertices.erase(ActiveVertices.begin());
+
+            for (auto &node : CurrentNode->Neighbours)
+                {
+                    auto locknode = node.lock();
+                    double newLength = MinDistance[CurrentNode->ID] +
+                                       get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);
+
+                    if (MinDistance[locknode->ID] > newLength)
+                        {
+                            ActiveVertices.erase({MinDistance[locknode->ID], locknode});
+                            MinDistance[locknode->ID] = newLength;
+                            ActiveVertices.insert({newLength, locknode});
+                            Precedent[locknode->ID] = CurrentNode->ID;
+                        }
+                }
         }
-
-        if (NumVisitedNodes++ > T->Nodes.size()) { //Found a negative loop
-            break;
-        }
-
-        ActiveVertices.erase(ActiveVertices.begin());
-
-        for (auto &node : CurrentNode->Neighbours) {
-            auto locknode = node.lock();
-            double newLength = MinDistance[CurrentNode->ID] +
-                                    get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);
-
-            if (MinDistance[locknode->ID] > newLength) {
-                ActiveVertices.erase({MinDistance[locknode->ID], locknode});
-                MinDistance[locknode->ID] = newLength;
-                ActiveVertices.insert({newLength, locknode});
-                Precedent[locknode->ID] = CurrentNode->ID;
-            }
-        }
-    }
 
     std::vector<int> NodesInRoute;
     std::vector<std::weak_ptr<Link>> RouteLinks;
@@ -61,25 +68,28 @@ std::shared_ptr<Call> C) {
     int CurrentNode = C->Destination.lock()->ID;
     NodesInRoute.push_back(CurrentNode);
 
-    while (Precedent[CurrentNode] != -1) {
-        NodesInRoute.push_back(Precedent[CurrentNode]);
-
+    while (Precedent[CurrentNode] != -1)
         {
-            int CurNode = Precedent[CurrentNode];
-            Precedent[CurrentNode] = -1;
-            CurrentNode = CurNode;
-        } //Avoiding negative cost loops
+            NodesInRoute.push_back(Precedent[CurrentNode]);
 
-        if (CurrentNode == -1 || NumVisitedNodes > T->Nodes.size()) {
-            RouteLinks.clear(); //Could not find route. Returns empty vector.
-            return RouteLinks;
+            {
+                int CurNode = Precedent[CurrentNode];
+                Precedent[CurrentNode] = -1;
+                CurrentNode = CurNode;
+            } //Avoiding negative cost loops
+
+            if (CurrentNode == -1 || NumVisitedNodes > T->Nodes.size())
+                {
+                    RouteLinks.clear(); //Could not find route. Returns empty vector.
+                    return RouteLinks;
+                }
         }
-    }
 
-    for (int i = NodesInRoute.size() - 1; i > 0; i--) {
-        RouteLinks.push_back(T->Links.at(OrigDestPair(NodesInRoute[i],
-                                         NodesInRoute[i - 1])));
-    }
+    for (int i = NodesInRoute.size() - 1; i > 0; i--)
+        {
+            RouteLinks.push_back(T->Links.at(OrigDestPair(NodesInRoute[i],
+                                             NodesInRoute[i - 1])));
+        }
 
     return RouteLinks;
 }

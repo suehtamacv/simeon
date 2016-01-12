@@ -6,8 +6,9 @@
 /**
  * @brief The TransmissionBitrate class represents a transmission bitrate.
  */
-class TransmissionBitrate {
-  public:
+class TransmissionBitrate
+{
+public:
 #define DEFAULT_TRANSMISSIONBITRATES \
     X(10E9) \
     X(40E9) \
@@ -31,7 +32,7 @@ class TransmissionBitrate {
     bool operator ==(const TransmissionBitrate &) const;
 
     static std::vector<TransmissionBitrate> DefaultBitrates;
-  private:
+private:
     double Bitrate;
 };
 

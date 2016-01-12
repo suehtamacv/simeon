@@ -6,8 +6,9 @@
 
 class NSGA2_Generation;
 
-class NSGA2 {
-  public:
+class NSGA2
+{
+public:
     NSGA2();
 
     void run_Generation();
@@ -19,7 +20,7 @@ class NSGA2 {
     static constexpr unsigned int numIndiv = 100;
     static constexpr unsigned int binaryTournamentParameter = 2;
 
-  protected:
+protected:
     void natural_selection(NSGA2_Generation &gen, NSGA2_Generation &dest);
     std::vector<std::shared_ptr<NSGA2_Generation>> evolution;
 

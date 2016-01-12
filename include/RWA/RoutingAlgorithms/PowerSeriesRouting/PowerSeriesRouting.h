@@ -6,12 +6,14 @@
 #include <vector>
 #include <GeneralPurposeAlgorithms/PSO.h>
 
-namespace PSR {
-    class Cost;
+namespace PSR
+{
+class Cost;
 }
 
-class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
-  public:
+class PowerSeriesRouting : public DijkstraRoutingAlgorithm
+{
+public:
     PowerSeriesRouting(std::shared_ptr<Topology> T);
     PowerSeriesRouting(std::shared_ptr<Topology> T,
                        std::vector<std::shared_ptr<PSR::Cost>> Costs);
@@ -27,7 +29,7 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm {
     int get_NMin() const;
     int get_NMax() const;
 
-  private:
+private:
     std::vector<std::shared_ptr<PSR::Cost>> Costs;
     arma::mat coefficients;
     int NMin, NMax;

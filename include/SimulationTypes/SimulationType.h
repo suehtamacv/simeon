@@ -6,8 +6,9 @@
 #include <boost/bimap.hpp>
 #include <Structure/Topology.h>
 
-class SimulationType {
-  public:
+class SimulationType
+{
+public:
 #define NETWORK_TYPE \
     X(TransparentNetwork, "Transparent Network") \
     X(TranslucentNetwork, "Translucent Network") //X Macros
@@ -21,13 +22,15 @@ class SimulationType {
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")
 
 #define X(a,b) a,
-    enum Network_Type {
+    enum Network_Type
+    {
         NETWORK_TYPE
     };
 #undef X
 
 #define X(a,b,c) a,
-    enum Simulation_Type {
+    enum Simulation_Type
+    {
         SIMULATION_TYPE
     };
 #undef X

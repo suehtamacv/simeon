@@ -13,8 +13,9 @@ class Fiber;
  * compensates for the loss in the precedent fiber segment and for the loss in
  * the succedent switching element (either a SSS or a Splitter).
  */
-class PreAmplifier : public EDFA {
-  public:
+class PreAmplifier : public EDFA
+{
+public:
     /**
      * @brief AT is the type of amplifier.
      */
@@ -28,7 +29,7 @@ class PreAmplifier : public EDFA {
 
     Gain &get_Gain();
     std::shared_ptr<Device> clone();
-  private:
+private:
     unsigned numPorts;
     Node &Destination;
     Fiber &Segment;

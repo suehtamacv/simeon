@@ -10,8 +10,9 @@
 class Link;
 class Device;
 
-class Node {
-  public:
+class Node
+{
+public:
 #define NODETYPE \
     X(TransparentNode, "transparent") \
     X(TranslucentNode, "translucent") \
@@ -29,7 +30,8 @@ class Node {
     * has a infinity amount of regenerators.
     */
 #define X(a,b) a,
-    enum NodeType {
+    enum NodeType
+    {
         NODETYPE
     };
 #undef X
@@ -43,7 +45,8 @@ class Node {
      * and SSS, and Switching Select, that only uses SSS devices.
      */
 #define X(a,b,c) a,
-    enum NodeArchitecture {
+    enum NodeArchitecture
+    {
         NODEARCH
     };
 #undef X
@@ -89,7 +92,7 @@ class Node {
     double get_OpEx();
 
     static void load() {}
-  private:
+private:
     NodeType Type;
     NodeArchitecture Architecture;
     void create_Devices();

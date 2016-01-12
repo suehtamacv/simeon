@@ -4,14 +4,16 @@
 #include <boost/assert.hpp>
 
 bool CallGenerator::EventCompare::operator()(const std::shared_ptr<Event> a,
-        const std::shared_ptr<Event> b) const {
+        const std::shared_ptr<Event> b) const
+{
     return *a > *b;
 }
 
 CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
                              double h,
                              std::vector<TransmissionBitrate> Bitrates) :
-    T(T), h(h), simulationTime(0), Bitrates(Bitrates) {
+    T(T), h(h), simulationTime(0), Bitrates(Bitrates)
+{
 
     UniformNodeDistribution = std::uniform_int_distribution<int>
                               (0, T->Nodes.size() - 1);
@@ -23,7 +25,8 @@ CallGenerator::CallGenerator(std::shared_ptr<Topology> T,
 
 }
 
-std::shared_ptr<Call> CallGenerator::generate_Call() {
+std::shared_ptr<Call> CallGenerator::generate_Call()
+{
     double ArrivalTime = simulationTime + ExponentialDistributionH(
                              random_generator);
     double EndingTime = ArrivalTime + ExponentialDistributionMu(random_generator);
@@ -32,9 +35,10 @@ std::shared_ptr<Call> CallGenerator::generate_Call() {
     int Origin = UniformNodeDistribution(random_generator);
     int Destination = UniformNodeDistribution(random_generator);
 
-    while (Origin == Destination) {
-        Destination = UniformNodeDistribution(random_generator);
-    }
+    while (Origin == Destination)
+        {
+            Destination = UniformNodeDistribution(random_generator);
+        }
 
     int Bitrate = UniformBitrateDistribution(random_generator);
 
@@ -56,7 +60,8 @@ std::shared_ptr<Call> CallGenerator::generate_Call() {
     return C;
 }
 
-void CallGenerator::set_Load(double h) {
+void CallGenerator::set_Load(double h)
+{
     BOOST_ASSERT_MSG(h >= 0, "Network loads must be positive.");
     this->h = h;
     ExponentialDistributionH = std::exponential_distribution<double>(h);

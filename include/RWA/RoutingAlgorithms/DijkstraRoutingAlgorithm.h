@@ -7,8 +7,9 @@
  * @brief The DijkstraRoutingAlgorithm class is a class of routing algorithms
  * whose routes are determined using the Dijkstra Shortest Path algorithm.
  */
-class DijkstraRoutingAlgorithm : public RoutingAlgorithm {
-  public:
+class DijkstraRoutingAlgorithm : public RoutingAlgorithm
+{
+public:
     DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T);
 
     std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C);

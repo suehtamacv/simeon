@@ -10,15 +10,17 @@ class Route;
  * @brief The Event class represents an event that happened in the network. Is
  * either a call requisition or a call ending.
  */
-class Event {
-  public:
+class Event
+{
+public:
     /**
     * @brief The Event_Type enum is used to specify the type of event.
     *
     * Each call generates two events, a CallRequisition on its start and a
     * CallEnding on its ending.
     */
-    enum Event_Type {
+    enum Event_Type
+    {
         CallRequisition, /*!< Event on the starting call. */
         CallEnding /*!< Event on the ending call. */
     };

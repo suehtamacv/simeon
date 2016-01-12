@@ -18,8 +18,9 @@ class Slot;
  * The call is implemented using contigue slots through all the links, and using
  * a single modulation scheme. Optional regenerators can be used at the final node.
  */
-class TransparentSegment {
-  public:
+class TransparentSegment
+{
+public:
     /**
      * @brief TransparentSegment is the standard constructor for a
      * TransparentSegment.

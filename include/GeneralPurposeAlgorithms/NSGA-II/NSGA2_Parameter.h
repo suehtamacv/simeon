@@ -4,16 +4,17 @@
 #include <vector>
 #include <string>
 
-class NSGA2_Parameter {
+class NSGA2_Parameter
+{
     friend class NSGA2;
 
-  public:
+public:
     NSGA2_Parameter(std::vector<int> gene);
     virtual double evaluate() = 0;
     virtual std::string get_ParamName() = 0;
     bool operator == (const NSGA2_Parameter &other) const;
 
-  protected:
+protected:
     bool isEvaluated;
     double value;
     std::vector<int> gene;

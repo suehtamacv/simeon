@@ -20,15 +20,18 @@ PSR::Cost::CostNicknameBimap PSR::Cost::CostsNicknames =
     ;
 
 PSR::Cost::Cost(int NMin, int NMax, std::shared_ptr<Topology> T,
-                PossibleCosts Type) : Type(Type), NMin(NMin), NMax(NMax), T(T) {
+                PossibleCosts Type) : Type(Type), NMin(NMin), NMax(NMax), T(T)
+{
 
 }
 
 std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
-        int NMax, std::shared_ptr<Topology> T) {
+        int NMax, std::shared_ptr<Topology> T)
+{
     std::shared_ptr<PSR::Cost> Cost;
 
-    switch (cost) {
+    switch (cost)
+        {
         case availability:
             Cost = std::shared_ptr<PSR::Cost>(new PSR::cAvailability(NMin, NMax, T));
             break;
@@ -60,19 +63,22 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
         case scheme:
             Cost = std::shared_ptr<PSR::Cost>(new PSR::cModulationScheme(NMin, NMax, T));
             break;
-    }
+        }
 
     return Cost;
 }
 
-int PSR::Cost::get_NMin() {
+int PSR::Cost::get_NMin()
+{
     return NMin;
 }
 
-int PSR::Cost::get_NMax() {
+int PSR::Cost::get_NMax()
+{
     return NMax;
 }
 
-int PSR::Cost::get_N() {
+int PSR::Cost::get_N()
+{
     return NMax - NMin + 1;
 }

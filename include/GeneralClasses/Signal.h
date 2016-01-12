@@ -7,8 +7,9 @@
  * @brief The Signal class represents a signal that propagates through the
  * network.
  */
-class Signal {
-  public:
+class Signal
+{
+public:
     /**
      * @brief InputOSNR is the input OSNR of the network.
      */
@@ -47,7 +48,7 @@ class Signal {
      */
     Power get_NoisePower();
 
-  private:
+private:
     Power SignalPower;
     Power NoisePower;
 };

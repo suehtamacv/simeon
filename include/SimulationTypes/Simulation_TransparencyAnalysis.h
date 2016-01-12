@@ -11,8 +11,9 @@ class Node;
 
 typedef std::pair<double, double> InLineDistance_OSNR_Point;
 
-class Simulation_TransparencyAnalysis : public SimulationType {
-  public:
+class Simulation_TransparencyAnalysis : public SimulationType
+{
+public:
     Simulation_TransparencyAnalysis();
 
     void help();
@@ -22,7 +23,7 @@ class Simulation_TransparencyAnalysis : public SimulationType {
     void load_file(std::string);
     void print();
 
-  private:
+private:
     bool hasLoaded;
     bool hasRun;
 

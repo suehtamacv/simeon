@@ -20,19 +20,21 @@ class Call;
  * exponential distributions, the former with parameter mu and the latter
  * with parameter 1/h.
  */
-class CallGenerator {
-  private:
+class CallGenerator
+{
+private:
     /**
      * @brief The EventCompare struct is used to compare two events. Associated
      * with the priority_queue, this comparison organizes the events in increasing
      * order of their occurral times.
      */
-    struct EventCompare {
+    struct EventCompare
+    {
         bool operator()(const std::shared_ptr<Event> a,
                         const std::shared_ptr<Event> b) const;
     };
 
-  public:
+public:
     /**
      * @brief CallGenerator is the standard constructor for a CallGenerator.
      * @param T is the topology over which the calls are generated.
@@ -89,7 +91,7 @@ class CallGenerator {
      */
     void set_Load(double load);
 
-  private:
+private:
     //Distributions
     std::uniform_int_distribution<int> UniformNodeDistribution;
     std::uniform_int_distribution<int> UniformBitrateDistribution;

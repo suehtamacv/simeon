@@ -1,14 +1,17 @@
 #include <Devices/Amplifiers/BoosterAmplifier.h>
 #include <Devices/SSS.h>
 
-BoosterAmplifier::BoosterAmplifier() : EDFA(-SSS::SSSLoss) {
+BoosterAmplifier::BoosterAmplifier() : EDFA(-SSS::SSSLoss)
+{
 
 }
 
-Gain &BoosterAmplifier::get_Gain() {
+Gain &BoosterAmplifier::get_Gain()
+{
     return AmplifierGain;
 }
 
-std::shared_ptr<Device> BoosterAmplifier::clone() {
+std::shared_ptr<Device> BoosterAmplifier::clone()
+{
     return std::shared_ptr<Device>(new BoosterAmplifier(*this));
 }

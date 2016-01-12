@@ -17,8 +17,9 @@ class Route;
  * wavelength assignment, regenerator assignment and regenerator placement
  * operations that a call must endure before its implementation.
  */
-class RoutingWavelengthAssignment {
-  public:
+class RoutingWavelengthAssignment
+{
+public:
     /**
      * @brief RoutingWavelengthAssignment is the constructor of a
      * RoutingWavelengthAssignment object, for a Translucent or Opaque simulation.

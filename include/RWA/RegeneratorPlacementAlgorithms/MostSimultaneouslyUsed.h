@@ -6,8 +6,9 @@
 
 class RoutingWavelengthAssignment;
 
-class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
-  public:
+class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm
+{
+public:
     MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
                            std::shared_ptr<RoutingWavelengthAssignment> RWA,
                            double NetworkLoad,
@@ -27,7 +28,7 @@ class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm {
     void placeRegenerators(unsigned NumTotalReg = MSU_NumTotalReg, unsigned = 0);
     void load();
 
-  private:
+private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
     double NetworkLoad;
     long long unsigned NumCalls;

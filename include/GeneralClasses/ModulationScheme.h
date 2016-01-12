@@ -8,8 +8,9 @@
 /**
  * @brief The ModulationScheme class represents a modulation scheme.
  */
-class ModulationScheme {
-  public:
+class ModulationScheme
+{
+public:
 #define DEFAULT_MODULATIONSCHEMES \
     X(4, Gain(6.8, Gain::dB)) \
     X(16, Gain(10.5, Gain::dB)) \
@@ -70,7 +71,7 @@ class ModulationScheme {
      */
     static std::vector<ModulationScheme> DefaultSchemes;
 
-  private:
+private:
     unsigned int M;
     Gain SNR_Per_Bit;
 };

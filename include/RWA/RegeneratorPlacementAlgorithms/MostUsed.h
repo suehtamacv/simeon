@@ -6,8 +6,9 @@
 
 class RoutingWavelengthAssignment;
 
-class MostUsed : public NX_RegeneratorPlacement {
-  public:
+class MostUsed : public NX_RegeneratorPlacement
+{
+public:
     MostUsed(std::shared_ptr<Topology> T,
              std::shared_ptr<RoutingWavelengthAssignment> RWA,
              double NetworkLoad,
@@ -17,7 +18,7 @@ class MostUsed : public NX_RegeneratorPlacement {
 
     void placeRegenerators(unsigned N, unsigned X);
 
-  private:
+private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
     double NetworkLoad;
     long long unsigned NumCalls;

@@ -3,8 +3,9 @@
 
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
 
-class FirstFit : public WavelengthAssignmentAlgorithm {
-  public:
+class FirstFit : public WavelengthAssignmentAlgorithm
+{
+public:
     FirstFit(std::shared_ptr<Topology> T);
 
     std::map<std::weak_ptr<Link>,

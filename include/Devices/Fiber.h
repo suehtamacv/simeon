@@ -6,8 +6,9 @@
 /**
  * @brief The Fiber class represents a Fiber segment.
  */
-class Fiber : public Device {
-  public:
+class Fiber : public Device
+{
+public:
     /**
      * @brief alphaFiber is the fiber loss coefficient, measured in dB per
      * kilometer.
@@ -26,7 +27,7 @@ class Fiber : public Device {
 
     std::shared_ptr<Device> clone();
 
-  private:
+private:
     double SpanLength;
     Gain NetLoss;
     Power NoisePower;

@@ -6,12 +6,14 @@
 /**
  * @brief The Power class represents a power, either measured in dBm or in Watts.
  */
-class Power {
-  public:
+class Power
+{
+public:
     /**
     * @brief The InitType enum is used to choose how to init the object.
     */
-    enum InitType {
+    enum InitType
+    {
         dBm, /*!< Use dBm to provide an initial value in dBm */
         Watt /*!< Use Watt to provide an initial value in watts */
     };
@@ -41,7 +43,7 @@ class Power {
      * @return the value of this Power in Watts.
      */
     double in_Watts() const;
-  private:
+private:
     double value_Watts;
 };
 

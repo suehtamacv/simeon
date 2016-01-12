@@ -7,8 +7,9 @@
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
-class Simulation_NSGA2_RegnPlac : public SimulationType {
-  public:
+class Simulation_NSGA2_RegnPlac : public SimulationType
+{
+public:
     Simulation_NSGA2_RegnPlac();
 
     void help();
@@ -28,7 +29,7 @@ class Simulation_NSGA2_RegnPlac : public SimulationType {
     RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
-  private:
+private:
     bool hasLoaded;
     static unsigned int RegnMax;
 
@@ -41,73 +42,81 @@ class Simulation_NSGA2_RegnPlac : public SimulationType {
     class Sim_NSGA2;
 };
 
-class Simulation_NSGA2_RegnPlac::Individual : public NSGA2_Individual {
+class Simulation_NSGA2_RegnPlac::Individual : public NSGA2_Individual
+{
     friend class Simulation_NSGA2_RegnPlac;
 
-  public:
+public:
     Individual(Simulation_NSGA2_RegnPlac &Sim) : Sim(Sim) {}
     void createIndividual();
     int createGene(unsigned int i);
     void setGene(std::vector<int> gene);
     std::shared_ptr<NSGA2_Individual> clone();
 
-  private:
+private:
     Simulation_NSGA2_RegnPlac &Sim;
 };
 
-class Simulation_NSGA2_RegnPlac::Param_BlockProb : public NSGA2_Parameter {
+class Simulation_NSGA2_RegnPlac::Param_BlockProb : public NSGA2_Parameter
+{
     friend class Simulation_NSGA2_RegnPlac;
 
-  public:
+public:
     Param_BlockProb(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
-    std::string get_ParamName() {
+    std::string get_ParamName()
+    {
         return "Blocking Probability";
     }
 
-  private:
+private:
     Simulation_NSGA2_RegnPlac &Sim;
     double BlockProb;
 };
 
-class Simulation_NSGA2_RegnPlac::Param_CapEx : public NSGA2_Parameter {
+class Simulation_NSGA2_RegnPlac::Param_CapEx : public NSGA2_Parameter
+{
     friend class Simulation_NSGA2_RegnPlac;
 
-  public:
+public:
     Param_CapEx(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
-    std::string get_ParamName() {
+    std::string get_ParamName()
+    {
         return "CapEx";
     }
 
-  private:
+private:
     Simulation_NSGA2_RegnPlac &Sim;
     double CapEx;
 };
 
-class Simulation_NSGA2_RegnPlac::Param_OpEx : public NSGA2_Parameter {
+class Simulation_NSGA2_RegnPlac::Param_OpEx : public NSGA2_Parameter
+{
     friend class Simulation_NSGA2_RegnPlac;
 
-  public:
+public:
     Param_OpEx(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
-    std::string get_ParamName() {
+    std::string get_ParamName()
+    {
         return "OpEx";
     }
 
-  private:
+private:
     Simulation_NSGA2_RegnPlac &Sim;
     double OpEx;
 };
 
-class Simulation_NSGA2_RegnPlac::Sim_NSGA2 : public NSGA2 {
+class Simulation_NSGA2_RegnPlac::Sim_NSGA2 : public NSGA2
+{
     friend class Simulation_NSGA2_RegnPlac;
 
-  public:
+public:
     Sim_NSGA2(Simulation_NSGA2_RegnPlac &Sim);
     void createInitialGeneration();
 
-  private:
+private:
     Simulation_NSGA2_RegnPlac &Sim;
 };
 

@@ -6,10 +6,11 @@
 
 class NSGA2_Individual;
 
-class NSGA2_Generation {
+class NSGA2_Generation
+{
     friend class NSGA2;
 
-  public:
+public:
     NSGA2_Generation();
 
     void eval();
@@ -21,7 +22,7 @@ class NSGA2_Generation {
     std::vector<std::shared_ptr<NSGA2_Individual>> getParetoFront(int i);
     std::shared_ptr<NSGA2_Individual> binaryTournament();
 
-  protected:
+protected:
     bool isEvaluated;
 
     std::vector<std::shared_ptr<NSGA2_Individual>> people;

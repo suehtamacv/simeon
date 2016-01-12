@@ -11,8 +11,9 @@
  * transparent segments, over which a Call can be implemented. Each Transparent
  * segment might be ended with a Translucent Node.
  */
-class Route {
-  public:
+class Route
+{
+public:
     /**
      * @brief Route is the standard constructor for a Route.
      * @param Segments is a vector of TransparentSegment used to implement the

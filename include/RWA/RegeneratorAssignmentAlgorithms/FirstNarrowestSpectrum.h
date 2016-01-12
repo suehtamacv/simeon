@@ -10,8 +10,9 @@
  * The algorithm tries to save spectrum in the network by always trying to use
  * the highest allowed spectral efficiency modulation format in the TransparentSegment.
  */
-class FirstNarrowestSpectrum : public RegeneratorAssignmentAlgorithm {
-  public:
+class FirstNarrowestSpectrum : public RegeneratorAssignmentAlgorithm
+{
+public:
     /**
      * @brief FirstNarrowestSpectrum is the standard constructor.
      * @param T is a pointer to the Topology.

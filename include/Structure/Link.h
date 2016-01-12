@@ -11,8 +11,9 @@ class Slot;
 class Device;
 class Topology;
 
-class Link {
-  public:
+class Link
+{
+public:
     static int NumSlots;
     static double DefaultAvgSpanLength;
 
@@ -46,7 +47,7 @@ class Link {
     static void load(std::shared_ptr<Topology> T);
     void set_AvgSpanLength(double avgSpanLength);
 
-  private:
+private:
     void create_Slots();
     void create_Devices();
 };

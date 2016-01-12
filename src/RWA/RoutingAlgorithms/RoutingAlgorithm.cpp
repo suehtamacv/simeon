@@ -19,42 +19,52 @@ RoutingAlgorithm::RoutingAlgorithmNicknames =
 #undef ROUTING_ALGORITHM
     ;
 
-RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T) : T(T) {
+RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T) : T(T)
+{
 
 }
 
 RoutingAlgorithm::RoutingAlgorithms
-RoutingAlgorithm::define_RoutingAlgorithm() {
+RoutingAlgorithm::define_RoutingAlgorithm()
+{
     std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
 
-    do {
-        for (auto &routing : RoutingAlgorithmNames.left) {
-            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
+    do
+        {
+            for (auto &routing : RoutingAlgorithmNames.left)
+                {
+                    std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
+                }
+
+            int Routing_Alg;
+            std::cin >> Routing_Alg;
+
+            if (std::cin.fail() || RoutingAlgorithmNames.left.count
+                    ((RoutingAlgorithms) Routing_Alg) == 0)
+                {
+                    std::cin.clear();
+                    std::cin.ignore();
+
+                    std::cerr << "Invalid routing algorithm." << std::endl;
+                    std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
+                }
+            else
+                {
+                    return (RoutingAlgorithms) Routing_Alg;
+                }
         }
-
-        int Routing_Alg;
-        std::cin >> Routing_Alg;
-
-        if (std::cin.fail() || RoutingAlgorithmNames.left.count
-                ((RoutingAlgorithms) Routing_Alg) == 0) {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid routing algorithm." << std::endl;
-            std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
-        } else {
-            return (RoutingAlgorithms) Routing_Alg;
-        }
-    } while (1);
+    while (1);
 
     return (RoutingAlgorithms) - 1;
 }
 
 std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
-    RoutingAlgorithms Algorithm, std::shared_ptr<Topology> T) {
+    RoutingAlgorithms Algorithm, std::shared_ptr<Topology> T)
+{
     std::shared_ptr<RoutingAlgorithm> R_Alg;
 
-    switch (Algorithm) {
+    switch (Algorithm)
+        {
         case LORa:
             R_Alg = std::shared_ptr<RoutingAlgorithm>(
                         new LengthOccupationRoutingAvailability(T));
@@ -79,7 +89,7 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
             R_Alg = std::shared_ptr<RoutingAlgorithm>(
                         new ShortestPath(T));
             break;
-    }
+        }
 
     R_Alg->load();
     return R_Alg;

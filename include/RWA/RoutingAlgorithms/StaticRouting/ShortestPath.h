@@ -3,8 +3,9 @@
 
 #include <RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h>
 
-class ShortestPath : public StaticRoutingAlgorithm {
-  public:
+class ShortestPath : public StaticRoutingAlgorithm
+{
+public:
     ShortestPath(std::shared_ptr<Topology> T);
 
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call>);

@@ -11,8 +11,9 @@
  * This algorithm tries to perform the regeneration (if it is needed) as far as
  * possible from the source node.
  */
-class FirstLongestReach : public RegeneratorAssignmentAlgorithm {
-  public:
+class FirstLongestReach : public RegeneratorAssignmentAlgorithm
+{
+public:
     /**
      * @brief FirstLongestReach is the standard constructor.
      * @param T is a pointer to the Topology.

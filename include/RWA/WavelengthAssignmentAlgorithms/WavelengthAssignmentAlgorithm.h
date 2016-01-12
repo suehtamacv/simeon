@@ -9,13 +9,15 @@ class Call;
 class Slot;
 class Topology;
 
-class WavelengthAssignmentAlgorithm {
-  public:
+class WavelengthAssignmentAlgorithm
+{
+public:
 #define WAVELENGTHASSIGNMENT_ALGORITHM \
     X(FF, "First Fit", "FF")
 
 #define X(a,b,c) a,
-    enum WavelengthAssignmentAlgorithms {
+    enum WavelengthAssignmentAlgorithms
+    {
         WAVELENGTHASSIGNMENT_ALGORITHM
     };
 #undef X

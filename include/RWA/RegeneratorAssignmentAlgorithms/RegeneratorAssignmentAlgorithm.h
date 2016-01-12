@@ -16,14 +16,16 @@ class Node;
  * @brief The RegeneratorAssignmentAlgorithm class assigns which nodes will use
  * regenerators, given a call and a set of links found by the RoutingAlgorithm.
  */
-class RegeneratorAssignmentAlgorithm {
-  public:
+class RegeneratorAssignmentAlgorithm
+{
+public:
 #define REGASSIGNMENT_ALGORITHMS \
     X(FLR, "First Longest Reach", "FLR") \
     X(FNS, "First Narrowest Spectrum", "FNS") //X Macros
 
 #define X(a,b,c) a,
-    enum RegeneratorAssignmentAlgorithms {
+    enum RegeneratorAssignmentAlgorithms
+    {
         REGASSIGNMENT_ALGORITHMS
     };
 #undef X
@@ -130,7 +132,7 @@ class RegeneratorAssignmentAlgorithm {
     create_RegeneratorAssignmentAlgorithm(
         RegeneratorAssignmentAlgorithms, std::shared_ptr<Topology>);
     virtual void load() = 0;
-  private:
+private:
     std::vector<std::weak_ptr<Link>> segmentLinks(
                                       std::vector<std::weak_ptr<Link>>Links,
                                       std::weak_ptr<Node> start,

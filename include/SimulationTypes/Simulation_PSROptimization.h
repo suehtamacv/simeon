@@ -9,8 +9,9 @@
 #include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
-class Simulation_PSROptimization : public SimulationType {
-  public:
+class Simulation_PSROptimization : public SimulationType
+{
+public:
     Simulation_PSROptimization();
 
     void help();
@@ -20,7 +21,7 @@ class Simulation_PSROptimization : public SimulationType {
     void load_file(std::string);
     void print();
 
-  private:
+private:
     bool hasLoaded;
     bool hasRun;
 
@@ -49,13 +50,16 @@ class Simulation_PSROptimization : public SimulationType {
 
     void create_Simulation();
 
-    struct Compare {
-        bool operator()(double a, double b) {
+    struct Compare
+    {
+        bool operator()(double a, double b)
+        {
             return a < b;
         }
     };
 
-    struct Fitness {
+    struct Fitness
+    {
         static std::shared_ptr<Topology> T;
         double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };

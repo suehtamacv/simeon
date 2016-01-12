@@ -9,8 +9,9 @@
 
 class NetworkSimulation;
 
-class Simulation_StatisticalTrend : public SimulationType {
-  public:
+class Simulation_StatisticalTrend : public SimulationType
+{
+public:
     Simulation_StatisticalTrend();
 
     void run();
@@ -20,7 +21,7 @@ class Simulation_StatisticalTrend : public SimulationType {
     void load_file(std::string);
     void help();
 
-  private:
+private:
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
 
     double NumCalls;

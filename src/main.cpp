@@ -7,7 +7,8 @@
 
 bool parallelism_enabled = true;
 
-int main(void) {
+int main(void)
+{
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 

@@ -8,12 +8,14 @@
 /**
  * @brief The Device class represents in a generic way a device on the network.
  */
-class Device {
-  public:
+class Device
+{
+public:
     /**
      * @brief The DeviceType enum is used to identify the type of Device.
      */
-    enum DeviceType {
+    enum DeviceType
+    {
         AmplifierDevice, /*!< Amplifier */
         FiberDevice, /*!< Fiber Segment */
         RegeneratorDevice, /*!< Regenerator */

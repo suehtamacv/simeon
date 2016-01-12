@@ -1,25 +1,9 @@
 --lineend=linux
---indent-switches
---indent-namespaces
 --mode=c
 
---style=google
-
---attach-namespaces
---attach-classes
---attach-inlines
+--style=gnu
 
 --add-brackets
 
---align-pointer=name
---align-reference=name
-
 --max-code-length=80
 --break-after-logical
-
---pad-oper
---unpad-paren
-
---break-blocks
---pad-header
---keep-one-line-statements

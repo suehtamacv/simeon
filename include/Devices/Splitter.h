@@ -9,8 +9,9 @@ class Node;
  * @brief The Splitter class represents a splitter. Is only used with the
  * Broadcast-And-Select node architecture.
  */
-class Splitter : public Device {
-  public:
+class Splitter : public Device
+{
+public:
     /**
      * @brief Splitter is the standard constructor for a splitter.
      * @param NumPorts is the number of ports of the splitter.
@@ -31,7 +32,7 @@ class Splitter : public Device {
      */
     void set_NumPorts(int NumPorts);
 
-  private:
+private:
     Node *parent;
     unsigned int NumPorts;
     Gain SplitterLoss;
