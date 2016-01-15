@@ -75,6 +75,11 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
 
     switch (Algorithm)
         {
+        case DA:
+            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
+                         new DistanceAdaptative(T));
+            break;
+
         case MSU:
             RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
                          new MostSimultaneouslyUsed(

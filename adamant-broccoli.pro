@@ -76,7 +76,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.cpp
 
 
 HEADERS += \
@@ -163,7 +164,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h \
+    include/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

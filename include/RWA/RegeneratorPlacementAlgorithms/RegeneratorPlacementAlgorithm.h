@@ -15,9 +15,10 @@ class RegeneratorPlacementAlgorithm
 {
 public:
 #define REGPLACEMENT_ALGORITHMS \
-    X(MSU, "Most Simultaneously Used", "MSU") \
-    X(MU, "Most Used", "MU") \
-    X(NDF, "Nodal Degree First", "NDF") //X Macros
+  X(DA, "Distance Adaptative", "DA") \
+  X(MSU, "Most Simultaneously Used", "MSU") \
+  X(MU, "Most Used", "MU") \
+  X(NDF, "Nodal Degree First", "NDF") //X Macros
 
 
 #define X(a,b,c) a,
