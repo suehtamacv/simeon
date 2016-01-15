@@ -5,7 +5,6 @@
 #include "GeneralClasses/TransmissionBitrate.h"
 #include "GeneralClasses/ModulationScheme.h"
 #include <map>
-#include <tuple>
 
 namespace PSR
 {
