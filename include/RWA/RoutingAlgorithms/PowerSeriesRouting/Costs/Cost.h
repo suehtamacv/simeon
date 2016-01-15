@@ -23,6 +23,7 @@ public:
   X(noise, "Noise", "noise") \
   X(normcontiguity, "Normalized Contiguity", "normcontiguity") \
   X(normnoise, "Normalized Noise", "normnoise") \
+  X(slots, "Number of Required Slots", "slots") \
   X(occupability, "Occupability", "occupability") \
   X(scheme, "Modulation Scheme", "scheme")
 

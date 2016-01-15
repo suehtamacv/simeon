@@ -67,6 +67,10 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
         case scheme:
             Cost = std::shared_ptr<PSR::Cost>(new PSR::cModulationScheme(NMin, NMax, T));
             break;
+
+        case slots:
+            Cost = std::shared_ptr<PSR::Cost>(new PSR::cSlots(NMin, NMax, T));
+            break;
         }
 
     return Cost;

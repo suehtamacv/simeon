@@ -75,7 +75,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp
 
 
 HEADERS += \
@@ -161,7 +162,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

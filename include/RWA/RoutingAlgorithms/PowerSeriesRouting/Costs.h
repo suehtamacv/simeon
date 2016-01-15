@@ -10,6 +10,7 @@
 #include "Costs/Cost_NormalizedContiguity.h"
 #include "Costs/Cost_NormalizedNoise.h"
 #include "Costs/Cost_Occupability.h"
+#include "Costs/Cost_Slots.h"
 
 #endif // COSTS
 
