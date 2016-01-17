@@ -76,26 +76,26 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
     switch (Algorithm)
         {
         case DA:
-            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
-                         new DistanceAdaptative(T));
+            RP_Alg = std::make_shared<DistanceAdaptative>(T);
             break;
 
         case MSU:
-            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
-                         new MostSimultaneouslyUsed(
-                             T, RWA, OptimizationLoad, NumCalls));
+            RP_Alg = std::make_shared<MostSimultaneouslyUsed>(
+                         T, RWA, OptimizationLoad, NumCalls);
             break;
 
         case MU:
-            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
-                         new MostUsed(
-                             T, RWA, OptimizationLoad, NumCalls));
+            RP_Alg = std::make_shared<MostUsed>(
+                         T, RWA, OptimizationLoad, NumCalls);
             break;
 
         case NDF:
-            RP_Alg = std::shared_ptr<RegeneratorPlacementAlgorithm>(
-                         new NodalDegreeFirst(T));
+            RP_Alg = std::make_shared<NodalDegreeFirst>(T);
             break;
+
+        case SQP:
+            RP_Alg = std::make_shared<SignalQualityPrediction>
+                     (T, RWA, OptimizationLoad, NumCalls);
         }
 
     if (runLoad)

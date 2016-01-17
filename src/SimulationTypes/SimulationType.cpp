@@ -93,29 +93,27 @@ std::shared_ptr<SimulationType> SimulationType::create()
             switch ((Simulation_Type) simul)
                 {
                 case transparency:
-                    simulation = std::shared_ptr<SimulationType>(new
-                                 Simulation_TransparencyAnalysis());
+                    simulation = std::make_shared<Simulation_TransparencyAnalysis>();
                     break;
 
                 case morp3o:
-                    simulation = std::shared_ptr<SimulationType>(new Simulation_NSGA2_RegnPlac());
+                    simulation = std::make_shared<Simulation_NSGA2_RegnPlac>();
                     break;
 
                 case networkload:
-                    simulation = std::shared_ptr<SimulationType>(new Simulation_NetworkLoad());
+                    simulation = std::make_shared<Simulation_NetworkLoad>();
                     break;
 
                 case psroptimization:
-                    simulation = std::shared_ptr<SimulationType>(new Simulation_PSROptimization());
+                    simulation = std::make_shared<Simulation_PSROptimization>();
                     break;
 
                 case regnum:
-                    simulation = std::shared_ptr<SimulationType>(new
-                                 Simulation_RegeneratorNumber());
+                    simulation = std::make_shared<Simulation_RegeneratorNumber>();
                     break;
 
                 case statisticaltrend:
-                    simulation = std::shared_ptr<SimulationType>(new Simulation_StatisticalTrend());
+                    simulation = std::make_shared<Simulation_StatisticalTrend>();
                     break;
                 }
 

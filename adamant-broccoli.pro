@@ -77,7 +77,8 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.cpp
+    src/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction.cpp
 
 
 HEADERS += \
@@ -165,7 +166,8 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h \
-    include/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h
+    include/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h \
+    include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

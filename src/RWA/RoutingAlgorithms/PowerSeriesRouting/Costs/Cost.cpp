@@ -33,43 +33,43 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
     switch (cost)
         {
         case availability:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cAvailability(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cAvailability>(NMin, NMax, T);
             break;
 
         case bitrate:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cBitrate(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cBitrate>(NMin, NMax, T);
             break;
 
         case contiguity:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cContiguity(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cContiguity>(NMin, NMax, T);
             break;
 
         case distance:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cDistance(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cDistance>(NMin, NMax, T);
             break;
 
         case noise:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cNoise(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cNoise>(NMin, NMax, T);
             break;
 
         case normcontiguity:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cNormContiguity(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cNormContiguity>(NMin, NMax, T);
             break;
 
         case normnoise:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cNormNoise(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cNormNoise>(NMin, NMax, T);
             break;
 
         case occupability:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cOccupability(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cOccupability>(NMin, NMax, T);
             break;
 
         case scheme:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cModulationScheme(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cModulationScheme>(NMin, NMax, T);
             break;
 
         case slots:
-            Cost = std::shared_ptr<PSR::Cost>(new PSR::cSlots(NMin, NMax, T));
+            Cost = std::make_shared<PSR::cSlots>(NMin, NMax, T);
             break;
         }
 
