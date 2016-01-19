@@ -207,9 +207,32 @@ void Simulation_RegeneratorNumber::load()
     hasLoaded = true;
 }
 
-void Simulation_RegeneratorNumber::save(std::string)
+void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
 {
+    std::ofstream SimConfigFile("SimConfigFile.txt",
+                               std::ofstream::out | std::ofstream::trunc);
 
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "\t* * * ADAMANT BROCCOLI SIMULATOR OF SLICE OPTICAL NETWORKS * * *" << std::endl << std::endl;
+    SimConfigFile << "Simulation Configurations File:" << std::endl << std::endl;
+    SimConfigFile << "PARAMETER = VALUE" << std::endl;
+
+    SimConfigFile << "simulation = regnum" << std::endl;
+    SimConfigFile << "avgspanlength = " << T->AvgSpanLength << std::endl;
+    SimConfigFile << "routalg = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) << std::endl;
+    SimConfigFile << "waa = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm) << std::endl;
+    //SimConfigFile << "rpa = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegAssignment_Algorithm) << std::endl;
+    //SimConfigFile << "raa = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegPlacement_Algorithm) << std::endl;
+    SimConfigFile << "callnum = " << NumCalls << std::endl;
+    SimConfigFile << "netload = " << OptimizationLoad << std::endl;
+    SimConfigFile << "minregnum = " << minRegNumber << std::endl;
+    SimConfigFile << "maxregnum = " << maxRegNumber << std::endl;
+    SimConfigFile << "regstep = " << stepRegNumber << std::endl;
+    SimConfigFile << "translnodes = " << numTranslucentNodes << std::endl;
+
+    SimConfigFile << std::endl << "Topology Data:" << std::endl << std::endl;
+    T->save("SimConfigFile.txt");
 }
 
 void Simulation_RegeneratorNumber::load_file(std::string)
@@ -242,6 +265,19 @@ void Simulation_RegeneratorNumber::print()
                   << simulations[i]->get_CallBlockingProbability() << std::endl;
 
         }
+
+    char saveOption;
+    std::cout << std::endl << "Do you wish to save the configurations of this simulation (y/n)? ";
+    std::cin >> saveOption;
+    /*
+    if(saveOption == 'y' || saveOption == 'Y') {
+        std::string saveFileName;
+        std::cout << "Enter the file name: ";
+        saveFileName.append(".txt");
+        std::getline(std::cin, saveFileName);
+        save(saveFileName);
+    } */
+    save("");
 }
 
 void Simulation_RegeneratorNumber::createSimulations()

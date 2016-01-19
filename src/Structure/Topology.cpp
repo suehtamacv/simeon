@@ -277,4 +277,33 @@ void Topology::set_avgSpanLength(double avgSpanLength)
         {
         link.second->set_AvgSpanLength(avgSpanLength);
         }
+    AvgSpanLength = avgSpanLength;
+}
+
+static std::string get_TopoNameFromNum(int TopNum) // Just leave it here, dude.
+{
+    std::string TopName;
+    switch(TopNum)
+    {
+        case 0:
+            TopName = "European";
+            break;
+        case 1:
+            TopName = "German";
+            break;
+        case 2:
+            TopName = "NSFNet";
+            break;
+        case 3:
+            TopName = "Pacific Bell";
+            break;
+        case 4:
+            TopName = "US Backbone";
+            break;
+        default:
+            TopName = "";
+            break;
+    }
+
+    return TopName;
 }

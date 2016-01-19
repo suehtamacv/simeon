@@ -60,7 +60,8 @@ public:
 
     static std::shared_ptr<Topology> create_DefaultTopology(DefaultTopologies);
 
-    void save(std::string TopologyFileName);
+    void save(std::string TopologyFileName);   
+    static std::string get_TopoNameFromNum(int TopNum);
 
     double get_LengthLongestLink();
     void set_avgSpanLength(double avgSpanLength);
@@ -69,6 +70,8 @@ public:
 
     double get_CapEx();
     double get_OpEx();
+
+    double AvgSpanLength;
 private:
     double LongestLink;
 };

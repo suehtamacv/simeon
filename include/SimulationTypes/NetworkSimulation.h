@@ -2,6 +2,7 @@
 #define NETWORKSIMULATION_H
 
 #include <memory>
+#include <fstream>
 
 class CallGenerator;
 class RoutingWavelengthAssignment;
