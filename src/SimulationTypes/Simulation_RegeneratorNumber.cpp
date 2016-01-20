@@ -209,30 +209,35 @@ void Simulation_RegeneratorNumber::load()
 
 void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
 {
-    std::ofstream SimConfigFile("SimConfigFile.txt",
-                               std::ofstream::out | std::ofstream::trunc);
+    SimulationType::save(SimConfigFileName);
+
+    Link::save(SimConfigFileName, T);
+
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    SimConfigFile << "\t* * * ADAMANT BROCCOLI SIMULATOR OF SLICE OPTICAL NETWORKS * * *" << std::endl << std::endl;
-    SimConfigFile << "Simulation Configurations File:" << std::endl << std::endl;
-    SimConfigFile << "PARAMETER = VALUE" << std::endl;
+    SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
+    SimConfigFile << "# Parameter = Value" << std::endl;
+    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+                  << std::endl;
+    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm)
+                  << std::endl;
+    //SimConfigFile << "  RegeneratorPlacementAlgorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegAssignment_Algorithm) << std::endl;
+    //SimConfigFile << "  RegeneratorAssignmentAlgorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegPlacement_Algorithm) << std::endl;
 
-    SimConfigFile << "simulation = regnum" << std::endl;
-    SimConfigFile << "avgspanlength = " << T->AvgSpanLength << std::endl;
-    SimConfigFile << "routalg = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) << std::endl;
-    SimConfigFile << "waa = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm) << std::endl;
-    //SimConfigFile << "rpa = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegAssignment_Algorithm) << std::endl;
-    //SimConfigFile << "raa = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegPlacement_Algorithm) << std::endl;
-    SimConfigFile << "callnum = " << NumCalls << std::endl;
-    SimConfigFile << "netload = " << OptimizationLoad << std::endl;
-    SimConfigFile << "minregnum = " << minRegNumber << std::endl;
-    SimConfigFile << "maxregnum = " << maxRegNumber << std::endl;
-    SimConfigFile << "regstep = " << stepRegNumber << std::endl;
-    SimConfigFile << "translnodes = " << numTranslucentNodes << std::endl;
+    SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
+    SimConfigFile << "# Parameter = Value" << std::endl;
+    SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
+    SimConfigFile << "  OptimizationLoad = " << OptimizationLoad << std::endl;
+    SimConfigFile << "  minRegNumber = " << minRegNumber << std::endl;
+    SimConfigFile << "  maxRegNumber = " << maxRegNumber << std::endl;
+    SimConfigFile << "  stepRegNumber = " << stepRegNumber << std::endl;
+    SimConfigFile << "  numTranslucentNodes = " << numTranslucentNodes << std::endl;
 
-    SimConfigFile << std::endl << "Topology Data:" << std::endl << std::endl;
-    T->save("SimConfigFile.txt");
+    SimConfigFile << std::endl;
+    T->save(SimConfigFileName);
 }
 
 void Simulation_RegeneratorNumber::load_file(std::string)
@@ -266,18 +271,7 @@ void Simulation_RegeneratorNumber::print()
 
         }
 
-    char saveOption;
-    std::cout << std::endl << "Do you wish to save the configurations of this simulation (y/n)? ";
-    std::cin >> saveOption;
-    /*
-    if(saveOption == 'y' || saveOption == 'Y') {
-        std::string saveFileName;
-        std::cout << "Enter the file name: ";
-        saveFileName.append(".txt");
-        std::getline(std::cin, saveFileName);
-        save(saveFileName);
-    } */
-    save("");
+    save("SimConfigFile.txt"); // Name of the save file
 }
 
 void Simulation_RegeneratorNumber::createSimulations()

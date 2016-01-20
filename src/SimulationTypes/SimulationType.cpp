@@ -63,6 +63,20 @@ void SimulationType::load()
 
 }
 
+void SimulationType::save(std::string SimConfigFileName)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::trunc);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  [general_readings]" << std::endl << std::endl;
+    SimConfigFile << "# Parameter = Value" << std::endl;
+
+    //SimConfigFile << "  SimulationType = " << SimulationType::SimulationTypeNicknames.left.at(Sim) << std::endl;
+
+}
+
 std::shared_ptr<SimulationType> SimulationType::create()
 {
     std::cout << std::endl << "-> Define a simulation to run." << std::endl;

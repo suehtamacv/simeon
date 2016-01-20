@@ -203,6 +203,16 @@ void Link::load(std::shared_ptr<Topology> T)
     T->set_avgSpanLength(DefaultAvgSpanLength);
 }
 
+void Link::save(std::string SimConfigFileName, std::shared_ptr<Topology> T)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  AvgSpanLength = " << T->AvgSpanLength << std::endl;
+}
+
 double Link::get_CapEx()
 {
     double CapEx = 0;
