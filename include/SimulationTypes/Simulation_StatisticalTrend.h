@@ -28,6 +28,8 @@ private:
     double NetworkLoad;
     int NumRepetitions;
 
+    std::string FileName;
+
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
     WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms

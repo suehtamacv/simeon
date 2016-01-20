@@ -137,6 +137,28 @@ void Simulation_StatisticalTrend::load()
         }
     while (1);
 
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     create_Simulations();
 
     hasLoaded = true;
@@ -220,6 +242,8 @@ void Simulation_StatisticalTrend::print()
 
     int Sim = 1;
 
+    std::ofstream ResultFile(FileName.c_str());
+
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "SIMULATION\tCALL BLOCKING PROBABILITY" << std::endl;
 
@@ -236,9 +260,15 @@ void Simulation_StatisticalTrend::print()
             }
 
         #pragma omp ordered
-        std::cout << Sim++ << "\t\t" << simulations[i]->get_CallBlockingProbability()
-                  << std::endl;
+            {
+            std::cout << Sim << "\t\t" << simulations[i]->get_CallBlockingProbability()
+                      << std::endl;
+            ResultFile << Sim++ << "\t\t" << simulations[i]->get_CallBlockingProbability()
+                       << std::endl;
+            }
         }
+
+    ResultFile.close();
 }
 
 void Simulation_StatisticalTrend::save(std::string)
