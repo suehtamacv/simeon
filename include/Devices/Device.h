@@ -28,7 +28,7 @@ public:
      * @brief Device is the standard constructor for a Device.
      * @param DevType is the type of Device.
      */
-    Device(DeviceType  DevType = UndefinedDevice);
+    Device(DeviceType DevType = UndefinedDevice);
 
     /**
      * @brief DevType is the type of device.

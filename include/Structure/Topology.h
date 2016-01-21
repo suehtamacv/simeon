@@ -20,6 +20,7 @@ public:
     X(German, "German", "data/topologies/German") \
     X(NSFNet, "NSFNet", "data/topologies/NSFNet") \
     X(PacificBell, "Pacific Bell", "data/topologies/PacificBell") \
+    X(Top1, "Topology 1", "data/topologies/Top1") \
     X(USBackbone, "US Backbone", "data/topologies/USBackbone") //Code Name, Official Name, FilePath
 
 #define X(a,b,c) a,
