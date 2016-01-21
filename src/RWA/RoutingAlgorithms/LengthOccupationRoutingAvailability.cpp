@@ -13,6 +13,6 @@ double LengthOccupationRoutingAvailability::get_Cost(
     std::shared_ptr<Call>)
 {
     return 1 +
-           (link.lock()->Length / T->get_LengthLongestLink()) +
+           (link.lock()->Length / T->get_LengthLongestLink()) -
            (link.lock()->get_Availability() / (double) Link::NumSlots);
 }
