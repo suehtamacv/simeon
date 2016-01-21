@@ -30,9 +30,8 @@ void PSR::cNoise::createCache()
             for (auto &scheme : ModulationScheme::DefaultSchemes)
                 {
                 CallProperties Prop{link.second, bitrate, scheme};
-                double ThresholdNoise = (Signal::InputPower * -scheme.get_ThresholdOSNR(
-                                             bitrate))
-                                        .in_Watts();
+                double ThresholdNoise = Signal::InputPower.in_Watts() /
+                                        scheme.get_ThresholdOSNR(bitrate).in_Linear();
 
                 cache.emplace(Prop, arma::ones<arma::rowvec>(NMax - NMin + 1));
                 int expo = 0;
