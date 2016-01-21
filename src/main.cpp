@@ -5,7 +5,7 @@
 #include "RWA.h"
 #include "SimulationTypes.h"
 
-bool parallelism_enabled = true;
+bool parallelism_enabled = false;
 
 int main(void)
 {
