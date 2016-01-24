@@ -109,97 +109,104 @@ std::shared_ptr<SimulationType> SimulationType::create()
     } while(1);
 
     if (option == 0)
-    {
-        std::cout << std::endl << "-> Define a simulation to run." << std::endl;
+        return start();
 
-        do
-            {
-            for (auto &sim : SimulationTypeNames.left)
-                {
-                std::cout << "(" << sim.first << ")\t" << sim.second << std::endl;
-                }
-
-            int simul;
-            std::cin >> simul;
-
-            if (std::cin.fail() ||
-                    SimulationTypeNames.left.count((Simulation_Type) simul) == 0)
-                {
-                std::cin.clear();
-                std::cin.ignore();
-
-                std::cerr << "Invalid Simulation Type." << std::endl;
-                std::cout << std::endl << "-> Define a simulation to run." << std::endl;
-                }
-            else
-                {
-                std::shared_ptr<SimulationType> simulation;
-
-                switch ((Simulation_Type) simul)
-                    {
-                    case transparency:
-                        simulation = std::make_shared<Simulation_TransparencyAnalysis>();
-                        break;
-
-                    case morp3o:
-                        simulation = std::make_shared<Simulation_NSGA2_RegnPlac>();
-                        break;
-
-                    case networkload:
-                        simulation = std::make_shared<Simulation_NetworkLoad>();
-                        break;
-
-                    case psroptimization:
-                        simulation = std::make_shared<Simulation_PSROptimization>();
-                        break;
-
-                    case regnum:
-                        simulation = std::make_shared<Simulation_RegeneratorNumber>();
-                        break;
-
-                    case statisticaltrend:
-                        simulation = std::make_shared<Simulation_StatisticalTrend>();
-                        break;
-                    }
-
-                simulation->help();
-                return simulation;
-                }
-            }
-        while (1);
-    }
     else if (option == 1)
-    {
-        std::string ConfigFileName;
-        /*
-        std::cout << "-> Enter the file name." << std::endl;
-        std::getline(std::cin, SimConfigFile);
-        */
-        ConfigFileName = "SimConfigFile.ini"; // Arquivo que tenho na pasta build/adamant
+        return open();
+}
 
-        using namespace boost::program_options;
+std::shared_ptr<SimulationType> SimulationType::start()
+{
+    std::cout << std::endl << "-> Define a simulation to run." << std::endl;
 
-        options_description ConfigDesctription("Configurations Data");
-        ConfigDesctription.add_options()("general.SimulationType",
-                                         value<std::string>()->required(), "Simulation Type");
-
-        variables_map vm;
-        std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-        BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-        store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), vm);
-        ConfigFile.close();
-        notify(vm);
-
-        std::string SimType = vm["general.SimulationType"].as<std::string>();
-
-        std::shared_ptr<SimulationType> simulation;
-
-        if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::regnum))
+    do
         {
-            simulation = std::make_shared<Simulation_RegeneratorNumber>();
-            std::cout << std::endl << "Simulation Type = " << SimType << std::endl;
-            simulation->load_file(ConfigFileName);
+        for (auto &sim : SimulationTypeNames.left)
+            {
+            std::cout << "(" << sim.first << ")\t" << sim.second << std::endl;
+            }
+
+        int simul;
+        std::cin >> simul;
+
+        if (std::cin.fail() ||
+                SimulationTypeNames.left.count((Simulation_Type) simul) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid Simulation Type." << std::endl;
+            std::cout << std::endl << "-> Define a simulation to run." << std::endl;
+            }
+        else
+            {
+            std::shared_ptr<SimulationType> simulation;
+
+            switch ((Simulation_Type) simul)
+                {
+                case transparency:
+                    simulation = std::make_shared<Simulation_TransparencyAnalysis>();
+                    break;
+
+                case morp3o:
+                    simulation = std::make_shared<Simulation_NSGA2_RegnPlac>();
+                    break;
+
+                case networkload:
+                    simulation = std::make_shared<Simulation_NetworkLoad>();
+                    break;
+
+                case psroptimization:
+                    simulation = std::make_shared<Simulation_PSROptimization>();
+                    break;
+
+                case regnum:
+                    simulation = std::make_shared<Simulation_RegeneratorNumber>();
+                    break;
+
+                case statisticaltrend:
+                    simulation = std::make_shared<Simulation_StatisticalTrend>();
+                    break;
+                }
+
+            simulation->help();
             return simulation;
+            }
         }
+    while (1);
+}
+
+std::shared_ptr<SimulationType> SimulationType::open()
+{
+    std::string ConfigFileName;
+    /*
+    std::cout << "-> Enter the file name." << std::endl;
+    std::getline(std::cin, SimConfigFile);
+    */
+    ConfigFileName = "SimConfigFile.ini"; // File with previous simulation configurations
+
+    using namespace boost::program_options;
+
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type");
+
+    variables_map vm;
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), vm);
+    ConfigFile.close();
+    notify(vm);
+
+    std::string SimType = vm["general.SimulationType"].as<std::string>();
+
+    std::shared_ptr<SimulationType> simulation;
+
+    if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::regnum))
+    {
+        simulation = std::make_shared<Simulation_RegeneratorNumber>();
+        std::cout << "Simulation Type = " << SimType << std::endl;
+        simulation->load_file(ConfigFileName);
+        return simulation;
     }
 }

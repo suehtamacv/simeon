@@ -40,6 +40,8 @@ public:
     Simulation_Type SimType;
 
     static std::shared_ptr<SimulationType> create();
+    static std::shared_ptr<SimulationType> start();
+    static std::shared_ptr<SimulationType> open();
 
     typedef boost::bimap<Network_Type, std::string> NetworkTypeBimap;
     static NetworkTypeBimap NetworkTypes;
