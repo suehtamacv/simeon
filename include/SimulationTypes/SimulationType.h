@@ -19,7 +19,7 @@ public:
     X(networkload, "Network Load Variation", "networkload") \
     X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization") \
     X(regnum, "Number of Regenerators", "regnum") \
-    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")\
+    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")
 
 #define X(a,b) a,
     enum Network_Type
