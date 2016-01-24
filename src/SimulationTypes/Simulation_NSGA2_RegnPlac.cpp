@@ -11,7 +11,7 @@
 
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
 
-Simulation_NSGA2_RegnPlac::Simulation_NSGA2_RegnPlac() : hasLoaded(false)
+Simulation_NSGA2_RegnPlac::Simulation_NSGA2_RegnPlac() : SimulationType(Simulation_Type::morp3o), hasLoaded(false)
 {
     auto maxBitrate = std::max_element(TransmissionBitrate::DefaultBitrates.begin(),
                                        TransmissionBitrate::DefaultBitrates.end());

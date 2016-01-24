@@ -4,7 +4,7 @@
 #include <Calls/CallGenerator.h>
 #include <RWA/RoutingWavelengthAssignment.h>
 
-Simulation_StatisticalTrend::Simulation_StatisticalTrend()
+Simulation_StatisticalTrend::Simulation_StatisticalTrend() : SimulationType(Simulation_Type::statisticaltrend)
 {
     hasLoaded = false;
 }

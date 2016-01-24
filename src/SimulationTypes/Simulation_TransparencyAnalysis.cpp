@@ -8,7 +8,7 @@
 #include <GeneralClasses/Signal.h>
 #include <algorithm>
 
-Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis()
+Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() : SimulationType(Simulation_Type::transparency)
 {
     hasLoaded = hasRun = false;
     minModulationScheme =

@@ -18,7 +18,7 @@ Simulation_PSROptimization::RegPlacement_Algorithm;
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
 Simulation_PSROptimization::RegAssignment_Algorithm;
 
-Simulation_PSROptimization::Simulation_PSROptimization()
+Simulation_PSROptimization::Simulation_PSROptimization() : SimulationType(Simulation_Type::psroptimization)
 {
     hasLoaded = hasRun = false;
 }

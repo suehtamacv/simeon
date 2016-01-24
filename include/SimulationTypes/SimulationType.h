@@ -19,7 +19,7 @@ public:
     X(networkload, "Network Load Variation", "networkload") \
     X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization") \
     X(regnum, "Number of Regenerators", "regnum") \
-    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")
+    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")\
 
 #define X(a,b) a,
     enum Network_Type
@@ -34,6 +34,10 @@ public:
         SIMULATION_TYPE
     };
 #undef X
+
+    SimulationType(Simulation_Type SimType);
+
+    Simulation_Type SimType;
 
     static std::shared_ptr<SimulationType> create();
 
