@@ -13,6 +13,7 @@ int main(void)
 
     auto simulation = SimulationType::create();
     simulation->print();
+    simulation->run();
 
     return 0;
 }

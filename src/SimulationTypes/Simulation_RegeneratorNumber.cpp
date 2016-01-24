@@ -29,6 +29,9 @@ void Simulation_RegeneratorNumber::run()
         load();
         }
 
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+    std::cout << "NUM REGENERATORS\tCALL BLOCKING PROBABILITY" << std::endl;
+
     extern bool parallelism_enabled;
     #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
 
@@ -38,6 +41,11 @@ void Simulation_RegeneratorNumber::run()
             {
             simulations[i]->run();
             }
+
+        #pragma omp ordered
+        std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
+                  << simulations[i]->get_CallBlockingProbability() << std::endl;
+
         }
 }
 
@@ -260,52 +268,28 @@ void Simulation_RegeneratorNumber::load_file(std::string ConfigFileName)
             ("sim_info.stepRegNumber", value<long double>()->required(), "Number of Reg. per Node Step")
             ("sim_info.numTranslucentNodes", value<long double>()->required(), "Number of Translucent Nodes");
 
-    variables_map vm;
+    variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
     BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
 
-    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), vm);
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
     ConfigFile.close();
-    notify(vm);
-
-    long double AvgSpanLengthValue = vm["general.AvgSpanLength"].as<long double>();
-    std::string RoutingAlgorithmValue = vm["algorithms.RoutingAlgorithm"].as<std::string>();
-    std::string WavelengthAssignmentAlgorithmValue = vm["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>();
-    std::string RegeneratorPlacementAlgorithmValue = vm["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>();
-    std::string RegeneratorAssignmentAlgorithmValue = vm["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>();
-    long double NumCallsValue = vm["sim_info.NumCalls"].as<long double>();
-    long double OptimizationLoadValue = vm["sim_info.OptimizationLoad"].as<long double>();
-    long double minRegNumberValue = vm["sim_info.minRegNumber"].as<long double>();
-    long double maxRegNumberValue = vm["sim_info.maxRegNumber"].as<long double>();
-    long double stepRegNumberValue = vm["sim_info.stepRegNumber"].as<long double>();
-    long double numTranslucentNodesValue = vm["sim_info.numTranslucentNodes"].as<long double>();
-
-    std::cout << "Average Span Length = " << AvgSpanLengthValue << std::endl;
-    std::cout << "Routing Algorithm = " << RoutingAlgorithmValue << std::endl;
-    std::cout << "Wavelength Assignment Algorithm = " << WavelengthAssignmentAlgorithmValue << std::endl;
-    std::cout << "Regenerator Placement Algorithm = " << RegeneratorPlacementAlgorithmValue << std::endl;
-    std::cout << "Regenerator Assignment Algorithm = " << RegeneratorAssignmentAlgorithmValue << std::endl;
-    std::cout << "Number of Calls = " << NumCallsValue << std::endl;
-    std::cout << "Network Load = " << OptimizationLoadValue << std::endl;
-    std::cout << "Min. Number of Reg. per Node = " << minRegNumberValue << std::endl;
-    std::cout << "Max. Number of Reg. per Node = " << maxRegNumberValue << std::endl;
-    std::cout << "Number of Reg. per Node Step = " << stepRegNumberValue << std::endl;
-    std::cout << "Number of Translucent Nodes = " << numTranslucentNodesValue << std::endl;
+    notify(VariablesMap);
 
     T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
-    Link::DefaultAvgSpanLength = AvgSpanLengthValue;
-    T->set_avgSpanLength(AvgSpanLengthValue);
-    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(RoutingAlgorithmValue);
-    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(WavelengthAssignmentAlgorithmValue);
-    RegPlacement_Algorithm = RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at(RegeneratorPlacementAlgorithmValue);
-    RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(RegeneratorAssignmentAlgorithmValue);
-    NumCalls = NumCallsValue;
-    OptimizationLoad = OptimizationLoadValue;
-    minRegNumber = minRegNumberValue;
-    maxRegNumber = maxRegNumberValue;
-    stepRegNumber = stepRegNumberValue;
-    numTranslucentNodes = numTranslucentNodesValue;
+    Link::DefaultAvgSpanLength = VariablesMap["general.AvgSpanLength"].as<long double>();
+    T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
+    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
+    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
+    RegPlacement_Algorithm = RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at( VariablesMap["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>());
+    RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
+    NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
+    OptimizationLoad = VariablesMap["sim_info.OptimizationLoad"].as<long double>();
+    minRegNumber = VariablesMap["sim_info.minRegNumber"].as<long double>();
+    maxRegNumber = VariablesMap["sim_info.maxRegNumber"].as<long double>();
+    stepRegNumber = VariablesMap["sim_info.stepRegNumber"].as<long double>();
+    numTranslucentNodes = VariablesMap["sim_info.numTranslucentNodes"].as<long double>();
 
     createSimulations();
 
@@ -319,26 +303,22 @@ void Simulation_RegeneratorNumber::print()
         load();
         }
 
-    std::cout << std::endl << "* * RESULTS * *" << std::endl;
-    std::cout << "NUM REGENERATORS\tCALL BLOCKING PROBABILITY" << std::endl;
+    std::cout << std::endl << "  A Number of Regenerators Simulation is about to start with the following parameters: " << std::endl;
+    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength << std::endl;
+    std::cout << "-> Routing Algorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+                  << std::endl;
+    std::cout << "-> Wavelength Assignment Algorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm)
+                  << std::endl;
+    std::cout << "-> Regenerator Placement Algorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegPlacement_Algorithm) << std::endl;
+    std::cout << "-> Regenerator Assignment Algorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
+    std::cout << "-> Number of Calls = " << NumCalls << std::endl;
+    std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
+    std::cout << "-> Min. Number of Reg. per Node = " << minRegNumber << std::endl;
+    std::cout << "-> Max. Number of Reg. per Node = " << maxRegNumber << std::endl;
+    std::cout << "-> Number of Reg. per Node Step = " << stepRegNumber << std::endl;
+    std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes << std::endl;
 
-    extern bool parallelism_enabled;
-    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
-
-    for (unsigned i = 0; i < simulations.size(); i++)
-        {
-        if (!simulations[i]->hasSimulated)
-            {
-            simulations[i]->run();
-            }
-
-        #pragma omp ordered
-        std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
-                  << simulations[i]->get_CallBlockingProbability() << std::endl;
-
-        }
-
-    std::string ConfigFileName = "SimConfigFileTEMP.ini"; // Name of the file
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
 
     save(ConfigFileName);
 }

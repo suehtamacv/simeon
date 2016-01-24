@@ -191,14 +191,14 @@ std::shared_ptr<SimulationType> SimulationType::open()
     ConfigDesctription.add_options()("general.SimulationType",
                                      value<std::string>()->required(), "Simulation Type");
 
-    variables_map vm;
+    variables_map VariablesMap;
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
     BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), vm);
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
     ConfigFile.close();
-    notify(vm);
+    notify(VariablesMap);
 
-    std::string SimType = vm["general.SimulationType"].as<std::string>();
+    std::string SimType = VariablesMap["general.SimulationType"].as<std::string>();
 
     std::shared_ptr<SimulationType> simulation;
 
