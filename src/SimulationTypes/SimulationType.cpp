@@ -205,7 +205,6 @@ std::shared_ptr<SimulationType> SimulationType::open()
     if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::regnum))
     {
         simulation = std::make_shared<Simulation_RegeneratorNumber>();
-        std::cout << "Simulation Type = " << SimType << std::endl;
         simulation->load_file(ConfigFileName);
         return simulation;
     }
