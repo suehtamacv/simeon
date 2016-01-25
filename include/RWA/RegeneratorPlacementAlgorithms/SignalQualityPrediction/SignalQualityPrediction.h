@@ -1,7 +1,7 @@
 #ifndef SIGNALQUALITYPREDICTION_H
 #define SIGNALQUALITYPREDICTION_H
 
-#include "NX_RegeneratorPlacement.h"
+#include "../NX_RegeneratorPlacement.h"
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <GeneralClasses/ModulationScheme.h>
 #include <map>
@@ -15,7 +15,9 @@ public:
                             long long unsigned NumCalls,
                             std::vector<TransmissionBitrate> Bitrates =
                                 TransmissionBitrate::DefaultBitrates);
-    void placeRegenerators(unsigned, unsigned);
+    void placeRegenerators(unsigned N = NX_N, unsigned X = NX_X);
+
+    unsigned get_LNMax(TransmissionBitrate, ModulationScheme);
 
 protected:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;
