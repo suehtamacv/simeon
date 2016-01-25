@@ -24,7 +24,7 @@ SimulationType::NetworkTypeNicknameBimap SimulationType::NetworkTypesNicknames =
 
 SimulationType::SimulationTypeNameBimap SimulationType::SimulationTypeNames =
     boost::assign::list_of<SimulationType::SimulationTypeNameBimap::relation>
-#define X(a,b,c) (a,b)
+#define X(a,b,c, d) (a,b)
     SIMULATION_TYPE
 #undef X
     ;
@@ -32,10 +32,9 @@ SimulationType::SimulationTypeNameBimap SimulationType::SimulationTypeNames =
 SimulationType::SimulationTypeNicknameBimap
 SimulationType::SimulationTypeNicknames =
     boost::assign::list_of<SimulationType::SimulationTypeNicknameBimap::relation>
-#define X(a,b,c) (a,c)
+#define X(a,b,c,d) (a,c)
     SIMULATION_TYPE
 #undef X
-#undef SIMULATION_TYPE
     ;
 
 SimulationType::SimulationType(Simulation_Type SimType) : SimType(SimType)
@@ -151,29 +150,9 @@ std::shared_ptr<SimulationType> SimulationType::start()
 
             switch ((Simulation_Type) simul)
                 {
-                case transparency:
-                    simulation = std::make_shared<Simulation_TransparencyAnalysis>();
-                    break;
-
-                case morp3o:
-                    simulation = std::make_shared<Simulation_NSGA2_RegnPlac>();
-                    break;
-
-                case networkload:
-                    simulation = std::make_shared<Simulation_NetworkLoad>();
-                    break;
-
-                case psroptimization:
-                    simulation = std::make_shared<Simulation_PSROptimization>();
-                    break;
-
-                case regnum:
-                    simulation = std::make_shared<Simulation_RegeneratorNumber>();
-                    break;
-
-                case statisticaltrend:
-                    simulation = std::make_shared<Simulation_StatisticalTrend>();
-                    break;
+#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); break;
+                SIMULATION_TYPE
+#undef X
                 }
 
             simulation->help();
@@ -206,31 +185,15 @@ std::shared_ptr<SimulationType> SimulationType::open()
     notify(VariablesMap);
 
     std::string SimType = VariablesMap["general.SimulationType"].as<std::string>();
+    Simulation_Type Sim_Type = SimulationTypeNicknames.right.at(SimType);
 
     std::shared_ptr<SimulationType> simulation;
 
-    if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::regnum))
-    {
-        simulation = std::make_shared<Simulation_RegeneratorNumber>();
-        simulation->load_file(ConfigFileName);
-        return simulation;
+    switch (Sim_Type) {
+#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); simulation->load_file(ConfigFileName); break;
+        SIMULATION_TYPE
+#undef X
     }
-    else if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::networkload))
-    {
-        simulation = std::make_shared<Simulation_NetworkLoad>();
-        simulation->load_file(ConfigFileName);
-        return simulation;
-    }
-    else if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::transparency))
-    {
-        simulation = std::make_shared<Simulation_TransparencyAnalysis>();
-        simulation->load_file(ConfigFileName);
-        return simulation;
-    }
-    else if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::statisticaltrend))
-    {
-        simulation = std::make_shared<Simulation_StatisticalTrend>();
-        simulation->load_file(ConfigFileName);
-        return simulation;
-    }
+
+    return simulation;
 }
