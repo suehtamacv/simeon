@@ -42,7 +42,7 @@ void NetworkSimulation::run()
 void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 {
     auto route = RWA->routeCall(evt->Parent);
-    evt->Parent->CallEnding.lock()->route = route;
+    evt->Parent->CallEnding.lock()->route = evt->route = route;;
 
     BOOST_ASSERT_MSG(evt->Parent->Status != Call::Not_Evaluated,
                      "Call was neither accepted nor blocked.");

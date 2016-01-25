@@ -53,6 +53,8 @@ void Simulation_NetworkLoad::print()
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "LOAD\tCALL BLOCKING PROBABILITY" << std::endl;
 
+    std::ofstream OutFile(FileName.c_str());
+
     extern bool parallelism_enabled;
     #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
 
@@ -64,7 +66,11 @@ void Simulation_NetworkLoad::print()
             }
 
         #pragma omp ordered
-        simulations[i]->print();
+            {
+            simulations[i]->print();
+            OutFile << simulations[i]->get_Load() << "\t"
+                    << simulations[i]->get_CallBlockingProbability() << std::endl;
+            }
         }
 
 }
@@ -203,6 +209,28 @@ void Simulation_NetworkLoad::load()
 
             std::cerr << "Invalid network load." << std::endl;
             std::cout << std::endl << "-> Define the network load step." << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
             }
         else
             {

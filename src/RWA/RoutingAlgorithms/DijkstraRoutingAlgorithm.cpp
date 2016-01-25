@@ -39,7 +39,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
             break;
             }
 
-        if (NumVisitedNodes++ > T->Nodes.size())   //Found a negative loop
+        if (NumVisitedNodes++ > T->Nodes.size()) //Found a negative loop
             {
             break;
             }
@@ -78,7 +78,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
             CurrentNode = CurNode;
             } //Avoiding negative cost loops
 
-        if (CurrentNode == -1 || NumVisitedNodes > T->Nodes.size())
+        if (CurrentNode == -1)
             {
             RouteLinks.clear(); //Could not find route. Returns empty vector.
             return RouteLinks;

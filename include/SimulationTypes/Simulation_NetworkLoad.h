@@ -27,6 +27,8 @@ private:
     double NumCalls;
     double NetworkLoadMin, NetworkLoadMax, NetworkLoadStep;
 
+    std::string FileName;
+
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
     WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms

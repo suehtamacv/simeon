@@ -29,7 +29,7 @@ public:
 
     bool hasSimulated;
 
-private:
+protected:
     void implement_call(std::shared_ptr<Event> evt);
     void drop_call(std::shared_ptr<Event> evt);
 };
