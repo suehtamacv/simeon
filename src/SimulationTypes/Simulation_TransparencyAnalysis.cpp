@@ -7,6 +7,10 @@
 #include <Calls/Call.h>
 #include <GeneralClasses/Signal.h>
 #include <algorithm>
+#include <boost/assert.hpp>
+#include <boost/assign.hpp>
+#include <boost/program_options.hpp>
+#include <map>
 
 Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() : SimulationType(Simulation_Type::transparency)
 {
@@ -39,11 +43,6 @@ void Simulation_TransparencyAnalysis::run()
     if (!hasLoaded)
         {
         load();
-        }
-
-    if (hasRun)
-        {
-        return;
         }
 
     for (double avgSpan = minAvgLinkSpan; avgSpan <= maxAvgLinkSpan;
@@ -85,6 +84,28 @@ void Simulation_TransparencyAnalysis::run()
                 {
                 OpaquePoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
                 }
+            }
+        }
+
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+
+    if (!TransparentPoints.empty())
+        {
+        std::cout << std::endl << "Transparent Points: " << std::endl;
+
+        for (auto &pair : TransparentPoints)
+            {
+            std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
+            }
+        }
+
+    if (!OpaquePoints.empty())
+        {
+        std::cout << std::endl << "Opaque Points: " << std::endl;
+
+        for (auto &pair : OpaquePoints)
+            {
+            std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
             }
         }
 
@@ -239,14 +260,63 @@ void Simulation_TransparencyAnalysis::load()
     hasLoaded = true;
 }
 
-void Simulation_TransparencyAnalysis::load_file(std::string)
+void Simulation_TransparencyAnalysis::load_file(std::string ConfigFileName)
 {
+    using namespace boost::program_options;
 
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type")
+            ("distance.minAvgLinkSpan", value<long double>()->required(), "Min. Avg. Dist. between in-line Amps.")
+            ("distance.maxAvgLinkSpan", value<long double>()->required(), "Max. Avg. Dist. between in-line Amps.")
+            ("distance.stepAvgLinkSpan", value<long double>()->required(), "Avg. Dist. between in-line Amps. Step")
+            ("osnr.minOSNR", value<long double>()->required(), "Min. OSNR")
+            ("osnr.maxOSNR", value<long double>()->required(), "Max. OSNR")
+            ("osnr.stepOSNR", value<long double>()->required(), "OSNR Step");
+
+    variables_map VariablesMap;
+
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
+    ConfigFile.close();
+    notify(VariablesMap);
+
+    T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
+    minAvgLinkSpan = VariablesMap["distance.minAvgLinkSpan"].as<long double>();
+    maxAvgLinkSpan = VariablesMap["distance.maxAvgLinkSpan"].as<long double>();
+    stepAvgLinkSpan = VariablesMap["distance.stepAvgLinkSpan"].as<long double>();
+    minOSNR = VariablesMap["osnr.minOSNR"].as<long double>();
+    maxOSNR = VariablesMap["osnr.maxOSNR"].as<long double>();
+    stepOSNR = VariablesMap["osnr.stepOSNR"].as<long double>();
+
+    find_OriginDestination();
+
+    hasLoaded = true;
 }
 
-void Simulation_TransparencyAnalysis::save(std::string)
+void Simulation_TransparencyAnalysis::save(std::string SimConfigFileName)
 {
+    SimulationType::save(SimConfigFileName);
 
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << std::endl << "  [distance]" << std::endl << std::endl;
+    SimConfigFile << "  minAvgLinkSpan = " << minAvgLinkSpan << std::endl;
+    SimConfigFile << "  maxAvgLinkSpan = " << maxAvgLinkSpan << std::endl;
+    SimConfigFile << "  stepAvgLinkSpan = " << stepAvgLinkSpan << std::endl;
+
+    SimConfigFile << std::endl << "  [osnr]" << std::endl << std::endl;
+    SimConfigFile << "  minOSNR = " << minAvgLinkSpan << std::endl;
+    SimConfigFile << "  maxOSNR = " << maxAvgLinkSpan << std::endl;
+    SimConfigFile << "  stepOSNR = " << stepAvgLinkSpan << std::endl;
+
+    SimConfigFile << std::endl;
+    T->save(SimConfigFileName);
 }
 
 void Simulation_TransparencyAnalysis::print()
@@ -256,32 +326,18 @@ void Simulation_TransparencyAnalysis::print()
         load();
         }
 
-    if (!hasRun)
-        {
-        run();
-        }
+    std::cout << std::endl << "  A Transparency Analysis Simulation is about to start with the following parameters: " << std::endl;
+    std::cout << "-> minAvgLinkSpan = " << minAvgLinkSpan << std::endl;
+    std::cout << "-> maxAvgLinkSpan = " << maxAvgLinkSpan << std::endl;
+    std::cout << "-> stepAvgLinkSpan = " << stepAvgLinkSpan << std::endl;
+    std::cout << "-> minOSNR = " << minAvgLinkSpan << std::endl;
+    std::cout << "-> maxOSNR = " << maxAvgLinkSpan << std::endl;
+    std::cout << "-> stepOSNR = " << stepAvgLinkSpan << std::endl;
 
-    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
 
-    if (!TransparentPoints.empty())
-        {
-        std::cout << std::endl << "Transparent Points: " << std::endl;
+    save(ConfigFileName);
 
-        for (auto &pair : TransparentPoints)
-            {
-            std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
-            }
-        }
-
-    if (!OpaquePoints.empty())
-        {
-        std::cout << std::endl << "Opaque Points: " << std::endl;
-
-        for (auto &pair : OpaquePoints)
-            {
-            std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
-            }
-        }
 }
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()

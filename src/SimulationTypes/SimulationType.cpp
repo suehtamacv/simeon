@@ -221,4 +221,10 @@ std::shared_ptr<SimulationType> SimulationType::open()
         simulation->load_file(ConfigFileName);
         return simulation;
     }
+    else if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::transparency))
+    {
+        simulation = std::make_shared<Simulation_TransparencyAnalysis>();
+        simulation->load_file(ConfigFileName);
+        return simulation;
+    }
 }
