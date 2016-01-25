@@ -22,7 +22,7 @@ WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames =
     ;
 
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithm(
-    std::shared_ptr<Topology> T) : T(T)
+    std::shared_ptr<Topology> T, WavelengthAssignmentAlgorithms WavAssAlgType) : T(T), WavAssAlgType(WavAssAlgType)
 {
 
 }
@@ -84,13 +84,13 @@ WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
 
 }
 
-void WavelengthAssignmentAlgorithm::save(std::string SimConfigFileName, WavelengthAssignmentAlgorithms WavAssAlg)
+void WavelengthAssignmentAlgorithm::save(std::string SimConfigFileName)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssAlg)
+    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithmNicknames.left.at(WavAssAlgType)
                   << std::endl;
 }

@@ -225,7 +225,7 @@ void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
     Link::save(SimConfigFileName, T);
 
     simulations.front()->RWA->R_Alg->save(SimConfigFileName);
-    WavelengthAssignmentAlgorithm::save(SimConfigFileName, WavAssign_Algorithm);
+    simulations.front()->RWA->WA_Alg->save(SimConfigFileName);
     RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
     RegeneratorAssignmentAlgorithm::save(SimConfigFileName, RegAssignment_Algorithm);
 

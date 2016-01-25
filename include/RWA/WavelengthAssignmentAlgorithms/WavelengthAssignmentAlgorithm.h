@@ -29,7 +29,9 @@ public:
     WavAssignAlgNicknameBimap;
     static WavAssignAlgNicknameBimap WavelengthAssignmentAlgorithmNicknames;
 
-    WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T);
+    WavelengthAssignmentAlgorithms WavAssAlgType;
+
+    WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T, WavelengthAssignmentAlgorithms WavAssAlgType);
 
     virtual std::map<std::weak_ptr<Link>,
             std::vector<std::weak_ptr<Slot>>,
@@ -40,7 +42,7 @@ public:
     create_WavelengthAssignmentAlgorithm(WavelengthAssignmentAlgorithms,
                                          std::shared_ptr<Topology>);
     virtual void load() = 0;
-    static void save(std::string, WavelengthAssignmentAlgorithms);
+    virtual void save(std::string) = 0;
 
     std::shared_ptr<Topology> T;
 };
