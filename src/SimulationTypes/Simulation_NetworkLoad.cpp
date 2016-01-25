@@ -234,6 +234,8 @@ void Simulation_NetworkLoad::load()
     }
     while (1);
 
+    runLoadNX = true;
+
     create_Simulations();
 
     hasLoaded = true;
@@ -254,21 +256,18 @@ void Simulation_NetworkLoad::save(std::string SimConfigFileName)
 
     Link::save(SimConfigFileName, T);
 
+    RoutingAlgorithm::save(SimConfigFileName, Routing_Algorithm);
+    WavelengthAssignmentAlgorithm::save(SimConfigFileName, WavAssign_Algorithm);
+    if(Type == TranslucentNetwork)
+    {
+        RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
+        RegeneratorAssignmentAlgorithm::save(SimConfigFileName, RegAssignment_Algorithm);
+    }
+
     SimConfigFile.open(SimConfigFileName,
                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
-
-    SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
-    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
-                  << std::endl;
-    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm)
-                  << std::endl;
-    if(Type == TranslucentNetwork)
-    {
-        SimConfigFile << "  RegeneratorPlacementAlgorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegPlacement_Algorithm) << std::endl;
-        SimConfigFile << "  RegeneratorAssignmentAlgorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
-    }
 
     SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
