@@ -265,7 +265,7 @@ void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
 
     Link::save(SimConfigFileName, T);
 
-    RoutingAlgorithm::save(SimConfigFileName, Routing_Algorithm);
+    simulations.front()->RWA->R_Alg->save(SimConfigFileName);
     WavelengthAssignmentAlgorithm::save(SimConfigFileName, WavAssign_Algorithm);
     if(Type == TranslucentNetwork)
     {

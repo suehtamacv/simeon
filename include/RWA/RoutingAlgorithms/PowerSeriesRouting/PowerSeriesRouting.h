@@ -19,6 +19,7 @@ public:
                        std::vector<std::shared_ptr<PSR::Cost>> Costs);
 
     void load();
+    void save(std::string);
     bool initCoefficients(PSO::PSO_Particle<double> &particle);
     bool initCoefficients(std::string);
 

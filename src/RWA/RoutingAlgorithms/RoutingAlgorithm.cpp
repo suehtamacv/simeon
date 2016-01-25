@@ -1,6 +1,7 @@
 #include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <boost/assign.hpp>
 #include <iostream>
+#include <fstream>
 #include <RWA/RoutingAlgorithms.h>
 
 RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
@@ -19,7 +20,7 @@ RoutingAlgorithm::RoutingAlgorithmNicknames =
 #undef ROUTING_ALGORITHM
     ;
 
-RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T) : T(T)
+RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlgType) : T(T), RoutAlgType(RoutAlgType)
 {
 
 }
@@ -95,7 +96,7 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
     return R_Alg;
 }
 
-void RoutingAlgorithm::save(std::string SimConfigFileName, RoutingAlgorithms RoutAlg)
+void RoutingAlgorithm::save(std::string SimConfigFileName)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
                                std::ofstream::out | std::ofstream::app);
@@ -103,6 +104,6 @@ void RoutingAlgorithm::save(std::string SimConfigFileName, RoutingAlgorithms Rou
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
-    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(RoutAlg)
+    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithmNicknames.left.at(RoutAlgType)
                   << std::endl;
 }

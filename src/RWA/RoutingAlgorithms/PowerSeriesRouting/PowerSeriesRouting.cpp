@@ -9,14 +9,14 @@ bool PowerSeriesRouting::hasLoaded = false;
 std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
-    DijkstraRoutingAlgorithm(T)
+    DijkstraRoutingAlgorithm(T, RoutingAlgorithms::PSR)
 {
     firstTimeRun = false;
 }
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
                                        std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    DijkstraRoutingAlgorithm(T)
+    DijkstraRoutingAlgorithm(T, RoutingAlgorithms::PSR)
 {
 
     firstTimeRun = false;
@@ -228,4 +228,9 @@ int PowerSeriesRouting::get_NMin() const
 int PowerSeriesRouting::get_NMax() const
 {
     return NMax;
+}
+
+void PowerSeriesRouting::save(std::string SimConfigFileName)
+{
+    RoutingAlgorithm::save(SimConfigFileName);
 }

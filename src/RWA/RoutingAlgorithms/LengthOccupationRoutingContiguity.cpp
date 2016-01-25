@@ -3,7 +3,7 @@
 #include <Structure/Topology.h>
 
 LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
-    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T)
+    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, RoutingAlgorithms::LORc)
 {
 
 }
@@ -15,4 +15,9 @@ double LengthOccupationRoutingContiguity::get_Cost(
     return 1 +
            (link.lock()->Length / T->get_LengthLongestLink()) +
            (1.0 / (link.lock()->get_Contiguity(C) + 1));
+}
+
+void LengthOccupationRoutingContiguity::save(std::string SimConfigFileName)
+{
+    RoutingAlgorithm::save(SimConfigFileName);
 }

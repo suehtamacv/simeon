@@ -10,6 +10,7 @@ public:
 
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
     void load() {}
+    void save(std::string);
 };
 
 #endif // SHORTESTPATH_H

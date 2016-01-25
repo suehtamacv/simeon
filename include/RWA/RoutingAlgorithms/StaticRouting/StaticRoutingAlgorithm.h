@@ -10,7 +10,7 @@ typedef std::pair<int, int> OrigDestPair;
 class StaticRoutingAlgorithm : public DijkstraRoutingAlgorithm
 {
 public:
-    StaticRoutingAlgorithm(std::shared_ptr<Topology> T);
+    StaticRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg);
 
     std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C);
 

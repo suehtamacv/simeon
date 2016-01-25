@@ -1,7 +1,7 @@
 #include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 
 MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
-    StaticRoutingAlgorithm(T)
+    StaticRoutingAlgorithm(T, RoutingAlgorithms::MH)
 {
 
 }
@@ -11,4 +11,9 @@ double MinimumHops::get_Cost(
     std::shared_ptr<Call>)
 {
     return 1;
+}
+
+void MinimumHops::save(std::string SimConfigFileName)
+{
+    RoutingAlgorithm::save(SimConfigFileName);
 }
