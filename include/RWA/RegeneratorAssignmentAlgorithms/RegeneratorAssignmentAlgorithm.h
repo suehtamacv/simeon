@@ -132,6 +132,7 @@ public:
     create_RegeneratorAssignmentAlgorithm(
         RegeneratorAssignmentAlgorithms, std::shared_ptr<Topology>);
     virtual void load() = 0;
+    static void save(std::string, RegeneratorAssignmentAlgorithms);
 private:
     std::vector<std::weak_ptr<Link>> segmentLinks(
                                       std::vector<std::weak_ptr<Link>>Links,

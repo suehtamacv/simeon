@@ -2,6 +2,7 @@
 #include <RWA/WavelengthAssignmentAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
+#include <fstream>
 
 WavelengthAssignmentAlgorithm::WavAssignAlgNameBimap
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames =
@@ -81,4 +82,15 @@ WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
     WA_Alg->load();
     return WA_Alg;
 
+}
+
+void WavelengthAssignmentAlgorithm::save(std::string SimConfigFileName, WavelengthAssignmentAlgorithms WavAssAlg)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssAlg)
+                  << std::endl;
 }

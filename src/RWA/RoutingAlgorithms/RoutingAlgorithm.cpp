@@ -94,3 +94,15 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
     R_Alg->load();
     return R_Alg;
 }
+
+void RoutingAlgorithm::save(std::string SimConfigFileName, RoutingAlgorithms RoutAlg)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
+    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(RoutAlg)
+                  << std::endl;
+}

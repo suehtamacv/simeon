@@ -40,6 +40,7 @@ public:
     create_WavelengthAssignmentAlgorithm(WavelengthAssignmentAlgorithms,
                                          std::shared_ptr<Topology>);
     virtual void load() = 0;
+    static void save(std::string, WavelengthAssignmentAlgorithms);
 
     std::shared_ptr<Topology> T;
 };

@@ -222,21 +222,18 @@ void Simulation_RegeneratorNumber::load()
 void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
 {
     SimulationType::save(SimConfigFileName);
-
     Link::save(SimConfigFileName, T);
+
+    RoutingAlgorithm::save(SimConfigFileName, Routing_Algorithm);
+    WavelengthAssignmentAlgorithm::save(SimConfigFileName, WavAssign_Algorithm);
+    RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
+    RegeneratorAssignmentAlgorithm::save(SimConfigFileName, RegAssignment_Algorithm);
 
     std::ofstream SimConfigFile(SimConfigFileName,
                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
-    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
-                  << std::endl;
-    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm)
-                  << std::endl;
-    SimConfigFile << "  RegeneratorPlacementAlgorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegPlacement_Algorithm) << std::endl;
-    SimConfigFile << "  RegeneratorAssignmentAlgorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
     SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
     SimConfigFile << "  OptimizationLoad = " << OptimizationLoad << std::endl;

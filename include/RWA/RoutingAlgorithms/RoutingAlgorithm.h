@@ -42,6 +42,7 @@ public:
         RoutingAlgorithms, std::shared_ptr<Topology>);
     virtual std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C) = 0;
     virtual void load() = 0;
+    static void save(std::string, RoutingAlgorithms);
 
     std::shared_ptr<Topology> T;
 };

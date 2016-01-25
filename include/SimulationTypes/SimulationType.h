@@ -10,8 +10,8 @@ class SimulationType
 {
 public:
 #define NETWORK_TYPE \
-    X(TransparentNetwork, "Transparent Network", "tpNet") \
-    X(TranslucentNetwork, "Translucent Network", "tlNet") //X Macros
+    X(TransparentNetwork, "Transparent Network", "TransparentNet") \
+    X(TranslucentNetwork, "Translucent Network", "TranslucentNet") //X Macros
 
 #define SIMULATION_TYPE \
     X(transparency, "Transparency Analysis", "transparency") \
