@@ -23,6 +23,7 @@ private:
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
     bool hasSimulated;
     bool hasLoaded;
+    bool runLoadNX;
 
     double NumCalls;
     double NetworkLoadMin, NetworkLoadMax, NetworkLoadStep;

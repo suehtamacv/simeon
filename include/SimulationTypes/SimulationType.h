@@ -10,8 +10,8 @@ class SimulationType
 {
 public:
 #define NETWORK_TYPE \
-    X(TransparentNetwork, "Transparent Network") \
-    X(TranslucentNetwork, "Translucent Network") //X Macros
+    X(TransparentNetwork, "Transparent Network", "tpNet") \
+    X(TranslucentNetwork, "Translucent Network", "tlNet") //X Macros
 
 #define SIMULATION_TYPE \
     X(transparency, "Transparency Analysis", "transparency") \
@@ -21,7 +21,7 @@ public:
     X(regnum, "Number of Regenerators", "regnum") \
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")
 
-#define X(a,b) a,
+#define X(a,b, c) a,
     enum Network_Type
     {
         NETWORK_TYPE
@@ -45,6 +45,8 @@ public:
 
     typedef boost::bimap<Network_Type, std::string> NetworkTypeBimap;
     static NetworkTypeBimap NetworkTypes;
+    typedef boost::bimap<Network_Type, std::string> NetworkTypeNicknameBimap;
+    static NetworkTypeNicknameBimap NetworkTypesNicknames;
     typedef boost::bimap<Simulation_Type, std::string> SimulationTypeNameBimap;
     static SimulationTypeNameBimap SimulationTypeNames;
     typedef boost::bimap<Simulation_Type, std::string> SimulationTypeNicknameBimap;

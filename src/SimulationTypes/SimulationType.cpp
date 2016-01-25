@@ -9,7 +9,14 @@ SimulationType::Network_Type SimulationType::Type;
 
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
     boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
-#define X(a,b) (a,b)
+#define X(a,b, c) (a,b)
+    NETWORK_TYPE
+#undef X
+    ;
+
+SimulationType::NetworkTypeNicknameBimap SimulationType::NetworkTypesNicknames =
+    boost::assign::list_of<SimulationType::NetworkTypeNicknameBimap::relation>
+#define X(a,b, c) (a,c)
     NETWORK_TYPE
 #undef X
 #undef NETWORK_TYPE
@@ -205,6 +212,12 @@ std::shared_ptr<SimulationType> SimulationType::open()
     if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::regnum))
     {
         simulation = std::make_shared<Simulation_RegeneratorNumber>();
+        simulation->load_file(ConfigFileName);
+        return simulation;
+    }
+    else if(SimType == SimulationTypeNicknames.left.at(Simulation_Type::networkload))
+    {
+        simulation = std::make_shared<Simulation_NetworkLoad>();
         simulation->load_file(ConfigFileName);
         return simulation;
     }
