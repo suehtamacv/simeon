@@ -8,6 +8,10 @@
 #include <RWA/RoutingWavelengthAssignment.h>
 #include <algorithm>
 #include <cmath>
+#include <boost/assert.hpp>
+#include <boost/assign.hpp>
+#include <boost/program_options.hpp>
+#include <map>
 
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
 
@@ -219,14 +223,63 @@ void Simulation_NSGA2_RegnPlac::help()
               " constraints." << std::endl;
 }
 
-void Simulation_NSGA2_RegnPlac::save(std::string)
+void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
 {
+    SimulationType::save(SimConfigFileName);
+    Link::save(SimConfigFileName, T);
 
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    // A FAZER = Implementar melhor o salve dos algoritmos
+    SimConfigFile << std::endl << "  [algorithms]" << std::endl;
+    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) << std::endl;
+    SimConfigFile << "  WavelengthAssignmentAlgorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm) << std::endl;
+    SimConfigFile << "  RegeneratorAssignmentAlgorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
+
+    SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
+    SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
+    SimConfigFile << "  NetworkLoad = " << NetworkLoad << std::endl;
+
+    SimConfigFile << std::endl;
+    T->save(SimConfigFileName);
 }
 
-void Simulation_NSGA2_RegnPlac::load_file(std::string)
+void Simulation_NSGA2_RegnPlac::load_file(std::string ConfigFileName)
 {
+    using namespace boost::program_options;
 
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type")
+            ("general.AvgSpanLength", value<long double>()->required(), "Distance Between Inline Amps.")
+            ("algorithms.RoutingAlgorithm", value<std::string>()->required(), "Routing Algorithm")
+            ("algorithms.WavelengthAssignmentAlgorithm", value<std::string>()->required(), "Wavelength Assignment Algorithm")
+            ("algorithms.RegeneratorAssignmentAlgorithm", value<std::string>()->required(), "Regenerator Assignment Algorithm")
+            ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
+            ("sim_info.NetworkLoad", value<long double>()->required(), "Network Load");
+
+    variables_map VariablesMap;
+
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
+    ConfigFile.close();
+    notify(VariablesMap);
+
+    T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
+    Link::DefaultAvgSpanLength = VariablesMap["general.AvgSpanLength"].as<long double>();
+    T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
+    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
+    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
+    RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
+    NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
+    NetworkLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
+
+    hasLoaded = true;
 }
 
 void Simulation_NSGA2_RegnPlac::print()
@@ -236,18 +289,20 @@ void Simulation_NSGA2_RegnPlac::print()
         load();
         }
 
-    Sim_NSGA2 Optimization(*this);
-
-    std::cout << std::endl << "* * RESULTS * *" << std::endl;
-    std::cout << "FIRST PARETO FRONT OF I-TH GENERATION" << std::endl;
-
-    while (Optimization.generation < NSGA2::numGen)
-        {
-        Optimization.run_Generation();
-        std::cout << std::endl << "GENERATION " <<  Optimization.generation
+    std::cout << std::endl << "  A MORP-3O Regenerator Placement Simulation is about to start with the following parameters: " << std::endl;
+    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength << std::endl;
+    std::cout << "-> Routing Algorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
                   << std::endl;
-        Optimization.evolution.at(Optimization.generation - 1)->print();
-        }
+    std::cout << "-> Wavelength Assignment Algorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm)
+                  << std::endl;
+    std::cout << "-> Regenerator Assignment Algorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
+    std::cout << "-> Number of Calls = " << NumCalls << std::endl;
+    std::cout << "-> Network Load = " << NetworkLoad << std::endl;
+
+    // A FAZER = Mover para run
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+
+    save(ConfigFileName);
 }
 
 void Simulation_NSGA2_RegnPlac::load()
@@ -327,8 +382,14 @@ void Simulation_NSGA2_RegnPlac::run()
 
     Sim_NSGA2 Optimization(*this);
 
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+    std::cout << "FIRST PARETO FRONT OF I-TH GENERATION" << std::endl;
+
     while (Optimization.generation < NSGA2::numGen)
         {
         Optimization.run_Generation();
+        std::cout << std::endl << "GENERATION " <<  Optimization.generation
+                  << std::endl;
+        Optimization.evolution.at(Optimization.generation - 1)->print();
         }
 }
