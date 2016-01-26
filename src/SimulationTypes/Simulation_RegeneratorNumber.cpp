@@ -227,7 +227,7 @@ void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
     simulations.front()->RWA->R_Alg->save(SimConfigFileName);
     simulations.front()->RWA->WA_Alg->save(SimConfigFileName);
     RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
-    RegeneratorAssignmentAlgorithm::save(SimConfigFileName, RegAssignment_Algorithm);
+    simulations.front()->RWA->RA_Alg->save(SimConfigFileName);
 
     std::ofstream SimConfigFile(SimConfigFileName,
                                std::ofstream::out | std::ofstream::app);

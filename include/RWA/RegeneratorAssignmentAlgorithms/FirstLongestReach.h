@@ -26,6 +26,7 @@ public:
         std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link> > Links);
     void load() {}
+    void save(std::string);
 };
 
 #endif // FIRSTLONGESTREACH_H
