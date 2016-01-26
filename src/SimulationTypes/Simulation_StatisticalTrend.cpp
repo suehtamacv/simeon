@@ -244,10 +244,6 @@ void Simulation_StatisticalTrend::print()
         std::cout << "-> numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N << std::endl;
         std::cout << "-> numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
     }
-
-    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
-    save(ConfigFileName);
 }
 
 void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
@@ -372,4 +368,8 @@ void Simulation_StatisticalTrend::run()
         std::cout << Sim++ << "\t\t" << simulations[i]->get_CallBlockingProbability()
                   << std::endl;
         }
+
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+
+    save(ConfigFileName);
 }

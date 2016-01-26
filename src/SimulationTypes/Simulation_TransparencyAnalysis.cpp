@@ -110,6 +110,10 @@ void Simulation_TransparencyAnalysis::run()
         }
 
     hasRun = true;
+
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+
+    save(ConfigFileName);
 }
 
 void Simulation_TransparencyAnalysis::load()
@@ -333,11 +337,6 @@ void Simulation_TransparencyAnalysis::print()
     std::cout << "-> minOSNR = " << minAvgLinkSpan << std::endl;
     std::cout << "-> maxOSNR = " << maxAvgLinkSpan << std::endl;
     std::cout << "-> stepOSNR = " << stepAvgLinkSpan << std::endl;
-
-    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
-    save(ConfigFileName);
-
 }
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()

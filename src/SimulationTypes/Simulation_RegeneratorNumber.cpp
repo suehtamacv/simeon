@@ -47,6 +47,10 @@ void Simulation_RegeneratorNumber::run()
                   << simulations[i]->get_CallBlockingProbability() << std::endl;
 
         }
+
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+
+    save(ConfigFileName);
 }
 
 void Simulation_RegeneratorNumber::load()
@@ -314,10 +318,6 @@ void Simulation_RegeneratorNumber::print()
     std::cout << "-> Max. Number of Reg. per Node = " << maxRegNumber << std::endl;
     std::cout << "-> Number of Reg. per Node Step = " << stepRegNumber << std::endl;
     std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes << std::endl;
-
-    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
-    save(ConfigFileName);
 }
 
 void Simulation_RegeneratorNumber::createSimulations()

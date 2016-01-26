@@ -54,6 +54,10 @@ void Simulation_NetworkLoad::run()
         #pragma omp ordered
         simulations[i]->print();
     }
+
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+
+    save(ConfigFileName);
 }
 
 void Simulation_NetworkLoad::print()
@@ -85,11 +89,6 @@ void Simulation_NetworkLoad::print()
         std::cout << "-> numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N << std::endl;
         std::cout << "-> numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
     }
-
-    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
-    save(ConfigFileName);
-
 }
 
 void Simulation_NetworkLoad::load()
