@@ -7,7 +7,7 @@
 
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
         std::vector<ModulationScheme> Schemes) :
-    RegeneratorAssignmentAlgorithm(T, Schemes, RegeneratorAssignmentAlgorithms::FNS)
+    RegeneratorAssignmentAlgorithm(T, RegeneratorAssignmentAlgorithms::FNS, Schemes)
 {
 
     //Sort schemes in decrescent order

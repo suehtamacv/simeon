@@ -270,7 +270,7 @@ void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
     if(Type == TranslucentNetwork)
     {
         RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
-        RegeneratorAssignmentAlgorithm::save(SimConfigFileName, RegAssignment_Algorithm);
+        simulations.front()->RWA->RA_Alg->save(SimConfigFileName);
     }
 
     SimConfigFile.open(SimConfigFileName,

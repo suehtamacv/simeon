@@ -50,8 +50,8 @@ public:
      * @param Schemes is a vector containing the possible modulation schemes.
      */
     RegeneratorAssignmentAlgorithm(std::shared_ptr<Topology> T,
-                                   std::vector<ModulationScheme> &Schemes = ModulationScheme::DefaultSchemes,
-                                   RegeneratorAssignmentAlgorithms RegAssAlgType);
+                                   RegeneratorAssignmentAlgorithms RegAssAlgType,
+                                   std::vector<ModulationScheme> &Schemes = ModulationScheme::DefaultSchemes);
 
     /**
      * @brief T is a pointer to the Topology.

@@ -29,8 +29,9 @@ RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames =
 
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithm(
     std::shared_ptr<Topology> T,
-    std::vector<ModulationScheme> &Schemes, RegeneratorAssignmentAlgorithms RegAssAlgType) :
-    T(T), ModulationSchemes(Schemes), RegAssAlgType(RegAssAlgType)
+    RegeneratorAssignmentAlgorithms RegAssAlgType,
+    std::vector<ModulationScheme> &Schemes) :
+    T(T), RegAssAlgType(RegAssAlgType), ModulationSchemes(Schemes)
 {
 
 }
