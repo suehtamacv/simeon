@@ -298,11 +298,6 @@ void Simulation_NSGA2_RegnPlac::print()
     std::cout << "-> Regenerator Assignment Algorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << NetworkLoad << std::endl;
-
-    // A FAZER = Mover para run
-    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
-    save(ConfigFileName);
 }
 
 void Simulation_NSGA2_RegnPlac::load()
@@ -392,4 +387,8 @@ void Simulation_NSGA2_RegnPlac::run()
                   << std::endl;
         Optimization.evolution.at(Optimization.generation - 1)->print();
         }
+
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+
+    save(ConfigFileName);
 }
