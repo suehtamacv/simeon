@@ -277,4 +277,5 @@ void Topology::set_avgSpanLength(double avgSpanLength)
         {
         link.second->set_AvgSpanLength(avgSpanLength);
         }
+    AvgSpanLength = avgSpanLength;
 }

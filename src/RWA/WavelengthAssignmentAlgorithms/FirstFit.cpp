@@ -4,7 +4,7 @@
 #include <Structure/Slot.h>
 
 FirstFit::FirstFit(std::shared_ptr<Topology> T) :
-    WavelengthAssignmentAlgorithm(T)
+    WavelengthAssignmentAlgorithm(T, WavelengthAssignmentAlgorithms::FF)
 {
 
 }
@@ -69,4 +69,9 @@ std::map<std::weak_ptr<Link>,
         }
 
     return Slots;
+}
+
+void FirstFit::save(std::string SimConfigFileName)
+{
+    WavelengthAssignmentAlgorithm::save(SimConfigFileName);
 }

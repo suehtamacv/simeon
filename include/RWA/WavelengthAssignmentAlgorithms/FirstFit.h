@@ -13,6 +13,7 @@ public:
         std::owner_less<std::weak_ptr<Link>>>
         assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg);
     void load() {}
+    void save(std::string);
 };
 
 #endif // FIRSTFIT_H

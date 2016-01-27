@@ -7,7 +7,7 @@
 
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
         std::vector<ModulationScheme> Schemes) :
-    RegeneratorAssignmentAlgorithm(T, Schemes)
+    RegeneratorAssignmentAlgorithm(T, RegeneratorAssignmentAlgorithms::FNS, Schemes)
 {
 
     //Sort schemes in decrescent order
@@ -95,4 +95,9 @@ std::vector<TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
     TransparentSegments.clear();
     return TransparentSegments;
 
+}
+
+void FirstNarrowestSpectrum::save(std::string SimConfigFileName)
+{
+    RegeneratorAssignmentAlgorithm::save(SimConfigFileName);
 }

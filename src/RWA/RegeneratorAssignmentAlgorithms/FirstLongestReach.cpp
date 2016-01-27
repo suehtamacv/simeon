@@ -6,7 +6,7 @@
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
                                      std::vector<ModulationScheme> ModulationSchemes) :
-    RegeneratorAssignmentAlgorithm(T, ModulationSchemes)
+    RegeneratorAssignmentAlgorithm(T, RegeneratorAssignmentAlgorithms::FLR, ModulationSchemes)
 {
 
 }
@@ -72,4 +72,9 @@ std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(
 
     TransparentSegments.clear();
     return TransparentSegments;
+}
+
+void FirstLongestReach::save(std::string SimConfigFileName)
+{
+    RegeneratorAssignmentAlgorithm::save(SimConfigFileName);
 }

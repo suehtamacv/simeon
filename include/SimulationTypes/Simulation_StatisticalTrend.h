@@ -6,6 +6,7 @@
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
 #include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
 class NetworkSimulation;
 
@@ -43,6 +44,7 @@ private:
     void place_Regenerators(std::shared_ptr<Topology>);
 
     bool hasLoaded;
+    bool runLoadNX;
 };
 
 #endif // SIMULATION_BOXPLOT_H

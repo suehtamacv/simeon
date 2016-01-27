@@ -2,6 +2,7 @@
 #include <RWA/RegeneratorPlacementAlgorithms.h>
 #include <boost/assign.hpp>
 #include <iostream>
+#include <fstream>
 
 RegeneratorPlacementAlgorithm::RegPlaceNameBimap
 RegeneratorPlacementAlgorithm::RegeneratorPlacementNames =
@@ -104,4 +105,14 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
         }
 
     return RP_Alg;
+}
+
+void RegeneratorPlacementAlgorithm::save(std::string SimConfigFileName, RegeneratorPlacementAlgorithms RegPlacAlg)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  RegeneratorPlacementAlgorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegPlacAlg) << std::endl;
 }

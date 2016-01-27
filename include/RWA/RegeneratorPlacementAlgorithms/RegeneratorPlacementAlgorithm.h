@@ -61,6 +61,7 @@ public:
                                          long long NumCalls,
                                          bool runLoad = true);
     virtual void load() = 0;
+    static void save(std::string, RegeneratorPlacementAlgorithms);
 };
 
 #endif // REGENERATORPLACEMENTALGORITHM_H

@@ -8,8 +8,8 @@
 #include <map>
 #include <set>
 
-DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T)
-    : RoutingAlgorithm(T)
+DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlgType)
+    : RoutingAlgorithm(T, RoutAlgType)
 {
 
 }

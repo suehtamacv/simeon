@@ -10,7 +10,7 @@
 class DijkstraRoutingAlgorithm : public RoutingAlgorithm
 {
 public:
-    DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T);
+    DijkstraRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlgType);
 
     std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C);
     virtual double get_Cost(std::weak_ptr<Link> link,

@@ -1,13 +1,22 @@
 #include <SimulationTypes/SimulationType.h>
 #include "SimulationTypes.h"
 #include <boost/assign.hpp>
+#include <boost/assign.hpp>
+#include <boost/program_options.hpp>
 #include <iostream>
 
 SimulationType::Network_Type SimulationType::Type;
 
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
     boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
-#define X(a,b) (a,b)
+#define X(a,b, c) (a,b)
+    NETWORK_TYPE
+#undef X
+    ;
+
+SimulationType::NetworkTypeNicknameBimap SimulationType::NetworkTypesNicknames =
+    boost::assign::list_of<SimulationType::NetworkTypeNicknameBimap::relation>
+#define X(a,b, c) (a,c)
     NETWORK_TYPE
 #undef X
 #undef NETWORK_TYPE
@@ -15,7 +24,7 @@ SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
 
 SimulationType::SimulationTypeNameBimap SimulationType::SimulationTypeNames =
     boost::assign::list_of<SimulationType::SimulationTypeNameBimap::relation>
-#define X(a,b,c) (a,b)
+#define X(a,b,c, d) (a,b)
     SIMULATION_TYPE
 #undef X
     ;
@@ -23,11 +32,15 @@ SimulationType::SimulationTypeNameBimap SimulationType::SimulationTypeNames =
 SimulationType::SimulationTypeNicknameBimap
 SimulationType::SimulationTypeNicknames =
     boost::assign::list_of<SimulationType::SimulationTypeNicknameBimap::relation>
-#define X(a,b,c) (a,c)
+#define X(a,b,c,d) (a,c)
     SIMULATION_TYPE
 #undef X
-#undef SIMULATION_TYPE
     ;
+
+SimulationType::SimulationType(Simulation_Type SimType) : SimType(SimType)
+{
+
+}
 
 void SimulationType::load()
 {
@@ -63,7 +76,52 @@ void SimulationType::load()
 
 }
 
+void SimulationType::save(std::string SimConfigFileName)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::trunc);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  [general]" << std::endl << std::endl;
+    SimConfigFile << "  SimulationType = " << SimulationTypeNicknames.left.at(SimType) << std::endl;
+
+}
+
 std::shared_ptr<SimulationType> SimulationType::create()
+{
+    int option;
+    std::cout << std::endl << "-> Select an option. " << std::endl;
+    std::cout << "(0)\tStart a new simulation" << std::endl << "(1)\tLoad previous simulation" << std::endl;
+
+    do
+    {
+        std::cin >> option;
+
+        if (std::cin.fail() ||
+                option < 0 || option > 1)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid Option." << std::endl;
+            std::cout << std:: endl << "-> Select an option. " << std::endl;
+            std::cout << "(0)\tStart a new simulation" << std::endl << "(1)\tLoad previous simulation" << std::endl;
+            }
+        else
+        {
+            break;
+        }
+    } while(1);
+
+    if (option == 0)
+        return start();
+
+    else if (option == 1)
+        return open();
+}
+
+std::shared_ptr<SimulationType> SimulationType::start()
 {
     std::cout << std::endl << "-> Define a simulation to run." << std::endl;
 
@@ -92,29 +150,9 @@ std::shared_ptr<SimulationType> SimulationType::create()
 
             switch ((Simulation_Type) simul)
                 {
-                case transparency:
-                    simulation = std::make_shared<Simulation_TransparencyAnalysis>();
-                    break;
-
-                case morp3o:
-                    simulation = std::make_shared<Simulation_NSGA2_RegnPlac>();
-                    break;
-
-                case networkload:
-                    simulation = std::make_shared<Simulation_NetworkLoad>();
-                    break;
-
-                case psroptimization:
-                    simulation = std::make_shared<Simulation_PSROptimization>();
-                    break;
-
-                case regnum:
-                    simulation = std::make_shared<Simulation_RegeneratorNumber>();
-                    break;
-
-                case statisticaltrend:
-                    simulation = std::make_shared<Simulation_StatisticalTrend>();
-                    break;
+#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); break;
+                SIMULATION_TYPE
+#undef X
                 }
 
             simulation->help();
@@ -122,4 +160,40 @@ std::shared_ptr<SimulationType> SimulationType::create()
             }
         }
     while (1);
+}
+
+std::shared_ptr<SimulationType> SimulationType::open()
+{
+    std::string ConfigFileName;
+    /*
+    std::cout << "-> Enter the file name." << std::endl;
+    std::getline(std::cin, SimConfigFile);
+    */
+    ConfigFileName = "SimConfigFile.ini"; // File with previous simulation configurations
+
+    using namespace boost::program_options;
+
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type");
+
+    variables_map VariablesMap;
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
+    ConfigFile.close();
+    notify(VariablesMap);
+
+    std::string SimType = VariablesMap["general.SimulationType"].as<std::string>();
+    Simulation_Type Sim_Type = SimulationTypeNicknames.right.at(SimType);
+
+    std::shared_ptr<SimulationType> simulation;
+
+    switch (Sim_Type) {
+#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); simulation->load_file(ConfigFileName); break;
+        SIMULATION_TYPE
+#undef X
+    }
+
+    return simulation;
 }

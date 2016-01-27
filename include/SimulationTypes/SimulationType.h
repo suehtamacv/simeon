@@ -10,35 +10,43 @@ class SimulationType
 {
 public:
 #define NETWORK_TYPE \
-    X(TransparentNetwork, "Transparent Network") \
-    X(TranslucentNetwork, "Translucent Network") //X Macros
+    X(TransparentNetwork, "Transparent Network", "TransparentNet") \
+    X(TranslucentNetwork, "Translucent Network", "TranslucentNet") //X Macros
 
 #define SIMULATION_TYPE \
-    X(transparency, "Transparency Analysis", "transparency") \
-    X(morp3o, "MORP-3O Regenerator Placement", "morp3o") \
-    X(networkload, "Network Load Variation", "networkload") \
-    X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization") \
-    X(regnum, "Number of Regenerators", "regnum") \
-    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend")
+    X(transparency, "Transparency Analysis", "transparency", Simulation_TransparencyAnalysis) \
+    X(morp3o, "MORP-3O Regenerator Placement", "morp3o", Simulation_NSGA2_RegnPlac) \
+    X(networkload, "Network Load Variation", "networkload", Simulation_NetworkLoad) \
+    X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization", Simulation_PSROptimization) \
+    X(regnum, "Number of Regenerators", "regnum", Simulation_RegeneratorNumber) \
+    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
 
-#define X(a,b) a,
+#define X(a,b, c) a,
     enum Network_Type
     {
         NETWORK_TYPE
     };
 #undef X
 
-#define X(a,b,c) a,
+#define X(a,b,c,d) a,
     enum Simulation_Type
     {
         SIMULATION_TYPE
     };
 #undef X
 
+    SimulationType(Simulation_Type SimType);
+
+    Simulation_Type SimType;
+
     static std::shared_ptr<SimulationType> create();
+    static std::shared_ptr<SimulationType> start();
+    static std::shared_ptr<SimulationType> open();
 
     typedef boost::bimap<Network_Type, std::string> NetworkTypeBimap;
     static NetworkTypeBimap NetworkTypes;
+    typedef boost::bimap<Network_Type, std::string> NetworkTypeNicknameBimap;
+    static NetworkTypeNicknameBimap NetworkTypesNicknames;
     typedef boost::bimap<Simulation_Type, std::string> SimulationTypeNameBimap;
     static SimulationTypeNameBimap SimulationTypeNames;
     typedef boost::bimap<Simulation_Type, std::string> SimulationTypeNicknameBimap;

@@ -3,8 +3,8 @@
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 
-StaticRoutingAlgorithm::StaticRoutingAlgorithm(std::shared_ptr<Topology> T) :
-    DijkstraRoutingAlgorithm(T)
+StaticRoutingAlgorithm::StaticRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg) :
+    DijkstraRoutingAlgorithm(T, RoutAlg)
 {
 }
 

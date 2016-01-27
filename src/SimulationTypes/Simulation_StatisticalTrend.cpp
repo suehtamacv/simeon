@@ -3,8 +3,13 @@
 #include <Structure/Link.h>
 #include <Calls/CallGenerator.h>
 #include <RWA/RoutingWavelengthAssignment.h>
+#include <boost/assert.hpp>
+#include <boost/assign.hpp>
+#include <boost/program_options.hpp>
+#include <map>
 
-Simulation_StatisticalTrend::Simulation_StatisticalTrend()
+Simulation_StatisticalTrend::Simulation_StatisticalTrend() : SimulationType(
+        Simulation_Type::statisticaltrend)
 {
     hasLoaded = false;
 }
@@ -162,6 +167,7 @@ void Simulation_StatisticalTrend::load()
     create_Simulations();
 
     hasLoaded = true;
+    runLoadNX = true;
 }
 
 void Simulation_StatisticalTrend::create_Simulations()
@@ -227,7 +233,7 @@ void Simulation_StatisticalTrend::place_Regenerators(
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg =
         RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
-            RegPlacement_Algorithm, T, RWA, NetworkLoad, NumCalls);
+            RegPlacement_Algorithm, T, RWA, NetworkLoad, NumCalls, runLoadNX);
 
     RP_Alg->placeRegenerators();
 
@@ -240,8 +246,162 @@ void Simulation_StatisticalTrend::print()
         load();
         }
 
-    int Sim = 1;
+    std::cout << std::endl <<
+              "  A Statistical Trend Analysis Simulation is about to start with the following parameters: "
+              << std::endl;
+    std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
+                  Type) << std::endl;
+    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
+              std::endl;
+    std::cout << "-> Routing Algorithm = " <<
+              RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+              << std::endl;
+    std::cout << "-> Wavelength Assignment Algorithm = " <<
+              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                  WavAssign_Algorithm)
+              << std::endl;
+    if(Type == TranslucentNetwork)
+        {
+        std::cout << "-> Regenerator Placement Algorithm = " <<
+                  RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
+                      RegPlacement_Algorithm) << std::endl;
+        std::cout << "-> Regenerator Assignment Algorithm = " <<
+                  RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
+                      RegAssignment_Algorithm) << std::endl;
+        }
+    std::cout << "-> NumCalls = " << NumCalls << std::endl;
+    std::cout << "-> NetworkLoad = " << NetworkLoad << std::endl;
+    std::cout << "-> NumRepetitions = " << NumRepetitions << std::endl;
+    if(Type == TranslucentNetwork)
+        {
+        std::cout << "-> numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N <<
+                  std::endl;
+        std::cout << "-> numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
+        }
+}
 
+void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
+{
+    SimulationType::save(SimConfigFileName);
+
+    std::ofstream SimConfigFile(SimConfigFileName,
+                                std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
+                      Type) << std::endl;
+    SimConfigFile.close();
+
+    Link::save(SimConfigFileName, T);
+
+    simulations.front()->RWA->R_Alg->save(SimConfigFileName);
+    simulations.front()->RWA->WA_Alg->save(SimConfigFileName);
+    if(Type == TranslucentNetwork)
+        {
+        RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
+        simulations.front()->RWA->RA_Alg->save(SimConfigFileName);
+        }
+
+    SimConfigFile.open(SimConfigFileName,
+                       std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
+    SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
+    SimConfigFile << "  NetworkLoad = " << NetworkLoad << std::endl;
+    SimConfigFile << "  NumRepetitions = " << NumRepetitions << std::endl;
+
+    if(Type == TranslucentNetwork)
+        {
+        SimConfigFile << "  numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N <<
+                      std::endl;
+        SimConfigFile << "  numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
+        }
+
+    SimConfigFile << std::endl;
+    T->save(SimConfigFileName);
+}
+
+void Simulation_StatisticalTrend::load_file(std::string ConfigFileName)
+{
+    using namespace boost::program_options;
+
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type")
+    ("general.NetworkType", value<std::string>()->required(), "Network Type")
+    ("general.AvgSpanLength", value<long double>()->required(),
+     "Distance Between Inline Amps.")
+    ("algorithms.RoutingAlgorithm", value<std::string>()->required(),
+     "Routing Algorithm")
+    ("algorithms.WavelengthAssignmentAlgorithm", value<std::string>()->required(),
+     "Wavelength Assignment Algorithm")
+    ("algorithms.RegeneratorPlacementAlgorithm", value<std::string>(),
+     "Regenerator Placement Algorithm")
+    ("algorithms.RegeneratorAssignmentAlgorithm", value<std::string>(),
+     "Regenerator Assignment Algorithm")
+    ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
+    ("sim_info.NetworkLoad", value<long double>()->required(), "Network Load")
+    ("sim_info.NumRepetitions", value<long double>()->required(),
+     "Number of Repetitions")
+    ("sim_info.numTranslucentNodes", value<long double>(),
+     "Number of Translucent Nodes")
+    ("sim_info.numReg", value<long double>(), "Num. of Regenerators per Node");
+
+    variables_map VariablesMap;
+
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
+          VariablesMap);
+    ConfigFile.close();
+    notify(VariablesMap);
+
+    T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
+    Type = NetworkTypesNicknames.right.at(
+               VariablesMap["general.NetworkType"].as<std::string>());
+    Link::DefaultAvgSpanLength =
+        VariablesMap["general.AvgSpanLength"].as<long double>();
+    T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
+    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
+                            VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
+    WavAssign_Algorithm =
+        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+            VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
+    if(Type == Network_Type::TranslucentNetwork)
+        {
+        RegPlacement_Algorithm =
+            RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at(
+                VariablesMap["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>());
+        RegAssignment_Algorithm =
+            RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(
+                VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
+        NX_RegeneratorPlacement::NX_N =
+            VariablesMap["sim_info.numTranslucentNodes"].as<long double>();
+        NX_RegeneratorPlacement::NX_X =
+            VariablesMap["sim_info.numReg"].as<long double>();
+        }
+    NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
+    NetworkLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
+    NumRepetitions = VariablesMap["sim_info.NumRepetitions"].as<long double>();
+
+    runLoadNX = false;
+    hasLoaded = true;
+
+    create_Simulations();
+}
+
+void Simulation_StatisticalTrend::run()
+{
+    if (!hasLoaded)
+        {
+        load();
+        }
+
+    int Sim = 1;
     std::ofstream ResultFile(FileName.c_str());
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
@@ -269,30 +429,8 @@ void Simulation_StatisticalTrend::print()
         }
 
     ResultFile.close();
-}
 
-void Simulation_StatisticalTrend::save(std::string)
-{
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
 
-}
-
-void Simulation_StatisticalTrend::load_file(std::string)
-{
-
-}
-
-void Simulation_StatisticalTrend::run()
-{
-    if (!hasLoaded)
-        {
-        load();
-        }
-
-    extern bool parallelism_enabled;
-    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
-
-    for (unsigned i = 0; i < simulations.size(); i++)
-        {
-        simulations[i]->run();
-        }
+    save(ConfigFileName);
 }

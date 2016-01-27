@@ -4,6 +4,8 @@
 #include <GeneralClasses/Signal.h>
 #include <memory>
 #include <vector>
+#include <string>
+#include <fstream>
 
 class Node;
 class Call;
@@ -45,6 +47,7 @@ public:
     double get_OpEx();
 
     static void load(std::shared_ptr<Topology> T);
+    static void save(std::string, std::shared_ptr<Topology> T);
     void set_AvgSpanLength(double avgSpanLength);
 
 private:

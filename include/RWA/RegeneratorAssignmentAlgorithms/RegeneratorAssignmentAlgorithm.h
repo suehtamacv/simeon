@@ -50,6 +50,7 @@ public:
      * @param Schemes is a vector containing the possible modulation schemes.
      */
     RegeneratorAssignmentAlgorithm(std::shared_ptr<Topology> T,
+                                   RegeneratorAssignmentAlgorithms RegAssAlgType,
                                    std::vector<ModulationScheme> &Schemes = ModulationScheme::DefaultSchemes);
 
     /**
@@ -127,11 +128,14 @@ public:
             std::weak_ptr<Node> end,
             unsigned int NumRegUsed);
 
+    RegeneratorAssignmentAlgorithms RegAssAlgType;
+
     static RegeneratorAssignmentAlgorithms define_RegeneratorAssignmentAlgorithm();
     static std::shared_ptr<RegeneratorAssignmentAlgorithm>
     create_RegeneratorAssignmentAlgorithm(
         RegeneratorAssignmentAlgorithms, std::shared_ptr<Topology>);
     virtual void load() = 0;
+    virtual void save(std::string) = 0;
 private:
     std::vector<std::weak_ptr<Link>> segmentLinks(
                                       std::vector<std::weak_ptr<Link>>Links,

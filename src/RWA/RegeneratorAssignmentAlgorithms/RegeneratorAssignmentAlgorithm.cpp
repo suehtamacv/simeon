@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
@@ -28,8 +29,9 @@ RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames =
 
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithm(
     std::shared_ptr<Topology> T,
+    RegeneratorAssignmentAlgorithms RegAssAlgType,
     std::vector<ModulationScheme> &Schemes) :
-    T(T), ModulationSchemes(Schemes)
+    T(T), RegAssAlgType(RegAssAlgType), ModulationSchemes(Schemes)
 {
 
 }
@@ -206,4 +208,14 @@ RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
 
     RA_Alg->load();
     return RA_Alg;
+}
+
+void RegeneratorAssignmentAlgorithm::save(std::string SimConfigFileName)
+{
+    std::ofstream SimConfigFile(SimConfigFileName,
+                               std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  RegeneratorAssignmentAlgorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssAlgType) << std::endl;
 }

@@ -3,7 +3,7 @@
 #include <Structure/Topology.h>
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
-    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T)
+    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, RoutingAlgorithms::LORa)
 {
 
 }
@@ -14,4 +14,9 @@ double LengthOccupationRoutingAvailability::get_Cost(
 {
     return 1.0 + link.lock()->Length / T->get_LengthLongestLink() -
            link.lock()->get_Availability() / (double) Link::NumSlots;
+}
+
+void LengthOccupationRoutingAvailability::save(std::string SimConfigFileName)
+{
+    RoutingAlgorithm::save(SimConfigFileName);
 }
