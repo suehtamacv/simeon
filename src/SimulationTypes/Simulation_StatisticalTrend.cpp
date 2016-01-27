@@ -8,8 +8,8 @@
 #include <boost/program_options.hpp>
 #include <map>
 
-Simulation_StatisticalTrend::Simulation_StatisticalTrend() : SimulationType(
-        Simulation_Type::statisticaltrend)
+Simulation_StatisticalTrend::Simulation_StatisticalTrend() :
+    SimulationType(Simulation_Type::statisticaltrend)
 {
     hasLoaded = false;
 }

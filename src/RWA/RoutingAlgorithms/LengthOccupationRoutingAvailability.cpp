@@ -3,7 +3,8 @@
 #include <Structure/Topology.h>
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
-    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, RoutingAlgorithms::LORa)
+    std::shared_ptr<Topology> T) :
+    DijkstraRoutingAlgorithm(T, LORa)
 {
 
 }

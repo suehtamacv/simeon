@@ -6,7 +6,7 @@
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
                                      std::vector<ModulationScheme> ModulationSchemes) :
-    RegeneratorAssignmentAlgorithm(T, RegeneratorAssignmentAlgorithms::FLR, ModulationSchemes)
+    RegeneratorAssignmentAlgorithm(T, FLR, ModulationSchemes)
 {
 
 }

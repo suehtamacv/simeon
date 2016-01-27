@@ -16,18 +16,18 @@ class Cost
 {
 public:
 #define POSSIBLECOSTS \
-    X(availability, "Availability", "availability") \
-    X(bitrate, "Bitrate", "bitrate") \
-    X(contiguity, "Contiguity", "contiguity") \
-    X(distance, "Distance", "distance") \
-    X(noise, "Noise", "noise") \
-    X(normcontiguity, "Normalized Contiguity", "normcontiguity") \
-    X(normnoise, "Normalized Noise", "normnoise") \
-    X(slots, "Number of Required Slots", "slots") \
-    X(occupability, "Occupability", "occupability") \
-    X(scheme, "Modulation Scheme", "scheme")
+    X(availability, "Availability", "availability", cAvailability) \
+    X(bitrate, "Bitrate", "bitrate", cBitrate) \
+    X(contiguity, "Contiguity", "contiguity", cContiguity) \
+    X(distance, "Distance", "distance", cDistance) \
+    X(noise, "Noise", "noise", cNoise) \
+    X(normcontiguity, "Normalized Contiguity", "normcontiguity", cNormContiguity) \
+    X(normnoise, "Normalized Noise", "normnoise", cNormNoise) \
+    X(slots, "Number of Required Slots", "slots", cSlots) \
+    X(occupability, "Occupability", "occupability", cOccupability) \
+    X(scheme, "Modulation Scheme", "scheme", cModulationScheme)
 
-#define X(a,b,c) a,
+#define X(a,b,c,d) a,
     enum PossibleCosts
     {
         POSSIBLECOSTS

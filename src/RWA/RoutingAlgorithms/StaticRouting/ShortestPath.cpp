@@ -2,7 +2,7 @@
 #include <Structure/Link.h>
 
 ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
-    StaticRoutingAlgorithm(T, RoutingAlgorithms::SP)
+    StaticRoutingAlgorithm(T, SP)
 {
 
 }

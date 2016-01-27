@@ -234,7 +234,7 @@ void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
     simulations.front()->RWA->RA_Alg->save(SimConfigFileName);
 
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::app);
+                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
@@ -257,40 +257,59 @@ void Simulation_RegeneratorNumber::load_file(std::string ConfigFileName)
     options_description ConfigDesctription("Configurations Data");
     ConfigDesctription.add_options()("general.SimulationType",
                                      value<std::string>()->required(), "Simulation Type")
-            ("general.AvgSpanLength", value<long double>()->required(), "Distance Between Inline Amps.")
-            ("algorithms.RoutingAlgorithm", value<std::string>()->required(), "Routing Algorithm")
-            ("algorithms.WavelengthAssignmentAlgorithm", value<std::string>()->required(), "Wavelength Assignment Algorithm")
-            ("algorithms.RegeneratorPlacementAlgorithm", value<std::string>()->required(), "Regenerator Placement Algorithm")
-            ("algorithms.RegeneratorAssignmentAlgorithm", value<std::string>()->required(), "Regenerator Assignment Algorithm")
-            ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
-            ("sim_info.OptimizationLoad", value<long double>()->required(), "Network Load")
-            ("sim_info.minRegNumber", value<long double>()->required(), "Min. Number of Reg. per Node")
-            ("sim_info.maxRegNumber", value<long double>()->required(), "Max. Number of Reg. per Node")
-            ("sim_info.stepRegNumber", value<long double>()->required(), "Number of Reg. per Node Step")
-            ("sim_info.numTranslucentNodes", value<long double>()->required(), "Number of Translucent Nodes");
+    ("general.AvgSpanLength", value<long double>()->required(),
+     "Distance Between Inline Amps.")
+    ("algorithms.RoutingAlgorithm", value<std::string>()->required(),
+     "Routing Algorithm")
+    ("algorithms.WavelengthAssignmentAlgorithm", value<std::string>()->required(),
+     "Wavelength Assignment Algorithm")
+    ("algorithms.RegeneratorPlacementAlgorithm", value<std::string>()->required(),
+     "Regenerator Placement Algorithm")
+    ("algorithms.RegeneratorAssignmentAlgorithm", value<std::string>()->required(),
+     "Regenerator Assignment Algorithm")
+    ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
+    ("sim_info.OptimizationLoad", value<long double>()->required(), "Network Load")
+    ("sim_info.minRegNumber", value<long double>()->required(),
+     "Min. Number of Reg. per Node")
+    ("sim_info.maxRegNumber", value<long double>()->required(),
+     "Max. Number of Reg. per Node")
+    ("sim_info.stepRegNumber", value<long double>()->required(),
+     "Number of Reg. per Node Step")
+    ("sim_info.numTranslucentNodes", value<long double>()->required(),
+     "Number of Translucent Nodes");
 
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
     BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
 
-    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
+          VariablesMap);
     ConfigFile.close();
     notify(VariablesMap);
 
     T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
-    Link::DefaultAvgSpanLength = VariablesMap["general.AvgSpanLength"].as<long double>();
+    Link::DefaultAvgSpanLength =
+        VariablesMap["general.AvgSpanLength"].as<long double>();
     T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
-    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
-    WavAssign_Algorithm = WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
-    RegPlacement_Algorithm = RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at( VariablesMap["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>());
-    RegAssignment_Algorithm = RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
+    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
+                            VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
+    WavAssign_Algorithm =
+        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+            VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
+    RegPlacement_Algorithm =
+        RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at(
+            VariablesMap["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>());
+    RegAssignment_Algorithm =
+        RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(
+            VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
     NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
     OptimizationLoad = VariablesMap["sim_info.OptimizationLoad"].as<long double>();
     minRegNumber = VariablesMap["sim_info.minRegNumber"].as<long double>();
     maxRegNumber = VariablesMap["sim_info.maxRegNumber"].as<long double>();
     stepRegNumber = VariablesMap["sim_info.stepRegNumber"].as<long double>();
-    numTranslucentNodes = VariablesMap["sim_info.numTranslucentNodes"].as<long double>();
+    numTranslucentNodes =
+        VariablesMap["sim_info.numTranslucentNodes"].as<long double>();
 
     createSimulations();
 
@@ -304,20 +323,31 @@ void Simulation_RegeneratorNumber::print()
         load();
         }
 
-    std::cout << std::endl << "  A Number of Regenerators Simulation is about to start with the following parameters: " << std::endl;
-    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength << std::endl;
-    std::cout << "-> Routing Algorithm = " << RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
-                  << std::endl;
-    std::cout << "-> Wavelength Assignment Algorithm = " << WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(WavAssign_Algorithm)
-                  << std::endl;
-    std::cout << "-> Regenerator Placement Algorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegPlacement_Algorithm) << std::endl;
-    std::cout << "-> Regenerator Assignment Algorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssignment_Algorithm) << std::endl;
+    std::cout << std::endl <<
+              "  A Number of Regenerators Simulation is about to start with the following parameters: "
+              << std::endl;
+    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
+              std::endl;
+    std::cout << "-> Routing Algorithm = " <<
+              RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+              << std::endl;
+    std::cout << "-> Wavelength Assignment Algorithm = " <<
+              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                  WavAssign_Algorithm)
+              << std::endl;
+    std::cout << "-> Regenerator Placement Algorithm = " <<
+              RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
+                  RegPlacement_Algorithm) << std::endl;
+    std::cout << "-> Regenerator Assignment Algorithm = " <<
+              RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
+                  RegAssignment_Algorithm) << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
     std::cout << "-> Min. Number of Reg. per Node = " << minRegNumber << std::endl;
     std::cout << "-> Max. Number of Reg. per Node = " << maxRegNumber << std::endl;
     std::cout << "-> Number of Reg. per Node Step = " << stepRegNumber << std::endl;
-    std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes << std::endl;
+    std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes <<
+              std::endl;
 }
 
 void Simulation_RegeneratorNumber::createSimulations()

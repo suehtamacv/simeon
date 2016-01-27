@@ -1,7 +1,7 @@
 #include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 
 MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
-    StaticRoutingAlgorithm(T, RoutingAlgorithms::MH)
+    StaticRoutingAlgorithm(T, MH)
 {
 
 }

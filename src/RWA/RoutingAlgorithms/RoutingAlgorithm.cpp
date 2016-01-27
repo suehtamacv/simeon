@@ -20,7 +20,9 @@ RoutingAlgorithm::RoutingAlgorithmNicknames =
 #undef ROUTING_ALGORITHM
     ;
 
-RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlgType) : T(T), RoutAlgType(RoutAlgType)
+RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
+                                   RoutingAlgorithms RoutAlgType) :
+    RoutAlgType(RoutAlgType), T(T)
 {
 
 }
@@ -99,11 +101,12 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
 void RoutingAlgorithm::save(std::string SimConfigFileName)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::app);
+                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
-    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithmNicknames.left.at(RoutAlgType)
+    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithmNicknames.left.at(
+                      RoutAlgType)
                   << std::endl;
 }

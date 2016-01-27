@@ -79,46 +79,19 @@ void SimulationType::load()
 void SimulationType::save(std::string SimConfigFileName)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::trunc);
+                                std::ofstream::out | std::ofstream::trunc);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
     SimConfigFile << "  [general]" << std::endl << std::endl;
-    SimConfigFile << "  SimulationType = " << SimulationTypeNicknames.left.at(SimType) << std::endl;
+    SimConfigFile << "  SimulationType = " << SimulationTypeNicknames.left.at(
+                      SimType) << std::endl;
 
 }
 
 std::shared_ptr<SimulationType> SimulationType::create()
 {
-    int option;
-    std::cout << std::endl << "-> Select an option. " << std::endl;
-    std::cout << "(0)\tStart a new simulation" << std::endl << "(1)\tLoad previous simulation" << std::endl;
-
-    do
-    {
-        std::cin >> option;
-
-        if (std::cin.fail() ||
-                option < 0 || option > 1)
-            {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid Option." << std::endl;
-            std::cout << std:: endl << "-> Select an option. " << std::endl;
-            std::cout << "(0)\tStart a new simulation" << std::endl << "(1)\tLoad previous simulation" << std::endl;
-            }
-        else
-        {
-            break;
-        }
-    } while(1);
-
-    if (option == 0)
-        return start();
-
-    else if (option == 1)
-        return open();
+    return start();
 }
 
 std::shared_ptr<SimulationType> SimulationType::start()
@@ -151,7 +124,7 @@ std::shared_ptr<SimulationType> SimulationType::start()
             switch ((Simulation_Type) simul)
                 {
 #define X(a,b,c,d) case a: simulation = std::make_shared<d>(); break;
-                SIMULATION_TYPE
+                    SIMULATION_TYPE
 #undef X
                 }
 
@@ -169,7 +142,8 @@ std::shared_ptr<SimulationType> SimulationType::open()
     std::cout << "-> Enter the file name." << std::endl;
     std::getline(std::cin, SimConfigFile);
     */
-    ConfigFileName = "SimConfigFile.ini"; // File with previous simulation configurations
+    ConfigFileName =
+        "SimConfigFile.ini"; // File with previous simulation configurations
 
     using namespace boost::program_options;
 
@@ -180,7 +154,8 @@ std::shared_ptr<SimulationType> SimulationType::open()
     variables_map VariablesMap;
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
     BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
+          VariablesMap);
     ConfigFile.close();
     notify(VariablesMap);
 
@@ -189,11 +164,12 @@ std::shared_ptr<SimulationType> SimulationType::open()
 
     std::shared_ptr<SimulationType> simulation;
 
-    switch (Sim_Type) {
+    switch (Sim_Type)
+        {
 #define X(a,b,c,d) case a: simulation = std::make_shared<d>(); simulation->load_file(ConfigFileName); break;
-        SIMULATION_TYPE
+            SIMULATION_TYPE
 #undef X
-    }
+        }
 
     return simulation;
 }

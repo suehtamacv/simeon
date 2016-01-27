@@ -206,7 +206,7 @@ void Link::load(std::shared_ptr<Topology> T)
 void Link::save(std::string SimConfigFileName, std::shared_ptr<Topology> T)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::app);
+                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 

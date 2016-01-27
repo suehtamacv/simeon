@@ -12,7 +12,8 @@
 #include <boost/program_options.hpp>
 #include <map>
 
-Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() : SimulationType(Simulation_Type::transparency)
+Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() :
+    SimulationType(Simulation_Type::transparency)
 {
     hasLoaded = hasRun = false;
     minModulationScheme =
@@ -271,19 +272,23 @@ void Simulation_TransparencyAnalysis::load_file(std::string ConfigFileName)
     options_description ConfigDesctription("Configurations Data");
     ConfigDesctription.add_options()("general.SimulationType",
                                      value<std::string>()->required(), "Simulation Type")
-            ("distance.minAvgLinkSpan", value<long double>()->required(), "Min. Avg. Dist. between in-line Amps.")
-            ("distance.maxAvgLinkSpan", value<long double>()->required(), "Max. Avg. Dist. between in-line Amps.")
-            ("distance.stepAvgLinkSpan", value<long double>()->required(), "Avg. Dist. between in-line Amps. Step")
-            ("osnr.minOSNR", value<long double>()->required(), "Min. OSNR")
-            ("osnr.maxOSNR", value<long double>()->required(), "Max. OSNR")
-            ("osnr.stepOSNR", value<long double>()->required(), "OSNR Step");
+    ("distance.minAvgLinkSpan", value<long double>()->required(),
+     "Min. Avg. Dist. between in-line Amps.")
+    ("distance.maxAvgLinkSpan", value<long double>()->required(),
+     "Max. Avg. Dist. between in-line Amps.")
+    ("distance.stepAvgLinkSpan", value<long double>()->required(),
+     "Avg. Dist. between in-line Amps. Step")
+    ("osnr.minOSNR", value<long double>()->required(), "Min. OSNR")
+    ("osnr.maxOSNR", value<long double>()->required(), "Max. OSNR")
+    ("osnr.stepOSNR", value<long double>()->required(), "OSNR Step");
 
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
     BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
 
-    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true), VariablesMap);
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
+          VariablesMap);
     ConfigFile.close();
     notify(VariablesMap);
 
@@ -305,7 +310,7 @@ void Simulation_TransparencyAnalysis::save(std::string SimConfigFileName)
     SimulationType::save(SimConfigFileName);
 
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::app);
+                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
@@ -330,7 +335,9 @@ void Simulation_TransparencyAnalysis::print()
         load();
         }
 
-    std::cout << std::endl << "  A Transparency Analysis Simulation is about to start with the following parameters: " << std::endl;
+    std::cout << std::endl <<
+              "  A Transparency Analysis Simulation is about to start with the following parameters: "
+              << std::endl;
     std::cout << "-> minAvgLinkSpan = " << minAvgLinkSpan << std::endl;
     std::cout << "-> maxAvgLinkSpan = " << maxAvgLinkSpan << std::endl;
     std::cout << "-> stepAvgLinkSpan = " << stepAvgLinkSpan << std::endl;

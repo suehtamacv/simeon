@@ -31,7 +31,7 @@ RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithm(
     std::shared_ptr<Topology> T,
     RegeneratorAssignmentAlgorithms RegAssAlgType,
     std::vector<ModulationScheme> &Schemes) :
-    T(T), RegAssAlgType(RegAssAlgType), ModulationSchemes(Schemes)
+    T(T), ModulationSchemes(Schemes), RegAssAlgType(RegAssAlgType)
 {
 
 }
@@ -213,9 +213,11 @@ RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
 void RegeneratorAssignmentAlgorithm::save(std::string SimConfigFileName)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::app);
+                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    SimConfigFile << "  RegeneratorAssignmentAlgorithm = " << RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(RegAssAlgType) << std::endl;
+    SimConfigFile << "  RegeneratorAssignmentAlgorithm = " <<
+                  RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
+                      RegAssAlgType) << std::endl;
 }

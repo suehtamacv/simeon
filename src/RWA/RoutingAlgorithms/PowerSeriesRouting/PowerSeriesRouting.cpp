@@ -9,7 +9,7 @@ bool PowerSeriesRouting::hasLoaded = false;
 std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
-    DijkstraRoutingAlgorithm(T, RoutingAlgorithms::PSR)
+    DijkstraRoutingAlgorithm(T, PSR)
 {
     firstTimeRun = false;
 }
@@ -139,7 +139,6 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
 
     //Reads from configuration file.
     NMin = VariablesMap.find("PSR.minexponent")->second.as<int>();
-
     NMax = VariablesMap.find("PSR.maxexponent")->second.as<int>();
 
     std::clog << "Reading a PSR with min. exponent " << NMin

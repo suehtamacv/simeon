@@ -3,7 +3,7 @@
 #include <Structure/Topology.h>
 
 LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
-    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, RoutingAlgorithms::LORc)
+    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, LORc)
 {
 
 }
