@@ -326,7 +326,7 @@ void Simulation_RegeneratorNumber::print()
     std::cout << std::endl <<
               "  A Number of Regenerators Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
+    std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
               RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
@@ -345,9 +345,8 @@ void Simulation_RegeneratorNumber::print()
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
     std::cout << "-> Min. Number of Reg. per Node = " << minRegNumber << std::endl;
     std::cout << "-> Max. Number of Reg. per Node = " << maxRegNumber << std::endl;
-    std::cout << "-> Number of Reg. per Node Step = " << stepRegNumber << std::endl;
-    std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes <<
-              std::endl;
+    std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes
+              << std::endl;
 }
 
 void Simulation_RegeneratorNumber::createSimulations()

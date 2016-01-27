@@ -338,12 +338,10 @@ void Simulation_TransparencyAnalysis::print()
     std::cout << std::endl <<
               "  A Transparency Analysis Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> minAvgLinkSpan = " << minAvgLinkSpan << std::endl;
-    std::cout << "-> maxAvgLinkSpan = " << maxAvgLinkSpan << std::endl;
-    std::cout << "-> stepAvgLinkSpan = " << stepAvgLinkSpan << std::endl;
-    std::cout << "-> minOSNR = " << minAvgLinkSpan << std::endl;
-    std::cout << "-> maxOSNR = " << maxAvgLinkSpan << std::endl;
-    std::cout << "-> stepOSNR = " << stepAvgLinkSpan << std::endl;
+    std::cout << "-> Minimum Average Span Length = " << minAvgLinkSpan << std::endl;
+    std::cout << "-> Maximum Average Span Length = " << maxAvgLinkSpan << std::endl;
+    std::cout << "-> Minimum OSNR = " << minAvgLinkSpan << std::endl;
+    std::cout << "-> Maximum OSNR = " << maxAvgLinkSpan << std::endl;
 }
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()

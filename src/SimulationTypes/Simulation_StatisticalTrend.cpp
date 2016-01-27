@@ -251,7 +251,7 @@ void Simulation_StatisticalTrend::print()
               << std::endl;
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
-    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
+    std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
               RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
@@ -269,15 +269,9 @@ void Simulation_StatisticalTrend::print()
                   RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
                       RegAssignment_Algorithm) << std::endl;
         }
-    std::cout << "-> NumCalls = " << NumCalls << std::endl;
-    std::cout << "-> NetworkLoad = " << NetworkLoad << std::endl;
-    std::cout << "-> NumRepetitions = " << NumRepetitions << std::endl;
-    if(Type == TranslucentNetwork)
-        {
-        std::cout << "-> numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N <<
-                  std::endl;
-        std::cout << "-> numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
-        }
+    std::cout << "-> Number of Calls = " << NumCalls << std::endl;
+    std::cout << "-> Network Load = " << NetworkLoad << std::endl;
+    std::cout << "-> Number of Repetitions = " << NumRepetitions << std::endl;
 }
 
 void Simulation_StatisticalTrend::save(std::string SimConfigFileName)

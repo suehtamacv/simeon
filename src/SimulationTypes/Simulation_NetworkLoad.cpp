@@ -79,7 +79,7 @@ void Simulation_NetworkLoad::print()
               << std::endl;
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
-    std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
+    std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
               RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
@@ -97,17 +97,9 @@ void Simulation_NetworkLoad::print()
                   RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
                       RegAssignment_Algorithm) << std::endl;
         }
-    std::cout << "-> NumCalls = " << NumCalls << std::endl;
-    std::cout << "-> NetworkLoadMin = " << NetworkLoadMin << std::endl;
-    std::cout << "-> NetworkLoadMax= " << NetworkLoadMax << std::endl;
-    std::cout << "-> NetworkLoadStep = " << NetworkLoadStep << std::endl;
-
-    if(Type == TranslucentNetwork)
-        {
-        std::cout << "-> numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N <<
-                  std::endl;
-        std::cout << "-> numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
-        }
+    std::cout << "-> Number of Calls = " << NumCalls << std::endl;
+    std::cout << "-> Minimum Network Load = " << NetworkLoadMin << std::endl;
+    std::cout << "-> Maximum Network Load = " << NetworkLoadMax << std::endl;
 }
 
 void Simulation_NetworkLoad::load()
