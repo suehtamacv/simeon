@@ -10,14 +10,14 @@ PSR::cNormNoise::cNormNoise(int NMin, int NMax, std::shared_ptr<Topology> T) :
 }
 
 arma::rowvec PSR::cNormNoise::getCost(
-    std::weak_ptr<Link> link, std::shared_ptr<Call> C)
+    std::weak_ptr<Link> link, std::shared_ptr<Call>)
 {
-    return cache.at(CallProperties{link, C->Bitrate, C->Scheme});
+    return cache.at(link.lock());
 }
 
 void PSR::cNormNoise::createCache()
 {
-    double maxNoiseToThresh = -1;
+    double maxNoise = -1;
     for (auto link : T->Links)
         {
         Signal S;
@@ -26,17 +26,9 @@ void PSR::cNormNoise::createCache()
         S = link.second->Destination.lock()->drop(S);
         double NoisePower = S.get_NoisePower().in_Watts();
 
-        for (auto &bitrate : TransmissionBitrate::DefaultBitrates)
+        if (maxNoise < NoisePower)
             {
-            for (auto &scheme : ModulationScheme::DefaultSchemes)
-                {
-                double ThresholdNoise = Signal::InputPower.in_Watts() /
-                                        scheme.get_ThresholdOSNR(bitrate).in_Linear();
-                if (maxNoiseToThresh < NoisePower / ThresholdNoise)
-                    {
-                    maxNoiseToThresh = NoisePower / ThresholdNoise;
-                    }
-                }
+            maxNoise = NoisePower;
             }
         }
 
@@ -48,23 +40,12 @@ void PSR::cNormNoise::createCache()
         S = link.second->Destination.lock()->drop(S);
         double NoisePower = S.get_NoisePower().in_Watts();
 
-        for (auto &bitrate : TransmissionBitrate::DefaultBitrates)
+        cache.emplace(link.second, arma::ones<arma::rowvec>(NMax - NMin + 1));
+        int expo = 0;
+
+        for (int n = NMin; n <= NMax; n++)
             {
-            for (auto &scheme : ModulationScheme::DefaultSchemes)
-                {
-                CallProperties Prop{link.second, bitrate, scheme};
-                double ThresholdNoise = Signal::InputPower.in_Watts() /
-                                        scheme.get_ThresholdOSNR(bitrate).in_Linear();
-
-                cache.emplace(Prop, arma::ones<arma::rowvec>(NMax - NMin + 1));
-                int expo = 0;
-
-                for (int n = NMin; n <= NMax; n++)
-                    {
-                    cache.at(Prop)(expo++) =
-                        pow(NoisePower / (ThresholdNoise * maxNoiseToThresh), n);
-                    }
-                }
+            cache.at(link.second)(expo++) = pow(NoisePower / maxNoise, n);
             }
         }
 }
