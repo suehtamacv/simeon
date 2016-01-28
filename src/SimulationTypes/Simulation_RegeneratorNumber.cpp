@@ -32,6 +32,8 @@ void Simulation_RegeneratorNumber::run()
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "NUM REGENERATORS\tCALL BLOCKING PROBABILITY" << std::endl;
 
+    std::ofstream OutFile(FileName.c_str());
+
     extern bool parallelism_enabled;
     #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
 
@@ -43,8 +45,12 @@ void Simulation_RegeneratorNumber::run()
             }
 
         #pragma omp ordered
-        std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
-                  << simulations[i]->get_CallBlockingProbability() << std::endl;
+            {
+            std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
+                      << simulations[i]->get_CallBlockingProbability() << std::endl;
+            OutFile << simulations[i]->Generator->T->get_NumRegenerators() << "\t"
+                    << simulations[i]->get_CallBlockingProbability() << std::endl;
+            }
 
         }
 
@@ -209,6 +215,28 @@ void Simulation_RegeneratorNumber::load()
 
             std::cerr << "Invalid number of translucent nodes."  << std::endl;
             std::cout << std::endl << "-> Define the number of translucent nodes"
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
                       << std::endl;
             }
         else

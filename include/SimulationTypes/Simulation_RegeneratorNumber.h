@@ -25,6 +25,8 @@ private:
     double OptimizationLoad;
     long double NumCalls;
 
+    std::string FileName;
+
     unsigned long minRegNumber;
     unsigned long maxRegNumber;
     unsigned long stepRegNumber;
