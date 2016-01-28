@@ -146,16 +146,10 @@ int Link::get_Contiguity(std::shared_ptr<Call> C)
     int NumRequiredSlots = C->Scheme.get_NumSlots(C->Bitrate);
     int Contiguity = 0;
     int CurrentFreeSlots = 0;
-    bool SlotsAvailability[Link::NumSlots];
 
-    for (int i = 0; i < Link::NumSlots; i++)
+    for (int s = 0; s < Link::NumSlots; s++)
         {
-        SlotsAvailability[i] = Slots[i]->isFree;
-        }
-
-    for (int sf = 0; sf < Link::NumSlots; sf++)
-        {
-        if (SlotsAvailability[sf])
+        if (Slots[s]->isFree)
             {
             CurrentFreeSlots++;
             }
