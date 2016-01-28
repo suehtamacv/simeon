@@ -280,6 +280,10 @@ void Simulation_PSROptimization::load_file(std::string)
 
 void Simulation_PSROptimization::print()
 {
+}
+
+void Simulation_PSROptimization::run()
+{
     if (!hasLoaded)
         {
         load();
@@ -308,27 +312,6 @@ void Simulation_PSROptimization::print()
         std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
         std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
         printCoefficients(FileName);
-        }
-}
-
-void Simulation_PSROptimization::run()
-{
-    if (!hasLoaded)
-        {
-        load();
-        }
-
-    Fitness::T = T;
-    int N = std::pow(NMax - NMin + 1, Costs.size());
-
-    PSO_Optim =
-        std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
-        (new PSO::ParticleSwarmOptimization<double, Fitness, Compare>
-         (P, G, N, XMin, XMax, VMin, VMax));
-
-    for (unsigned i = 0; i < G; i++)
-        {
-        PSO_Optim->run_generation();
         }
 
     hasRun = true;
