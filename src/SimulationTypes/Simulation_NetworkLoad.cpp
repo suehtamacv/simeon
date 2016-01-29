@@ -386,10 +386,10 @@ void Simulation_NetworkLoad::load_file(std::string ConfigFileName)
     NetworkLoadMax = VariablesMap["sim_info.NetworkLoadMax"].as<long double>();
     NetworkLoadStep = VariablesMap["sim_info.NetworkLoadStep"].as<long double>();
 
+    create_Simulations();
+
     hasLoaded = true;
     runLoadNX = false;
-
-    create_Simulations();
 }
 
 void Simulation_NetworkLoad::create_Simulations()
