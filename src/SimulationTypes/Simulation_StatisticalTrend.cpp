@@ -76,6 +76,8 @@ void Simulation_StatisticalTrend::load()
             //Regenerator Assignment Algorithm
             RegAssignment_Algorithm =
                 RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+
+            runLoadNX = true;
             }
         }
 
@@ -167,7 +169,6 @@ void Simulation_StatisticalTrend::load()
     create_Simulations();
 
     hasLoaded = true;
-    runLoadNX = true;
 }
 
 void Simulation_StatisticalTrend::create_Simulations()

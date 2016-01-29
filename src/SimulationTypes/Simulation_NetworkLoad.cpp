@@ -157,6 +157,8 @@ void Simulation_NetworkLoad::load()
             //Regenerator Assignment Algorithm
             RegAssignment_Algorithm =
                 RegeneratorAssignmentAlgorithm::define_RegeneratorAssignmentAlgorithm();
+
+            runLoadNX = true;
             }
         }
 
@@ -269,7 +271,6 @@ void Simulation_NetworkLoad::load()
     create_Simulations();
 
     hasLoaded = true;
-    runLoadNX = true;
 }
 
 void Simulation_NetworkLoad::save(std::string SimConfigFileName)
