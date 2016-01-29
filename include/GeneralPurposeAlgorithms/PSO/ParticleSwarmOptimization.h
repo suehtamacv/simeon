@@ -25,7 +25,6 @@ private:
     unsigned int N;
 
     int g;
-    int p;
 
     void updatePositions();
 
@@ -37,7 +36,7 @@ private:
     static constexpr double c1 = 2.05;
     static constexpr double c2 = 2.05;
     static constexpr double phi = c1 + c2;
-    static constexpr double chi = 2.0 / std::fabs(2 - phi - sqrt(
+    static constexpr double chi = 2.0 / std::abs(2 - phi - sqrt(
                                       phi * phi - 4 * phi));
 
 };
@@ -69,16 +68,15 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
         Particles[particle]->Neighbour[0] = Particles[(particle + 1) % P];
         Particles[particle]->Neighbour[1] = Particles[(particle - 1) % P];
         }
+    Particles[0]->Neighbour[1] = Particles[Particles.size() - 1];
 
     BestParticle = Particles[0];
-    p = g = 1;
+    g = 1;
 }
 
 template<class PositionType, class Fit, class Comp>
 void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
 {
-    p = 1;
-
     #pragma omp parallel for ordered schedule(dynamic)
 
     for (unsigned i = 0; i < Particles.size(); i++)
@@ -99,8 +97,6 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
 
             BestParticle = Particles[i];
             }
-
-        p++;
         }
 
     updatePositions();
