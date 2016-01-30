@@ -67,7 +67,7 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
 
     switch (Algorithm)
         {
-#define X(a,b,c,d) case a: std::make_shared<d>(T); break;
+#define X(a,b,c,d) case a: R_Alg = std::make_shared<d>(T); break;
             ROUTING_ALGORITHM
 #undef X
         }
