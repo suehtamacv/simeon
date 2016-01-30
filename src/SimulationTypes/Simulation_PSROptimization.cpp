@@ -343,7 +343,7 @@ double Simulation_PSROptimization::Fitness::operator()(
         }
 
     //Initializes routing algorithm with the particle.
-    R_Alg->initCoefficients(*particle);
+    R_Alg->initCoefficients(particle.get()->X);
 
     //Creates the Call Generator and the RWA Object
     auto Generator = std::make_shared<CallGenerator>(TopologyCopy,

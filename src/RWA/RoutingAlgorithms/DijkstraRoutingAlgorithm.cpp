@@ -69,6 +69,11 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
     int CurrentNode = C->Destination.lock()->ID;
     NodesInRoute.push_back(CurrentNode);
 
+    if (Precedent[CurrentNode] == -1) {
+        RouteLinks.clear();
+        return RouteLinks;
+    }
+
     while (Precedent[CurrentNode] != -1)
         {
         NodesInRoute.push_back(Precedent[CurrentNode]);
