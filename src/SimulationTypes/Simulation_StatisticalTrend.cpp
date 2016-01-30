@@ -202,16 +202,13 @@ void Simulation_StatisticalTrend::create_Simulations()
             }
 
         //Creates the Call Generator and the RWA Object
-        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
-                NetworkLoad));
-        std::shared_ptr<RoutingWavelengthAssignment> RWA(
-            new RoutingWavelengthAssignment(
-                R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+        auto Generator = std::make_shared<CallGenerator>(TopologyCopy, NetworkLoad);
+        auto RWA = std::make_shared<RoutingWavelengthAssignment>(R_Alg, WA_Alg, RA_Alg,
+                   ModulationScheme::DefaultSchemes, TopologyCopy);
 
         //Push simulation into stack
         simulations.push_back(
-            std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
-                    Generator, RWA, NumCalls)));
+            std::make_shared<NetworkSimulation>(Generator, RWA, NumCalls));
         }
 }
 
@@ -324,8 +321,8 @@ void Simulation_StatisticalTrend::load_file(std::string ConfigFileName)
     using namespace boost::program_options;
 
     options_description ConfigDesctription("Configurations Data");
-    ConfigDesctription.add_options()("general.SimulationType",
-                                     value<std::string>()->required(), "Simulation Type")
+    ConfigDesctription.add_options()
+    ("general.SimulationType", value<std::string>()->required(), "Simulation Type")
     ("general.NetworkType", value<std::string>()->required(), "Network Type")
     ("general.AvgSpanLength", value<long double>()->required(),
      "Distance Between Inline Amps.")

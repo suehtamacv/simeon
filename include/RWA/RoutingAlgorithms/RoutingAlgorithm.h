@@ -16,13 +16,13 @@ class RoutingAlgorithm
 {
 public:
 #define ROUTING_ALGORITHM \
-    X(LORa, "Length and Occupation Routing - Availability", "LORa") \
-    X(LORc, "Length and Occupation Routing - Contiguity", "LORc") \
-	X(PSR, "Power Series Routing", "PSR") \
-    X(MH, "Minimum Hops", "MH") \
-    X(SP, "Shortest Path", "SP")
+    X(LORa, "Length and Occupation Routing - Availability", "LORa", LengthOccupationRoutingAvailability) \
+    X(LORc, "Length and Occupation Routing - Contiguity", "LORc", LengthOccupationRoutingContiguity) \
+    X(PSR, "Power Series Routing", "PSR", PowerSeriesRouting) \
+    X(MH, "Minimum Hops", "MH", MinimumHops) \
+    X(SP, "Shortest Path", "SP", ShortestPath) //Enum value, Name, Nickname, Class name.
 
-#define X(a,b,c) a,
+#define X(a,b,c,d) a,
     enum RoutingAlgorithms
     {
         ROUTING_ALGORITHM

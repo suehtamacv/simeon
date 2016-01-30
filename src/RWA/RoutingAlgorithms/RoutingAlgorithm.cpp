@@ -6,7 +6,7 @@
 
 RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
     boost::assign::list_of<RoutingAlgorithm::RoutAlgNameBimap::relation>
-#define X(a,b,c) (a,b)
+#define X(a,b,c,d) (a,b)
     ROUTING_ALGORITHM
 #undef X
     ;
@@ -14,10 +14,9 @@ RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
 RoutingAlgorithm::RoutAlgNicknameBimap
 RoutingAlgorithm::RoutingAlgorithmNicknames =
     boost::assign::list_of<RoutingAlgorithm::RoutAlgNicknameBimap::relation>
-#define X(a,b,c) (a,c)
+#define X(a,b,c,d) (a,c)
     ROUTING_ALGORITHM
 #undef X
-#undef ROUTING_ALGORITHM
     ;
 
 RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
@@ -68,30 +67,9 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
 
     switch (Algorithm)
         {
-        case LORa:
-            R_Alg = std::shared_ptr<RoutingAlgorithm>(
-                        new LengthOccupationRoutingAvailability(T));
-            break;
-
-        case LORc:
-            R_Alg = std::shared_ptr<RoutingAlgorithm>(
-                        new LengthOccupationRoutingContiguity(T));
-            break;
-
-        case PSR:
-            R_Alg = std::shared_ptr<RoutingAlgorithm>(
-                        new PowerSeriesRouting(T));
-            break;
-
-        case MH:
-            R_Alg = std::shared_ptr<RoutingAlgorithm>(
-                        new MinimumHops(T));
-            break;
-
-        case SP:
-            R_Alg = std::shared_ptr<RoutingAlgorithm>(
-                        new ShortestPath(T));
-            break;
+#define X(a,b,c,d) case a: std::make_shared<d>(T); break;
+            ROUTING_ALGORITHM
+#undef X
         }
 
     R_Alg->load();

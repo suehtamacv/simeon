@@ -322,11 +322,11 @@ double Simulation_PSROptimization::Fitness::operator()(
 {
 
     //Creates a copy of the topology.
-    std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+    auto TopologyCopy = std::make_shared<Topology>(*T);
 
     //Creates the RWA Algorithms
-    std::shared_ptr<PowerSeriesRouting> R_Alg(new PowerSeriesRouting(TopologyCopy,
-            Simulation_PSROptimization::Costs));
+    auto R_Alg = std::make_shared<PowerSeriesRouting>(TopologyCopy,
+                 Simulation_PSROptimization::Costs);
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
         WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
             Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
@@ -346,13 +346,11 @@ double Simulation_PSROptimization::Fitness::operator()(
     R_Alg->initCoefficients(*particle);
 
     //Creates the Call Generator and the RWA Object
-    std::shared_ptr<CallGenerator> Generator(
-        new CallGenerator(
-            TopologyCopy, Simulation_PSROptimization::OptimizationLoad,
-            TransmissionBitrate::DefaultBitrates));
-    std::shared_ptr<RoutingWavelengthAssignment> RWA(
-        new RoutingWavelengthAssignment(
-            R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+    auto Generator = std::make_shared<CallGenerator>(TopologyCopy,
+                     Simulation_PSROptimization::OptimizationLoad,
+                     TransmissionBitrate::DefaultBitrates);
+    auto RWA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg, RA_Alg,
+               ModulationScheme::DefaultSchemes, TopologyCopy);
 
     return
         NetworkSimulation(Generator, RWA, Simulation_PSROptimization::NumCalls).
