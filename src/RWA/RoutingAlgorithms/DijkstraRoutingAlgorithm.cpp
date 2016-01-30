@@ -69,10 +69,11 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
     int CurrentNode = C->Destination.lock()->ID;
     NodesInRoute.push_back(CurrentNode);
 
-    if (Precedent[CurrentNode] == -1) {
+    if (Precedent[CurrentNode] == -1)
+        {
         RouteLinks.clear();
         return RouteLinks;
-    }
+        }
 
     while (Precedent[CurrentNode] != -1)
         {
@@ -95,6 +96,14 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
         {
         RouteLinks.push_back(T->Links.at(OrigDestPair(NodesInRoute[i],
                                          NodesInRoute[i - 1])));
+        }
+
+    //Checks whether the route is correct
+    //Usually it just isn't when there's a negative cost loop.
+    if ((RouteLinks.front().lock()->Origin.lock()->ID != C->Origin.lock()->ID) ||
+            (RouteLinks.back().lock()->Destination.lock()->ID != C->Destination.lock()->ID))
+        {
+        RouteLinks.clear();
         }
 
     return RouteLinks;
