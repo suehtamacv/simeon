@@ -295,8 +295,8 @@ void Simulation_PSROptimization::run()
         int N = std::pow(NMax - NMin + 1, Costs.size());
 
         PSO_Optim =
-            std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
-            (new PSO::ParticleSwarmOptimization<double, Fitness, Compare>
+            std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+            (new ParticleSwarmOptimization<double, Fitness, Compare>
              (P, G, N, XMin, XMax, VMin, VMax));
         }
 
@@ -318,7 +318,7 @@ void Simulation_PSROptimization::run()
 }
 
 double Simulation_PSROptimization::Fitness::operator()(
-    std::shared_ptr<PSO::PSO_Particle<double>> particle)
+    std::shared_ptr<PSO_Particle<double>> particle)
 {
 
     //Creates a copy of the topology.

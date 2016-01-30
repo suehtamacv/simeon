@@ -61,10 +61,10 @@ private:
     struct Fitness
     {
         static std::shared_ptr<Topology> T;
-        double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
+        double operator()(std::shared_ptr<PSO_Particle<double>>);
     };
 
-    std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
+    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
             PSO_Optim;
 
     void printCoefficients(std::string file, bool override = true);

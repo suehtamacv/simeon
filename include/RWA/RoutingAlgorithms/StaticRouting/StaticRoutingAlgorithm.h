@@ -5,7 +5,6 @@
 #include <map>
 
 class Link;
-typedef std::pair<int, int> OrigDestPair;
 
 class StaticRoutingAlgorithm : public DijkstraRoutingAlgorithm
 {
@@ -14,7 +13,7 @@ public:
 
     std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C);
 
-    std::map<OrigDestPair, std::vector<std::weak_ptr<Link>>> Routes;
+    std::map<std::pair<int, int>, std::vector<std::weak_ptr<Link>>> Routes;
 private:
     void precalculate_Routes();
 };

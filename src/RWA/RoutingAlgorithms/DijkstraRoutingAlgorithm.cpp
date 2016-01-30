@@ -51,7 +51,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
             {
             auto locknode = node.lock();
             double newLength = MinDistance[CurrentNode->ID] +
-                               get_Cost(T->Links.at(OrigDestPair(CurrentNode->ID, locknode->ID)), C);
+                               get_Cost(T->Links.at(std::make_pair(CurrentNode->ID, locknode->ID)), C);
 
             if (MinDistance[locknode->ID] > newLength)
                 {
@@ -94,7 +94,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
 
     for (int i = NodesInRoute.size() - 1; i > 0; i--)
         {
-        RouteLinks.push_back(T->Links.at(OrigDestPair(NodesInRoute[i],
+        RouteLinks.push_back(T->Links.at(std::make_pair(NodesInRoute[i],
                                          NodesInRoute[i - 1])));
         }
 

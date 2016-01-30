@@ -8,8 +8,6 @@
 #include <boost/bimap.hpp>
 #include <Structure/Node.h>
 
-typedef std::pair<int, int> OrigDestPair;
-
 class Link;
 
 class Topology
@@ -51,7 +49,7 @@ public:
 
 
     std::vector<std::shared_ptr<Node>> Nodes;
-    std::map<OrigDestPair, std::shared_ptr<Link>> Links;
+    std::map<std::pair<int, int>, std::shared_ptr<Link>> Links;
 
     std::weak_ptr<Node> add_Node(int NodeID = -1,
                                  Node::NodeType = Node::TransparentNode,

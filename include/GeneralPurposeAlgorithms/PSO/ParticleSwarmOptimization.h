@@ -77,7 +77,8 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
 template<class PositionType, class Fit, class Comp>
 void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
 {
-    #pragma omp parallel for ordered schedule(dynamic)
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
 
     for (unsigned i = 0; i < Particles.size(); i++)
         {
@@ -90,12 +91,14 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
             }
 
         #pragma omp critical
-        if (Comp()(Particles[i]->bestFit, BestParticle->bestFit))
             {
-            std::clog << "New fitter particle found. Fit: " << Particles[i]->currentFit
-                      << std::endl;
+            if (Comp()(Particles[i]->bestFit, BestParticle->bestFit))
+                {
+                std::clog << "New fitter particle found. Fit: " << Particles[i]->currentFit
+                          << std::endl;
 
-            BestParticle = Particles[i];
+                BestParticle = Particles[i];
+                }
             }
         }
 

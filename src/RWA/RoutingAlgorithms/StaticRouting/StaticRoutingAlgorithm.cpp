@@ -17,8 +17,7 @@ std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(
         precalculate_Routes();
         }
 
-    OrigDestPair OrigDest(C->Origin.lock()->ID, C->Destination.lock()->ID);
-    return Routes[OrigDest];
+    return Routes[std::make_pair(C->Origin.lock()->ID, C->Destination.lock()->ID)];
 }
 
 void StaticRoutingAlgorithm::precalculate_Routes()
@@ -33,7 +32,7 @@ void StaticRoutingAlgorithm::precalculate_Routes()
                 }
 
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-            OrigDestPair DummyOrigDest(orig->ID, dest->ID);
+            auto DummyOrigDest = std::make_pair(orig->ID, dest->ID);
 
             Routes.emplace(DummyOrigDest, DijkstraRoutingAlgorithm::route(DummyCall));
             }

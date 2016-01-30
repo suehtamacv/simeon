@@ -160,12 +160,13 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
 std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                        std::weak_ptr<Node> Destination, double Length)
 {
-    Links.emplace(OrigDestPair(Origin.lock()->ID, Destination.lock()->ID),
+    Links.emplace(std::make_pair(Origin.lock()->ID, Destination.lock()->ID),
                   std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
-    Origin.lock()->insert_Link(Destination, Links.at(OrigDestPair(Origin.lock()->ID,
-                               Destination.lock()->ID)));
+    Origin.lock()->insert_Link(Destination,
+                               Links.at(std::make_pair(Origin.lock()->ID,
+                                        Destination.lock()->ID)));
     LongestLink = -1;
-    return (std::weak_ptr<Link>) Links.at(OrigDestPair(Origin.lock()->ID,
+    return (std::weak_ptr<Link>) Links.at(std::make_pair(Origin.lock()->ID,
                                           Destination.lock()->ID));
 }
 
