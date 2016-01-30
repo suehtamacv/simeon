@@ -18,16 +18,47 @@ public:
 private:
     struct CallProperties
     {
-        std::weak_ptr<Link> link;
+        int Origin;
+        int Destination;
         TransmissionBitrate bitrate;
         ModulationScheme scheme;
 
+        CallProperties(int Origin, int Destination,
+                       TransmissionBitrate bitrate, ModulationScheme scheme) :
+            Origin(Origin), Destination(Destination), bitrate(bitrate), scheme(scheme) {}
+
         bool operator <(const CallProperties &other) const
         {
-            return ((bitrate < other.bitrate) ||
-                    ((bitrate == other.bitrate) && (scheme < other.scheme)) ||
-                    ((bitrate == other.bitrate) && (scheme == other.scheme) &&
-                     (link.lock() < other.link.lock())));
+            if (Origin < other.Origin)
+                {
+                return true;
+                }
+            else if (Origin == other.Origin)
+                {
+                if (Destination < other.Destination)
+                    {
+                    return true;
+                    }
+                else if (Destination == other.Destination)
+                    {
+                    if (bitrate < other.bitrate)
+                        {
+                        return true;
+                        }
+                    else if (bitrate == other.bitrate)
+                        {
+                        if (scheme < other.scheme)
+                            {
+                            return true;
+                            }
+                        else
+                            {
+                            return false;
+                            }
+                        }
+                    }
+                }
+            return false;
         }
     };
 

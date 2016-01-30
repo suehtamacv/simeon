@@ -12,13 +12,19 @@ PSR::cNoise::cNoise(
 arma::rowvec PSR::cNoise::getCost(std::weak_ptr<Link> link,
                                   std::shared_ptr<Call> C)
 {
-    return cache.at(CallProperties{link, C->Bitrate, C->Scheme});
+    return cache.at(CallProperties(link.lock()->Origin.lock()->ID,
+                                   link.lock()->Destination.lock()->ID,
+                                   C->Bitrate, C->Scheme));
 }
 
 void PSR::cNoise::createCache()
 {
     for (auto link : T->Links)
         {
+
+        auto Origin = link.second->Origin.lock()->ID;
+        auto Destination = link.second->Destination.lock()->ID;
+
         Signal S;
         S = link.second->Origin.lock()->add(S);
         S = link.second->bypass(S);
@@ -29,7 +35,7 @@ void PSR::cNoise::createCache()
             {
             for (auto &scheme : ModulationScheme::DefaultSchemes)
                 {
-                CallProperties Prop{link.second, bitrate, scheme};
+                CallProperties Prop(Origin, Destination, bitrate, scheme);
                 double ThresholdNoise = Signal::InputPower.in_Watts() /
                                         scheme.get_ThresholdOSNR(bitrate).in_Linear();
 
