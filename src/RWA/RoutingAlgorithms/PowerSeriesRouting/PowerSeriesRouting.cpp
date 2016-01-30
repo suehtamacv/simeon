@@ -96,12 +96,12 @@ void PowerSeriesRouting::load()
     hasLoaded = true;
 }
 
-bool PowerSeriesRouting::initCoefficients(PSO::PSO_Particle<double> &particle)
+bool PowerSeriesRouting::initCoefficients(std::vector<double> X)
 {
-    coefficients = arma::mat(1, particle.X.size());
+    coefficients = arma::mat(1, X.size());
     int it = 0;
 
-    for (auto &x : particle.X)
+    for (auto &x : X)
         {
         coefficients(0, it++) = x;
         }

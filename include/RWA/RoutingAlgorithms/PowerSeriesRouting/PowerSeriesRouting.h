@@ -4,7 +4,6 @@
 #include <RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
 #include <armadillo>
 #include <vector>
-#include <GeneralPurposeAlgorithms/PSO.h>
 
 namespace PSR
 {
@@ -20,7 +19,7 @@ public:
 
     void load();
     void save(std::string);
-    bool initCoefficients(PSO::PSO_Particle<double> &particle);
+    bool initCoefficients(std::vector<double> X);
     bool initCoefficients(std::string);
 
     double get_Cost(std::weak_ptr<Link> link,
