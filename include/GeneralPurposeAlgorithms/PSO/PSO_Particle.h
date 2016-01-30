@@ -31,18 +31,17 @@ template<class PositionType>
 PSO_Particle<PositionType>::PSO_Particle(
     unsigned int N, PositionType XMin, PositionType XMax) : N(N)
 {
-    X.resize(N);
-    V.resize(N);
-    P.resize(N);
+    X.resize(N, 0);
+    V.resize(N, 0);
+    P.resize(N, 0);
     initialize(XMin, XMax);
 }
 
 template<class PositionType>
-void PSO_Particle<PositionType>::initialize(
-    PositionType XMin, PositionType XMax)
+void PSO_Particle<PositionType>::initialize(PositionType, PositionType XMax)
 {
 
-    std::uniform_real_distribution<PositionType> distribution(XMin, XMax);
+    std::uniform_real_distribution<PositionType> distribution(0, XMax);
     for (auto &x : X)
         {
         x = distribution(random_generator);

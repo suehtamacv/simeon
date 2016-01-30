@@ -58,17 +58,30 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
 
     for (auto &particle : Particles)
         {
-        particle = std::shared_ptr<PSO_Particle<PositionType>>(
-                       new PSO_Particle<PositionType>(N, XMin, XMax));
+        particle = std::make_shared<PSO_Particle<PositionType>>(N, XMin, XMax);
         }
 
     //Create ring topology
     for (unsigned particle = 0; particle < Particles.size(); ++particle)
         {
-        Particles[particle]->Neighbour[0] = Particles[(particle + 1) % P];
-        Particles[particle]->Neighbour[1] = Particles[(particle - 1) % P];
+        if (particle != 0)
+            {
+            Particles[particle]->Neighbour[0] = Particles[particle - 1];
+            }
+        else
+            {
+            Particles[particle]->Neighbour[0] = Particles.back();
+            }
+
+        if (particle != Particles.size() - 1)
+            {
+            Particles[particle]->Neighbour[1] = Particles[particle + 1];
+            }
+        else
+            {
+            Particles[particle]->Neighbour[1] = Particles.front();
+            }
         }
-    Particles[0]->Neighbour[1] = Particles[Particles.size() - 1];
 
     BestParticle = Particles[0];
     g = 1;
