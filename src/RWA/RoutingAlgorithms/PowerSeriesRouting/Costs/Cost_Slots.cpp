@@ -14,7 +14,7 @@ arma::rowvec PSR::cSlots::getCost(std::weak_ptr<Link>, std::shared_ptr<Call> C)
 
 void PSR::cSlots::createCache()
 {
-    unsigned int maxSlots = 0;
+    unsigned int maxSlots = 1;
     for (auto scheme : ModulationScheme::DefaultSchemes)
         {
         for (auto bitrate : TransmissionBitrate::DefaultBitrates)

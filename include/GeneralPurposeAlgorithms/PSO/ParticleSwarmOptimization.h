@@ -36,8 +36,7 @@ private:
     static constexpr double c1 = 2.05;
     static constexpr double c2 = 2.05;
     static constexpr double phi = c1 + c2;
-    static constexpr double chi = 2.0 / std::abs(2 - phi - sqrt(
-                                      phi * phi - 4 * phi));
+    double chi;
 
 };
 
@@ -52,6 +51,7 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
     PositionType VMax) :
     P(P), G(G), N(N), XMin(XMin), XMax(XMax), VMin(VMin), VMax(VMax)
 {
+    chi = 2.0 / std::abs(2 - phi - sqrt(phi * phi - 4 * phi));
 
     //Create Particles
     Particles.resize(P);
