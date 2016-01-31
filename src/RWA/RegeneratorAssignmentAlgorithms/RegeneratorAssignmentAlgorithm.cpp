@@ -9,6 +9,7 @@
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 #include <RWA/TransparentSegment.h>
+#include <Structure/Topology.h>
 
 RegeneratorAssignmentAlgorithm::RegAssignNameBimap
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames =
@@ -75,7 +76,8 @@ bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
     TransparentSegment Segment(segmentLinks(Links, start, end), scheme, 0);
     Signal Sig = Segment.bypass(Signal());
 
-    return ((Sig.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
+    return ((!T->considerPhysicalImpairments ||
+             Sig.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
             (Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate)));
 }
 
@@ -93,7 +95,8 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
         {
         Segment.ModScheme = scheme;
 
-        if (((S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
+        if (((!T->considerPhysicalImpairments ||
+                S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
                 ((Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate))))
             {
             return scheme;

@@ -9,14 +9,14 @@ SimulationType::Network_Type SimulationType::Type;
 
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
     boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
-#define X(a,b, c) (a,b)
+#define X(a,b,c) (a,b)
     NETWORK_TYPE
 #undef X
     ;
 
 SimulationType::NetworkTypeNicknameBimap SimulationType::NetworkTypesNicknames =
     boost::assign::list_of<SimulationType::NetworkTypeNicknameBimap::relation>
-#define X(a,b, c) (a,c)
+#define X(a,b,c) (a,c)
     NETWORK_TYPE
 #undef X
 #undef NETWORK_TYPE
@@ -24,7 +24,7 @@ SimulationType::NetworkTypeNicknameBimap SimulationType::NetworkTypesNicknames =
 
 SimulationType::SimulationTypeNameBimap SimulationType::SimulationTypeNames =
     boost::assign::list_of<SimulationType::SimulationTypeNameBimap::relation>
-#define X(a,b,c, d) (a,b)
+#define X(a,b,c,d) (a,b)
     SIMULATION_TYPE
 #undef X
     ;

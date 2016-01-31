@@ -58,7 +58,8 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             TransparentSegment Segment(Links, scheme, 0);
             Signal S;
 
-            if (Segment.bypass(S).get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))
+            if (!T->considerPhysicalImpairments ||
+                    Segment.bypass(S).get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))
                 {
                 Segments.push_back(Segment);
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
