@@ -2,11 +2,11 @@
 #define CALL_H
 
 #include <memory>
-#include <Calls/Event.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <GeneralClasses/ModulationScheme.h>
 
 class Node;
+class Event;
 
 /**
  * @brief The Call class is the standard object representing a connection

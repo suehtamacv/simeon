@@ -28,9 +28,29 @@ public:
      */
     Power(const Power &);
 
+    /**
+     * @brief operator * applies a Gain G over this Power.
+     * @param G is the Gain.
+     * @return a Power object, after suffering the Gain G.
+     */
     Power operator*(Gain G);
+    /**
+     * @brief operator + adds another Power P to this Power.
+     * @param P is the Power.
+     * @return a Power object, result of summing the two Powers.
+     */
     Power operator+(Power &P);
+    /**
+     * @brief operator *= applies a Gain G over this power.
+     * @param G is the Gain.
+     * @return a reference to this object.
+     */
     Power &operator*=(Gain &G);
+    /**
+     * @brief operator += adds another Power P to this Power.
+     * @param P is the Power.
+     * @return a reference to this object.
+     */
     Power &operator+=(Power &P);
 
     /**

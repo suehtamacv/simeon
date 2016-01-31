@@ -3,9 +3,15 @@
 
 #include "Device.h"
 
+/**
+ * @brief The Regenerator class represents a electronic regenerator.
+ */
 class Regenerator : public Device
 {
 public:
+    /**
+     * @brief Regenerator is the constructor for a regenerator device.
+     */
     Regenerator();
 
     Gain &get_Gain();

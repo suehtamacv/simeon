@@ -1,5 +1,6 @@
 #include <Calls/CallGenerator.h>
 #include <Calls/Call.h>
+#include <Calls/Event.h>
 #include <GeneralClasses/RandomGenerator.h>
 #include <boost/assert.hpp>
 

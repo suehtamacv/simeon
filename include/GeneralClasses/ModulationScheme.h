@@ -11,6 +11,11 @@
 class ModulationScheme
 {
 public:
+/**
+  * In DEFAULT_MODULATIONSCHEMES there are the default modulation schemes used
+  * through the simulator. To add a new M-QAM scheme, add to the list
+  * X(M, Gain(SNR_PER_BIT, Gain::dB)).
+  **/
 #define DEFAULT_MODULATIONSCHEMES \
   X(4, Gain(6.8, Gain::dB)) \
   X(16, Gain(10.5, Gain::dB)) \

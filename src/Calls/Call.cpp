@@ -1,4 +1,5 @@
 #include <Calls/Call.h>
+#include <Calls/Event.h>
 
 Call::Call(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,

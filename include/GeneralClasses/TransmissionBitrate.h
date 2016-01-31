@@ -9,6 +9,11 @@
 class TransmissionBitrate
 {
 public:
+/**
+ * In DEFAULT_TRANSMISSIONBITRATES there are the default transmission bitrates
+ * used through the simulator. To add a new bitrate, add to the list X(BR), where
+ * BR is measured in bits-per-second.
+ **/
 #define DEFAULT_TRANSMISSIONBITRATES \
   X(10E9) \
   X(40E9) \
