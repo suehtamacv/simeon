@@ -313,14 +313,14 @@ void Simulation_NSGA2_RegnPlac::print()
     std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     std::cout << "-> Regenerator Assignment Algorithm = " <<
-              RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
+              RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames.left.at(
                   RegAssignment_Algorithm) << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << NetworkLoad << std::endl;

@@ -82,19 +82,19 @@ void Simulation_NetworkLoad::print()
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
         {
         std::cout << "-> Regenerator Placement Algorithm = " <<
-                  RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
+                  RegeneratorPlacementAlgorithm::RegeneratorPlacementNames.left.at(
                       RegPlacement_Algorithm) << std::endl;
         std::cout << "-> Regenerator Assignment Algorithm = " <<
-                  RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
+                  RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames.left.at(
                       RegAssignment_Algorithm) << std::endl;
         }
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
