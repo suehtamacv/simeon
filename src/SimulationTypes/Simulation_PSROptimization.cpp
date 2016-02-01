@@ -268,9 +268,55 @@ void Simulation_PSROptimization::create_Simulation()
 
 }
 
-void Simulation_PSROptimization::save(std::string)
+void Simulation_PSROptimization::save(std::string SimConfigFileName)
 {
-    // save parameters in file
+    SimulationType::save(SimConfigFileName);
+
+    std::ofstream SimConfigFile(SimConfigFileName,
+                                std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
+                      Type) << std::endl;
+
+    SimConfigFile.close();
+
+    Link::save(SimConfigFileName, T);
+
+    SimConfigFile.open(SimConfigFileName,
+                                    std::ofstream::out | std::ofstream::app);
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
+                      Type) << std::endl;
+
+    SimConfigFile << std::endl << "  [algorithms]" << std::endl;
+    SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
+                  WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                      WavAssign_Algorithm) << std::endl;
+    if(Type == TranslucentNetwork)
+        {
+        SimConfigFile << "  RegeneratorPlacementAlgorithm = " <<
+                  RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
+                      RegPlacement_Algorithm) << std::endl;
+        SimConfigFile << "  RegeneratorAssignmentAlgorithm = " <<
+                  RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
+                      RegAssignment_Algorithm) << std::endl;
+        }
+
+    SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
+    SimConfigFile << "  MinimumPSRExponent = " << NMin << std::endl;
+    SimConfigFile << "  MaximumPSRExponent = " << NMax << std::endl;
+    SimConfigFile << "  PSRCosts =";
+    for(auto Iterator = Costs.begin(); Iterator != Costs.end(); Iterator++)
+        SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at((*Iterator)->Type);
+    SimConfigFile << std::endl;
+    SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
+    SimConfigFile << "  NetworkLoad = " << OptimizationLoad << std::endl;
+
+    SimConfigFile << std::endl;
+    T->save(SimConfigFileName);
 }
 
 void Simulation_PSROptimization::load_file(std::string)
@@ -349,6 +395,10 @@ void Simulation_PSROptimization::run()
         }
 
     hasRun = true;
+
+    // Saving Sim. Configurations
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+    save(ConfigFileName);
 }
 
 double Simulation_PSROptimization::Fitness::operator()(
