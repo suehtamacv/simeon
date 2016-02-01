@@ -3,7 +3,9 @@
 #include <RWA/TransparentSegment.h>
 #include <RWA/Route.h>
 #include <RWA/RoutingWavelengthAssignment.h>
+#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <Structure/Topology.h>
+#include <Structure/Link.h>
 
 SQP_NetworkSimulation::SQP_NetworkSimulation(std::shared_ptr<CallGenerator>
         Generator, std::shared_ptr<RoutingWavelengthAssignment> RWA,
@@ -17,34 +19,50 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 {
     NetworkSimulation::implement_call(evt);
 
-    if (evt->Parent->Status == Call::Blocked)
+    auto Links = RWA->R_Alg->route(evt->Parent);
+    if (Links.empty())
         {
         return;
         }
 
-    for (auto &segment : evt->route->Segments)
+    int LNMax = 1;
+    std::sort(ModulationScheme::DefaultSchemes.rbegin(),
+              ModulationScheme::DefaultSchemes.rend());
+
+    for (auto &scheme : ModulationScheme::DefaultSchemes)
         {
-        auto LNMax = SQP->get_LNMax(evt->Parent->Bitrate, segment.ModScheme);
-        std::vector<bool> sqp_LNMax(segment.Nodes.size(), false);
-
-        for (unsigned numNode = 0; numNode < segment.Nodes.size(); ++numNode)
+        LNMax = SQP->get_LNMax(evt->Parent->Bitrate, scheme);
+        if (LNMax != 0)
             {
-            if ((numNode % LNMax == 0) ||
-                    ((numNode - 1) % LNMax == 0) ||
-                    ((numNode + 1) % LNMax == 0))
-                {
-                sqp_LNMax[numNode] = true;
-                }
-            }
-
-        for (unsigned numNode = 0; numNode < segment.Nodes.size(); ++numNode)
-            {
-            if (sqp_LNMax[numNode])
-                {
-                NodeUsage[segment.Nodes[numNode].lock()->ID]++;
-                }
+            break;
             }
         }
+
+    std::vector<bool> sqp_LNMax(Links.size() + 1, false);
+    for (unsigned numNode = 0; numNode <= Links.size(); ++numNode)
+        {
+        if ((numNode % LNMax == 0) ||
+                ((numNode - 1) % LNMax == 0) ||
+                ((numNode + 1) % LNMax == 0))
+            {
+            sqp_LNMax[numNode] = true;
+            }
+
+        }
+
+    for (unsigned numNode = 0; numNode < Links.size(); ++numNode)
+        {
+        if (sqp_LNMax[numNode])
+            {
+            NodeUsage[Links[numNode].lock()->Origin.lock()->ID]++;
+            }
+        }
+
+    if (sqp_LNMax[Links.size()])
+        {
+        NodeUsage[Links.back().lock()->Destination.lock()->ID]++;
+        }
+
 }
 
 void SQP_NetworkSimulation::run()
