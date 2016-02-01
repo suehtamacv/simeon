@@ -6,6 +6,9 @@
 #include <boost/bimap.hpp>
 #include <Structure/Topology.h>
 
+namespace Simulations
+{
+
 class SimulationType
 {
 public:
@@ -21,7 +24,7 @@ public:
     X(regnum, "Number of Regenerators", "regnum", Simulation_RegeneratorNumber) \
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
 
-#define X(a,b, c) a,
+#define X(a,b,c) a,
     enum Network_Type
     {
         NETWORK_TYPE
@@ -63,5 +66,7 @@ public:
     Topology::DefaultTopologies Chosen_Topology;
     std::shared_ptr<Topology> T;
 };
+
+}
 
 #endif // SIMULATIONTYPE_H

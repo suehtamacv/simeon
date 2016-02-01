@@ -9,6 +9,9 @@
 
 class Node;
 
+namespace Simulations
+{
+
 class Simulation_TransparencyAnalysis : public SimulationType
 {
 public:
@@ -40,4 +43,5 @@ private:
     std::shared_ptr<TransmissionBitrate> maxBitrate;
 };
 
+}
 #endif // SIMULATION_TRANSPARENCYANALYSIS_H

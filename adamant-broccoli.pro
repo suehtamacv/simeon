@@ -52,6 +52,7 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.cpp \
     src/RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
     src/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/AdaptativeWeighingRouting.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
@@ -140,6 +141,7 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
     include/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \
     include/RWA/RoutingAlgorithms/RoutingAlgorithm.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/AdaptativeWeighingRouting.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h \

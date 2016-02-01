@@ -5,6 +5,8 @@
 #include <boost/program_options.hpp>
 #include <iostream>
 
+using namespace Simulations;
+
 SimulationType::Network_Type SimulationType::Type;
 
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =

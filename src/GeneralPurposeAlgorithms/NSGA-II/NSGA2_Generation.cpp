@@ -14,8 +14,7 @@ NSGA2_Generation::NSGA2_Generation() : isEvaluated(false)
 
 void NSGA2_Generation::eval()
 {
-    extern bool parallelism_enabled;
-    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+    #pragma omp parallel for ordered schedule(dynamic)
 
     for (unsigned i = 0; i < people.size(); i++)
         {

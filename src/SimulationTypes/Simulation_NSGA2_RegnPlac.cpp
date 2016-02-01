@@ -13,6 +13,8 @@
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace Simulations;
+
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
 
 Simulation_NSGA2_RegnPlac::Simulation_NSGA2_RegnPlac() :

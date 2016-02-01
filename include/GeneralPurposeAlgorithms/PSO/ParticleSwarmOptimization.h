@@ -90,8 +90,7 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
 template<class PositionType, class Fit, class Comp>
 void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
 {
-    extern bool parallelism_enabled;
-    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+    #pragma omp parallel for ordered schedule(dynamic)
 
     for (unsigned i = 0; i < Particles.size(); i++)
         {

@@ -7,6 +7,9 @@
 #include <SimulationTypes/SimulationType.h>
 #include "RWA.h"
 
+namespace Simulations
+{
+
 class Simulation_NetworkLoad : public SimulationType
 {
 public:
@@ -43,4 +46,5 @@ private:
     void place_Regenerators(std::shared_ptr<Topology> T);
 };
 
+}
 #endif // SIMULATION_NETWORKLOAD_H

@@ -6,6 +6,8 @@
 #include <RWA/RoutingWavelengthAssignment.h>
 #include <iostream>
 
+using namespace Simulations;
+
 NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                                      std::shared_ptr<RoutingWavelengthAssignment> RWA,
                                      unsigned long NumMaxCalls) :

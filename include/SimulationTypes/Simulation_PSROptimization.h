@@ -9,6 +9,9 @@
 #include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
+namespace Simulations
+{
+
 class Simulation_PSROptimization : public SimulationType
 {
 public:
@@ -69,5 +72,7 @@ private:
 
     void printCoefficients(std::string file, bool override = true);
 };
+
+}
 
 #endif // SIMULATION_PSROPTIMIZATION_H

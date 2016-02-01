@@ -10,6 +10,8 @@
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace Simulations;
+
 Simulation_NetworkLoad::Simulation_NetworkLoad() : SimulationType(
         Simulation_Type::networkload)
 {

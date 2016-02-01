@@ -12,6 +12,8 @@
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace Simulations;
+
 Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() :
     SimulationType(Simulation_Type::transparency)
 {

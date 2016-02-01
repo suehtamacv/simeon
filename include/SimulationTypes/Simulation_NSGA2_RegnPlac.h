@@ -7,6 +7,9 @@
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
+namespace Simulations
+{
+
 class Simulation_NSGA2_RegnPlac : public SimulationType
 {
 public:
@@ -119,5 +122,7 @@ public:
 private:
     Simulation_NSGA2_RegnPlac &Sim;
 };
+
+}
 
 #endif // SIMULATION_NSGA2_REGENERATORPLACEMENT_H

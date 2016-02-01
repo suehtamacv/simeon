@@ -7,6 +7,8 @@
 #include <RWA.h>
 #include <Structure/Link.h>
 
+using namespace Simulations;
+
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
 std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;

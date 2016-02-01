@@ -5,14 +5,17 @@
 #include "RWA.h"
 #include "SimulationTypes.h"
 
+namespace Simulations
+{
 bool parallelism_enabled = true;
+}
 
 int main(void)
 {
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
-    auto simulation = SimulationType::create();
+    auto simulation = Simulations::SimulationType::create();
     simulation->print();
     simulation->run();
 

@@ -4,7 +4,7 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include "SignalQualityPrediction.h"
 
-class SQP_NetworkSimulation : public NetworkSimulation
+class SQP_NetworkSimulation : public Simulations::NetworkSimulation
 {
     friend class SignalQualityPrediction;
 public:

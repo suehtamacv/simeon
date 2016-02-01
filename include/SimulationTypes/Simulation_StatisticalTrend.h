@@ -8,6 +8,9 @@
 #include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
+namespace Simulations
+{
+
 class NetworkSimulation;
 
 class Simulation_StatisticalTrend : public SimulationType
@@ -47,4 +50,5 @@ private:
     bool runLoadNX;
 };
 
+}
 #endif // SIMULATION_BOXPLOT_H

@@ -6,6 +6,8 @@
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace Simulations;
+
 Simulation_RegeneratorNumber::Simulation_RegeneratorNumber() :
     SimulationType(Simulation_Type::regnum), hasLoaded(false)
 {

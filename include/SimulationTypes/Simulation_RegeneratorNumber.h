@@ -7,6 +7,9 @@
 #include <vector>
 #include "RWA.h"
 
+namespace Simulations
+{
+
 class Simulation_RegeneratorNumber : public SimulationType
 {
 public:
@@ -46,5 +49,7 @@ private:
     void refreshRegenerators(std::shared_ptr<Topology>, unsigned long numReg);
     std::vector<std::shared_ptr<NetworkSimulation>> simulations;
 };
+
+}
 
 #endif // SIMULATION_REGENERATORNUMBER_H

@@ -35,9 +35,8 @@ void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned)
         node->set_NodeType(Node::OpaqueNode);
         }
 
-    std::shared_ptr<CallGenerator> CG(new CallGenerator(T, NetworkLoad, Bitrates));
-    std::shared_ptr<NetworkSimulation> Sim(
-        new NetworkSimulation(CG, RWA, NumCalls));
+    auto CG = std::make_shared<CallGenerator>(T, NetworkLoad, Bitrates);
+    auto Sim = std::make_shared<Simulations::NetworkSimulation>(CG, RWA, NumCalls);
     Sim->run();
 
     unsigned long long TotalSimultaneousUsed = 0;

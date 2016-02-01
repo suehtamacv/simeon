@@ -8,6 +8,9 @@ class CallGenerator;
 class RoutingWavelengthAssignment;
 class Event;
 
+namespace Simulations
+{
+
 class NetworkSimulation
 {
 public:
@@ -34,5 +37,7 @@ protected:
     void implement_call(std::shared_ptr<Event> evt);
     void drop_call(std::shared_ptr<Event> evt);
 };
+
+}
 
 #endif // NETWORKSIMULATION_H
