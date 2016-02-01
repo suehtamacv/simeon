@@ -234,7 +234,7 @@ void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    // A FAZER = Implementar melhor o salve dos algoritmos
+    // To do: Better algorithms saving
     SimConfigFile << std::endl << "  [algorithms]" << std::endl;
     SimConfigFile << "  RoutingAlgorithm = " <<
                   RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) <<

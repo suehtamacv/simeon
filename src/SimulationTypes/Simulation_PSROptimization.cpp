@@ -6,6 +6,11 @@
 #include <Calls.h>
 #include <RWA.h>
 #include <Structure/Link.h>
+#include <sstream>
+#include <boost/assert.hpp>
+#include <boost/assign.hpp>
+#include <boost/program_options.hpp>
+#include <map>
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
@@ -288,10 +293,7 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
                                     std::ofstream::out | std::ofstream::app);
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
-                      Type) << std::endl;
-
-    SimConfigFile << std::endl << "  [algorithms]" << std::endl;
+    SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
                   WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
                       WavAssign_Algorithm) << std::endl;
@@ -309,8 +311,8 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     SimConfigFile << "  MinimumPSRExponent = " << NMin << std::endl;
     SimConfigFile << "  MaximumPSRExponent = " << NMax << std::endl;
     SimConfigFile << "  PSRCosts =";
-    for(auto Iterator = Costs.begin(); Iterator != Costs.end(); Iterator++)
-        SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at((*Iterator)->Type);
+    for(auto &cost : Costs)
+        SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
     SimConfigFile << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
     SimConfigFile << "  NetworkLoad = " << OptimizationLoad << std::endl;
@@ -319,9 +321,78 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     T->save(SimConfigFileName);
 }
 
-void Simulation_PSROptimization::load_file(std::string)
+void Simulation_PSROptimization::load_file(std::string ConfigFileName)
 {
-    // load parameters from a file
+    using namespace boost::program_options;
+
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type")
+            ("general.NetworkType", value<std::string>()->required(), "Network Type")
+            ("general.AvgSpanLength", value<long double>()->required(),
+             "Distance Between Inline Amps.")
+            ("algorithms.WavelengthAssignmentAlgorithm", value<std::string>()->required(),
+             "Wavelength Assignment Algorithm")
+            ("algorithms.RegeneratorPlacementAlgorithm", value<std::string>(),
+             "Regenerator Placement Algorithm")
+            ("algorithms.RegeneratorAssignmentAlgorithm", value<std::string>(),
+             "Regenerator Assignment Algorithm")
+            ("sim_info.MinimumPSRExponent", value<int>()->required(), "Minimum PSR Exponent")
+            ("sim_info.MaximumPSRExponent", value<int>()->required(), "Maximum PSR Exponent")
+            ("sim_info.PSRCosts", value<std::vector<std::string>>()->multitoken(), "PSR Costs")
+            ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
+            ("sim_info.NetworkLoad", value<long double>()->required(), "Network Load");
+
+    variables_map VariablesMap;
+
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
+          VariablesMap);
+    ConfigFile.close();
+    notify(VariablesMap);
+
+    T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
+    Type = NetworkTypesNicknames.right.at(
+               VariablesMap["general.NetworkType"].as<std::string>());
+    Link::DefaultAvgSpanLength =
+        VariablesMap["general.AvgSpanLength"].as<long double>();
+    T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
+
+    WavAssign_Algorithm =
+        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+            VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
+    if(Type == Network_Type::TranslucentNetwork)
+        {
+        RegPlacement_Algorithm =
+            RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at(
+                VariablesMap["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>());
+        RegAssignment_Algorithm =
+            RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(
+                VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
+        }
+
+    NMin = VariablesMap["sim_info.MinimumPSRExponent"].as<int>();
+    NMax = VariablesMap["sim_info.MaximumPSRExponent"].as<int>();
+
+    std::vector<std::string> CostsList = VariablesMap.find("sim_info.PSRCosts")->second.as<std::vector<std::string>>();
+    for(auto &costs : CostsList)
+    {
+        std::istringstream PSR_Costs(costs);
+        std::string Aux;
+        while(PSR_Costs.tellg() != -1) // Reading the last cost twice
+        {
+            PSR_Costs >> Aux;
+            Costs.push_back(PSR::Cost::createCost(
+                            (PSR::Cost::PossibleCosts) PSR::Cost::CostsNicknames.right.at(Aux), NMin, NMax, T));
+        }
+    }
+
+    NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
+    OptimizationLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
+
+    hasLoaded = true;
 }
 
 void Simulation_PSROptimization::print()
@@ -355,8 +426,8 @@ void Simulation_PSROptimization::print()
     std::cout << "-> Maximum PSR Exponent = " << NMax << std::endl;
 
     std::cout << "-> PSR Costs =";
-    for(auto Iterator = Costs.begin(); Iterator != Costs.end(); Iterator++)
-        std::cout << " " << PSR::Cost::CostsNicknames.left.at((*Iterator)->Type) << std::endl;
+    for(auto &cost : Costs)
+        std::cout << " " << PSR::Cost::CostsNicknames.left.at(cost->Type) << std::endl;
 
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
