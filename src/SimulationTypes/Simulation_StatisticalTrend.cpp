@@ -422,7 +422,7 @@ void Simulation_StatisticalTrend::run()
 
     ResultFile.close();
 
+    // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
     save(ConfigFileName);
 }

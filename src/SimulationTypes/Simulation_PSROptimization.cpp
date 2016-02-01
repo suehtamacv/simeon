@@ -280,6 +280,40 @@ void Simulation_PSROptimization::load_file(std::string)
 
 void Simulation_PSROptimization::print()
 {
+    if (!hasLoaded)
+        {
+        load();
+        }
+
+    std::cout << std::endl <<
+              "  A Power Series Routing PSO Optimization Simulation is about to start with the following parameters: "
+              << std::endl;
+    std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
+                  Type) << std::endl;
+    std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
+              std::endl;
+    std::cout << "-> Wavelength Assignment Algorithm = " <<
+              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+                  WavAssign_Algorithm)
+              << std::endl;
+    if(Type == TranslucentNetwork)
+        {
+        std::cout << "-> Regenerator Placement Algorithm = " <<
+                  RegeneratorPlacementAlgorithm::RegeneratorPlacementNames.left.at(
+                      RegPlacement_Algorithm) << std::endl;
+        std::cout << "-> Regenerator Assignment Algorithm = " <<
+                  RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames.left.at(
+                      RegAssignment_Algorithm) << std::endl;
+        }
+    std::cout << "-> Minimum PSR Exponent = " << NMin << std::endl;
+    std::cout << "-> Maximum PSR Exponent = " << NMax << std::endl;
+
+    std::cout << "-> PSR Costs =";
+    for(auto Iterator = Costs.begin(); Iterator != Costs.end(); Iterator++)
+        std::cout << " " << PSR::Cost::CostsNicknames.left.at((*Iterator)->Type) << std::endl;
+
+    std::cout << "-> Number of Calls = " << NumCalls << std::endl;
+    std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
 }
 
 void Simulation_PSROptimization::run()

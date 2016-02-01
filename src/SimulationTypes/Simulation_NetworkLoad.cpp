@@ -62,8 +62,8 @@ void Simulation_NetworkLoad::run()
             }
         }
 
+    // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
     save(ConfigFileName);
 }
 

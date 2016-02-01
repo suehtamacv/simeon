@@ -414,7 +414,7 @@ void Simulation_NSGA2_RegnPlac::run()
         Optimization.evolution.at(Optimization.generation - 1)->print();
         }
 
+    // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
-
     save(ConfigFileName);
 }
