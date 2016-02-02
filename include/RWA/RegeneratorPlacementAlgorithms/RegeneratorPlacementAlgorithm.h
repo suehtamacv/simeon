@@ -17,6 +17,7 @@ public:
 #define REGPLACEMENT_ALGORITHMS \
     X(DA, "Distance Adaptative", "DA") \
     X(MSU, "Most Simultaneously Used", "MSU") \
+    X(NX_MSU, "Most Simultaneously Used (NX Variant)", "NX_MSU") \
     X(MU, "Most Used", "MU") \
     X(NDF, "Nodal Degree First", "NDF") \
     X(SQP, "Signal Quality Prediction", "SQP") //X Macros

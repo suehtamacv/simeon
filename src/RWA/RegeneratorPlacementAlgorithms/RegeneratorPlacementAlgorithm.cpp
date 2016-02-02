@@ -80,6 +80,11 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
             RP_Alg = std::make_shared<DistanceAdaptative>(T);
             break;
 
+        case NX_MSU:
+            RP_Alg = std::make_shared<NX_MostSimultaneouslyUsed>
+                     (T, RWA, OptimizationLoad, NumCalls);
+            break;
+
         case MSU:
             RP_Alg = std::make_shared<MostSimultaneouslyUsed>(
                          T, RWA, OptimizationLoad, NumCalls);
@@ -107,12 +112,15 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
     return RP_Alg;
 }
 
-void RegeneratorPlacementAlgorithm::save(std::string SimConfigFileName, RegeneratorPlacementAlgorithms RegPlacAlg)
+void RegeneratorPlacementAlgorithm::save(std::string SimConfigFileName,
+        RegeneratorPlacementAlgorithms RegPlacAlg)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
-                               std::ofstream::out | std::ofstream::app);
+                                std::ofstream::out | std::ofstream::app);
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    SimConfigFile << "  RegeneratorPlacementAlgorithm = " << RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(RegPlacAlg) << std::endl;
+    SimConfigFile << "  RegeneratorPlacementAlgorithm = " <<
+                  RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
+                      RegPlacAlg) << std::endl;
 }
