@@ -392,6 +392,29 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
     OptimizationLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
 
+    std::cout << std::endl << "-> Define the file where to store the coefficients."
+              << std::endl;
+
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the coefficients."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     hasLoaded = true;
 }
 

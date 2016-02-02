@@ -339,6 +339,28 @@ void Simulation_RegeneratorNumber::load_file(std::string ConfigFileName)
     numTranslucentNodes =
         VariablesMap["sim_info.numTranslucentNodes"].as<long double>();
 
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     createSimulations();
 
     hasLoaded = true;

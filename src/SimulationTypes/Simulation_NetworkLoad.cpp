@@ -387,6 +387,28 @@ void Simulation_NetworkLoad::load_file(std::string ConfigFileName)
     NetworkLoadMax = VariablesMap["sim_info.NetworkLoadMax"].as<long double>();
     NetworkLoadStep = VariablesMap["sim_info.NetworkLoadStep"].as<long double>();
 
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     create_Simulations();
 
     hasLoaded = true;
