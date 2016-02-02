@@ -382,6 +382,28 @@ void Simulation_StatisticalTrend::load_file(std::string ConfigFileName)
     NetworkLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
     NumRepetitions = VariablesMap["sim_info.NumRepetitions"].as<long double>();
 
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     runLoadNX = false;
     hasLoaded = true;
 
