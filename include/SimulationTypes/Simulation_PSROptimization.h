@@ -15,6 +15,21 @@ namespace Simulations
 class Simulation_PSROptimization : public SimulationType
 {
 public:
+#define PSRVARIANTS \
+    X(Variant_PSR, "Standard PSR", "VariantPSR") \
+    X(Variant_AWR, "Adaptative Weighing Routing", "VariantAWR")
+
+#define X(a,b,c) a,
+    enum PSR_Variants {
+        PSRVARIANTS
+    };
+#undef X
+
+    typedef boost::bimap<PSR_Variants, std::string> PSRVariantNameBimap;
+    static PSRVariantNameBimap PSRVariantNames;
+    typedef boost::bimap<PSR_Variants, std::string> PSRVariantNicknameBimap;
+    static PSRVariantNicknameBimap PSRVariantNicknames;
+
     Simulation_PSROptimization();
 
     void help();
@@ -27,6 +42,8 @@ public:
 private:
     bool hasLoaded;
     bool hasRun;
+
+    PSR_Variants Variant;
 
     static WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;

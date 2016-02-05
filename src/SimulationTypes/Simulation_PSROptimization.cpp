@@ -14,6 +14,24 @@
 
 using namespace Simulations;
 
+Simulation_PSROptimization::PSRVariantNameBimap
+Simulation_PSROptimization::PSRVariantNames =
+    boost::assign::list_of<Simulation_PSROptimization::PSRVariantNameBimap::relation>
+#define X(a,b,c) (a,b)
+    PSRVARIANTS
+#undef X
+    ;
+
+Simulation_PSROptimization::PSRVariantNicknameBimap
+Simulation_PSROptimization::PSRVariantNicknames =
+    boost::assign::list_of<Simulation_PSROptimization::PSRVariantNicknameBimap::relation>
+#define X(a,b,c) (a,b)
+    PSRVARIANTS
+#undef X
+#undef PSRVARIANTS
+    ;
+
+
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
 std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
@@ -73,6 +91,34 @@ void Simulation_PSROptimization::load()
         }
     while (1);
 
+    std::cout << std::endl << "-> Choose a PSR Variant." << std::endl;
+    do
+        {
+        for (auto &variant : PSRVariantNames.left)
+            {
+            std::cout << "(" << variant.first << ")\t" << variant.second << std::endl;
+            }
+
+        int PSR_Variant;
+        std::cin >> PSR_Variant;
+
+        if (std::cin.fail() ||
+                PSRVariantNames.left.count((PSR_Variants) PSR_Variant) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid PSR Variant." << std::endl;
+            std::cout << std::endl << "-> Choose a PSR Variant." << std::endl;
+            }
+        else
+            {
+            Variant = (PSR_Variants) PSR_Variant;
+            break;
+            }
+        }
+    while(1);
+
     Node::load();
 
     Link::load(T);
@@ -95,52 +141,59 @@ void Simulation_PSROptimization::load()
             }
         }
 
-    std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
-
-    do
+    if (Variant == Variant_PSR)
         {
-        int nmin;
-        std::cin >> nmin;
+        std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
 
-        if (std::cin.fail())
+        do
             {
-            std::cin.clear();
-            std::cin.ignore();
+            int nmin;
+            std::cin >> nmin;
 
-            std::cerr << "Invalid minimum exponent." << std::endl;
-            std::cout << std::endl << "-> Define the minimum PSR Exponent."
-                      << std::endl;
+            if (std::cin.fail())
+                {
+                std::cin.clear();
+                std::cin.ignore();
+
+                std::cerr << "Invalid minimum exponent." << std::endl;
+                std::cout << std::endl << "-> Define the minimum PSR Exponent."
+                          << std::endl;
+                }
+            else
+                {
+                NMin = nmin;
+                break;
+                }
             }
-        else
+        while (1);
+
+        std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
+
+        do
             {
-            NMin = nmin;
-            break;
+            int nmax;
+            std::cin >> nmax;
+
+            if (std::cin.fail() || nmax < NMin)
+                {
+                std::cin.clear();
+                std::cin.ignore();
+
+                std::cerr << "Invalid maximum exponent." << std::endl;
+                std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
+                }
+            else
+                {
+                NMax = nmax;
+                break;
+                }
             }
+        while (1);
         }
-    while (1);
-
-    std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
-
-    do
+    else if (Variant == Variant_AWR)
         {
-        int nmax;
-        std::cin >> nmax;
-
-        if (std::cin.fail() || nmax < NMin)
-            {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid maximum exponent." << std::endl;
-            std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
-            }
-        else
-            {
-            NMax = nmax;
-            break;
-            }
+        NMin = NMax = 1;
         }
-    while (1);
 
     std::cout << std::endl << "-> Choose the PSR Costs." << std::endl;
 
@@ -192,6 +245,12 @@ void Simulation_PSROptimization::load()
                 Costs.push_back(PSR::Cost::createCost(
                                     (PSR::Cost::PossibleCosts) Cost, NMin, NMax, T));
                 } //Verifies that the cost hasn't been chosen.
+
+            if (chosenCosts.size() == 2 && Variant == Variant_AWR)
+                //Currently an AWR can only have two costs
+                {
+                break;
+                }
 
             std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
             }
@@ -318,6 +377,8 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
         SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
         }
     SimConfigFile << std::endl;
+    SimConfigFile << "  PSRVariant =" << PSRVariantNicknames.left.at(Variant)
+                  << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
     SimConfigFile << "  NetworkLoad = " << OptimizationLoad << std::endl;
 
@@ -347,6 +408,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
      "Maximum PSR Exponent")
     ("sim_info.PSRCosts", value<std::vector<std::string>>()->multitoken(),
      "PSR Costs")
+    ("sim_info.PSRVariant", value<std::string>()->required(), "PSR Variant")
     ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
     ("sim_info.NetworkLoad", value<long double>()->required(), "Network Load");
 
@@ -398,6 +460,8 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
             }
         }
 
+    Variant = PSRVariantNicknames.right.at(
+                  VariablesMap["sim_info.PSRVariant"].as<std::string>());
     NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
     OptimizationLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
 
@@ -464,6 +528,8 @@ void Simulation_PSROptimization::print()
                   std::endl;
         }
 
+    std::cout << "-> PSR Variant = " << PSRVariantNames.left.at(Variant)
+              << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
 }
