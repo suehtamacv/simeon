@@ -29,7 +29,7 @@ public:
     int get_NMin() const;
     int get_NMax() const;
 
-private:
+protected:
     std::vector<std::shared_ptr<PSR::Cost>> Costs;
     arma::mat coefficients;
     int NMin, NMax;

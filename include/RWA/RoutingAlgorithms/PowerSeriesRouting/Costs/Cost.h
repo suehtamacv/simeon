@@ -42,6 +42,7 @@ public:
     Cost(int NMin, int NMax, std::shared_ptr<Topology> T, PossibleCosts Type);
     virtual arma::rowvec getCost(std::weak_ptr<Link> link,
                                  std::shared_ptr<Call> C) = 0;
+    double getCost(int N, std::weak_ptr<Link> link, std::shared_ptr<Call> C);
     static std::shared_ptr<Cost> createCost(PossibleCosts, int NMin, int NMax,
                                             std::shared_ptr<Topology>);
 

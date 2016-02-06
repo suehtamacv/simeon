@@ -70,6 +70,9 @@ private:
 
     void create_Simulation();
 
+    void runPSR();
+    void runAWR();
+
     struct Compare
     {
         bool operator()(double a, double b)

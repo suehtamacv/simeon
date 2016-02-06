@@ -246,12 +246,6 @@ void Simulation_PSROptimization::load()
                                     (PSR::Cost::PossibleCosts) Cost, NMin, NMax, T));
                 } //Verifies that the cost hasn't been chosen.
 
-            if (chosenCosts.size() == 2 && Variant == Variant_AWR)
-                //Currently an AWR can only have two costs
-                {
-                break;
-                }
-
             std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
             }
         while (1);
@@ -541,32 +535,15 @@ void Simulation_PSROptimization::run()
         load();
         }
 
-    if (!hasRun)
+    switch (Variant)
         {
-        Fitness::T = T;
-        int N = std::pow(NMax - NMin + 1, Costs.size());
-
-        PSO_Optim =
-            std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
-            (new ParticleSwarmOptimization<double, Fitness, Compare>
-             (P, G, N, XMin, XMax, VMin, VMax));
+        case Variant_PSR:
+            runPSR();
+            break;
+        case Variant_AWR:
+            runAWR();
+            break;
         }
-
-    std::cout << std::endl << "* * RESULTS * *" << std::endl;
-
-    for (unsigned i = 1; i <= G; i++)
-        {
-        if (!hasRun)
-            {
-            PSO_Optim->run_generation();
-            }
-
-        std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
-        std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
-        printCoefficients(FileName);
-        }
-
-    hasRun = true;
 
     // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
@@ -657,4 +634,46 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
         OutFile << std::endl;
         }
 
+}
+
+void Simulation_PSROptimization::runPSR()
+{
+    if (!hasRun)
+        {
+        Fitness::T = T;
+        int N = std::pow(NMax - NMin + 1, Costs.size());
+
+        PSO_Optim =
+            std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+            (new ParticleSwarmOptimization<double, Fitness, Compare>
+             (P, G, N, XMin, XMax, VMin, VMax));
+        }
+
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+
+    for (unsigned i = 1; i <= G; i++)
+        {
+        if (!hasRun)
+            {
+            PSO_Optim->run_generation();
+            }
+
+        std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
+        std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
+        printCoefficients(FileName);
+        }
+
+    hasRun = true;
+}
+
+void Simulation_PSROptimization::runAWR()
+{
+    const double AngMin = 0;
+    const double AngMax = 2 * std::acos(-1);
+    const double AngStep = (AngMax - AngMin) / P;
+
+    for (double Angle = AngMin; Angle <= AngMax; Angle += AngStep)
+        {
+
+        }
 }

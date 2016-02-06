@@ -54,3 +54,10 @@ int PSR::Cost::get_N()
 {
     return NMax - NMin + 1;
 }
+
+double PSR::Cost::getCost(
+    int N, std::weak_ptr<Link> link, std::shared_ptr<Call> C)
+{
+    BOOST_ASSERT_MSG((N <= NMax) && (N >= NMin), "Invalid N requested");
+    return getCost(link, C)(N - NMin);
+}
