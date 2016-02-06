@@ -1,6 +1,6 @@
 #include <RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction.h>
 #include <RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h>
-#include <RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 #include <RWA/WavelengthAssignmentAlgorithms/FirstFit.h>
 #include <RWA/RoutingWavelengthAssignment.h>
 #include <Calls.h>
@@ -84,7 +84,7 @@ void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
 
 void SignalQualityPrediction::evaluateLNMax()
 {
-    auto SP = std::make_shared<ShortestPath>(T);
+    auto MH = std::make_shared<MinimumHops>(T);
 
     for (auto &bitrate : Bitrates)
         {
@@ -106,7 +106,7 @@ void SignalQualityPrediction::evaluateLNMax()
                     auto DummyCall = std::make_shared<Call>(orig, dest, bitrate);
                     DummyCall->Scheme = scheme;
 
-                    auto links = SP->route(DummyCall);
+                    auto links = MH->route(DummyCall);
                     Signal S;
 
                     if ((links.size() > maxLN) &&
