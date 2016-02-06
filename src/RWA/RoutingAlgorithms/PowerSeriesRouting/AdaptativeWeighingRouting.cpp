@@ -30,7 +30,7 @@ double AdaptativeWeighingRouting::get_Cost(
             }
 
         Cost += Costs.back()->getCost(1, link, C) *
-                std::sin(coefficients.at(Costs.size())) * Sines;
+                std::sin(2 * coefficients.at(Costs.size())) * Sines;
         }
 
     return Cost;

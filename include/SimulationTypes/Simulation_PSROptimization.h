@@ -43,6 +43,8 @@ private:
     bool hasLoaded;
     bool hasRun;
 
+    std::shared_ptr<PSO_Particle<double>> BestParticle;
+
     PSR_Variants Variant;
 
     static WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
@@ -84,6 +86,7 @@ private:
     struct Fitness
     {
         static std::shared_ptr<Topology> T;
+        static PSR_Variants Variant;
         double operator()(std::shared_ptr<PSO_Particle<double>>);
     };
 

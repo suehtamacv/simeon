@@ -36,6 +36,8 @@ double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
 std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
+Simulation_PSROptimization::PSR_Variants
+Simulation_PSROptimization::Fitness::Variant;
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
@@ -558,8 +560,21 @@ double Simulation_PSROptimization::Fitness::operator()(
     auto TopologyCopy = std::make_shared<Topology>(*T);
 
     //Creates the RWA Algorithms
-    auto R_Alg = std::make_shared<PowerSeriesRouting>(TopologyCopy,
-                 Simulation_PSROptimization::Costs);
+    std::shared_ptr<PowerSeriesRouting> R_Alg;
+
+    switch (Variant)
+        {
+        case Variant_PSR:
+            R_Alg = std::make_shared<PowerSeriesRouting>
+                    (TopologyCopy, Simulation_PSROptimization::Costs);
+            break;
+
+        case Variant_AWR:
+            R_Alg = std::make_shared<AdaptativeWeighingRouting>
+                    (TopologyCopy, Simulation_PSROptimization::Costs);
+            break;
+        }
+
     std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
         WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
             Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
@@ -621,12 +636,12 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
         OutFile << std::endl;
         }
 
-    OutFile << "bestfit = " << PSO_Optim->BestParticle->bestFit << std::endl;
+    OutFile << "bestfit = " << BestParticle->bestFit << std::endl;
 
     OutFile << "coefficients =";
 
         {
-        for (auto &coef : PSO_Optim->BestParticle->P)
+        for (auto &coef : BestParticle->P)
             {
             OutFile << " " << std::setprecision(15) << coef;
             }
@@ -641,6 +656,8 @@ void Simulation_PSROptimization::runPSR()
     if (!hasRun)
         {
         Fitness::T = T;
+        Fitness::Variant = Variant;
+
         int N = std::pow(NMax - NMin + 1, Costs.size());
 
         PSO_Optim =
@@ -658,8 +675,10 @@ void Simulation_PSROptimization::runPSR()
             PSO_Optim->run_generation();
             }
 
+        BestParticle = PSO_Optim->BestParticle;
+
         std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
-        std::cout << i << "\t\t" << PSO_Optim->BestParticle->bestFit << std::endl;
+        std::cout << i << "\t\t" << BestParticle->bestFit << std::endl;
         printCoefficients(FileName);
         }
 
@@ -668,12 +687,22 @@ void Simulation_PSROptimization::runPSR()
 
 void Simulation_PSROptimization::runAWR()
 {
-    const double AngMin = 0;
-    const double AngMax = 2 * std::acos(-1);
-    const double AngStep = (AngMax - AngMin) / P;
-
-    for (double Angle = AngMin; Angle <= AngMax; Angle += AngStep)
+    if (!hasRun)
         {
+        Fitness::T = T;
+        Fitness::Variant = Variant;
 
+        PSO_Optim =
+            std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+            (new ParticleSwarmOptimization<double, Fitness, Compare>
+             (50, 1, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
+
+        PSO_Optim->run_generation();
+
+        std::cout << "BEST CALL BLOCKING PROBABILITY" << std::endl;
+        std::cout << BestParticle->bestFit << std::endl;
+        printCoefficients(FileName);
         }
+
+    hasRun = true;
 }
