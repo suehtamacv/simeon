@@ -19,6 +19,11 @@ NX_MostSimultaneouslyUsed::NX_MostSimultaneouslyUsed(std::shared_ptr<Topology>
 
 }
 
+void NX_MostSimultaneouslyUsed::load()
+{
+    NX_RegeneratorPlacement::load();
+}
+
 void NX_MostSimultaneouslyUsed::placeRegenerators(unsigned N, unsigned X)
 {
     BOOST_ASSERT_MSG(RWA->RA_Alg != nullptr, "Regenerator Placement can only run"

@@ -15,7 +15,9 @@ public:
                               long long unsigned NumCalls,
                               std::vector<TransmissionBitrate> Bitrates =
                                   TransmissionBitrate::DefaultBitrates);
+
     void placeRegenerators(unsigned N, unsigned X);
+    void load();
 
 private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;

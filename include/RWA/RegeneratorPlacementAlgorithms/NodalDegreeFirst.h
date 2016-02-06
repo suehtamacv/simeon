@@ -15,7 +15,9 @@ public:
      * @param T is a pointer to the Topology.
      */
     NodalDegreeFirst(std::shared_ptr<Topology> T);
+
     void placeRegenerators(unsigned N, unsigned X);
+    void load();
 };
 
 #endif // NODALDEGREEFIRST_H

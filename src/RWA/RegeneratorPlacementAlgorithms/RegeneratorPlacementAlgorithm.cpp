@@ -102,6 +102,12 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
         case SQP:
             RP_Alg = std::make_shared<SignalQualityPrediction>
                      (T, RWA, OptimizationLoad, NumCalls);
+            break;
+
+        case SQP_Var:
+            RP_Alg = std::make_shared<SignalQualityPrediction_Variants>
+                     (T, RWA, OptimizationLoad, NumCalls);
+            break;
         }
 
     if (runLoad)

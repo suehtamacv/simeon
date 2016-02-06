@@ -17,6 +17,11 @@ SignalQualityPrediction::SignalQualityPrediction(std::shared_ptr<Topology> T,
     evaluateLNMax();
 }
 
+void SignalQualityPrediction::load()
+{
+    NX_RegeneratorPlacement::load();
+}
+
 void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
 {
     if ((N == 0) && (X == 0))

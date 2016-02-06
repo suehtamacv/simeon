@@ -25,7 +25,7 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         return;
         }
 
-    int LNMax = 1;
+    int LNMax = 0;
     std::sort(ModulationScheme::DefaultSchemes.rbegin(),
               ModulationScheme::DefaultSchemes.rend());
 
@@ -36,6 +36,11 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
             {
             break;
             }
+        }
+
+    if (LNMax == 0)
+        {
+        return;
         }
 
     std::vector<bool> sqp_LNMax(Links.size() + 1, false);

@@ -22,7 +22,7 @@ public:
      */
     virtual void placeRegenerators(unsigned N = NX_N, unsigned X = NX_X) = 0;
 
-    void load();
+    virtual void load() = 0;
 
     unsigned static NX_N;
     unsigned static NX_X;

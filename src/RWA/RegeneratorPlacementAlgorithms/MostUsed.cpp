@@ -21,6 +21,11 @@ MostUsed::MostUsed(std::shared_ptr<Topology> T,
 
 }
 
+void MostUsed::load()
+{
+    NX_RegeneratorPlacement::load();
+}
+
 void MostUsed::placeRegenerators(unsigned N, unsigned X)
 {
     BOOST_ASSERT_MSG(RWA->RA_Alg != nullptr, "Regenerator Placement can only run"

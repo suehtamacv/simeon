@@ -20,7 +20,8 @@ public:
     X(NX_MSU, "Most Simultaneously Used (NX Variant)", "NX_MSU") \
     X(MU, "Most Used", "MU") \
     X(NDF, "Nodal Degree First", "NDF") \
-    X(SQP, "Signal Quality Prediction", "SQP") //X Macros
+    X(SQP, "Signal Quality Prediction", "SQP") \
+    X(SQP_Var, "Signal Quality Prediction (Variants)", "SQP_Var" ) //X Macros
 
 
 #define X(a,b,c) a,

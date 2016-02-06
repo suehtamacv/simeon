@@ -17,6 +17,7 @@ public:
             );
 
     void placeRegenerators(unsigned N, unsigned X);
+    void load();
 
 private:
     std::shared_ptr<RoutingWavelengthAssignment> RWA;

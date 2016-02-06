@@ -15,7 +15,9 @@ public:
                             long long unsigned NumCalls,
                             std::vector<TransmissionBitrate> Bitrates =
                                 TransmissionBitrate::DefaultBitrates);
+
     void placeRegenerators(unsigned N = NX_N, unsigned X = NX_X);
+    void load();
 
     unsigned get_LNMax(TransmissionBitrate, ModulationScheme);
 
