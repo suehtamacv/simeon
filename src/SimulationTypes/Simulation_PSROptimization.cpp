@@ -697,12 +697,18 @@ void Simulation_PSROptimization::runAWR()
             (new ParticleSwarmOptimization<double, Fitness, Compare>
              (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
 
-        PSO_Optim->run_generation();
-        BestParticle = PSO_Optim->BestParticle;
-
-        std::cout << "BEST CALL BLOCKING PROBABILITY" << std::endl;
-        std::cout << BestParticle->bestFit << std::endl;
-        printCoefficients(FileName);
+        for (unsigned i = 1; i <= G; i++)
+			{
+			if (!hasRun)
+				{
+					PSO_Optim->run_generation();
+				}
+			BestParticle = PSO_Optim->BestParticle;
+			
+			std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
+			std::cout << i << "\t\t" << BestParticle->bestFit << std::endl;
+			printCoefficients(FileName);
+			}
         }
 
     hasRun = true;
