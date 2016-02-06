@@ -695,9 +695,10 @@ void Simulation_PSROptimization::runAWR()
         PSO_Optim =
             std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
             (new ParticleSwarmOptimization<double, Fitness, Compare>
-             (50, 1, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
+             (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
 
         PSO_Optim->run_generation();
+        BestParticle = PSO_Optim->BestParticle;
 
         std::cout << "BEST CALL BLOCKING PROBABILITY" << std::endl;
         std::cout << BestParticle->bestFit << std::endl;
