@@ -6,6 +6,7 @@
 #include "Costs/Cost_Contiguity.h"
 #include "Costs/Cost_Distance.h"
 #include "Costs/Cost_HopDistance.h"
+#include "Costs/Cost_LinkLength.h"
 #include "Costs/Cost_ModulationScheme.h"
 #include "Costs/Cost_Noise.h"
 #include "Costs/Cost_NormalizedContiguity.h"

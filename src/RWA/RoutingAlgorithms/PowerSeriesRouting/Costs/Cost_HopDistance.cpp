@@ -1,4 +1,5 @@
 #include "include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.h"
+#include <set>
 #include <Calls/Call.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>

@@ -21,6 +21,7 @@ public:
     X(contiguity, "Contiguity", "contiguity", cContiguity) \
     X(distance, "Distance", "distance", cDistance) \
     X(hopdistance, "Hop Distance", "hopdistance", cHopDistance) \
+    X(linklength, "Link Length", "linklength", cLinkLength) \
     X(noise, "Noise", "noise", cNoise) \
     X(normcontiguity, "Normalized Contiguity", "normcontiguity", cNormContiguity) \
     X(normnoise, "Normalized Noise", "normnoise", cNormNoise) \
