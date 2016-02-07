@@ -15,7 +15,7 @@ std::map<std::weak_ptr<Link>,
     FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 {
 
-    unsigned int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
+    int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
     Slots.clear();
@@ -37,7 +37,7 @@ std::map<std::weak_ptr<Link>,
             }
         }
 
-    unsigned int CurrentFreeSlots = 0;
+    int CurrentFreeSlots = 0;
     int si = -1, sf = 0;
 
     for (sf = 0; sf < Link::NumSlots; sf++)
@@ -60,6 +60,8 @@ std::map<std::weak_ptr<Link>,
 
     if (si != -1)
         {
+        BOOST_ASSERT_MSG(sf == si + RequiredSlots - 1,
+                         "Error in Wavelength Assingment");
         for (auto &link : Seg.Links)
             {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>

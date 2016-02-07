@@ -15,7 +15,7 @@ std::map<std::weak_ptr<Link>,
     ContiguityFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 {
 
-    unsigned int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
+    int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
     Slots.clear();
@@ -79,6 +79,8 @@ std::map<std::weak_ptr<Link>,
 
     if (si != -1)
         {
+        BOOST_ASSERT_MSG(sf == si + RequiredSlots - 1,
+                         "Error in Wavelength Assingment");
         for (auto &link : Seg.Links)
             {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>
