@@ -3,10 +3,10 @@
 
 #include "WavelengthAssignmentAlgorithm.h"
 
-class ContiguityFit : public WavelengthAssignmentAlgorithm
+class BestFit : public WavelengthAssignmentAlgorithm
 {
 public:
-    ContiguityFit(std::shared_ptr<Topology> T);
+    BestFit(std::shared_ptr<Topology> T);
 
     std::map<std::weak_ptr<Link>,
         std::vector<std::weak_ptr<Slot>>,

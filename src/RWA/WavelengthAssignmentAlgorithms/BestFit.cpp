@@ -1,11 +1,11 @@
-#include "include/RWA/WavelengthAssignmentAlgorithms/ContiguityFit.h"
+#include "include/RWA/WavelengthAssignmentAlgorithms/BestFit.h"
 #include <set>
 #include <Calls/Call.h>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
-ContiguityFit::ContiguityFit(std::shared_ptr<Topology> T) :
-    WavelengthAssignmentAlgorithm(T, WavelengthAssignmentAlgorithm::CF)
+BestFit::BestFit(std::shared_ptr<Topology> T) :
+    WavelengthAssignmentAlgorithm(T, WavelengthAssignmentAlgorithm::BF)
 {
 
 }
@@ -13,7 +13,7 @@ ContiguityFit::ContiguityFit(std::shared_ptr<Topology> T) :
 std::map<std::weak_ptr<Link>,
     std::vector<std::weak_ptr<Slot>>,
     std::owner_less<std::weak_ptr<Link>>>
-    ContiguityFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
+    BestFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 {
 
     int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
@@ -65,14 +65,14 @@ std::map<std::weak_ptr<Link>,
             {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>
                           (link.lock()->Slots.begin() + si,
-                           link.lock()->Slots.begin() + si + RequiredSlots));
+                           link.lock()->Slots.begin() + si + RequiredSlots - 1));
             }
         }
 
     return Slots;
 }
 
-void ContiguityFit::save(std::string SimConfigFileName)
+void BestFit::save(std::string SimConfigFileName)
 {
     WavelengthAssignmentAlgorithm::save(SimConfigFileName);
 }

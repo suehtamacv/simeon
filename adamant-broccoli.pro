@@ -75,7 +75,6 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.cpp \
     src/RWA/RoutingWavelengthAssignment.cpp \
     src/RWA/TransparentSegment.cpp \
-    src/RWA/WavelengthAssignmentAlgorithms/ContiguityFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/ExactFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/FirstFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp \
@@ -87,7 +86,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
-    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp
+    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/BestFit.cpp
 
 
 HEADERS += \
@@ -172,7 +172,6 @@ HEADERS += \
     include/RWA/RoutingWavelengthAssignment.h \
     include/RWA/TransparentSegment.h \
     include/RWA/WavelengthAssignmentAlgorithms.h \
-    include/RWA/WavelengthAssignmentAlgorithms/ContiguityFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/ExactFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/FirstFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h \
@@ -185,7 +184,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
+    include/RWA/WavelengthAssignmentAlgorithms/BestFit.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

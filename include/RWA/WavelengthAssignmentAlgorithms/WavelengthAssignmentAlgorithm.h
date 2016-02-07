@@ -13,7 +13,7 @@ class WavelengthAssignmentAlgorithm
 {
 public:
 #define WAVELENGTHASSIGNMENT_ALGORITHM \
-    X(CF, "Contiguity Fit", "CF", ContiguityFit) \
+    X(BF, "Best Fit", "BF", BestFit) \
     X(EF, "Exact Fit", "EF", ExactFit) \
     X(FF, "First Fit", "FF", FirstFit) \
     X(RF, "Random Fit", "RF", RandomFit)
