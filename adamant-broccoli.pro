@@ -83,7 +83,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.cpp \
-    src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp
+    src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/ExactFit.cpp
 
 
 HEADERS += \
@@ -177,7 +178,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h \
     include/RWA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.h \
     include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.h \
-    include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h
+    include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h \
+    include/RWA/WavelengthAssignmentAlgorithms/ExactFit.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
