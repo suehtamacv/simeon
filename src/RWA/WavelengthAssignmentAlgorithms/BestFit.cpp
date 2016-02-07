@@ -22,7 +22,7 @@ std::map<std::weak_ptr<Link>,
     Slots.clear();
 
     bool SlotsAvailability[Link::NumSlots + 1];
-    std::set<std::pair<int, int>> InitialSlotsAndHoles;
+    std::set<std::pair<int, int>> PossibleBlocks;
 
     for (int i = 0; i < Link::NumSlots; i++)
         {
@@ -52,20 +52,20 @@ std::map<std::weak_ptr<Link>,
             {
             if (CurrentFreeSlots != 0 && CurrentFreeSlots >= RequiredSlots)
                 {
-                InitialSlotsAndHoles.emplace(CurrentFreeSlots, sf - CurrentFreeSlots);
+                PossibleBlocks.emplace(CurrentFreeSlots, sf - CurrentFreeSlots);
                 }
             CurrentFreeSlots = 0;
             }
         }
 
-    if (!InitialSlotsAndHoles.empty())
+    if (!PossibleBlocks.empty())
         {
-        int si = InitialSlotsAndHoles.begin()->second;
+        int si = PossibleBlocks.begin()->second;
         for (auto &link : Seg.Links)
             {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>
                           (link.lock()->Slots.begin() + si,
-                           link.lock()->Slots.begin() + si + RequiredSlots - 1));
+                           link.lock()->Slots.begin() + si + RequiredSlots));
             }
         }
 
