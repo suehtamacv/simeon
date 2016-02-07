@@ -60,6 +60,7 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
@@ -155,6 +156,7 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \

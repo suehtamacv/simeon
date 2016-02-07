@@ -20,6 +20,7 @@ public:
     X(bitrate, "Bitrate", "bitrate", cBitrate) \
     X(contiguity, "Contiguity", "contiguity", cContiguity) \
     X(distance, "Distance", "distance", cDistance) \
+    X(hopdistance, "Hop Distance", "hopdistance", cHopDistance) \
     X(noise, "Noise", "noise", cNoise) \
     X(normcontiguity, "Normalized Contiguity", "normcontiguity", cNormContiguity) \
     X(normnoise, "Normalized Noise", "normnoise", cNormNoise) \

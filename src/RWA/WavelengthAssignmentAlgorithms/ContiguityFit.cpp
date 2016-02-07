@@ -1,4 +1,5 @@
 #include "include/RWA/WavelengthAssignmentAlgorithms/ContiguityFit.h"
+#include <set>
 #include <Calls/Call.h>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
