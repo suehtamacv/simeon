@@ -44,9 +44,11 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.cpp \
     src/RWA/Route.cpp \
     src/RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.cpp \
@@ -71,7 +73,10 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.cpp \
     src/RWA/RoutingWavelengthAssignment.cpp \
     src/RWA/TransparentSegment.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/ContiguityFit.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/ExactFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/FirstFit.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
     src/SimulationTypes/SimulationType.cpp \
@@ -80,11 +85,7 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
-    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.cpp \
-    src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp \
-    src/RWA/WavelengthAssignmentAlgorithms/ExactFit.cpp
+    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp
 
 
 HEADERS += \
@@ -135,9 +136,11 @@ HEADERS += \
     include/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h \
     include/RWA/RegeneratorPlacementAlgorithms/MostUsed.h \
     include/RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h \
+    include/RWA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.h \
     include/RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h \
     include/RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h \
     include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction.h \
+    include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.h \
     include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h \
     include/RWA/Route.h \
     include/RWA/RoutingAlgorithms.h \
@@ -165,7 +168,10 @@ HEADERS += \
     include/RWA/RoutingWavelengthAssignment.h \
     include/RWA/TransparentSegment.h \
     include/RWA/WavelengthAssignmentAlgorithms.h \
+    include/RWA/WavelengthAssignmentAlgorithms/ContiguityFit.h \
+    include/RWA/WavelengthAssignmentAlgorithms/ExactFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/FirstFit.h \
+    include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h \
     include/SimulationTypes.h \
     include/SimulationTypes/NetworkSimulation.h \
@@ -175,11 +181,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/RWA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.h \
-    include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.h \
-    include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h \
-    include/RWA/WavelengthAssignmentAlgorithms/ExactFit.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
