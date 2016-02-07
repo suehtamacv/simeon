@@ -7,7 +7,7 @@
 WavelengthAssignmentAlgorithm::WavAssignAlgNameBimap
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames =
     boost::assign::list_of<WavelengthAssignmentAlgorithm::WavAssignAlgNameBimap::relation>
-#define X(a,b,c) (a,b)
+#define X(a,b,c,d) (a,b)
     WAVELENGTHASSIGNMENT_ALGORITHM
 #undef X
     ;
@@ -15,10 +15,9 @@ WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames =
 WavelengthAssignmentAlgorithm::WavAssignAlgNicknameBimap
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames =
     boost::assign::list_of<WavelengthAssignmentAlgorithm::WavAssignAlgNicknameBimap::relation>
-#define X(a,b,c) (a,c)
+#define X(a,b,c,d) (a,c)
     WAVELENGTHASSIGNMENT_ALGORITHM
 #undef X
-#undef WAVELENGTHASSIGNMENT_ALGORITHM
     ;
 
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithm(
@@ -75,15 +74,13 @@ WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
 
     switch (Algorithm)
         {
-        case FF:
-            WA_Alg = std::shared_ptr<WavelengthAssignmentAlgorithm>(
-                         new FirstFit(T));
-            break;
+#define X(a,b,c,d) case a: WA_Alg = std::make_shared<d>(T); break;
+            WAVELENGTHASSIGNMENT_ALGORITHM
+#undef X
         }
 
     WA_Alg->load();
     return WA_Alg;
-
 }
 
 void WavelengthAssignmentAlgorithm::save(std::string SimConfigFileName)

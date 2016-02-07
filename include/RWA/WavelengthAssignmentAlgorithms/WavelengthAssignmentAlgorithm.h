@@ -13,9 +13,10 @@ class WavelengthAssignmentAlgorithm
 {
 public:
 #define WAVELENGTHASSIGNMENT_ALGORITHM \
-    X(FF, "First Fit", "FF")
+    X(FF, "First Fit", "FF", FirstFit) \
+    X(RF, "Random Fit", "RF", RandomFit)
 
-#define X(a,b,c) a,
+#define X(a,b,c,d) a,
     enum WavelengthAssignmentAlgorithms
     {
         WAVELENGTHASSIGNMENT_ALGORITHM
@@ -31,7 +32,8 @@ public:
 
     WavelengthAssignmentAlgorithms WavAssAlgType;
 
-    WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T, WavelengthAssignmentAlgorithms WavAssAlgType);
+    WavelengthAssignmentAlgorithm(std::shared_ptr<Topology> T,
+                                  WavelengthAssignmentAlgorithms WavAssAlgType);
 
     virtual std::map<std::weak_ptr<Link>,
             std::vector<std::weak_ptr<Slot>>,
