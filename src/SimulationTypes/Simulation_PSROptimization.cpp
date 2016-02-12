@@ -670,7 +670,7 @@ void Simulation_PSROptimization::runPSR()
 
     for (unsigned i = 1; i <= G; i++)
         {
-        if (!hasRun)
+        if (!hasRun && BestParticle->bestFit != 0.0)
             {
             PSO_Optim->run_generation();
             }
@@ -698,17 +698,17 @@ void Simulation_PSROptimization::runAWR()
              (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
 
         for (unsigned i = 1; i <= G; i++)
-			{
-			if (!hasRun)
-				{
-					PSO_Optim->run_generation();
-				}
-			BestParticle = PSO_Optim->BestParticle;
-			
-			std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
-			std::cout << i << "\t\t" << BestParticle->bestFit << std::endl;
-			printCoefficients(FileName);
-			}
+            {
+            if (!hasRun && BestParticle->bestFit != 0.0)
+                {
+                PSO_Optim->run_generation();
+                }
+            BestParticle = PSO_Optim->BestParticle;
+
+            std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
+            std::cout << i << "\t\t" << BestParticle->bestFit << std::endl;
+            printCoefficients(FileName);
+            }
         }
 
     hasRun = true;
