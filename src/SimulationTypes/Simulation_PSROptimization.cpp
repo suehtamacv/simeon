@@ -670,7 +670,7 @@ void Simulation_PSROptimization::runPSR()
 
     for (unsigned i = 1; i <= G; i++)
         {
-        if (!hasRun && BestParticle->bestFit != 0.0)
+        if (!hasRun && (!BestParticle || BestParticle->bestFit != 0.0))
             {
             PSO_Optim->run_generation();
             }
@@ -699,7 +699,7 @@ void Simulation_PSROptimization::runAWR()
 
         for (unsigned i = 1; i <= G; i++)
             {
-            if (!hasRun && BestParticle->bestFit != 0.0)
+            if (!hasRun && (!BestParticle || BestParticle->bestFit != 0.0))
                 {
                 PSO_Optim->run_generation();
                 }
