@@ -30,11 +30,16 @@ SignalQualityPrediction::SignalQualityPrediction(std::shared_ptr<Topology> T,
     NX_RegeneratorPlacement(T), RWA(RWA), NetworkLoad(NetworkLoad),
     NumCalls(NumCalls), Bitrates(Bitrates)
 {
-    load();
+    chooseSQPType();
     evaluateLNMax();
 }
 
 void SignalQualityPrediction::load()
+{
+    NX_RegeneratorPlacement::load();
+}
+
+void SignalQualityPrediction::chooseSQPType()
 {
     if (chosenType)
         {

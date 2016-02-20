@@ -29,6 +29,7 @@ public:
 
     void placeRegenerators(unsigned N = NX_N, unsigned X = NX_X);
     void load();
+    void chooseSQPType();
 
     double get_LNMax(TransmissionBitrate, ModulationScheme);
 
