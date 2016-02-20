@@ -62,19 +62,16 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
     else if (SQP->Type == SignalQualityPrediction::Distance)
         {
         double sumLength = 0;
-        int countLNMaxSection = 0;
+        int countLNMaxSection = 1;
 
         for (unsigned numNode = 0; numNode < Links.size(); ++numNode)
             {
             sumLength += Links[numNode].lock()->Length;
-            if (sumLength > LNMax + countLNMaxSection * LNMax)
+            if (sumLength >= countLNMaxSection * LNMax)
                 {
                 countLNMaxSection++;
                 sqp_LNMax[numNode] = sqp_LNMax[numNode + 1] = true;
-                if (numNode != 0)
-                    {
-                    sqp_LNMax[numNode - 1] = true;
-                    }
+                numNode != 0 ? sqp_LNMax[numNode - 1] = true : 0;
                 }
             }
         }
