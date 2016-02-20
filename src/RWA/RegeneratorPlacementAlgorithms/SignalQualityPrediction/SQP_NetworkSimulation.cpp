@@ -25,7 +25,7 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         return;
         }
 
-    int LNMax = 0;
+    long int LNMax = 0;
     std::sort(ModulationScheme::DefaultSchemes.rbegin(),
               ModulationScheme::DefaultSchemes.rend());
 
@@ -44,15 +44,39 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         }
 
     std::vector<bool> sqp_LNMax(Links.size() + 1, false);
-    for (unsigned numNode = 0; numNode <= Links.size(); ++numNode)
-        {
-        if ((numNode % LNMax == 0) ||
-                ((numNode - 1) % LNMax == 0) ||
-                ((numNode + 1) % LNMax == 0))
-            {
-            sqp_LNMax[numNode] = true;
-            }
 
+    //LNMax is based on Minimum Hops measure
+    if (SQP->Type == SignalQualityPrediction::HopsNumber)
+        {
+        for (unsigned numNode = 0; numNode <= Links.size(); ++numNode)
+            {
+            if ((numNode % LNMax == 0) ||
+                    ((numNode - 1) % LNMax == 0) ||
+                    ((numNode + 1) % LNMax == 0))
+                {
+                sqp_LNMax[numNode] = true;
+                }
+            }
+        }
+    //LNMax is based on Shortest Path measure
+    else if (SQP->Type == SignalQualityPrediction::Distance)
+        {
+        double sumLength = 0;
+        int countLNMaxSection = 0;
+
+        for (unsigned numNode = 0; numNode < Links.size(); ++numNode)
+            {
+            sumLength += Links[numNode].lock()->Length;
+            if (sumLength > LNMax + countLNMaxSection * LNMax)
+                {
+                countLNMaxSection++;
+                sqp_LNMax[numNode] = sqp_LNMax[numNode + 1] = true;
+                if (numNode != 0)
+                    {
+                    sqp_LNMax[numNode - 1] = true;
+                    }
+                }
+            }
         }
 
     for (unsigned numNode = 0; numNode < Links.size(); ++numNode)

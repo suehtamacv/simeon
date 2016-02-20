@@ -2,6 +2,7 @@
 #include "RWA/RoutingAlgorithms.h"
 #include <Calls/Call.h>
 #include <Structure/Topology.h>
+#include <Structure/Link.h>
 #include <RWA/TransparentSegment.h>
 #include <boost/assign.hpp>
 
@@ -25,6 +26,7 @@ SignalQualityPrediction_Variants::SignalQualityPrediction_Variants(
     SignalQualityPrediction(T, RWA, NetworkLoad, NumCalls, Bitrates)
 {
     chooseSQPVariant();
+    SignalQualityPrediction::evaluateLNMax();
     evaluateLNMax();
 }
 
@@ -75,15 +77,13 @@ void SignalQualityPrediction_Variants::evaluateLNMax()
     std::shared_ptr<StaticRoutingAlgorithm> RAlg;
 
     //Choose adequate Routing Algorithm
-    switch (Variant)
+    switch (Type)
         {
-        case mSCH_MH:
-        case MSCH_MH:
+        case HopsNumber:
             RAlg = std::make_shared<MinimumHops>(T);
             break;
 
-        case mSCH_SP:
-        case MSCH_SP:
+        case Distance:
             RAlg = std::make_shared<ShortestPath>(T);
             break;
         }
@@ -93,17 +93,13 @@ void SignalQualityPrediction_Variants::evaluateLNMax()
     std::sort(Schemes.rbegin(), Schemes.rend());
 
     //Choose adequate Modulation Scheme
-    switch (Variant)
+    if (Variant == mSCH)
         {
-        case mSCH_MH:
-        case mSCH_SP:
-            scheme = Schemes.back();
-            break;
-
-        case MSCH_MH:
-        case MSCH_SP:
-            scheme = Schemes.front();
-            break;
+        scheme = Schemes.back();
+        }
+    else if (Variant == MSCH)
+        {
+        scheme = Schemes.front();
         }
 
     std::sort(Bitrates.rbegin(), Bitrates.rend());

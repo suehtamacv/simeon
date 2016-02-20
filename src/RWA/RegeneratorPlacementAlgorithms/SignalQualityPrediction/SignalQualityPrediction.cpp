@@ -1,10 +1,26 @@
 #include <RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction.h>
 #include <RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h>
 #include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
+#include <RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
 #include <RWA/WavelengthAssignmentAlgorithms/FirstFit.h>
 #include <RWA/RoutingWavelengthAssignment.h>
-#include <Calls.h>
 #include <GeneralClasses/RandomGenerator.h>
+#include <Structure/Link.h>
+#include <Calls.h>
+#include <boost/assign.hpp>
+
+bool SignalQualityPrediction::chosenType = false;
+SignalQualityPrediction::SQP_Type SignalQualityPrediction::Type;
+
+SignalQualityPrediction::SQPTypeNameBimap
+SignalQualityPrediction::SQPTypeNames =
+    boost::assign::list_of<SignalQualityPrediction::SQPTypeNameBimap::relation>
+#define X(a,b) (a,b)
+    SQPTypes
+#undef X
+#undef SQPTypes
+    ;
+
 
 SignalQualityPrediction::SignalQualityPrediction(std::shared_ptr<Topology> T,
         std::shared_ptr<RoutingWavelengthAssignment> RWA,
@@ -14,12 +30,46 @@ SignalQualityPrediction::SignalQualityPrediction(std::shared_ptr<Topology> T,
     NX_RegeneratorPlacement(T), RWA(RWA), NetworkLoad(NetworkLoad),
     NumCalls(NumCalls), Bitrates(Bitrates)
 {
+    load();
     evaluateLNMax();
 }
 
 void SignalQualityPrediction::load()
 {
-    NX_RegeneratorPlacement::load();
+    if (chosenType)
+        {
+        return;
+        }
+
+    std::cout << std::endl << "-> Define the SQP Type." << std::endl;
+
+    do
+        {
+        for (auto &type : SQPTypeNames.left)
+            {
+            std::cout << "(" << type.first << ")\t" << type.second << std::endl;
+            }
+
+        int chosenSQPType;
+        std::cin >> chosenSQPType;
+
+        if (std::cin.fail() || SQPTypeNames.left.count
+                ((SQP_Type) chosenSQPType) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid SQP Type." << std::endl;
+            std::cout << std::endl << "-> Define the SQP Type." << std::endl;
+            }
+        else
+            {
+            Type = (SQP_Type) chosenSQPType;
+            chosenType = true;
+            break;
+            }
+        }
+    while (1);
 }
 
 void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
@@ -89,7 +139,19 @@ void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
 
 void SignalQualityPrediction::evaluateLNMax()
 {
-    auto MH = std::make_shared<MinimumHops>(T);
+    LNMax.clear();
+    std::shared_ptr<RoutingAlgorithm> R_Alg;
+
+    switch (Type)
+        {
+        case Distance:
+            R_Alg = std::make_shared<ShortestPath>(T);
+            break;
+
+        case HopsNumber:
+            R_Alg = std::make_shared<MinimumHops>(T);
+            break;
+        }
 
     for (auto &bitrate : Bitrates)
         {
@@ -111,14 +173,30 @@ void SignalQualityPrediction::evaluateLNMax()
                     auto DummyCall = std::make_shared<Call>(orig, dest, bitrate);
                     DummyCall->Scheme = scheme;
 
-                    auto links = MH->route(DummyCall);
+                    auto links = R_Alg->route(DummyCall);
                     Signal S;
 
-                    if ((links.size() > maxLN) &&
+                    unsigned long LNRoute = 0;
+
+                    switch (Type)
+                        {
+                        case HopsNumber:
+                            LNRoute = links.size();
+                            break;
+
+                        case Distance:
+                            for (auto &link : links)
+                                {
+                                LNRoute += link.lock()->Length;
+                                }
+                            break;
+                        }
+
+                    if ((LNRoute > maxLN) &&
                             (TransparentSegment(links, scheme).bypass(S).get_OSNR() >=
                              scheme.get_ThresholdOSNR(bitrate)))
                         {
-                        maxLN = links.size();
+                        maxLN = LNRoute;
                         }
                     }
                 }
@@ -128,7 +206,7 @@ void SignalQualityPrediction::evaluateLNMax()
         }
 }
 
-unsigned SignalQualityPrediction::get_LNMax(TransmissionBitrate bitrate,
+double SignalQualityPrediction::get_LNMax(TransmissionBitrate bitrate,
         ModulationScheme scheme)
 {
     return LNMax.at(std::make_pair(bitrate, scheme));

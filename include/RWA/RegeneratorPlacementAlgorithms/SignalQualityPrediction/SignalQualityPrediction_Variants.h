@@ -8,10 +8,8 @@ class SignalQualityPrediction_Variants : public SignalQualityPrediction
 {
 public:
 #define SQPVARIANTS \
-  X(mSCH_SP, "Minimum Scheme, Shortest Path") \
-  X(mSCH_MH, "Minimum Scheme, Minimum Hops") \
-  X(MSCH_SP, "Maximum Scheme, Shortest Path") \
-  X(MSCH_MH, "Maximum Scheme, Minimum Hops")
+  X(mSCH, "Minimum Scheme") \
+  X(MSCH, "Maximum Scheme")
 
 #define X(a,b) a,
     enum SQP_Variants
