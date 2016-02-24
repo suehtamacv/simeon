@@ -5,6 +5,7 @@
 #include <RWA/WavelengthAssignmentAlgorithms/ExactFit.h>
 #include <RWA/WavelengthAssignmentAlgorithms/FirstFit.h>
 #include <RWA/WavelengthAssignmentAlgorithms/LeastUsed.h>
+#include <RWA/WavelengthAssignmentAlgorithms/MostUsedSA.h>
 #include <RWA/WavelengthAssignmentAlgorithms/RandomFit.h>
 
 #endif // WAVELENGTHASSIGNMENTALGORITHMS_H

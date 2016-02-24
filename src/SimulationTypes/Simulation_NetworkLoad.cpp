@@ -19,7 +19,7 @@ Simulation_NetworkLoad::Simulation_NetworkLoad() : SimulationType(
 
     Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) - 1;
     WavAssign_Algorithm =
-        (WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms) - 1;
+        (WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms) - 1;
     RegPlacement_Algorithm =
         (RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms) - 1;
     RegAssignment_Algorithm =
@@ -87,7 +87,7 @@ void Simulation_NetworkLoad::print()
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
@@ -148,7 +148,7 @@ void Simulation_NetworkLoad::load()
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
         if (Type == TranslucentNetwork)
             {
@@ -369,7 +369,7 @@ void Simulation_NetworkLoad::load_file(std::string ConfigFileName)
     Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
-        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     if(Type == Network_Type::TranslucentNetwork)
         {
@@ -434,8 +434,8 @@ void Simulation_NetworkLoad::create_Simulations()
         //Creates the RWA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
-        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
+            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
@@ -469,8 +469,8 @@ void Simulation_NetworkLoad::place_Regenerators(std::shared_ptr<Topology> T)
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
             Routing_Algorithm, T);
-    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-        WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
+        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
             WavAssign_Algorithm, T);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
         RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(

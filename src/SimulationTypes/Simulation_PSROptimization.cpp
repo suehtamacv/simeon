@@ -38,7 +38,7 @@ std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
 Simulation_PSROptimization::PSR_Variants
 Simulation_PSROptimization::Fitness::Variant;
-WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
 Simulation_PSROptimization::RegPlacement_Algorithm;
@@ -129,7 +129,7 @@ void Simulation_PSROptimization::load()
         {
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
         if (Type == TranslucentNetwork)
             {
@@ -352,7 +352,7 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
-                  WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                  WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
                       WavAssign_Algorithm) << std::endl;
     if(Type == TranslucentNetwork)
         {
@@ -426,7 +426,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
 
     WavAssign_Algorithm =
-        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     if(Type == Network_Type::TranslucentNetwork)
         {
@@ -502,7 +502,7 @@ void Simulation_PSROptimization::print()
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
@@ -575,8 +575,8 @@ double Simulation_PSROptimization::Fitness::operator()(
             break;
         }
 
-    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-        WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
+        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
             Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 

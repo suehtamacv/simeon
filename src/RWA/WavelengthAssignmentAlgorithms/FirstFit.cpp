@@ -3,6 +3,8 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
+using namespace WA;
+
 FirstFit::FirstFit(std::shared_ptr<Topology> T) :
     WavelengthAssignmentAlgorithm(T, WavelengthAssignmentAlgorithms::FF)
 {

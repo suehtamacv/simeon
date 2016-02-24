@@ -4,6 +4,8 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
+using namespace WA;
+
 BestFit::BestFit(std::shared_ptr<Topology> T) :
     WavelengthAssignmentAlgorithm(T, WavelengthAssignmentAlgorithm::BF)
 {

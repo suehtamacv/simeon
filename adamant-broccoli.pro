@@ -79,6 +79,7 @@ SOURCES += src/main.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/ExactFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/FirstFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/LeastUsed.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/MostUsedSA.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
@@ -176,6 +177,7 @@ HEADERS += \
     include/RWA/WavelengthAssignmentAlgorithms/ExactFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/FirstFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/LeastUsed.h \
+    include/RWA/WavelengthAssignmentAlgorithms/MostUsedSA.h \
     include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h \
     include/SimulationTypes.h \

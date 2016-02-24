@@ -3,6 +3,8 @@
 
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
 
+namespace WA
+{
 class FirstFit : public WavelengthAssignmentAlgorithm
 {
 public:
@@ -15,5 +17,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // FIRSTFIT_H

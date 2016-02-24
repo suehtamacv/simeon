@@ -3,6 +3,8 @@
 
 #include "WavelengthAssignmentAlgorithm.h"
 
+namespace WA
+{
 class LeastUsed : public WavelengthAssignmentAlgorithm
 {
 public:
@@ -15,5 +17,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // LEASTUSED_H

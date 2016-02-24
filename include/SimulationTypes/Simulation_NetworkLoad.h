@@ -35,7 +35,7 @@ private:
 
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
-    WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;
     RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;

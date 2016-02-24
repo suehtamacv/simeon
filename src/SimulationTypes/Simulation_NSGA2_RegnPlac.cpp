@@ -126,8 +126,8 @@ double Simulation_NSGA2_RegnPlac::Param_BlockProb::evaluate()
 
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
-        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
+            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
                 Sim.WavAssign_Algorithm, T);
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
             RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
@@ -242,7 +242,7 @@ void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
                   RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) <<
                   std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
-                  WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                  WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
                       WavAssign_Algorithm) << std::endl;
     SimConfigFile << "  RegeneratorAssignmentAlgorithm = " <<
                   RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
@@ -291,7 +291,7 @@ void Simulation_NSGA2_RegnPlac::load_file(std::string ConfigFileName)
     Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
-        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     RegAssignment_Algorithm =
         RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(
@@ -318,7 +318,7 @@ void Simulation_NSGA2_RegnPlac::print()
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     std::cout << "-> Regenerator Assignment Algorithm = " <<
@@ -344,7 +344,7 @@ void Simulation_NSGA2_RegnPlac::load()
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
         //Regenerator Assignment Algorithm
         RegAssignment_Algorithm =

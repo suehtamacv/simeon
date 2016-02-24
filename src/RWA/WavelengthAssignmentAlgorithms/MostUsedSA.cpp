@@ -1,4 +1,4 @@
-#include <RWA/WavelengthAssignmentAlgorithms/LeastUsed.h>
+#include "include/RWA/WavelengthAssignmentAlgorithms/MostUsedSA.h"
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 #include <Structure/Topology.h>
@@ -6,15 +6,15 @@
 
 using namespace WA;
 
-LeastUsed::LeastUsed(std::shared_ptr<Topology> T) :
-    WavelengthAssignmentAlgorithm(T, LU)
+MostUsed::MostUsed(std::shared_ptr<Topology> T) :
+    WavelengthAssignmentAlgorithm(T, MU)
 {
 
 }
 
 std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
     std::owner_less<std::weak_ptr<Link>>>
-    LeastUsed::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
+    MostUsed::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 {
     int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
@@ -22,7 +22,7 @@ std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
     Slots.clear();
 
     std::vector<bool> SlotsAvailability(Link::NumSlots, true);
-    std::vector<int> SlotsUsage(Link::NumSlots, std::numeric_limits<int>::max());
+    std::vector<int> SlotsUsage(Link::NumSlots, -1);
 
     for (auto &link : Seg.Links)
         {
@@ -55,10 +55,10 @@ std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
     do
         {
         auto possibleInitSlot = std::distance(SlotsUsage.begin(),
-                                              std::min_element(SlotsUsage.begin(), SlotsUsage.end()));
+                                              std::max_element(SlotsUsage.begin(), SlotsUsage.end()));
 
         //There are no available slots
-        if (SlotsUsage[possibleInitSlot] == std::numeric_limits<int>::max())
+        if (SlotsUsage[possibleInitSlot] == -1)
             {
             break;
             }
@@ -66,7 +66,7 @@ std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         //There aren't enough slots after this slot to accomodate the requisition
         if (possibleInitSlot + RequiredSlots - 1 > Link::NumSlots)
             {
-            SlotsUsage[possibleInitSlot] = std::numeric_limits<int>::max();
+            SlotsUsage[possibleInitSlot] = -1;
             continue;
             }
 
@@ -87,7 +87,7 @@ std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
             }
         else
             {
-            SlotsUsage[possibleInitSlot] = std::numeric_limits<int>::max();
+            SlotsUsage[possibleInitSlot] = -1;
             }
         }
     while (si == -1);
@@ -105,7 +105,7 @@ std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
     return Slots;
 }
 
-void LeastUsed::save(std::string SimConfigFileName)
+void MostUsed::save(std::string SimConfigFileName)
 {
     WavelengthAssignmentAlgorithm::save(SimConfigFileName);
 }

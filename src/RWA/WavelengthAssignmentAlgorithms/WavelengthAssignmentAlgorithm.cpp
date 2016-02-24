@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace WA;
+
 WavelengthAssignmentAlgorithm::WavAssignAlgNameBimap
 WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames =
     boost::assign::list_of<WavelengthAssignmentAlgorithm::WavAssignAlgNameBimap::relation>

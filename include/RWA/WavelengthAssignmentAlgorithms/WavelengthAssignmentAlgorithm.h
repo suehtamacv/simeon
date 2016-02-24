@@ -9,6 +9,8 @@ class Call;
 class Slot;
 class Topology;
 
+namespace WA
+{
 class WavelengthAssignmentAlgorithm
 {
 public:
@@ -17,6 +19,7 @@ public:
     X(EF, "Exact Fit", "EF", ExactFit) \
     X(FF, "First Fit", "FF", FirstFit) \
     X(LU, "Least Used", "LF", LeastUsed) \
+    X(MU, "Most Used", "MU", MostUsed) \
     X(RF, "Random Fit", "RF", RandomFit)
 
 #define X(a,b,c,d) a,
@@ -51,5 +54,5 @@ public:
 
     std::shared_ptr<Topology> T;
 };
-
+}
 #endif // WAVELENGTHASSIGNMENTALGORITHM_H

@@ -1,14 +1,14 @@
-#ifndef RANDOMFIT_H
-#define RANDOMFIT_H
+#ifndef MOSTUSED_H
+#define MOSTUSED_H
 
 #include "WavelengthAssignmentAlgorithm.h"
 
 namespace WA
 {
-class RandomFit : public WavelengthAssignmentAlgorithm
+class MostUsed : public WavelengthAssignmentAlgorithm
 {
 public:
-    RandomFit(std::shared_ptr<Topology> T);
+    MostUsed(std::shared_ptr<Topology> T);
 
     std::map<std::weak_ptr<Link>,
         std::vector<std::weak_ptr<Slot>>,
@@ -19,4 +19,4 @@ public:
 };
 }
 
-#endif // RANDOMFIT_H
+#endif // MOSTUSED_H

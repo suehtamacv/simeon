@@ -3,6 +3,8 @@
 
 #include "WavelengthAssignmentAlgorithm.h"
 
+namespace WA
+{
 class ExactFit : public WavelengthAssignmentAlgorithm
 {
 public:
@@ -15,5 +17,5 @@ public:
     void load() {}
     void save(std::string);
 };
-
+}
 #endif // EXACTFIT_H

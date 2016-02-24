@@ -6,11 +6,15 @@
 #include <Calls/Call.h>
 
 class RoutingAlgorithm;
-class WavelengthAssignmentAlgorithm;
 class RegeneratorAssignmentAlgorithm;
 class ModulationScheme;
 class Topology;
 class Route;
+
+namespace WA
+{
+class WavelengthAssignmentAlgorithm;
+}
 
 /**
  * @brief The RoutingWavelengthAssignment class is a container to the routing,
@@ -30,7 +34,7 @@ public:
      * @param T is a pointer to the topology.
      */
     RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
-                                std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
+                                std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg,
                                 std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
                                 std::vector<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
@@ -44,7 +48,7 @@ public:
      * @param T is a pointer to the topology.
      */
     RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
-                                std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg,
+                                std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg,
                                 std::vector<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
 
@@ -55,7 +59,7 @@ public:
     /**
      * @brief WA_Alg is a pointer to the WavelengthAssignmentAlgorithm.
      */
-    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg;
+    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg;
     /**
      * @brief RA_Alg is a pointer to the RegeneratorAssignmentAlgorithm. If the
      * simulation is transparent, this pointer must be nullptr.

@@ -47,7 +47,7 @@ private:
 
     PSR_Variants Variant;
 
-    static WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    static WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;
     static RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;

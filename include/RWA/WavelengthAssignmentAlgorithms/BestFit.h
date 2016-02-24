@@ -3,6 +3,8 @@
 
 #include "WavelengthAssignmentAlgorithm.h"
 
+namespace WA
+{
 class BestFit : public WavelengthAssignmentAlgorithm
 {
 public:
@@ -15,5 +17,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // CONTIGUITYFIT_H

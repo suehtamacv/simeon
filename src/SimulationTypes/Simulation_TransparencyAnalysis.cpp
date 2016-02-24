@@ -73,7 +73,7 @@ void Simulation_TransparencyAnalysis::run()
                 }
 
             std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
-            std::shared_ptr<FirstFit> FF(new FirstFit(TopCopy));
+            std::shared_ptr<WA::FirstFit> FF(new WA::FirstFit(TopCopy));
 
             RoutingWavelengthAssignment RWA(SP, FF, ModulationScheme::DefaultSchemes,
                                             TopCopy);

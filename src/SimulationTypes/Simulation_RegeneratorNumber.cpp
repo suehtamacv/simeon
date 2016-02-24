@@ -77,7 +77,7 @@ void Simulation_RegeneratorNumber::load()
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
 
         //Regenerator Placement Algorithm
         RegPlacement_Algorithm =
@@ -325,7 +325,7 @@ void Simulation_RegeneratorNumber::load_file(std::string ConfigFileName)
     Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
-        WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     RegPlacement_Algorithm =
         RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at(
@@ -384,7 +384,7 @@ void Simulation_RegeneratorNumber::print()
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     std::cout << "-> Regenerator Placement Algorithm = " <<
@@ -418,8 +418,8 @@ void Simulation_RegeneratorNumber::createSimulations()
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
 
-        std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-            WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
+            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
 
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
@@ -446,8 +446,8 @@ void Simulation_RegeneratorNumber::placeRegenerators(
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
             Routing_Algorithm, Top);
-    std::shared_ptr<WavelengthAssignmentAlgorithm> WA_Alg =
-        WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
+        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
             WavAssign_Algorithm, Top);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
         RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
