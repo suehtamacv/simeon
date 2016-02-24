@@ -75,8 +75,10 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.cpp \
     src/RWA/RoutingWavelengthAssignment.cpp \
     src/RWA/TransparentSegment.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/BestFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/ExactFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/FirstFit.cpp \
+    src/RWA/WavelengthAssignmentAlgorithms/LeastUsed.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/RandomFit.cpp \
     src/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
@@ -86,9 +88,7 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
-    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
-    src/RWA/WavelengthAssignmentAlgorithms/BestFit.cpp
-
+    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -172,8 +172,10 @@ HEADERS += \
     include/RWA/RoutingWavelengthAssignment.h \
     include/RWA/TransparentSegment.h \
     include/RWA/WavelengthAssignmentAlgorithms.h \
+    include/RWA/WavelengthAssignmentAlgorithms/BestFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/ExactFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/FirstFit.h \
+    include/RWA/WavelengthAssignmentAlgorithms/LeastUsed.h \
     include/RWA/WavelengthAssignmentAlgorithms/RandomFit.h \
     include/RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h \
     include/SimulationTypes.h \
@@ -184,8 +186,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/RWA/WavelengthAssignmentAlgorithms/BestFit.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

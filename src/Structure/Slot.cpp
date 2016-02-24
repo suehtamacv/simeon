@@ -1,9 +1,9 @@
 #include <boost/assert.hpp>
 #include <Structure/Slot.h>
 
-Slot::Slot(int numSlot) : numSlot(numSlot)
+Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 {
-    isFree = true;
+
 }
 
 void Slot::freeSlot()

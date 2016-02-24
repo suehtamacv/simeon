@@ -16,6 +16,7 @@ public:
     X(BF, "Best Fit", "BF", BestFit) \
     X(EF, "Exact Fit", "EF", ExactFit) \
     X(FF, "First Fit", "FF", FirstFit) \
+    X(LU, "Least Used", "LF", LeastUsed) \
     X(RF, "Random Fit", "RF", RandomFit)
 
 #define X(a,b,c,d) a,
