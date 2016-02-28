@@ -61,7 +61,8 @@ private:
     int NMax;
     static std::vector<std::shared_ptr<PSR::Cost>> Costs;
 
-    std::string FileName;
+    std::string CoefficientsFilename;
+    std::string LogFilename;
 
     static constexpr unsigned int P = 50;
     static constexpr unsigned int G = 500;
@@ -73,7 +74,6 @@ private:
     void create_Simulation();
 
     void runPSR();
-    void runAWR();
 
     struct Compare
     {

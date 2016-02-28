@@ -304,7 +304,7 @@ void Simulation_PSROptimization::load()
 
     do
         {
-        std::cin >> FileName;
+        std::cin >> CoefficientsFilename;
 
         if (std::cin.fail())
             {
@@ -321,6 +321,30 @@ void Simulation_PSROptimization::load()
             }
         }
     while (1);
+
+    std::cout << std::endl << "-> Define the file where to log the optimization."
+              << std::endl;
+
+    do
+        {
+        std::cin >> LogFilename;
+
+        if (std::cin.fail() || LogFilename == CoefficientsFilename)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to log the optimization."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
 
     hasLoaded = true;
 }
@@ -466,7 +490,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
 
     do
         {
-        std::cin >> FileName;
+        std::cin >> CoefficientsFilename;
 
         if (std::cin.fail())
             {
@@ -537,15 +561,7 @@ void Simulation_PSROptimization::run()
         load();
         }
 
-    switch (Variant)
-        {
-        case Variant_PSR:
-            runPSR();
-            break;
-        case Variant_AWR:
-            runAWR();
-            break;
-        }
+    runPSR();
 
     // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
@@ -658,15 +674,27 @@ void Simulation_PSROptimization::runPSR()
         Fitness::T = T;
         Fitness::Variant = Variant;
 
-        int N = std::pow(NMax - NMin + 1, Costs.size());
+        if (Variant == Variant_PSR)
+            {
+            int N = std::pow(NMax - NMin + 1, Costs.size());
 
-        PSO_Optim =
-            std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
-            (new ParticleSwarmOptimization<double, Fitness, Compare>
-             (P, G, N, XMin, XMax, VMin, VMax));
+            PSO_Optim =
+                std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+                (new ParticleSwarmOptimization<double, Fitness, Compare>
+                 (P, G, N, XMin, XMax, VMin, VMax));
+            }
+        else if (Variant == Variant_AWR)
+            {
+            PSO_Optim =
+                std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+                (new ParticleSwarmOptimization<double, Fitness, Compare>
+                 (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
+            }
         }
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
+
+    std::ofstream logFile(LogFilename);
 
     for (unsigned i = 1; i <= G; i++)
         {
@@ -679,36 +707,8 @@ void Simulation_PSROptimization::runPSR()
 
         std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
         std::cout << i << "\t\t" << BestParticle->bestFit << std::endl;
-        printCoefficients(FileName);
-        }
-
-    hasRun = true;
-}
-
-void Simulation_PSROptimization::runAWR()
-{
-    if (!hasRun)
-        {
-        Fitness::T = T;
-        Fitness::Variant = Variant;
-
-        PSO_Optim =
-            std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
-            (new ParticleSwarmOptimization<double, Fitness, Compare>
-             (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
-
-        for (unsigned i = 1; i <= G; i++)
-            {
-            if (!hasRun && (!BestParticle || BestParticle->bestFit != 0.0))
-                {
-                PSO_Optim->run_generation();
-                }
-            BestParticle = PSO_Optim->BestParticle;
-
-            std::cout << "GENERATION\tCALL BLOCKING PROBABILITY" << std::endl;
-            std::cout << i << "\t\t" << BestParticle->bestFit << std::endl;
-            printCoefficients(FileName);
-            }
+        logFile << i << "\t\t" << BestParticle->bestFit << std::endl;
+        printCoefficients(CoefficientsFilename);
         }
 
     hasRun = true;
