@@ -89,7 +89,11 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
-    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp
+    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
+    src/GeneralClasses/TransferFunction.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -188,7 +192,11 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
+    include/GeneralClasses/TransferFunction.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
