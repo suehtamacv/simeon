@@ -2,6 +2,7 @@
 #define SPECTRALDENSITY_H
 
 #include <GeneralClasses/TransferFunctions/TransferFunction.h>
+#include <map>
 
 class SpectralDensity
 {
@@ -16,7 +17,9 @@ public:
     static constexpr int GaussianOrder = 1;
 
     arma::rowvec specDensity;
-    double densityScaling;
+    double densityScaling;    
+
+    std::map<std::pair<double, double>, arma::rowvec> specDensityMap;
 
     SpectralDensity &operator*=(TransferFunction &H);
 };
