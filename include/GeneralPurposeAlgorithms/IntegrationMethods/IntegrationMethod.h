@@ -1,16 +1,16 @@
 #ifndef INTEGRATIONMETHOD_H
 #define INTEGRATIONMETHOD_H
 
-#include <vector>
+#include <armadillo>
 
 class IntegrationMethod
 {
 public:
-    IntegrationMethod(std::vector<double>, double);
-    std::vector<double> YPoints;
+    IntegrationMethod(arma::mat&, double);
+    arma::mat YPoints;
     double XRange;
     virtual double Calculate() = 0;
-    void setValues(std::vector<double>, double);
+    void setValues(arma::mat&, double);
 };
 
 #endif // INTEGRATIONMETHOD_H

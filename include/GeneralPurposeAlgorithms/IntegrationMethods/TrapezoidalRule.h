@@ -6,7 +6,7 @@
 class TrapezoidalRule : public IntegrationMethod
 {
 public:
-    TrapezoidalRule(std::vector<double>, double);
+    TrapezoidalRule(arma::mat &, double);
     double Calculate();
 };
 

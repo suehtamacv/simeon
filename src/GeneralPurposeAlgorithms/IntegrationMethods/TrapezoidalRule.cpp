@@ -1,6 +1,6 @@
 #include "include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h"
 
-TrapezoidalRule::TrapezoidalRule(std::vector<double> YPoints, double XRange)
+TrapezoidalRule::TrapezoidalRule(arma::mat &YPoints, double XRange)
     : IntegrationMethod(YPoints, XRange)
 {
 
@@ -15,6 +15,8 @@ double TrapezoidalRule::Calculate()
         Sum += YPoints.at(Cont);
         }
 
+    Result = (h / 2.0) * (2 * arma::accu(YPoints) - YPoints.begin() -
+                          YPoints.end());
     Result = (h / 2) * (YPoints.at(YPoints.size() - 1) + YPoints.at(0) + 2 * Sum);
     return Result;
 }

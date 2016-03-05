@@ -9,10 +9,12 @@ unsigned long Signal::numSamples = 1000;
 Signal::Signal(unsigned int numSlots) : SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
-    double freqVar = numSlots * Slot::BSlot / 2;
-
-    signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq - freqVar,
-                                                          PhysicalConstants::freq + freqVar, numSamples);
+    if(considerFilterImperfection)
+    {
+        double freqVar = numSlots * Slot::BSlot / 2;
+        signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq - freqVar,
+                                                              PhysicalConstants::freq + freqVar, numSamples);
+    }
 }
 
 Signal &Signal::operator *=(Gain &G)

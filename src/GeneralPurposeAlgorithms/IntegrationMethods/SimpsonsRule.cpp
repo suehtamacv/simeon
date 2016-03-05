@@ -1,6 +1,6 @@
 #include "include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h"
 
-SimpsonsRule::SimpsonsRule(std::vector<double> YPoints, double XRange)
+SimpsonsRule::SimpsonsRule(arma::mat &YPoints, double XRange)
     : IntegrationMethod(YPoints, XRange)
 {
 

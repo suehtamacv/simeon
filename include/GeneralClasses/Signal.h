@@ -6,6 +6,9 @@
 #include <vector>
 #include <memory>
 
+extern bool considerAseNoise;
+extern bool considerFilterImperfection;
+
 /**
  * @brief The Signal class represents a signal that propagates through the
  * network.

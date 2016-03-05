@@ -6,7 +6,7 @@
 class SimpsonsRule : public IntegrationMethod
 {
 public:
-    SimpsonsRule(std::vector<double>, double);
+    SimpsonsRule(arma::mat &, double);
     double Calculate();
 };
 
