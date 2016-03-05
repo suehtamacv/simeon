@@ -58,7 +58,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             TransparentSegment Segment(Links, scheme, 0);
             Signal S;
 
-            if (!T->considerPhysicalImpairments ||
+            if (!considerAseNoise ||
                     Segment.bypass(S).get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))
                 {
                 Segments.push_back(Segment);

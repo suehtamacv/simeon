@@ -76,7 +76,7 @@ bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
     TransparentSegment Segment(segmentLinks(Links, start, end), scheme, 0);
     Signal Sig = Segment.bypass(Signal());
 
-    return ((!T->considerPhysicalImpairments ||
+    return ((!considerAseNoise ||
              Sig.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
             (Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate)));
 }
@@ -95,7 +95,7 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
         {
         Segment.ModScheme = scheme;
 
-        if (((!T->considerPhysicalImpairments ||
+        if (((!considerAseNoise ||
                 S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
                 ((Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate))))
             {

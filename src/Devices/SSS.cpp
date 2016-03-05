@@ -63,10 +63,12 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
 {
     if(transFunctionsCache.count(numSlots) == 0)
         {
+        double freqVar = numSlots * Slot::BSlot / 2;
+
         transFunctionsCache.emplace(numSlots,
                                     std::make_shared<TransferFunction>(PhysicalConstants::freq - freqVar,
                                             PhysicalConstants::freq + freqVar, Signal::numSamples));
         }
 
-    return transFunctionsCache.at(numSlots);
+    return *transFunctionsCache.at(numSlots);
 }

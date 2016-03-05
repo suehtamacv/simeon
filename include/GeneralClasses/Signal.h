@@ -2,6 +2,9 @@
 #define SIGNAL_H
 
 #include <GeneralClasses/Power.h>
+#include <GeneralClasses/SpectralDensity.h>
+#include <vector>
+#include <memory>
 
 /**
  * @brief The Signal class represents a signal that propagates through the
@@ -23,8 +26,7 @@ public:
      * @brief Signal is the standard constructor of a Signal. Creates a signal
      * with power InputPower and OSNR InputOSNR.
      */
-    Signal();
-
+    Signal(unsigned int numSlots = 1);
     /**
      * @brief operator *= multiplies the Signal by a gain, effectively rescaling
      * both the signal and the noise.
@@ -49,6 +51,8 @@ public:
     Power get_NoisePower();
 
     static unsigned long  numSamples;
+
+    std::shared_ptr<SpectralDensity> signalSpecDensity;
 
 private:
     Power SignalPower;

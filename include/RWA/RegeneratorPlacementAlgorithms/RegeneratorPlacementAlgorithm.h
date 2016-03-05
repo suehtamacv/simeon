@@ -4,6 +4,9 @@
 #include <boost/bimap.hpp>
 #include <iostream>
 
+extern bool considerAseNoise;
+extern bool considerFilterImperfection;
+
 class RoutingWavelengthAssignment;
 class Topology;
 
