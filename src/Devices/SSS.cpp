@@ -66,9 +66,12 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
         {
         double freqVar = numSlots * Slot::BSlot / 2;
         transFunctionsCache.emplace(numSlots,
-                                    GaussianTransferFunction(PhysicalConstants::freq - freqVar,
-                                            PhysicalConstants::freq + freqVar,
-                                            Signal::numFrequencySamples, filterOrder));
+                                    GaussianTransferFunction(
+                                        PhysicalConstants::freq - freqVar,
+                                        PhysicalConstants::freq + freqVar,
+                                        Signal::numFrequencySamples,
+                                        filterOrder,
+                                        std::pow(get_Gain().in_Linear(), 2)));
         }
 
     return transFunctionsCache.at(numSlots);

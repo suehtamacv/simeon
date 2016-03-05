@@ -11,7 +11,7 @@ class TransferFunction
 {
 public:
     TransferFunction(double freqMin, double freqMax,
-                     unsigned long int numSamples, double scale = 1);
+                     unsigned long int numSamples, double scale);
     TransferFunction(double scale);
 
     //Vector contendo os valores da função de transferência a serem multiplicados com a densidade espectral do sinal.

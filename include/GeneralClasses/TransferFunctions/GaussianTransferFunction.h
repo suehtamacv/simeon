@@ -6,7 +6,8 @@
 class GaussianTransferFunction : public TransferFunction
 {
 public:
-    GaussianTransferFunction(double freqMin, double freqMax, unsigned long int numSamples, unsigned int filterOrder);
+    GaussianTransferFunction(double freqMin, double freqMax,
+                             unsigned long int numSamples, unsigned int filterOrder, double scale);
 
     /**
      * @brief BW_3dB is the bandwidth of optical filter at 3 dB.
