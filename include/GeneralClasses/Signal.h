@@ -41,7 +41,11 @@ public:
      * @return a signal after adding the noise.
      */
     Signal &operator +=(Power &);
-
+    /**
+     * @brief operator *= multiplies this signal spectral density by a transfer function.
+     * @return a signal after the transfer function.
+     */
+    Signal &operator *=(TransferFunction &);
     /**
      * @brief get_OSNR returns the Signal-To-Noise Ratio of the Signal.
      * @return the Signal-To-Noise Ratio of the Signal.
@@ -53,13 +57,15 @@ public:
      */
     Power get_NoisePower();
 
-    static unsigned long  numSamples;
+    Power get_SpectralPower();
 
-    std::shared_ptr<SpectralDensity> signalSpecDensity;
-
+    static unsigned long  numFrequencySamples;
 private:
     Power SignalPower;
     Power NoisePower;
+    double frequencyRange;
+    std::shared_ptr<SpectralDensity> signalSpecDensity;
+
 };
 
 #endif // SIGNAL_H

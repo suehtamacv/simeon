@@ -67,7 +67,7 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
 
         transFunctionsCache.emplace(numSlots,
                                     std::make_shared<TransferFunction>(PhysicalConstants::freq - freqVar,
-                                            PhysicalConstants::freq + freqVar, Signal::numSamples));
+                                            PhysicalConstants::freq + freqVar, Signal::numFrequencySamples));
         }
 
     return *transFunctionsCache.at(numSlots);
