@@ -93,7 +93,9 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
-    src/GeneralClasses/TransferFunction.cpp
+    src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
+    src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
+    src/GeneralClasses/SpectralDensity.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -196,7 +198,9 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
-    include/GeneralClasses/TransferFunction.h
+    include/GeneralClasses/TransferFunctions/TransferFunction.h \
+    include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
+    include/GeneralClasses/SpectralDensity.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

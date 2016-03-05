@@ -7,6 +7,8 @@ Fiber::Fiber(double SpanLength) :
     NoisePower(0, Power::Watt)
 {
     this->SpanLength = SpanLength;
+
+    deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(), 2));
 }
 
 Gain &Fiber::get_Gain()
@@ -32,4 +34,9 @@ double Fiber::get_CapEx()
 double Fiber::get_OpEx()
 {
     return 0;
+}
+
+TransferFunction& Fiber::get_TransferFunction(unsigned int)
+{
+    return *deviceTF.get();
 }

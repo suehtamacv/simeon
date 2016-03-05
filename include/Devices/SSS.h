@@ -2,6 +2,7 @@
 #define SSS_H
 
 #include <Devices/Device.h>
+#include <map>
 
 class Node;
 
@@ -19,7 +20,7 @@ public:
     /**
      * @brief SSS is the standard constructor of a SSS.
      */
-    SSS(Node *parent);
+    SSS(Node *parent, unsigned int filterOrder = 1);
 
     Gain &get_Gain();
     Power &get_Noise();
@@ -27,6 +28,11 @@ public:
     double get_OpEx();
 
     std::shared_ptr<Device> clone();
+
+    std::shared_ptr<TransferFunction> deviceTF;
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
+    unsigned int filterOrder;
+    std::map<int,std::shared_ptr<TransferFunction>> transFunctionsCache;
 
 private:
     Power NoisePower;

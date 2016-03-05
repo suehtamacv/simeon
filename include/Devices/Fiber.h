@@ -27,6 +27,9 @@ public:
 
     std::shared_ptr<Device> clone();
 
+    std::shared_ptr<TransferFunction> deviceTF;
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
+
 private:
     double SpanLength;
     Gain NetLoss;

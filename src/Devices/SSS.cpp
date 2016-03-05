@@ -1,10 +1,14 @@
 #include <Devices/SSS.h>
 #include <Structure/Node.h>
+#include <Structure/Slot.h>
+#include <GeneralClasses/PhysicalConstants.h>
+#include <GeneralClasses/Signal.h>
 
 Gain SSS::SSSLoss(-5);
 
-SSS::SSS(Node *parent) :
-    Device(Device::SSSDevice), NoisePower(0, Power::Watt), parent(parent)
+SSS::SSS(Node *parent, unsigned int filterOrder) :
+    Device(Device::SSSDevice), filterOrder(filterOrder), NoisePower(0, Power::Watt),
+    parent(parent)
 {
 
 }
@@ -53,4 +57,16 @@ double SSS::get_CapEx()
 double SSS::get_OpEx()
 {
     return 0.2;
+}
+
+TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
+{
+    if(transFunctionsCache.count(numSlots) == 0)
+        {
+        transFunctionsCache.emplace(numSlots,
+                                    std::make_shared<TransferFunction>(PhysicalConstants::freq - freqVar,
+                                            PhysicalConstants::freq + freqVar, Signal::numSamples));
+        }
+
+    return transFunctionsCache.at(numSlots);
 }

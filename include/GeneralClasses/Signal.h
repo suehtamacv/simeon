@@ -48,6 +48,8 @@ public:
      */
     Power get_NoisePower();
 
+    static unsigned long  numSamples;
+
 private:
     Power SignalPower;
     Power NoisePower;

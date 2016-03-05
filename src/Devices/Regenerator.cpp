@@ -3,7 +3,7 @@
 Regenerator::Regenerator() : Device(Device::RegeneratorDevice),
     RegeneratorGain(Gain(0)), RegeneratorNoise(Power(0, Power::Watt))
 {
-
+    deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(), 2));
 }
 
 Gain &Regenerator::get_Gain()
@@ -29,4 +29,9 @@ double Regenerator::get_OpEx()
 std::shared_ptr<Device> Regenerator::clone()
 {
     return std::shared_ptr<Device>(new Regenerator());
+}
+
+TransferFunction& Regenerator::get_TransferFunction(unsigned int)
+{
+    return *deviceTF.get();
 }

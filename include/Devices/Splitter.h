@@ -32,6 +32,9 @@ public:
      */
     void set_NumPorts(int NumPorts);
 
+    std::shared_ptr<TransferFunction> deviceTF;
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
+
 private:
     Node *parent;
     unsigned int NumPorts;
