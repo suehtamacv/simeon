@@ -17,6 +17,7 @@ public:
 
     arma::rowvec specDensity;
     double densityScaling;
+
     SpectralDensity &operator*=(TransferFunction &H);
 };
 

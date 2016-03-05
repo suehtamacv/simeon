@@ -53,8 +53,9 @@ Power Signal::get_NoisePower()
 
 Power Signal::get_SpectralPower()
 {
-    return Power(TrapezoidalRule(signalSpecDensity->specDensity,
-                                 frequencyRange).calculate() * signalSpecDensity->densityScaling, Power::Watt);
+    return Power(
+               TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange).calculate()
+               * signalSpecDensity->densityScaling, Power::Watt);
 }
 
 double Signal::get_SignalPowerRatio()

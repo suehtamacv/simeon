@@ -16,8 +16,6 @@ PreAmplifier::PreAmplifier(Fiber &Segment, Node &Destination) : EDFA(Gain(0)) ,
         {
         set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
         }
-
-    deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(), 2));
 }
 
 Gain &PreAmplifier::get_Gain()
@@ -27,7 +25,6 @@ Gain &PreAmplifier::get_Gain()
         {
         numPorts = Destination.Links.size();
         set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
-        deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(), 2));
         }
 
     return AmplifierGain;
@@ -36,9 +33,4 @@ Gain &PreAmplifier::get_Gain()
 std::shared_ptr<Device> PreAmplifier::clone()
 {
     return std::shared_ptr<Device>(new PreAmplifier(*this));
-}
-
-TransferFunction& PreAmplifier::get_TransferFunction(unsigned int)
-{
-    return *deviceTF.get();
 }

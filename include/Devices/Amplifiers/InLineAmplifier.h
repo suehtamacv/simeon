@@ -26,12 +26,9 @@ public:
     InLineAmplifier(Fiber &Segment);
 
     Gain &get_Gain();
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
 
     std::shared_ptr<Device> clone();
 
-private:
-    std::shared_ptr<TransferFunction> deviceTF;
 };
 
 #endif // LINEAMPLIFIER_H

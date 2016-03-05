@@ -3,7 +3,7 @@
 
 BoosterAmplifier::BoosterAmplifier() : EDFA(-SSS::SSSLoss)
 {
-    deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(), 2));
+
 }
 
 Gain &BoosterAmplifier::get_Gain()
@@ -14,9 +14,4 @@ Gain &BoosterAmplifier::get_Gain()
 std::shared_ptr<Device> BoosterAmplifier::clone()
 {
     return std::shared_ptr<Device>(new BoosterAmplifier(*this));
-}
-
-TransferFunction& BoosterAmplifier::get_TransferFunction(unsigned int)
-{
-    return *deviceTF.get();
 }
