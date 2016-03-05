@@ -7,7 +7,7 @@ Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 unsigned long Signal::numFrequencySamples = 1000;
 
-Signal::Signal(unsigned int numSlots) : SignalPower(InputPower),
+Signal::Signal(unsigned int numSlots) : numSlots(numSlots), SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
     if(considerFilterImperfection)
@@ -33,7 +33,10 @@ Signal &Signal::operator +=(Power &P)
 
 Signal &Signal::operator *=(TransferFunction &TF)
 {
-    signalSpecDensity->operator *=(TF);
+    if (considerFilterImperfection)
+        {
+        signalSpecDensity->operator *=(TF);
+        }
     return *this;
 }
 

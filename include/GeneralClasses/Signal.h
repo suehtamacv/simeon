@@ -60,6 +60,8 @@ public:
     Power get_SpectralPower();
 
     static unsigned long  numFrequencySamples;
+
+    unsigned int numSlots;
 private:
     Power SignalPower;
     Power NoisePower;
