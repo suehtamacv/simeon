@@ -13,7 +13,7 @@ bool parallelism_enabled = true;
 }
 
 bool considerAseNoise = true;
-bool considerFilterImperfection = false;
+bool considerFilterImperfection = true;
 
 int main(void)
 {
@@ -23,8 +23,6 @@ int main(void)
     auto simulation = Simulations::SimulationType::create();
     simulation->print();
     simulation->run();
-
-    GaussianTransferFunction Teste(193.4e12 - 25e9, 193.4e12 + 25e9, 1000, 1);
 
     return 0;
 }
