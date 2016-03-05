@@ -22,10 +22,13 @@ public:
     BoosterAmplifier();
 
     Gain &get_Gain();
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
+
     std::shared_ptr<Device> clone();
 
+private:
     std::shared_ptr<TransferFunction> deviceTF;
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
+
 };
 
 #endif // BOOSTERAMPLIFIER_H

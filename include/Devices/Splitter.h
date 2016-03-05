@@ -20,6 +20,7 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
 
@@ -32,14 +33,12 @@ public:
      */
     void set_NumPorts(int NumPorts);
 
-    std::shared_ptr<TransferFunction> deviceTF;
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
-
 private:
     Node *parent;
     unsigned int NumPorts;
     Gain SplitterLoss;
     Power NoisePower;
+    std::shared_ptr<TransferFunction> deviceTF;
 };
 
 #endif // SPLITTER_H

@@ -9,7 +9,7 @@ public:
     IntegrationMethod(arma::mat&, double);
     arma::mat YPoints;
     double XRange;
-    virtual double Calculate() = 0;
+    virtual double calculate() = 0;
     void setValues(arma::mat&, double);
 };
 

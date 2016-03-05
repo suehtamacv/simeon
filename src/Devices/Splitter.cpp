@@ -7,7 +7,8 @@ Splitter::Splitter(Node *parent) : Device(Device::SplitterDevice),
     SplitterLoss(1.0 / (NumPorts + 1), Gain::Linear),
     NoisePower(0, Power::Watt)
 {
-    deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(), 2));
+    deviceTF = std::make_shared<TransferFunction>(std::pow(get_Gain().in_Linear(),
+               2));
 }
 
 Gain &Splitter::get_Gain()
@@ -29,6 +30,8 @@ void Splitter::set_NumPorts(int NumPorts)
 {
     this->NumPorts = NumPorts;
     SplitterLoss = Gain(1.0 / (NumPorts + 1), Gain::Linear);
+    deviceTF = std::make_shared<TransferFunction>
+               (std::pow(get_Gain().in_Linear(), 2));
 }
 
 std::shared_ptr<Device> Splitter::clone()

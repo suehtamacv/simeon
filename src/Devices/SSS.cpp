@@ -3,12 +3,13 @@
 #include <Structure/Slot.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
+#include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
 
 Gain SSS::SSSLoss(-5);
 
 SSS::SSS(Node *parent, unsigned int filterOrder) :
-    Device(Device::SSSDevice), filterOrder(filterOrder), NoisePower(0, Power::Watt),
-    parent(parent)
+    Device(Device::SSSDevice), filterOrder(filterOrder),
+    NoisePower(0, Power::Watt), parent(parent)
 {
 
 }
@@ -64,11 +65,11 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
     if(transFunctionsCache.count(numSlots) == 0)
         {
         double freqVar = numSlots * Slot::BSlot / 2;
-
         transFunctionsCache.emplace(numSlots,
-                                    std::make_shared<TransferFunction>(PhysicalConstants::freq - freqVar,
-                                            PhysicalConstants::freq + freqVar, Signal::numFrequencySamples));
+                                    GaussianTransferFunction(PhysicalConstants::freq - freqVar,
+                                            PhysicalConstants::freq + freqVar,
+                                            Signal::numFrequencySamples, filterOrder));
         }
 
-    return *transFunctionsCache.at(numSlots);
+    return transFunctionsCache.at(numSlots);
 }

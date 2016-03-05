@@ -1,9 +1,9 @@
 #include "GeneralClasses/SpectralDensity.h"
 #include <GeneralClasses/PhysicalConstants.h>
 
-SpectralDensity::SpectralDensity(double freqMin, double freqMax,
-                                 unsigned int numSamples) : specDensity(arma::linspace(freqMin, freqMax,
-                                             numSamples).t()), densityScaling(1)
+SpectralDensity::SpectralDensity
+(double freqMin, double freqMax, unsigned int numSamples) :
+    specDensity(arma::linspace(freqMin, freqMax, numSamples).t()), densityScaling(1)
 {
     specDensity.transform(
         [] (double val)

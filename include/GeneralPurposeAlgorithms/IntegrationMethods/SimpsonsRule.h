@@ -7,7 +7,7 @@ class SimpsonsRule : public IntegrationMethod
 {
 public:
     SimpsonsRule(arma::mat &, double);
-    double Calculate();
+    double calculate();
 };
 
 #endif // SIMPSONSRULE_H

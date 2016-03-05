@@ -6,7 +6,7 @@ SimpsonsRule::SimpsonsRule(arma::mat &YPoints, double XRange)
 
 }
 
-double SimpsonsRule::Calculate()
+double SimpsonsRule::calculate()
 {
     double Result, h, Sum = 0;
     h = XRange / (YPoints.size() - 1);

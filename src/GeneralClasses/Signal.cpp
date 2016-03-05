@@ -54,7 +54,7 @@ Power Signal::get_NoisePower()
 Power Signal::get_SpectralPower()
 {
     return Power(TrapezoidalRule(signalSpecDensity->specDensity,
-                                 frequencyRange).Calculate() * signalSpecDensity->densityScaling, Power::Watt);
+                                 frequencyRange).calculate() * signalSpecDensity->densityScaling, Power::Watt);
 }
 
 double Signal::get_SignalPowerRatio()
@@ -63,9 +63,8 @@ double Signal::get_SignalPowerRatio()
         {
         SpectralDensity originSD(PhysicalConstants::freq - frequencyRange / 2,
                                  PhysicalConstants::freq + frequencyRange / 2, numFrequencySamples);
-        originalSpecDensityCache.emplace(numSlots,
-                                         TrapezoidalRule(originSD.specDensity,
-                                                 frequencyRange).Calculate());
+        originalSpecDensityCache.emplace(numSlots, TrapezoidalRule(originSD.specDensity,
+                                         frequencyRange).calculate() * originSD.densityScaling);
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }

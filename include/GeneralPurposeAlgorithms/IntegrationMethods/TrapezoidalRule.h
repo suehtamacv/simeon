@@ -7,7 +7,7 @@ class TrapezoidalRule : public IntegrationMethod
 {
 public:
     TrapezoidalRule(arma::mat &, double);
-    double Calculate();
+    double calculate();
 };
 
 #endif // TRAPEZOIDALRULE_H

@@ -24,19 +24,17 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
 
     std::shared_ptr<Device> clone();
-
-    std::shared_ptr<TransferFunction> deviceTF;
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
     unsigned int filterOrder;
-    std::map<int,std::shared_ptr<TransferFunction>> transFunctionsCache;
 
 private:
     Power NoisePower;
     Node *parent;
+    std::map<int, TransferFunction> transFunctionsCache;
 };
 
 #endif // SSS_H

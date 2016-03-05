@@ -28,14 +28,14 @@ public:
     PreAmplifier(Fiber &Segment, Node &Node);
 
     Gain &get_Gain();
-    std::shared_ptr<Device> clone();
-
-    std::shared_ptr<TransferFunction> deviceTF;
     TransferFunction &get_TransferFunction(unsigned int numSlots);
+
+    std::shared_ptr<Device> clone();
 
 private:
     unsigned numPorts;
     Node &Destination;
+    std::shared_ptr<TransferFunction> deviceTF;
     Fiber &Segment;
 };
 

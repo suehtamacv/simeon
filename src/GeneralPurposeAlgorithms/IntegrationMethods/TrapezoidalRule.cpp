@@ -6,7 +6,7 @@ TrapezoidalRule::TrapezoidalRule(arma::mat &YPoints, double XRange)
 
 }
 
-double TrapezoidalRule::Calculate()
+double TrapezoidalRule::calculate()
 {
     double h = XRange / (YPoints.size() - 1);
     return (h / 2.0) * (2 * arma::accu(YPoints) -
