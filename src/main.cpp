@@ -17,7 +17,6 @@ bool considerFilterImperfection = false;
 
 int main(void)
 {
-    /*
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
@@ -25,7 +24,6 @@ int main(void)
     simulation->print();
     simulation->run();
 
-    */
     GaussianTransferFunction Teste(193.4e12 - 25e9, 193.4e12 + 25e9, 1000, 1);
 
     return 0;

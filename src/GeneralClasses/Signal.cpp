@@ -7,7 +7,8 @@ Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 unsigned long Signal::numFrequencySamples = 1000;
 
-Signal::Signal(unsigned int numSlots) : numSlots(numSlots), SignalPower(InputPower),
+Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
+    SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
     if(considerFilterImperfection)
@@ -54,4 +55,22 @@ Power Signal::get_SpectralPower()
 {
     return Power(TrapezoidalRule(signalSpecDensity->specDensity,
                                  frequencyRange).Calculate() * signalSpecDensity->densityScaling, Power::Watt);
+}
+
+double Signal::get_SignalPowerRatio()
+{
+    if(originalSpecDensityCache.count(numSlots) == 0)
+        {
+        SpectralDensity originSD(PhysicalConstants::freq - frequencyRange / 2,
+                                 PhysicalConstants::freq + frequencyRange / 2, numFrequencySamples);
+        originalSpecDensityCache.emplace(numSlots,
+                                         TrapezoidalRule(originSD.specDensity,
+                                                 frequencyRange).Calculate());
+        }
+    return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
+}
+
+double Signal::get_PowerRatioThreshold()
+{
+    return 0.6;
 }

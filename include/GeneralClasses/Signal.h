@@ -5,6 +5,7 @@
 #include <GeneralClasses/SpectralDensity.h>
 #include <vector>
 #include <memory>
+#include <map>
 
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
@@ -59,6 +60,10 @@ public:
 
     Power get_SpectralPower();
 
+    double get_SignalPowerRatio();
+
+    double get_PowerRatioThreshold();
+
     static unsigned long  numFrequencySamples;
 
     unsigned int numSlots;
@@ -66,6 +71,8 @@ private:
     Power SignalPower;
     Power NoisePower;
     double frequencyRange;
+
+    std::map<int, Power> originalSpecDensityCache ;
     std::shared_ptr<SpectralDensity> signalSpecDensity;
 
 };
