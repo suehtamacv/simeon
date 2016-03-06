@@ -15,6 +15,7 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm
 public:
 #define PSRVARIANTS \
     X(Variant_AWR, "Adaptative Weighing Routing", "awr", AdaptativeWeighingRouting) \
+    X(Variant_LocalPSR, "Local PSR", "localPSR", LocalPowerSeriesRouting) \
     X(Variant_TensorialPSR, "Tensorial PSR", "tensorialPSR", TensorialPowerSeriesRouting) \
     X(Variant_MatricialPSR, "Matricial PSR (Standard)", "matricialPSR", MatricialPowerSeriesRouting) \
 

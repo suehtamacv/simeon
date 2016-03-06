@@ -653,6 +653,15 @@ void Simulation_PSROptimization::runPSR()
                      (P, G, Costs.size() * (NMax - NMin + 1), XMin, XMax, VMin, VMax));
                 break;
 
+            case PowerSeriesRouting::Variant_LocalPSR:
+                PSO_Optim =
+                    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+                    (new ParticleSwarmOptimization<double, Fitness, Compare>
+                     (P, G, std::pow
+                      (NMax - NMin + 1, Costs.size()) * T->Nodes.size() * (T->Nodes.size() - 1) * 0.5,
+                      XMin, XMax, VMin, VMax));
+                break;
+
             case PowerSeriesRouting::Variant_AWR:
                 PSO_Optim =
                     std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>

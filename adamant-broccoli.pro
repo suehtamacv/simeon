@@ -91,7 +91,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.cpp
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -193,7 +194,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

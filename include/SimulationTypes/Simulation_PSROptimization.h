@@ -49,7 +49,7 @@ private:
     std::string CoefficientsFilename;
     std::string LogFilename;
 
-    static constexpr unsigned int P = 50;
+    static constexpr unsigned int P = 48;
     static constexpr unsigned int G = 500;
     static constexpr double XMin = -1;
     static constexpr double XMax = 1;
