@@ -23,6 +23,7 @@ SpectralDensity::SpectralDensity
 
         specDensityMap.emplace(freqValues, thisSpecDensity);
         }
+    specDensity = specDensityMap[freqValues];
 }
 
 SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
@@ -30,9 +31,7 @@ SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
     densityScaling *= H.scale;
     if (!H.isImpulseTransferFunction)
         {
-        std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
-
-        specDensityMap[freqValues] %= H.frequencySamples;
+        specDensity %= H.frequencySamples;
         }
 
     return *this;
