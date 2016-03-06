@@ -22,7 +22,7 @@ public:
     double freqMax;
 
     arma::rowvec specDensity;
-    std::map<std::pair<double, double>, arma::rowvec> specDensityMap;
+    static std::map<std::pair<double, double>, arma::rowvec> specDensityMap;
 
     SpectralDensity &operator*=(TransferFunction &H);
 };

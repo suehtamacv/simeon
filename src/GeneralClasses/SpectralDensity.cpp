@@ -3,6 +3,9 @@
 #include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
 
+std::map<std::pair<double, double>, arma::rowvec>
+SpectralDensity::specDensityMap;
+
 SpectralDensity::SpectralDensity
 (double freqMin, double freqMax, unsigned int numSamples) : densityScaling(1),
     freqMin(freqMin), freqMax(freqMax)
