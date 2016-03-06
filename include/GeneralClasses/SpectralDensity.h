@@ -16,8 +16,10 @@ public:
     static constexpr double SBW_3dB = 40e9;
     static constexpr int GaussianOrder = 1;
 
-    arma::rowvec specDensity;
-    double densityScaling;    
+    double densityScaling;
+
+    double freqMin;
+    double freqMax;
 
     std::map<std::pair<double, double>, arma::rowvec> specDensityMap;
 
