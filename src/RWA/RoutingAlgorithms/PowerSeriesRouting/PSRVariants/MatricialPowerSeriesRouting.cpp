@@ -5,14 +5,14 @@
 MatricialPowerSeriesRouting::MatricialPowerSeriesRouting
 (std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::matPSR)
 {
-
+    Variant = Variant_MatricialPSR;
 }
 
 MatricialPowerSeriesRouting::MatricialPowerSeriesRouting
 (std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost>> Costs) :
     PowerSeriesRouting(T, Costs, RoutingAlgorithm::matPSR)
 {
-
+    Variant = Variant_MatricialPSR;
 }
 
 double MatricialPowerSeriesRouting::get_Cost

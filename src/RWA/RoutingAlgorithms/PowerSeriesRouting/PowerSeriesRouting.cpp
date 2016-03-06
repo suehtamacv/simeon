@@ -130,6 +130,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     PSRDescription.add_options()
     ("PSR.minexponent", value<int>(), "Minimum Exponent")
     ("PSR.maxexponent", value<int>(), "Maximum Exponent")
+    ("PSR.variant", value<std::string>(), "PSR Variant")
     ("PSR.costs", value<std::string>(), "Chosen Costs")
     ("PSR.coefficients", value<std::string>(), "Coefficients");
 
@@ -141,6 +142,11 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     //Reads from configuration file.
     NMin = VariablesMap.find("PSR.minexponent")->second.as<int>();
     NMax = VariablesMap.find("PSR.maxexponent")->second.as<int>();
+
+    BOOST_ASSERT_MSG(Variant ==
+                     VariantNicknames.right.at(
+                         VariablesMap.find("PSR.variant")->second.as<std::string>()),
+                     "Coefficients were chosen for a different Variant.");
 
     std::clog << "Reading a PSR with min. exponent " << NMin
               << " and max. exponent " << NMax << "." << std::endl;

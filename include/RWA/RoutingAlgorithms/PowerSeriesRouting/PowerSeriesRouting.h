@@ -60,6 +60,8 @@ protected:
     bool firstTimeRun;
     static bool hasLoaded;
 
+    Variants Variant;
+
     static arma::mat defaultcoefficients;
     static std::vector<std::shared_ptr<PSR::Cost>> defaultcosts;
 };

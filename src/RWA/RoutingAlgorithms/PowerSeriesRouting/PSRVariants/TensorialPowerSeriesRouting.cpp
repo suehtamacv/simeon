@@ -4,19 +4,29 @@
 TensorialPowerSeriesRouting::TensorialPowerSeriesRouting
 (std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::tenPSR)
 {
+    Variant = Variant_TensorialPSR;
+
     coefs_matrix = arma::ones(1);
     for (unsigned cost = 0; cost < Costs.size(); ++cost)
         {
         auto costCoefs = coefficients.rows(cost * get_N(), (cost + 1) * get_N() - 1);
         coefs_matrix = arma::kron(coefs_matrix, costCoefs);
         }
+
 }
 
 TensorialPowerSeriesRouting::TensorialPowerSeriesRouting
 (std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost>> Costs) :
     PowerSeriesRouting(T, Costs, RoutingAlgorithm::tenPSR)
 {
+    Variant = Variant_TensorialPSR;
 
+    coefs_matrix = arma::ones(1);
+    for (unsigned cost = 0; cost < Costs.size(); ++cost)
+        {
+        auto costCoefs = coefficients.rows(cost * get_N(), (cost + 1) * get_N() - 1);
+        coefs_matrix = arma::kron(coefs_matrix, costCoefs);
+        }
 }
 
 double TensorialPowerSeriesRouting::get_Cost
