@@ -14,6 +14,7 @@ public:
 
 private:
     arma::mat coefs_matrix;
+    void calculate_CoefsMatrix();
 };
 
 #endif // TENSORIALPOWERSERIESROUTING_H
