@@ -58,7 +58,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             int requiredSlots = scheme.get_NumSlots(C->Bitrate);
             TransparentSegment Segment(Links, scheme, 0);
             Signal S(requiredSlots);
-            S = Segment.bypass(S);
+            S = Segment.bypass(S);            
 
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
