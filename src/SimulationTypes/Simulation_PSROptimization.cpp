@@ -125,59 +125,63 @@ void Simulation_PSROptimization::load()
             }
         }
 
-    if ((Variant == PowerSeriesRouting::Variant_MatricialPSR) ||
-            (Variant == PowerSeriesRouting::Variant_TensorialPSR))
+    switch(Variant)
         {
-        std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
+        case PowerSeriesRouting::Variant_LocalPSR:
+        case PowerSeriesRouting::Variant_MatricialPSR:
+        case PowerSeriesRouting::Variant_TensorialPSR:
 
-        do
-            {
-            int nmin;
-            std::cin >> nmin;
+            std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
 
-            if (std::cin.fail())
+            do
                 {
-                std::cin.clear();
-                std::cin.ignore();
+                int nmin;
+                std::cin >> nmin;
 
-                std::cerr << "Invalid minimum exponent." << std::endl;
-                std::cout << std::endl << "-> Define the minimum PSR Exponent."
-                          << std::endl;
+                if (std::cin.fail())
+                    {
+                    std::cin.clear();
+                    std::cin.ignore();
+
+                    std::cerr << "Invalid minimum exponent." << std::endl;
+                    std::cout << std::endl << "-> Define the minimum PSR Exponent."
+                              << std::endl;
+                    }
+                else
+                    {
+                    NMin = nmin;
+                    break;
+                    }
                 }
-            else
+            while (1);
+
+            std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
+
+            do
                 {
-                NMin = nmin;
-                break;
+                int nmax;
+                std::cin >> nmax;
+
+                if (std::cin.fail() || nmax < NMin)
+                    {
+                    std::cin.clear();
+                    std::cin.ignore();
+
+                    std::cerr << "Invalid maximum exponent." << std::endl;
+                    std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
+                    }
+                else
+                    {
+                    NMax = nmax;
+                    break;
+                    }
                 }
-            }
-        while (1);
+            while (1);
+            break;
 
-        std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
-
-        do
-            {
-            int nmax;
-            std::cin >> nmax;
-
-            if (std::cin.fail() || nmax < NMin)
-                {
-                std::cin.clear();
-                std::cin.ignore();
-
-                std::cerr << "Invalid maximum exponent." << std::endl;
-                std::cout << std::endl << "-> Define the maximum PSR Exponent." << std::endl;
-                }
-            else
-                {
-                NMax = nmax;
-                break;
-                }
-            }
-        while (1);
-        }
-    else if (Variant == PowerSeriesRouting::Variant_AWR)
-        {
-        NMin = NMax = 1;
+        case PowerSeriesRouting::Variant_AWR:
+            NMax = NMin = 1;
+            break;
         }
 
     std::cout << std::endl << "-> Choose the PSR Costs." << std::endl;
@@ -658,7 +662,7 @@ void Simulation_PSROptimization::runPSR()
                     std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
                     (new ParticleSwarmOptimization<double, Fitness, Compare>
                      (P, G, std::pow
-                      (NMax - NMin + 1, Costs.size()) * T->Nodes.size() * (T->Nodes.size() - 1) * 0.5,
+                      (NMax - NMin + 1, Costs.size()) * T->Nodes.size() * (T->Nodes.size() - 1),
                       XMin, XMax, VMin, VMax));
                 break;
 
