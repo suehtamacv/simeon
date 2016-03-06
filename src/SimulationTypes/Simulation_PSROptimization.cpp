@@ -125,7 +125,8 @@ void Simulation_PSROptimization::load()
             }
         }
 
-    if (Variant == PowerSeriesRouting::Variant_MatricialPSR)
+    if ((Variant == PowerSeriesRouting::Variant_MatricialPSR) ||
+            (Variant == PowerSeriesRouting::Variant_TensorialPSR))
         {
         std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
 
