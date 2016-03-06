@@ -2,21 +2,41 @@
 #include <iostream>
 #include <algorithm>
 #include <boost/program_options.hpp>
+#include <boost/assign.hpp>
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
 
 arma::mat PowerSeriesRouting::defaultcoefficients;
 bool PowerSeriesRouting::hasLoaded = false;
 std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
 
-PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T) :
-    DijkstraRoutingAlgorithm(T, PSR)
+PowerSeriesRouting::VariantNameBimap PowerSeriesRouting::VariantNames =
+    boost::assign::list_of<PowerSeriesRouting::VariantNameBimap::relation>
+#define X(a,b,c) (a,b)
+    PSRVARIANTS
+#undef X
+    ;
+
+PowerSeriesRouting::VariantNicknameBimap
+PowerSeriesRouting::VariantNicknames =
+    boost::assign::list_of<PowerSeriesRouting::VariantNicknameBimap::relation>
+#define X(a,b,c) (a,b)
+    PSRVARIANTS
+#undef X
+    ;
+
+
+PowerSeriesRouting::PowerSeriesRouting
+(std::shared_ptr<Topology> T, Variants Variant) :
+    DijkstraRoutingAlgorithm(T, PSR), PSRVariant(Variant)
 {
     firstTimeRun = false;
 }
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
-                                       std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    DijkstraRoutingAlgorithm(T, RoutingAlgorithms::PSR)
+                                       std::vector<std::shared_ptr<PSR::Cost>> Costs,
+                                       Variants Variant) :
+    DijkstraRoutingAlgorithm(T, RoutingAlgorithms::PSR), PSRVariant(Variant)
 {
 
     firstTimeRun = false;
@@ -31,25 +51,6 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
         {
         this->Costs.push_back(PSR::Cost::createCost(cost->Type, NMin, NMax, T));
         }
-}
-
-double PowerSeriesRouting::get_Cost(std::weak_ptr<Link> link,
-                                    std::shared_ptr<Call> C)
-{
-    arma::mat cost_matrix = arma::ones(1);
-
-    for (auto &cost : Costs)
-        {
-        cost_matrix = arma::kron(cost_matrix, cost->getCost(link, C));
-        }
-
-    if (!firstTimeRun)
-        {
-        coefficients.copy_size(cost_matrix);
-        firstTimeRun = true;
-        }
-
-    return arma::accu(coefficients % cost_matrix);
 }
 
 void PowerSeriesRouting::load()
@@ -129,6 +130,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     PSRDescription.add_options()
     ("PSR.minexponent", value<int>(), "Minimum Exponent")
     ("PSR.maxexponent", value<int>(), "Maximum Exponent")
+    ("PSR.variant", value<std::string>(), "PSR Variant")
     ("PSR.costs", value<std::string>(), "Chosen Costs")
     ("PSR.coefficients", value<std::string>(), "Coefficients");
 
@@ -140,6 +142,8 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     //Reads from configuration file.
     NMin = VariablesMap.find("PSR.minexponent")->second.as<int>();
     NMax = VariablesMap.find("PSR.maxexponent")->second.as<int>();
+    PSRVariant = VariantNicknames.right.at(
+                     VariablesMap.find("PSR.variant")->second.as<std::string>());
 
     std::clog << "Reading a PSR with min. exponent " << NMin
               << " and max. exponent " << NMax << "." << std::endl;
@@ -232,4 +236,21 @@ int PowerSeriesRouting::get_NMax() const
 void PowerSeriesRouting::save(std::string SimConfigFileName)
 {
     RoutingAlgorithm::save(SimConfigFileName);
+}
+
+std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
+    std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost> > Costs,
+    Variants Variant)
+{
+    std::shared_ptr<PowerSeriesRouting> PSR;
+
+    switch (Variant)
+        {
+#define X(a,b,c) case a: PSR = std::make_shared<c>(T, Costs); break;
+            PSRVARIANTS
+#undef X
+#undef PSRVARIANTS
+        }
+
+    return PSR;
 }

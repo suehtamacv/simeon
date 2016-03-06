@@ -16,10 +16,9 @@ class RoutingAlgorithm
 {
 public:
 #define ROUTING_ALGORITHM \
-    X(AWR, "Adaptative Weighing Routing", "AWR", AdaptativeWeighingRouting) \
     X(LORa, "Length and Occupation Routing - Availability", "LORa", LengthOccupationRoutingAvailability) \
     X(LORc, "Length and Occupation Routing - Contiguity", "LORc", LengthOccupationRoutingContiguity) \
-    X(PSR, "Power Series Routing", "PSR", PowerSeriesRouting) \
+    X(PSR, "Power Series Routing", "PSR", MatricialPowerSeriesRouting) \
     X(MH, "Minimum Hops", "MH", MinimumHops) \
     X(SP, "Shortest Path", "SP", ShortestPath) //Enum value, Name, Nickname, Class name.
 

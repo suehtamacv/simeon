@@ -1,7 +1,7 @@
 #ifndef ADAPTATIVEWEIGHINGROUTING_H
 #define ADAPTATIVEWEIGHINGROUTING_H
 
-#include "PowerSeriesRouting.h"
+#include "../PowerSeriesRouting.h"
 
 class AdaptativeWeighingRouting : public PowerSeriesRouting
 {

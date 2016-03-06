@@ -14,30 +14,11 @@
 
 using namespace Simulations;
 
-Simulation_PSROptimization::PSRVariantNameBimap
-Simulation_PSROptimization::PSRVariantNames =
-    boost::assign::list_of<Simulation_PSROptimization::PSRVariantNameBimap::relation>
-#define X(a,b,c) (a,b)
-    PSRVARIANTS
-#undef X
-    ;
-
-Simulation_PSROptimization::PSRVariantNicknameBimap
-Simulation_PSROptimization::PSRVariantNicknames =
-    boost::assign::list_of<Simulation_PSROptimization::PSRVariantNicknameBimap::relation>
-#define X(a,b,c) (a,b)
-    PSRVARIANTS
-#undef X
-#undef PSRVARIANTS
-    ;
-
-
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
 std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
-Simulation_PSROptimization::PSR_Variants
-Simulation_PSROptimization::Fitness::Variant;
+PowerSeriesRouting::Variants Simulation_PSROptimization::Fitness::Variant;
 WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
@@ -96,7 +77,7 @@ void Simulation_PSROptimization::load()
     std::cout << std::endl << "-> Choose a PSR Variant." << std::endl;
     do
         {
-        for (auto &variant : PSRVariantNames.left)
+        for (auto &variant : PowerSeriesRouting::VariantNames.left)
             {
             std::cout << "(" << variant.first << ")\t" << variant.second << std::endl;
             }
@@ -105,7 +86,8 @@ void Simulation_PSROptimization::load()
         std::cin >> PSR_Variant;
 
         if (std::cin.fail() ||
-                PSRVariantNames.left.count((PSR_Variants) PSR_Variant) == 0)
+                PowerSeriesRouting::VariantNames.left.count
+                ((PowerSeriesRouting::Variants) PSR_Variant) == 0)
             {
             std::cin.clear();
             std::cin.ignore();
@@ -115,7 +97,7 @@ void Simulation_PSROptimization::load()
             }
         else
             {
-            Variant = (PSR_Variants) PSR_Variant;
+            Variant = (PowerSeriesRouting::Variants) PSR_Variant;
             break;
             }
         }
@@ -143,7 +125,7 @@ void Simulation_PSROptimization::load()
             }
         }
 
-    if (Variant == Variant_PSR)
+    if (Variant == PowerSeriesRouting::Variant_MatricialPSR)
         {
         std::cout << std::endl << "-> Define the minimum PSR Exponent." << std::endl;
 
@@ -192,7 +174,7 @@ void Simulation_PSROptimization::load()
             }
         while (1);
         }
-    else if (Variant == Variant_AWR)
+    else if (Variant == PowerSeriesRouting::Variant_AWR)
         {
         NMin = NMax = 1;
         }
@@ -397,8 +379,8 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
         SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
         }
     SimConfigFile << std::endl;
-    SimConfigFile << "  PSRVariant =" << PSRVariantNicknames.left.at(Variant)
-                  << std::endl;
+    SimConfigFile << "  PSRVariant =" << PowerSeriesRouting::VariantNicknames.
+                  left.at(Variant) << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
     SimConfigFile << "  NetworkLoad = " << OptimizationLoad << std::endl;
 
@@ -480,7 +462,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
             }
         }
 
-    Variant = PSRVariantNicknames.right.at(
+    Variant = PowerSeriesRouting::VariantNicknames.right.at(
                   VariablesMap["sim_info.PSRVariant"].as<std::string>());
     NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
     OptimizationLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
@@ -548,7 +530,8 @@ void Simulation_PSROptimization::print()
                   std::endl;
         }
 
-    std::cout << "-> PSR Variant = " << PSRVariantNames.left.at(Variant)
+    std::cout << "-> PSR Variant = " << PowerSeriesRouting::VariantNames.left.at(
+                  Variant)
               << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
@@ -576,20 +559,7 @@ double Simulation_PSROptimization::Fitness::operator()(
     auto TopologyCopy = std::make_shared<Topology>(*T);
 
     //Creates the RWA Algorithms
-    std::shared_ptr<PowerSeriesRouting> R_Alg;
-
-    switch (Variant)
-        {
-        case Variant_PSR:
-            R_Alg = std::make_shared<PowerSeriesRouting>
-                    (TopologyCopy, Simulation_PSROptimization::Costs);
-            break;
-
-        case Variant_AWR:
-            R_Alg = std::make_shared<AdaptativeWeighingRouting>
-                    (TopologyCopy, Simulation_PSROptimization::Costs);
-            break;
-        }
+    auto R_Alg = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
 
     std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
         WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
@@ -636,35 +606,27 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
         }
 
     OutFile << "  [PSR]" << std::endl << std::endl;
-
     OutFile << "minexponent = " << NMin << std::endl;
-
     OutFile << "maxexponent = " << NMax << std::endl;
-
+    OutFile << "variant = " << PowerSeriesRouting::VariantNicknames
+            .left.at(Variant) << std::endl;
     OutFile << "costs =";
-
         {
         for (auto &cost : Costs)
             {
             OutFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
             }
-
         OutFile << std::endl;
         }
-
     OutFile << "bestfit = " << BestParticle->bestFit << std::endl;
-
     OutFile << "coefficients =";
-
         {
         for (auto &coef : BestParticle->P)
             {
             OutFile << " " << std::setprecision(15) << coef;
             }
-
         OutFile << std::endl;
         }
-
 }
 
 void Simulation_PSROptimization::runPSR()
@@ -674,21 +636,21 @@ void Simulation_PSROptimization::runPSR()
         Fitness::T = T;
         Fitness::Variant = Variant;
 
-        if (Variant == Variant_PSR)
+        switch (Variant)
             {
-            int N = std::pow(NMax - NMin + 1, Costs.size());
+            case PowerSeriesRouting::Variant_MatricialPSR:
+                PSO_Optim =
+                    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+                    (new ParticleSwarmOptimization<double, Fitness, Compare>
+                     (P, G, std::pow(NMax - NMin + 1, Costs.size()), XMin, XMax, VMin, VMax));
+                break;
 
-            PSO_Optim =
-                std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
-                (new ParticleSwarmOptimization<double, Fitness, Compare>
-                 (P, G, N, XMin, XMax, VMin, VMax));
-            }
-        else if (Variant == Variant_AWR)
-            {
-            PSO_Optim =
-                std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
-                (new ParticleSwarmOptimization<double, Fitness, Compare>
-                 (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
+            case PowerSeriesRouting::Variant_AWR:
+                PSO_Optim =
+                    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+                    (new ParticleSwarmOptimization<double, Fitness, Compare>
+                     (P, G, Costs.size() - 1, 0, std::acos(-1), VMin, VMax));
+                break;
             }
         }
 

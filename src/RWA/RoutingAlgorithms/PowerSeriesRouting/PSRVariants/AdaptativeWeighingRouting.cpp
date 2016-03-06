@@ -1,17 +1,15 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/AdaptativeWeighingRouting.h>
+#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h>
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting(
-    std::shared_ptr<Topology> T) : PowerSeriesRouting(T)
+    std::shared_ptr<Topology> T) : PowerSeriesRouting(T, Variant_AWR)
 {
-    RoutAlgType = AWR;
 }
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting(std::shared_ptr<Topology>
         T, std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    PowerSeriesRouting(T, Costs)
+    PowerSeriesRouting(T, Costs, Variant_AWR)
 {
-    RoutAlgType = AWR;
 }
 
 double AdaptativeWeighingRouting::get_Cost(
@@ -19,14 +17,14 @@ double AdaptativeWeighingRouting::get_Cost(
 {
     double Cost = 0;
 
-	//Spherical coordinates for a n-sphere that represents the possible values that the AWR can take.
-	double Sines = 1;
-	
-	for (unsigned n = 0; n < Costs.size(); ++n)
-		{
+    //Spherical coordinates for a n-sphere that represents the possible values that the AWR can take.
+    double Sines = 1;
+
+    for (unsigned n = 0; n < Costs.size(); ++n)
+        {
         Cost += Costs[n]->getCost(1, link, C) * std::cos(coefficients.at(n)) * Sines;
         Sines *= std::sin(coefficients.at(n));
-		}
-	
+        }
+
     return Cost;
 }
