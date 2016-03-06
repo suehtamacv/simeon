@@ -14,10 +14,10 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm
 {
 public:
 #define PSRVARIANTS \
-    X(Variant_MatricialPSR, "Standard PSR", MatricialPowerSeriesRouting) \
-    X(Variant_AWR, "Adaptative Weighing Routing", AdaptativeWeighingRouting)
+    X(Variant_MatricialPSR, "Matricial PSR (Standard)", "matricialPSR", MatricialPowerSeriesRouting) \
+    X(Variant_AWR, "Adaptative Weighing Routing", "awr", AdaptativeWeighingRouting)
 
-#define X(a,b,c) a,
+#define X(a,b,c,d) a,
     enum Variants
     {
         PSRVARIANTS

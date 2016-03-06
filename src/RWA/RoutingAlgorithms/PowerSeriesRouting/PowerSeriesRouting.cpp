@@ -12,7 +12,7 @@ std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
 
 PowerSeriesRouting::VariantNameBimap PowerSeriesRouting::VariantNames =
     boost::assign::list_of<PowerSeriesRouting::VariantNameBimap::relation>
-#define X(a,b,c) (a,b)
+#define X(a,b,c,d) (a,b)
     PSRVARIANTS
 #undef X
     ;
@@ -20,7 +20,7 @@ PowerSeriesRouting::VariantNameBimap PowerSeriesRouting::VariantNames =
 PowerSeriesRouting::VariantNicknameBimap
 PowerSeriesRouting::VariantNicknames =
     boost::assign::list_of<PowerSeriesRouting::VariantNicknameBimap::relation>
-#define X(a,b,c) (a,b)
+#define X(a,b,c,d) (a,c)
     PSRVARIANTS
 #undef X
     ;
@@ -142,7 +142,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     //Reads from configuration file.
     NMin = VariablesMap.find("PSR.minexponent")->second.as<int>();
     NMax = VariablesMap.find("PSR.maxexponent")->second.as<int>();
-    PSRVariant = VariantNames.right.at(
+    PSRVariant = VariantNicknames.right.at(
                      VariablesMap.find("PSR.variant")->second.as<std::string>());
 
     std::clog << "Reading a PSR with min. exponent " << NMin
@@ -246,7 +246,7 @@ std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
 
     switch (Variant)
         {
-#define X(a,b,c) case a: PSR = std::make_shared<c>(T, Costs); break;
+#define X(a,b,c,d) case a: PSR = std::make_shared<d>(T, Costs); break;
             PSRVARIANTS
 #undef X
 #undef PSRVARIANTS
