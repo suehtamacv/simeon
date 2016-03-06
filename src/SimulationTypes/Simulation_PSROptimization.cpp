@@ -608,8 +608,6 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
     OutFile << "  [PSR]" << std::endl << std::endl;
     OutFile << "minexponent = " << NMin << std::endl;
     OutFile << "maxexponent = " << NMax << std::endl;
-    OutFile << "variant = " << PowerSeriesRouting::VariantNicknames.left
-               .at(Variant) << std::endl;
     OutFile << "costs =";
         {
         for (auto &cost : Costs)
@@ -643,6 +641,13 @@ void Simulation_PSROptimization::runPSR()
                     std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
                     (new ParticleSwarmOptimization<double, Fitness, Compare>
                      (P, G, std::pow(NMax - NMin + 1, Costs.size()), XMin, XMax, VMin, VMax));
+                break;
+
+            case PowerSeriesRouting::Variant_TensorialPSR:
+                PSO_Optim =
+                    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+                    (new ParticleSwarmOptimization<double, Fitness, Compare>
+                     (P, G, Costs.size() * (NMax - NMin + 1), XMin, XMax, VMin, VMax));
                 break;
 
             case PowerSeriesRouting::Variant_AWR:

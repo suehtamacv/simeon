@@ -14,8 +14,10 @@ class PowerSeriesRouting : public DijkstraRoutingAlgorithm
 {
 public:
 #define PSRVARIANTS \
+    X(Variant_AWR, "Adaptative Weighing Routing", "awr", AdaptativeWeighingRouting) \
+    X(Variant_TensorialPSR, "Tensorial PSR", "tensorialPSR", TensorialPowerSeriesRouting) \
     X(Variant_MatricialPSR, "Matricial PSR (Standard)", "matricialPSR", MatricialPowerSeriesRouting) \
-    X(Variant_AWR, "Adaptative Weighing Routing", "awr", AdaptativeWeighingRouting)
+
 
 #define X(a,b,c,d) a,
     enum Variants
@@ -29,11 +31,10 @@ public:
     typedef boost::bimap<Variants, std::string> VariantNicknameBimap;
     static VariantNicknameBimap VariantNicknames;
 
-    PowerSeriesRouting(std::shared_ptr<Topology> T,
-                       Variants = Variant_MatricialPSR);
+    PowerSeriesRouting(std::shared_ptr<Topology> T, RoutingAlgorithms RAlg);
     PowerSeriesRouting(std::shared_ptr<Topology> T,
                        std::vector<std::shared_ptr<PSR::Cost>> Costs,
-                       Variants = Variant_MatricialPSR);
+                       RoutingAlgorithms RAlg);
 
     void load();
     void save(std::string);
@@ -44,6 +45,7 @@ public:
 
     int get_NMin() const;
     int get_NMax() const;
+    int get_N() const;
 
     static std::shared_ptr<PowerSeriesRouting>
     createPSR(std::shared_ptr<Topology> T,
@@ -60,8 +62,6 @@ protected:
 
     static arma::mat defaultcoefficients;
     static std::vector<std::shared_ptr<PSR::Cost>> defaultcosts;
-
-    Variants PSRVariant;
 };
 
 #endif // POWERSERIESROUTING_H

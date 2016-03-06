@@ -3,5 +3,6 @@
 
 #include "PSRVariants/AdaptativeWeighingRouting.h"
 #include "PSRVariants/MatricialPowerSeriesRouting.h"
+#include "PSRVariants/TensorialPowerSeriesRouting.h"
 
 #endif // PSRVARIANTS_H

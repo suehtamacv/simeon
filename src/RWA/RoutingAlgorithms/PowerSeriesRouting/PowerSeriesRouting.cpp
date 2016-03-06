@@ -7,8 +7,8 @@
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
 
 arma::mat PowerSeriesRouting::defaultcoefficients;
-bool PowerSeriesRouting::hasLoaded = false;
 std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
+bool PowerSeriesRouting::hasLoaded = false;
 
 PowerSeriesRouting::VariantNameBimap PowerSeriesRouting::VariantNames =
     boost::assign::list_of<PowerSeriesRouting::VariantNameBimap::relation>
@@ -27,16 +27,16 @@ PowerSeriesRouting::VariantNicknames =
 
 
 PowerSeriesRouting::PowerSeriesRouting
-(std::shared_ptr<Topology> T, Variants Variant) :
-    DijkstraRoutingAlgorithm(T, PSR), PSRVariant(Variant)
+(std::shared_ptr<Topology> T, RoutingAlgorithms RAlg) :
+    DijkstraRoutingAlgorithm(T, RAlg)
 {
     firstTimeRun = false;
 }
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
                                        std::vector<std::shared_ptr<PSR::Cost>> Costs,
-                                       Variants Variant) :
-    DijkstraRoutingAlgorithm(T, RoutingAlgorithms::PSR), PSRVariant(Variant)
+                                       RoutingAlgorithms RAlg) :
+    DijkstraRoutingAlgorithm(T, RAlg)
 {
 
     firstTimeRun = false;
@@ -130,7 +130,6 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     PSRDescription.add_options()
     ("PSR.minexponent", value<int>(), "Minimum Exponent")
     ("PSR.maxexponent", value<int>(), "Maximum Exponent")
-    ("PSR.variant", value<std::string>(), "PSR Variant")
     ("PSR.costs", value<std::string>(), "Chosen Costs")
     ("PSR.coefficients", value<std::string>(), "Coefficients");
 
@@ -142,8 +141,6 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     //Reads from configuration file.
     NMin = VariablesMap.find("PSR.minexponent")->second.as<int>();
     NMax = VariablesMap.find("PSR.maxexponent")->second.as<int>();
-    PSRVariant = VariantNicknames.right.at(
-                     VariablesMap.find("PSR.variant")->second.as<std::string>());
 
     std::clog << "Reading a PSR with min. exponent " << NMin
               << " and max. exponent " << NMax << "." << std::endl;
@@ -233,13 +230,18 @@ int PowerSeriesRouting::get_NMax() const
     return NMax;
 }
 
+int PowerSeriesRouting::get_N() const
+{
+    return NMax - NMin + 1;
+}
+
 void PowerSeriesRouting::save(std::string SimConfigFileName)
 {
     RoutingAlgorithm::save(SimConfigFileName);
 }
 
 std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
-    std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost> > Costs,
+    std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost>> Costs,
     Variants Variant)
 {
     std::shared_ptr<PowerSeriesRouting> PSR;

@@ -1,8 +1,7 @@
 #ifndef ROUTINGALGORITHMS_H
 #define ROUTINGALGORITHMS_H
 
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h>
+#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
 #include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
 #include <RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h>

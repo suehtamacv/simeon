@@ -2,13 +2,13 @@
 #include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting(
-    std::shared_ptr<Topology> T) : PowerSeriesRouting(T, Variant_AWR)
+    std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::AWR)
 {
 }
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting(std::shared_ptr<Topology>
         T, std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    PowerSeriesRouting(T, Costs, Variant_AWR)
+    PowerSeriesRouting(T, Costs, RoutingAlgorithm::AWR)
 {
 }
 
