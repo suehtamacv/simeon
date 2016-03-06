@@ -608,8 +608,8 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
     OutFile << "  [PSR]" << std::endl << std::endl;
     OutFile << "minexponent = " << NMin << std::endl;
     OutFile << "maxexponent = " << NMax << std::endl;
-    OutFile << "variant = " << PowerSeriesRouting::VariantNicknames
-            .left.at(Variant) << std::endl;
+    OutFile << "variant = " << PowerSeriesRouting::VariantNames.left
+               .at(Variant) << std::endl;
     OutFile << "costs =";
         {
         for (auto &cost : Costs)
