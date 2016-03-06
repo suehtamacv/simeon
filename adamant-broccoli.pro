@@ -55,6 +55,9 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
     src/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
@@ -67,6 +70,7 @@ SOURCES += src/main.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
+    src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp \
     src/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.cpp \
     src/RWA/RoutingAlgorithms/RoutingAlgorithm.cpp \
@@ -90,9 +94,6 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.cpp \
-    src/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -154,7 +155,11 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
     include/RWA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \
     include/RWA/RoutingAlgorithms/RoutingAlgorithm.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h \
@@ -168,6 +173,7 @@ HEADERS += \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h \
+    include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h \
     include/RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h \
     include/RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h \
@@ -191,11 +197,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h \
-    include/RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

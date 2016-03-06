@@ -26,6 +26,7 @@ public:
     X(normcontiguity, "Normalized Contiguity", "normcontiguity", cNormContiguity) \
     X(normnoise, "Normalized Noise", "normnoise", cNormNoise) \
     X(slots, "Number of Required Slots", "slots", cSlots) \
+    X(origdestindex, "Origin-Destination Index", "origdestindex", cOrigDestIndex) \
     X(occupability, "Occupability", "occupability", cOccupability) \
     X(scheme, "Modulation Scheme", "scheme", cModulationScheme)
 

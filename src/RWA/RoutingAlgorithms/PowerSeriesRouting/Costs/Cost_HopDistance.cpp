@@ -51,7 +51,6 @@ bool PSR::cHopDistance::Comparator::operator <(const Comparator &other) const
     return false;
 }
 
-
 void PSR::cHopDistance::createCache()
 {
     std::set<Comparator> MinimalDistance;
