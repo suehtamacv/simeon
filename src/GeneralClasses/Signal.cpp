@@ -66,9 +66,8 @@ double Signal::get_SignalPowerRatio()
                                  PhysicalConstants::freq + frequencyRange / 2, numFrequencySamples);
 
         originalSpecDensityCache.emplace(numSlots,
-                                         TrapezoidalRule(
-                                             originSD.specDensity,
-                                             frequencyRange).calculate() * originSD.densityScaling);
+                                         Power(TrapezoidalRule(originSD.specDensity, frequencyRange).calculate()
+                                               * originSD.densityScaling, Power::Watt));
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }
