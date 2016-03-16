@@ -9,7 +9,7 @@ unsigned long Signal::numFrequencySamples = 1000; // Mudar de volta para 25
 
 Signal::Signal(unsigned int numSlots) : numSlots(4),
     SignalPower(InputPower),
-    NoisePower(InputPower * -InputOSNR)
+    NoisePower(InputPower * -InputOSNR) // Fixei numSlots em 4
 {
     if(considerFilterImperfection)
         {
@@ -54,8 +54,8 @@ Power Signal::get_NoisePower()
 Power Signal::get_SpectralPower()
 {
     return Power(
-               TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange).calculate()
-               * signalSpecDensity->densityScaling, Power::Watt);
+               TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange * 2).calculate()
+               * signalSpecDensity->densityScaling, Power::Watt); // Adicionei *2 na freqRange
 }
 
 double Signal::get_SignalPowerRatio(int numLinks)
@@ -66,14 +66,14 @@ double Signal::get_SignalPowerRatio(int numLinks)
                                  PhysicalConstants::freq + frequencyRange, numFrequencySamples);
 
         originalSpecDensityCache.emplace(numSlots,
-                                         Power(TrapezoidalRule(originSD.specDensity, frequencyRange).calculate()
-                                               * originSD.densityScaling, Power::Watt));
+                                         Power(TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
+                                               * originSD.densityScaling, Power::Watt)); // Adicionei *2 na freqRange
         }
 
-    // Para testes:
+    //Teste
     double Result =  get_SpectralPower() / originalSpecDensityCache.at(numSlots);
-
     std::cout << std::endl << " LINKS = " << numLinks << " SLOTS = " << numSlots << " PR = " << Result << std::endl;
+    //Teste
 
     return Result;
 }

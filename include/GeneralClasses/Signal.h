@@ -60,7 +60,7 @@ public:
 
     Power get_SpectralPower();
 
-    double get_SignalPowerRatio(int numLinks);
+    double get_SignalPowerRatio(int numLinks); // Adicionei esse parâmetro para testes
 
     double get_PowerRatioThreshold();
 
