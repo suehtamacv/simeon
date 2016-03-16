@@ -9,8 +9,8 @@ GaussianTransferFunction::GaussianTransferFunction
     frequencySamples.transform(
         [&filterOrder] (double val)
         {
-        return (std::exp(-2 * std::log(2) * pow(2 * (val - PhysicalConstants::freq) / BW_3dB,
-                                    2 * filterOrder)));
+        return (pow(std::exp(-2 * std::log(2) * pow(2 * (val - PhysicalConstants::freq) / BW_3dB,
+                                    2 * filterOrder)), 2)); // Elevei ao quadrado
         }
     );
 }
