@@ -9,7 +9,7 @@ GaussianTransferFunction::GaussianTransferFunction
     frequencySamples.transform(
         [&filterOrder] (double val)
         {
-        return (std::exp2l(-2 * pow(2 * (val - PhysicalConstants::freq) / BW_3dB,
+        return (std::exp(-2 * pow(2 * (val - PhysicalConstants::freq) / BW_3dB,
                                     2 * filterOrder)));
         }
     );
