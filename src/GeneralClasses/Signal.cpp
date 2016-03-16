@@ -13,7 +13,7 @@ Signal::Signal(unsigned int numSlots) : numSlots(4),
 {
     if(considerFilterImperfection)
         {
-        frequencyRange = numSlots * Slot::BSlot / 2;
+        frequencyRange = 4 * Slot::BSlot / 2; // Remover o 4 e colocar numSlots
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                             frequencyRange, PhysicalConstants::freq + frequencyRange, numFrequencySamples);
         }
@@ -53,6 +53,11 @@ Power Signal::get_NoisePower()
 
 Power Signal::get_SpectralPower()
 {
+    //Teste
+    numSlots = 4;
+    frequencyRange = numSlots * Slot::BSlot / 2;
+    //Teste
+
     return Power(
                TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange * 2).calculate()
                * signalSpecDensity->densityScaling, Power::Watt); // Adicionei *2 na freqRange
@@ -60,6 +65,11 @@ Power Signal::get_SpectralPower()
 
 double Signal::get_SignalPowerRatio(int numLinks)
 {
+    //Teste
+    numSlots = 4;
+    frequencyRange = numSlots * Slot::BSlot / 2;
+    //Teste
+
     if(originalSpecDensityCache.count(numSlots) == 0)
         {
         SpectralDensity originSD(PhysicalConstants::freq - frequencyRange,
@@ -72,7 +82,8 @@ double Signal::get_SignalPowerRatio(int numLinks)
 
     //Teste
     double Result =  get_SpectralPower() / originalSpecDensityCache.at(numSlots);
-    std::cout << std::endl << " LINKS = " << numLinks << " SLOTS = " << numSlots << " PR = " << Result << std::endl;
+    if(numLinks == 3)
+        std::cout << std::endl << " LINKS = " << numLinks << " SLOTS = " << numSlots << " PR = " << Result << std::endl;
     //Teste
 
     return Result;

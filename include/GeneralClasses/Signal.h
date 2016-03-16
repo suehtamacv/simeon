@@ -67,10 +67,12 @@ public:
     static unsigned long  numFrequencySamples;
 
     unsigned int numSlots;
+
+    double frequencyRange; // Removi de private para public
 private:
     Power SignalPower;
     Power NoisePower;
-    double frequencyRange;
+
 
     std::map<int, Power> originalSpecDensityCache ;
     std::shared_ptr<SpectralDensity> signalSpecDensity;

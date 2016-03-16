@@ -12,6 +12,11 @@ SpectralDensity::SpectralDensity
 {
     std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
 
+    //Teste
+    freqMin = PhysicalConstants::freq - 4 * Slot::BSlot / 2;
+    freqMax = PhysicalConstants::freq + 4 * Slot::BSlot / 2;
+    //Teste
+
     if(specDensityMap.count(freqValues) == 0)
         {
         arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
