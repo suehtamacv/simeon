@@ -80,7 +80,7 @@ bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
              S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
             (Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate)) &&
             (!considerFilterImperfection ||
-             S.get_SignalPowerRatio() < S.get_PowerRatioThreshold()));
+             S.get_SignalPowerRatio(Links.size()) < S.get_PowerRatioThreshold()));
 }
 
 ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
@@ -101,7 +101,7 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
                 S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
                 ((Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate))) &&
                 (!considerFilterImperfection ||
-                 S.get_SignalPowerRatio() < S.get_PowerRatioThreshold()))
+                 S.get_SignalPowerRatio(SegmentLinks.size()) < S.get_PowerRatioThreshold()))
             {
             return scheme;
 
