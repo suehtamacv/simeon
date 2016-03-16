@@ -19,8 +19,8 @@ SpectralDensity::SpectralDensity
         thisSpecDensity.transform(
             [] (double val)
             {
-            return (pow(std::exp(-pow(2 * std::log(2) * (val - PhysicalConstants::freq) / SBW_3dB,
-                                    2 * GaussianOrder)), 2)); // Elevei ao quadrado
+            return (std::exp(-pow(2 * std::log(2) * (val - PhysicalConstants::freq) / SBW_3dB,
+                                    2 * GaussianOrder)));
             }
         );
 
