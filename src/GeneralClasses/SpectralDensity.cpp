@@ -10,12 +10,12 @@ SpectralDensity::SpectralDensity
 (double freqMin, double freqMax, unsigned int numSamples) : densityScaling(1),
     freqMin(freqMin), freqMax(freqMax)
 {
-    std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
-
     //Teste
     freqMin = PhysicalConstants::freq - 4 * Slot::BSlot / 2;
     freqMax = PhysicalConstants::freq + 4 * Slot::BSlot / 2;
     //Teste
+
+    std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
 
     if(specDensityMap.count(freqValues) == 0)
         {
@@ -24,7 +24,7 @@ SpectralDensity::SpectralDensity
         thisSpecDensity.transform(
             [] (double val)
             {
-            return (std::exp(-pow(2 * std::log(2) * (val - PhysicalConstants::freq) / SBW_3dB,
+            return (std::exp( (-2) * std::log(2) * pow( 2 * (val - PhysicalConstants::freq) / SBW_3dB,
                                     2 * GaussianOrder)));
             }
         );

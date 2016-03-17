@@ -195,7 +195,7 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
-        //S *= (*it)->get_TransferFunction(S.numSlots);
+        //S *= (*it)->get_TransferFunction(S.numSlots); // Talvez devessemos remover, parece estar considerando a mesma coisa 2 vezes
         }
 
     return S;
