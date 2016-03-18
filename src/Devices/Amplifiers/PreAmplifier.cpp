@@ -26,7 +26,6 @@ Gain &PreAmplifier::get_Gain()
         numPorts = Destination.Links.size();
         set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
         }
-
     return AmplifierGain;
 }
 

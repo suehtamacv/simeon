@@ -51,11 +51,16 @@ Power Signal::get_NoisePower()
     return Power(NoisePower);
 }
 
-Power Signal::get_SpectralPower()
+Power Signal::get_SpectralPower(int numLinks)
 {
     //Teste
     numSlots = 4;
     frequencyRange = numSlots * Slot::BSlot / 2;
+    //Teste
+
+    //Teste
+    if(numLinks == 3)
+        //std::cout << std::endl << " GL = " << signalSpecDensity->densityScaling << std::endl;
     //Teste
 
     return Power(
@@ -81,7 +86,7 @@ double Signal::get_SignalPowerRatio(int numLinks)
         }
 
     //Teste
-    double Result =  get_SpectralPower() / originalSpecDensityCache.at(numSlots);
+    double Result =  get_SpectralPower(numLinks) / originalSpecDensityCache.at(numSlots);
     if(numLinks == 3)
         std::cout << std::endl << " LINKS = " << numLinks << " SLOTS = " << numSlots << " PR = " << Result << std::endl;
     //Teste

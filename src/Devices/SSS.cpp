@@ -15,7 +15,7 @@ SSS::SSS(Node *parent, unsigned int filterOrder) :
 }
 
 Gain &SSS::get_Gain()
-{
+{    
     return SSSLoss;
 }
 

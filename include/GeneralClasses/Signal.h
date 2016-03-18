@@ -58,7 +58,7 @@ public:
      */
     Power get_NoisePower();
 
-    Power get_SpectralPower();
+    Power get_SpectralPower(int numLinks); // Adicionei esse parâmetro para testes
 
     double get_SignalPowerRatio(int numLinks); // Adicionei esse parâmetro para testes
 
