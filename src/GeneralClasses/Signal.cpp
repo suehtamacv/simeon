@@ -7,13 +7,13 @@ Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 unsigned long Signal::numFrequencySamples = 1000; // Mudar de volta para 25
 
-Signal::Signal(unsigned int numSlots) : numSlots(4),
+Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
     SignalPower(InputPower),
-    NoisePower(InputPower * -InputOSNR) // Fixei numSlots em 4
+    NoisePower(InputPower * -InputOSNR)
 {
     if(considerFilterImperfection)
         {
-        frequencyRange = 4 * Slot::BSlot / 2; // Remover o 4 e colocar numSlots
+        frequencyRange = numSlots * Slot::BSlot / 2;
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                             frequencyRange, PhysicalConstants::freq + frequencyRange, numFrequencySamples);
         }
@@ -51,29 +51,15 @@ Power Signal::get_NoisePower()
     return Power(NoisePower);
 }
 
-Power Signal::get_SpectralPower(int numLinks)
+Power Signal::get_SpectralPower()
 {
-    //Teste
-    numSlots = 4;
-    frequencyRange = numSlots * Slot::BSlot / 2;
-    //Teste
-
-    //Teste
-    //if(numLinks == 3)
-        //std::cout << std::endl << " GL = " << signalSpecDensity->densityScaling << std::endl;
-    //Teste
-
     return Power(
                TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange * 2).calculate()
-               * signalSpecDensity->densityScaling, Power::Watt); // Adicionei *2 na freqRange
+               * signalSpecDensity->densityScaling, Power::Watt);
 }
 
 double Signal::get_SignalPowerRatio(int numLinks)
 {
-    //Teste
-    numSlots = 4;
-    frequencyRange = numSlots * Slot::BSlot / 2;
-    //Teste
 
     if(originalSpecDensityCache.count(numSlots) == 0)
         {
@@ -82,12 +68,12 @@ double Signal::get_SignalPowerRatio(int numLinks)
 
         originalSpecDensityCache.emplace(numSlots,
                                          Power(TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
-                                               * originSD.densityScaling, Power::Watt)); // Adicionei *2 na freqRange
+                                               * originSD.densityScaling, Power::Watt));
         }
 
     //Teste
-    double Result =  get_SpectralPower(numLinks) / originalSpecDensityCache.at(numSlots);
-    if(numLinks == 3)
+    double Result =  get_SpectralPower() / originalSpecDensityCache.at(numSlots);
+
         std::cout << std::endl << " LINKS = " << numLinks << " SLOTS = " << numSlots << " PR = " << Result << std::endl;
     //Teste
 

@@ -58,7 +58,7 @@ public:
      */
     Power get_NoisePower();
 
-    Power get_SpectralPower(int numLinks); // Adicionei esse parâmetro para testes
+    Power get_SpectralPower();
 
     double get_SignalPowerRatio(int numLinks); // Adicionei esse parâmetro para testes
 
@@ -68,11 +68,10 @@ public:
 
     unsigned int numSlots;
 
-    double frequencyRange; // Removi de private para public
 private:
     Power SignalPower;
     Power NoisePower;
-
+    double frequencyRange;
 
     std::map<int, Power> originalSpecDensityCache ;
     std::shared_ptr<SpectralDensity> signalSpecDensity;
