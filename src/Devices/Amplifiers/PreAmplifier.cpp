@@ -14,7 +14,7 @@ PreAmplifier::PreAmplifier(Fiber &Segment, Node &Destination) : EDFA(Gain(0)) ,
         }
     else
         {
-        set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
+        set_Gain( - Gain(1.0 / (numPorts + 1), Gain::Linear) - Segment.get_Gain()); // Mudei Gain::dB de linear
         }
 }
 
@@ -24,8 +24,9 @@ Gain &PreAmplifier::get_Gain()
             Destination.Links.size() != numPorts)
         {
         numPorts = Destination.Links.size();
-        set_Gain(-Gain(numPorts + 1, Gain::Linear) - Segment.get_Gain());
+        set_Gain( - Gain(1.0 / (numPorts + 1), Gain::Linear) - Segment.get_Gain()); // Mudei Gain::dB de linear
         }
+
     return AmplifierGain;
 }
 

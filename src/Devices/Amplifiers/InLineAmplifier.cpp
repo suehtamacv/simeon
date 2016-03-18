@@ -7,7 +7,7 @@ InLineAmplifier::InLineAmplifier(Fiber &Segment) : EDFA(-Segment.get_Gain())
 }
 
 Gain &InLineAmplifier::get_Gain()
-{    
+{
     return AmplifierGain;
 }
 

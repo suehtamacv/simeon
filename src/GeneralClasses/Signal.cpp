@@ -59,7 +59,7 @@ Power Signal::get_SpectralPower(int numLinks)
     //Teste
 
     //Teste
-    if(numLinks == 3)
+    //if(numLinks == 3)
         //std::cout << std::endl << " GL = " << signalSpecDensity->densityScaling << std::endl;
     //Teste
 

@@ -16,8 +16,7 @@ Gain &Splitter::get_Gain()
     if (NumPorts != parent->Neighbours.size())
         {
         set_NumPorts(parent->Neighbours.size());
-        }
-
+        }    
     return SplitterLoss;
 }
 
