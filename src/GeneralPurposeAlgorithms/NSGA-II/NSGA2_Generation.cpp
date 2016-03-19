@@ -139,7 +139,7 @@ void NSGA2_Generation::evalParetoFront()
                     continue;
                     }
 
-                isDominated |= indiv->isDominated(other);
+                isDominated |= other->dominates(indiv);
 
                 if (isDominated)
                     {

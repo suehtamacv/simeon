@@ -83,8 +83,8 @@ unsigned int NSGA2_Individual::getNumParameters() const
     return Parameters.size();
 }
 
-bool NSGA2_Individual::isDominated(const std::shared_ptr<NSGA2_Individual>
-                                   other) const
+bool NSGA2_Individual::dominates(const std::shared_ptr<NSGA2_Individual> other)
+const
 {
     for (unsigned int i = 0; i < Parameters.size(); i++)
         {
@@ -94,8 +94,8 @@ bool NSGA2_Individual::isDominated(const std::shared_ptr<NSGA2_Individual>
 
             for (unsigned j = 0; j < Parameters.size(); j++)
                 {
-                Dominates &= (getParameter(i)->evaluate() <= other->getParameter(
-                                  j)->evaluate());
+                Dominates &=
+                    (getParameter(j)->evaluate() <= other->getParameter(j)->evaluate());
                 }
 
             if (Dominates)
