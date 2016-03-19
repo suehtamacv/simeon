@@ -24,6 +24,10 @@ public:
     X(regnum, "Number of Regenerators", "regnum", Simulation_RegeneratorNumber) \
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
 
+#define METRIC_TYPE \
+    X(asenoise, "Ase Noise", "asenoise") \
+    X(filterimperfection, "Filter Imperfection", "filterimperfection")
+
 #define X(a,b,c) a,
     enum Network_Type
     {
@@ -35,6 +39,13 @@ public:
     enum Simulation_Type
     {
         SIMULATION_TYPE
+    };
+#undef X
+
+#define X(a,b,c) a,
+    enum Metric_Type
+    {
+        METRIC_TYPE
     };
 #undef X
 
@@ -54,6 +65,10 @@ public:
     static SimulationTypeNameBimap SimulationTypeNames;
     typedef boost::bimap<Simulation_Type, std::string> SimulationTypeNicknameBimap;
     static SimulationTypeNameBimap SimulationTypeNicknames;
+    typedef boost::bimap<Metric_Type, std::string> MetricTypeBimap;
+    static MetricTypeBimap MetricTypes;
+    typedef boost::bimap<Metric_Type, std::string> MetricTypeNicknameBimap;
+    static MetricTypeNicknameBimap MetricTypesNicknames;
 
     virtual void run() = 0;
     virtual void load() = 0;

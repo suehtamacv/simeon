@@ -12,8 +12,8 @@ namespace Simulations
 bool parallelism_enabled = true;
 }
 
-bool considerAseNoise = true;
-bool considerFilterImperfection = true;
+bool considerAseNoise = false;
+bool considerFilterImperfection = false;
 
 int main(void)
 {
