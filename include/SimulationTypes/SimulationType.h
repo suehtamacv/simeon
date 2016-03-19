@@ -70,6 +70,8 @@ public:
     typedef boost::bimap<Metric_Type, std::string> MetricTypeNicknameBimap;
     static MetricTypeNicknameBimap MetricTypesNicknames;
 
+    static std::vector<SimulationType::Metric_Type> Metrics;
+
     virtual void run() = 0;
     virtual void load() = 0;
     virtual void print() = 0;

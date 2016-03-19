@@ -20,7 +20,7 @@ int main(void)
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
-    auto simulation = Simulations::SimulationType::create();
+    auto simulation = Simulations::SimulationType::open(); // removi create
     simulation->print();
     simulation->run();
 
