@@ -17,11 +17,8 @@ public:
     double evaluate();
     std::string get_ParamName()
     {
-        return "Num. of Regn.";
+        return "Number of Regenerators";
     }
-
-private:
-    double nreg;
 };
 }
 }

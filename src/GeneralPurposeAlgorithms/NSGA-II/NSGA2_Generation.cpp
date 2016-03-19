@@ -166,7 +166,6 @@ void NSGA2_Generation::operator += (std::shared_ptr<NSGA2_Individual> other)
 
     auto indiv = other->clone();
     indiv->paretoFront = indiv->crowdingDistance = -1;
-    indiv->isEvaluated = false;
     people.push_back(indiv);
 }
 
@@ -255,7 +254,7 @@ void NSGA2_Generation::breed(
     if (found == 2)
         {
         std::uniform_real_distribution<double> dist(0, 1);
-        std::vector<int> GeneA = a.Gene, GeneB = b.Gene;
+        std::vector<int> GeneA = a.getGenes(), GeneB = b.getGenes();
 
         if (dist(random_generator) < NSGA2::breedingProb)   //breeds
             {
@@ -269,8 +268,8 @@ void NSGA2_Generation::breed(
             }
 
         auto newIndivA = a.clone(), newIndivB = b.clone();
-        newIndivA->Gene = GeneA;
-        newIndivB->Gene = GeneB;
+        newIndivA->setGene(GeneA);
+        newIndivB->setGene(GeneB);
         dest += newIndivA;
         dest += newIndivB;
 

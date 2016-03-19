@@ -87,11 +87,6 @@ public:
      */
     int paretoFront;
     /**
-     * @brief Gene is the genes of this Individual.
-     */
-    std::vector<int> Gene;
-
-    /**
      * @brief getNumParameters returns the number of Parameters of this individual.
      * @return the number of Parameters of this individual.
      */
@@ -104,12 +99,21 @@ public:
      * @return true if this Individual is dominated by other.
      */
     bool isDominated(const std::shared_ptr<NSGA2_Individual> other) const;
-
     /**
      * @brief mutate mutates this Individual.
      * @return a reference to this Individual, mutated.
      */
     NSGA2_Individual &mutate();
+    /**
+     * @brief setGene sets the genes of this individual.
+     * @param newGene are the new genes.
+     */
+    void setGene(std::vector<int> newGene);
+    /**
+     * @brief getGenes returns the genes of this individual.
+     * @return the genes of this individual.
+     */
+    std::vector<int> getGenes() const;
 
     /**
      * @brief isEvaluated is true, if this Individual's Parameters have already
@@ -118,6 +122,10 @@ public:
     bool isEvaluated;
 protected:
     std::vector<std::shared_ptr<NSGA2_Parameter>> Parameters;
+    /**
+     * @brief Gene is the genes of this Individual.
+     */
+    std::vector<int> Gene;
 };
 
 #endif // NSGA2_INDIVIDUAL_H

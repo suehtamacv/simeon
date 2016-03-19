@@ -10,3 +10,9 @@ bool NSGA2_Parameter::operator ==(const NSGA2_Parameter &other) const
 {
     return value == other.value;
 }
+
+void NSGA2_Parameter::setValue(double val)
+{
+    isEvaluated = true;
+    value = val;
+}

@@ -29,9 +29,9 @@ double NSGA2_Parameter_OpEx::evaluate()
             T.Nodes[i]->set_NumRegenerators(gene[i]);
             }
 
-        OpEx = T.get_OpEx();
+        value = T.get_OpEx();
         isEvaluated = true;
         }
 
-    return OpEx;
+    return value;
 }

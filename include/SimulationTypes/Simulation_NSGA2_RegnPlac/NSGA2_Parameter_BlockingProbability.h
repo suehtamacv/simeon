@@ -22,7 +22,6 @@ public:
 
 private:
     Simulation_NSGA2_RegnPlac &Sim;
-    double BlockProb;
 };
 }
 }

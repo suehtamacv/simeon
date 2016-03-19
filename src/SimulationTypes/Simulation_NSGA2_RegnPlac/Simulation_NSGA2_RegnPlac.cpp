@@ -60,6 +60,16 @@ Simulation_NSGA2_RegnPlac::Individual::clone()
 {
     std::shared_ptr<Individual> indiv(new Individual(Sim));
     indiv->setGene(Gene);
+
+    indiv->isEvaluated = isEvaluated;
+    if (isEvaluated)
+        {
+        for (unsigned i = 0; i < getNumParameters(); i++)
+            {
+            indiv->getParameter(i)->setValue(getParameter(i)->evaluate());
+            }
+        }
+
     return indiv;
 }
 
@@ -115,7 +125,6 @@ void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
 
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
-    // To do: Better algorithms saving
     SimConfigFile << std::endl << "  [algorithms]" << std::endl;
     SimConfigFile << "  RoutingAlgorithm = " <<
                   RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) <<

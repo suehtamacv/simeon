@@ -33,6 +33,11 @@ public:
      * @return true iff the value is equal.
      */
     bool operator == (const NSGA2_Parameter &other) const;
+    /**
+     * @brief setValue sets the value of this parameter.
+     * @param value is the new value of this parameter.
+     */
+    void setValue(double value);
 
 protected:
     bool isEvaluated;

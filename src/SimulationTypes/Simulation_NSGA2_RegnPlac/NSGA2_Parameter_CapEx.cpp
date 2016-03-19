@@ -29,9 +29,9 @@ double NSGA2_Parameter_CapEx::evaluate()
             T.Nodes[i]->set_NumRegenerators(gene[i]);
             }
 
-        CapEx = T.get_CapEx();
+        value = T.get_CapEx();
         isEvaluated = true;
         }
 
-    return CapEx;
+    return value;
 }

@@ -48,10 +48,10 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
 
-        BlockProb = NetworkSimulation(Generator, RWA, Sim.NumCalls)
+        value = NetworkSimulation(Generator, RWA, Sim.NumCalls)
                     .get_CallBlockingProbability();
         isEvaluated = true;
         }
 
-    return BlockProb;
+    return value;
 }

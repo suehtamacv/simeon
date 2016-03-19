@@ -13,13 +13,13 @@ double NSGA2_Parameter_NumberOfRegenerators::evaluate()
 {
     if (!isEvaluated)
         {
-        nreg = 0;
+        value = 0;
         for (auto &g : gene)
             {
-            nreg += g;
+            value += g;
             }
         isEvaluated = true;
         }
 
-    return nreg;
+    return value;
 }
