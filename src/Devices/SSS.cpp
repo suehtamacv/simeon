@@ -7,11 +7,11 @@
 
 Gain SSS::SSSLoss(-5);
 
-SSS::SSS(Node *parent, unsigned int filterOrder) :
-    Device(Device::SSSDevice), filterOrder(filterOrder),
+SSS::SSS(Node *parent) :
+    Device(Device::SSSDevice),
     NoisePower(0, Power::Watt), parent(parent)
 {
-
+    filterOrder = SpectralDensity::GaussianOrder;
 }
 
 Gain &SSS::get_Gain()

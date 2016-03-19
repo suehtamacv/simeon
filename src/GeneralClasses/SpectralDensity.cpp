@@ -6,6 +6,8 @@
 std::map<std::pair<double, double>, arma::rowvec>
 SpectralDensity::specDensityMap;
 
+int SpectralDensity::GaussianOrder = 1;
+
 SpectralDensity::SpectralDensity
 (double freqMin, double freqMax, unsigned int numSamples) : densityScaling(1),
     freqMin(freqMin), freqMax(freqMax)
@@ -38,4 +40,31 @@ SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
         }
 
     return *this;
+}
+
+void SpectralDensity::define_SignalsFilterOrder()
+{
+    std::cout << std::endl << "-> Enter the SSS optical filter order." << std::endl;
+
+    do
+        {
+
+        int filterOrder;
+        std::cin >> filterOrder;
+
+        if (std::cin.fail() || filterOrder < 1)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid Filter Order." << std::endl;
+            std::cout << std::endl << "-> Enter the SSS optical filter order." << std::endl;
+            }
+        else
+            {
+            GaussianOrder = filterOrder;
+            break;
+            }
+        }
+    while (1);
 }

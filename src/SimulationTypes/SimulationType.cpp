@@ -4,6 +4,7 @@
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
+#include <GeneralClasses/SpectralDensity.h>
 
 using namespace Simulations;
 
@@ -105,14 +106,14 @@ void SimulationType::load()
             {
                 considerFilterImperfection = true;
                 considerAseNoise = false;
-                //SSS::define_SignalsFilterOrder();
+                SpectralDensity::define_SignalsFilterOrder();
             }
             else
             {
                 considerAseNoise = true;
                 considerFilterImperfection = true;
 
-                //SSS::define_SignalsFilterOrder();
+                SpectralDensity::define_SignalsFilterOrder();
             }
             break;
         }

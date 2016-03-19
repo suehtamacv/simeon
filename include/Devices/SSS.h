@@ -20,7 +20,7 @@ public:
     /**
      * @brief SSS is the standard constructor of a SSS.
      */
-    SSS(Node *parent, unsigned int filterOrder = 1);
+    SSS(Node *parent);
 
     Gain &get_Gain();
     Power &get_Noise();

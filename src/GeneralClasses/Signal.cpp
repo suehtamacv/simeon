@@ -73,7 +73,10 @@ double Signal::get_SignalPowerRatio(int numLinks)
 
     //teste
     double Result = get_SpectralPower() / originalSpecDensityCache.at(numSlots);
-    std::cout << std::endl << " Links = " << numLinks << " Slots = " << numSlots <<  " PR = " << Result << std::endl;
+    if(numLinks == 3 && numSlots == 4){
+        std::cout << std::endl << " FO = " << SpectralDensity::GaussianOrder << std::endl;
+        std::cout << std::endl << " Links = " << numLinks << " Slots = " << numSlots <<  " PR = " << Result << std::endl;
+    }
     //teste
 
     return Result;
