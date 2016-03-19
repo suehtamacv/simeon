@@ -89,11 +89,14 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
     src/SimulationTypes/SimulationType.cpp \
     src/SimulationTypes/Simulation_NetworkLoad.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -193,11 +196,15 @@ HEADERS += \
     include/SimulationTypes/NetworkSimulation.h \
     include/SimulationTypes/SimulationType.h \
     include/SimulationTypes/Simulation_NetworkLoad.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.h \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

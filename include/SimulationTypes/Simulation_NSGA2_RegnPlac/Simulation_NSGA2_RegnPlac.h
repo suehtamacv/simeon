@@ -1,7 +1,7 @@
 #ifndef SIMULATION_NSGA2_REGENERATORPLACEMENT_H
 #define SIMULATION_NSGA2_REGENERATORPLACEMENT_H
 
-#include "SimulationType.h"
+#include "../SimulationType.h"
 #include <GeneralPurposeAlgorithms/NSGA-2.h>
 #include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
@@ -37,11 +37,6 @@ private:
     static unsigned int RegnMax;
 
     class Individual;
-
-    class Param_BlockProb;
-    class Param_CapEx;
-    class Param_OpEx;
-
     class Sim_NSGA2;
 };
 
@@ -58,57 +53,6 @@ public:
 
 private:
     Simulation_NSGA2_RegnPlac &Sim;
-};
-
-class Simulation_NSGA2_RegnPlac::Param_BlockProb : public NSGA2_Parameter
-{
-    friend class Simulation_NSGA2_RegnPlac;
-
-public:
-    Param_BlockProb(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
-    double evaluate();
-    std::string get_ParamName()
-    {
-        return "Blocking Probability";
-    }
-
-private:
-    Simulation_NSGA2_RegnPlac &Sim;
-    double BlockProb;
-};
-
-class Simulation_NSGA2_RegnPlac::Param_CapEx : public NSGA2_Parameter
-{
-    friend class Simulation_NSGA2_RegnPlac;
-
-public:
-    Param_CapEx(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
-    double evaluate();
-    std::string get_ParamName()
-    {
-        return "CapEx";
-    }
-
-private:
-    Simulation_NSGA2_RegnPlac &Sim;
-    double CapEx;
-};
-
-class Simulation_NSGA2_RegnPlac::Param_OpEx : public NSGA2_Parameter
-{
-    friend class Simulation_NSGA2_RegnPlac;
-
-public:
-    Param_OpEx(std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
-    double evaluate();
-    std::string get_ParamName()
-    {
-        return "OpEx";
-    }
-
-private:
-    Simulation_NSGA2_RegnPlac &Sim;
-    double OpEx;
 };
 
 class Simulation_NSGA2_RegnPlac::Sim_NSGA2 : public NSGA2

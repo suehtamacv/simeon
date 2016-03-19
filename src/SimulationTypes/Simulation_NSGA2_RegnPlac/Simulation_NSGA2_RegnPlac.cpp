@@ -1,4 +1,4 @@
-#include <SimulationTypes/Simulation_NSGA2_RegnPlac.h>
+#include <SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.h>
 #include <GeneralClasses/RandomGenerator.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <GeneralClasses/TransmissionBitrate.h>
@@ -7,11 +7,10 @@
 #include <Calls/CallGenerator.h>
 #include <RWA/RoutingWavelengthAssignment.h>
 #include <algorithm>
-#include <cmath>
 #include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
-#include <map>
+#include <SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h>
 
 using namespace Simulations;
 
@@ -27,125 +26,6 @@ Simulation_NSGA2_RegnPlac::Simulation_NSGA2_RegnPlac() :
     int MaxNumSlots = maxScheme->get_NumSlots(*maxBitrate);
     RegnMax = std::floor(Link::NumSlots / MaxNumSlots) * std::ceil(
                   maxBitrate->get_Bitrate() / RegeneratorAssignmentAlgorithm::RegeneratorBitrate);
-}
-
-Simulation_NSGA2_RegnPlac::Param_CapEx::Param_CapEx(
-    std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim) :
-    NSGA2_Parameter(gene), Sim(Sim)
-{
-
-}
-
-double Simulation_NSGA2_RegnPlac::Param_CapEx::evaluate()
-{
-    if (!isEvaluated)
-        {
-        Topology T(*Sim.T);
-
-        for (unsigned int i = 0; i < gene.size(); i++)
-            {
-            if (gene[i] != 0)
-                {
-                T.Nodes[i]->set_NodeType(Node::TranslucentNode);
-                }
-            else
-                {
-                T.Nodes[i]->set_NodeType(Node::TransparentNode);
-                }
-
-            T.Nodes[i]->set_NumRegenerators(gene[i]);
-            }
-
-        CapEx = T.get_CapEx();
-        isEvaluated = true;
-        }
-
-    return CapEx;
-}
-
-Simulation_NSGA2_RegnPlac::Param_OpEx::Param_OpEx(
-    std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim) :
-    NSGA2_Parameter(gene), Sim(Sim)
-{
-
-}
-
-double Simulation_NSGA2_RegnPlac::Param_OpEx::evaluate()
-{
-    if (!isEvaluated)
-        {
-        Topology T(*Sim.T);
-
-        for (unsigned int i = 0; i < gene.size(); i++)
-            {
-            if (gene[i] != 0)
-                {
-                T.Nodes[i]->set_NodeType(Node::TranslucentNode);
-                }
-            else
-                {
-                T.Nodes[i]->set_NodeType(Node::TransparentNode);
-                }
-
-            T.Nodes[i]->set_NumRegenerators(gene[i]);
-            }
-
-        OpEx = T.get_OpEx();
-        isEvaluated = true;
-        }
-
-    return OpEx;
-}
-
-Simulation_NSGA2_RegnPlac::Param_BlockProb::Param_BlockProb(
-    std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim) :
-    NSGA2_Parameter(gene), Sim(Sim)
-{
-
-}
-
-double Simulation_NSGA2_RegnPlac::Param_BlockProb::evaluate()
-{
-    if (!isEvaluated)
-        {
-        std::shared_ptr<Topology> T(new Topology(*Sim.T));
-
-        for (unsigned int i = 0; i < gene.size(); i++)
-            {
-            if (gene[i] != 0)
-                {
-                T->Nodes[i]->set_NodeType(Node::TranslucentNode);
-                }
-            else
-                {
-                T->Nodes[i]->set_NodeType(Node::TransparentNode);
-                }
-
-            T->Nodes[i]->set_NumRegenerators(gene[i]);
-            }
-
-        std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
-        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
-                Sim.WavAssign_Algorithm, T);
-        std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
-            RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
-                Sim.RegAssignment_Algorithm, T);
-
-        //Creates the Call Generator and the RWA Object
-        std::shared_ptr<CallGenerator> Generator(new CallGenerator(T,
-                Sim.NetworkLoad));
-        std::shared_ptr<RoutingWavelengthAssignment> RWA(
-            new RoutingWavelengthAssignment(
-                R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
-
-        BlockProb = NetworkSimulation(Generator, RWA, Sim.NumCalls)
-                    .get_CallBlockingProbability();
-        isEvaluated = true;
-        }
-
-    return BlockProb;
 }
 
 void Simulation_NSGA2_RegnPlac::Individual::createIndividual()
@@ -186,14 +66,15 @@ Simulation_NSGA2_RegnPlac::Individual::clone()
 void Simulation_NSGA2_RegnPlac::Individual::setGene(
     std::vector<int> gene)
 {
+    using namespace NSGA2_Parameters;
     Gene = gene;
     Parameters.clear();
     Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
-                             new Param_CapEx(Gene, Sim)));
+                             new NSGA2_Parameter_CapEx(Gene, Sim)));
     Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
-                             new Param_OpEx(Gene, Sim)));
+                             new NSGA2_Parameter_OpEx(Gene, Sim)));
     Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
-                             new Param_BlockProb(Gene, Sim)));
+                             new NSGA2_Parameter_BlockingProbability(Gene, Sim)));
 }
 
 Simulation_NSGA2_RegnPlac::Sim_NSGA2::Sim_NSGA2(Simulation_NSGA2_RegnPlac &Sim)
