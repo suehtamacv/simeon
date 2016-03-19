@@ -5,7 +5,7 @@
 
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
-unsigned long Signal::numFrequencySamples = 1000; // Mudar de volta para 25
+unsigned long Signal::numFrequencySamples = 25;
 
 Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
     SignalPower(InputPower),
@@ -71,11 +71,10 @@ double Signal::get_SignalPowerRatio(int numLinks)
                                                * originSD.densityScaling, Power::Watt));
         }
 
-    //Teste
-    double Result =  get_SpectralPower() / originalSpecDensityCache.at(numSlots);
-
-        std::cout << std::endl << " LINKS = " << numLinks << " SLOTS = " << numSlots << " PR = " << Result << std::endl;
-    //Teste
+    //teste
+    double Result = get_SpectralPower() / originalSpecDensityCache.at(numSlots);
+    std::cout << std::endl << " Links = " << numLinks << " Slots = " << numSlots <<  " PR = " << Result << std::endl;
+    //teste
 
     return Result;
 }

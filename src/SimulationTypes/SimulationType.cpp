@@ -76,6 +76,49 @@ void SimulationType::load()
         }
     while (1);
 
+    std::cout << std::endl << "-> Select a blocking metric." << std::endl;
+
+    do
+    {
+        std::cout << "(0)\tASE Noise" << std::endl
+                      << "(1)\tFilter Imperfection" << std::endl
+                      << "(2)\tBoth" << std::endl;
+        int Metric;
+        std::cin >> Metric;
+
+        if(std::cin.fail() || Metric < 0 || Metric > 2)
+        {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cout << "Invalid metric." << std::endl;
+            std::cout << std::endl << "-> Select a blocking metric." << std::endl;
+        }
+        else
+        {
+            if(Metric == 0)
+            {
+                considerAseNoise = true;
+                considerFilterImperfection = false;
+            }
+            else if(Metric == 1)
+            {
+                considerFilterImperfection = true;
+                considerAseNoise = false;
+                //SSS::define_SignalsFilterOrder();
+            }
+            else
+            {
+                considerAseNoise = true;
+                considerFilterImperfection = true;
+
+                //SSS::define_SignalsFilterOrder();
+            }
+            break;
+        }
+    }
+    while(1);
+
 }
 
 void SimulationType::save(std::string SimConfigFileName)
