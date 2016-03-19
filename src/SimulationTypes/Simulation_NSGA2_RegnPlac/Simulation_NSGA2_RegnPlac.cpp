@@ -70,9 +70,7 @@ void Simulation_NSGA2_RegnPlac::Individual::setGene(
     Gene = gene;
     Parameters.clear();
     Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
-                             new NSGA2_Parameter_CapEx(Gene, Sim)));
-    Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
-                             new NSGA2_Parameter_OpEx(Gene, Sim)));
+                             new NSGA2_Parameter_NumberOfRegenerators(Gene, Sim)));
     Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
                              new NSGA2_Parameter_BlockingProbability(Gene, Sim)));
 }

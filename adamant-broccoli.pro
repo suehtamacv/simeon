@@ -96,7 +96,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -204,7 +205,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

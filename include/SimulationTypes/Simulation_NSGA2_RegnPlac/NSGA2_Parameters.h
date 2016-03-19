@@ -3,6 +3,7 @@
 
 #include "NSGA2_Parameter_BlockingProbability.h"
 #include "NSGA2_Parameter_CapEx.h"
+#include "NSGA2_Parameter_NumberOfRegenerators.h"
 #include "NSGA2_Parameter_OpEx.h"
 
 #endif // NSGA2_PARAMETERS_H
