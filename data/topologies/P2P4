@@ -1,0 +1,17 @@
+  [nodes]
+
+# node = ID TYPE ARCHITECTURE NUMREG
+  node = 1 transparent ss 0
+  node = 2 transparent bs 0
+  node = 3 transparent ss 0
+  node = 4 transparent bs 0
+
+  [links]
+
+# -> = ORIGIN DESTINATION LENGTH
+  -> = 1 2 200
+  -> = 2 1 200
+  -> = 2 3 200
+  -> = 3 2 200
+  -> = 3 4 200
+  -> = 4 3 200
