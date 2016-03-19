@@ -312,6 +312,15 @@ void Simulation_NSGA2_RegnPlac::print()
     std::cout << std::endl <<
               "  A MORP-3O Regenerator Placement Simulation is about to start with the following parameters: "
               << std::endl;
+    std::cout << "-> Metrics =" <<std::endl;
+    for(auto &metric : Metrics)
+    {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
+    }
+    if(considerFilterImperfection)
+    {
+        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
+    }
     std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<

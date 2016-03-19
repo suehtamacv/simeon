@@ -79,6 +79,15 @@ void Simulation_NetworkLoad::print()
     std::cout << std::endl <<
               "  A Network Load Variation Simulation is about to start with the following parameters: "
               << std::endl;
+    std::cout << "-> Metrics =" <<std::endl;
+    for(auto &metric : Metrics)
+    {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
+    }
+    if(considerFilterImperfection)
+    {
+        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
+    }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<

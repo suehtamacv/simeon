@@ -58,7 +58,7 @@ Power Signal::get_SpectralPower()
                * signalSpecDensity->densityScaling, Power::Watt);
 }
 
-double Signal::get_SignalPowerRatio(int numLinks)
+double Signal::get_SignalPowerRatio()
 {
 
     if(originalSpecDensityCache.count(numSlots) == 0)
@@ -71,15 +71,7 @@ double Signal::get_SignalPowerRatio(int numLinks)
                                                * originSD.densityScaling, Power::Watt));
         }
 
-    //teste
-    double Result = get_SpectralPower() / originalSpecDensityCache.at(numSlots);
-    if(numLinks == 3 && numSlots == 4){
-        std::cout << std::endl << " FO = " << SpectralDensity::GaussianOrder << std::endl;
-        std::cout << std::endl << " Links = " << numLinks << " Slots = " << numSlots <<  " PR = " << Result << std::endl;
-    }
-    //teste
-
-    return Result;
+    return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }
 
 double Signal::get_PowerRatioThreshold()

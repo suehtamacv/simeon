@@ -266,32 +266,35 @@ std::shared_ptr<SimulationType> SimulationType::open()
     Simulation_Type Sim_Type = SimulationTypeNicknames.right.at(SimType);    
 
     std::shared_ptr<SimulationType> simulation;
-    /*
     switch (Sim_Type)
         {
-#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); simulation->load_file(ConfigFileName); break;
+#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); break;
             SIMULATION_TYPE
 #undef X
         }
-    */
-    simulation = std::make_shared<Simulation_NetworkLoad>(); // TESTES
-std::cout << std::endl << "FLAG" << std::endl;
-    std::vector<std::string> MetricsList = VariablesMap.find("general.Metric")->second.as<std::vector<std::string>>();
+
+    std::vector<std::string> MetricsList = VariablesMap.find("general.Metrics")->second.as<std::vector<std::string>>();
+
     for(auto &metric : MetricsList)
-    {
-        std::istringstream SimMetrics(metric);
+    {        
+        std::stringstream SimMetrics(metric);
         std::string Aux;
-        while(SimMetrics.tellg() != -1) // Reading the last cost twice
+        while(!SimMetrics.eof())
             {
             SimMetrics >> Aux;
             Metrics.push_back((SimulationType::Metric_Type) SimulationType::MetricTypesNicknames.right.at(Aux));
 
             if(SimulationType::MetricTypesNicknames.right.at(Aux) == SimulationType::Metric_Type::filterimperfection)
+            {
+                considerFilterImperfection = true;
                 SpectralDensity::GaussianOrder = VariablesMap["general.FilterOrder"].as<int>();
             }
-        std::cout << std::endl << Aux << std::endl; // TESTES
+            if(SimulationType::MetricTypesNicknames.right.at(Aux) == SimulationType::Metric_Type::asenoise)
+            {
+                considerAseNoise = true;
+            }
+            }        
     }
-    std::cout << std::endl << "GENERAL LOADED" << std::endl;
 
     simulation->load_file(ConfigFileName);
 
