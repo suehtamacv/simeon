@@ -98,7 +98,7 @@ public:
      * @param other is the other Individual.
      * @return true if this Individual is dominated by other.
      */
-    bool dominates(const std::shared_ptr<NSGA2_Individual> other) const;
+    bool isDominatedBy(const std::shared_ptr<NSGA2_Individual> other) const;
     /**
      * @brief mutate mutates this Individual.
      * @return a reference to this Individual, mutated.

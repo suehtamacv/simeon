@@ -28,11 +28,19 @@ std::shared_ptr<NSGA2_Generation> NSGA2::newGeneration(NSGA2_Generation &prnt)
 
     while (!gen_r->people.empty())
         {
-        std::uniform_int_distribution<> dist(0, gen_r->people.size() - 1);
-
-        auto indiv_a = gen_r->people[dist(random_generator)];
-        auto indiv_b = gen_r->people[dist(random_generator)];
-        gen_r->breed(*indiv_a, *indiv_b, *gen_q);
+        if (gen_r->people.size() == 2)
+            {
+            auto indiv_a = gen_r->people[0];
+            auto indiv_b = gen_r->people[1];
+            gen_r->breed(*indiv_a, *indiv_b, *gen_q);
+            }
+        else
+            {
+            std::uniform_int_distribution<> dist(0, gen_r->people.size() - 1);
+            auto indiv_a = gen_r->people[dist(random_generator)];
+            auto indiv_b = gen_r->people[dist(random_generator)];
+            gen_r->breed(*indiv_a, *indiv_b, *gen_q);
+            }
         }
 
     for (auto indiv : gen_q->people)

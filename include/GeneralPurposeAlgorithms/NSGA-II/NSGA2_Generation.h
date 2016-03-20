@@ -29,7 +29,7 @@ public:
      * @brief print prints all individuals in a certain Pareto Front.
      * @param paretoFront is the Pareto Front to print.
      */
-    void print(int paretoFront = 1);
+    void print(std::string filename = "NO_FILE_GIVEN", int paretoFront = 1);
 
     /**
      * @brief operator += clones the Individual i and adds it to this Generation.

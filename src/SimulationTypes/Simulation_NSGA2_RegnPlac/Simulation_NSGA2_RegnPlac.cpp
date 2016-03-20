@@ -281,6 +281,28 @@ void Simulation_NSGA2_RegnPlac::load()
         }
     while (1);
 
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     hasLoaded = true;
 }
 
@@ -302,6 +324,8 @@ void Simulation_NSGA2_RegnPlac::run()
         std::cout << std::endl << "GENERATION " <<  Optimization.generation
                   << std::endl;
         Optimization.evolution.at(Optimization.generation - 1)->print();
+        Optimization.evolution.at(Optimization.generation - 1)->print(
+            FileName + "_G" + std::to_string(Optimization.generation), 1);
         }
 
     // Saving Sim. Configurations

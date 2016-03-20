@@ -83,19 +83,19 @@ unsigned int NSGA2_Individual::getNumParameters() const
     return Parameters.size();
 }
 
-bool NSGA2_Individual::dominates(const std::shared_ptr<NSGA2_Individual> other)
-const
+bool NSGA2_Individual::isDominatedBy
+(const std::shared_ptr<NSGA2_Individual> other) const
 {
-    for (unsigned int i = 0; i < Parameters.size(); i++)
+    for (unsigned int par1 = 0; par1 < Parameters.size(); par1++)
         {
-        if (getParameter(i)->evaluate() < other->getParameter(i)->evaluate())
+        if (other->getParameter(par1)->evaluate() < getParameter(par1)->evaluate())
             {
             bool Dominates = true;
 
-            for (unsigned j = 0; j < Parameters.size(); j++)
+            for (unsigned par2 = 0; par2 < Parameters.size() && Dominates; par2++)
                 {
-                Dominates &=
-                    (getParameter(j)->evaluate() <= other->getParameter(j)->evaluate());
+                Dominates = Dominates &&
+                            (other->getParameter(par2)->evaluate() <= getParameter(par2)->evaluate());
                 }
 
             if (Dominates)
@@ -129,6 +129,7 @@ NSGA2_Individual &NSGA2_Individual::mutate()
 void NSGA2_Individual::setGene(std::vector<int> newGene)
 {
     isEvaluated = false;
+    crowdingDistance = paretoFront = -1;
     Gene = newGene;
 }
 

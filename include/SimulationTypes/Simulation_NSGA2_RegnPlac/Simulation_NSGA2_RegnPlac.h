@@ -35,6 +35,7 @@ public:
 private:
     bool hasLoaded;
     static unsigned int RegnMax;
+    std::string FileName;
 
     class Individual;
     class Sim_NSGA2;

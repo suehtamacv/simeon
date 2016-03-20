@@ -1,11 +1,12 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.h>
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.h>
+#include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h>
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2.h>
 #include <GeneralClasses/RandomGenerator.h>
 #include <algorithm>
 #include <limits>
 #include <iostream>
-#include <set>
+#include <fstream>
 
 NSGA2_Generation::NSGA2_Generation() : isEvaluated(false)
 {
@@ -15,7 +16,6 @@ NSGA2_Generation::NSGA2_Generation() : isEvaluated(false)
 void NSGA2_Generation::eval()
 {
     #pragma omp parallel for ordered schedule(dynamic)
-
     for (unsigned i = 0; i < people.size(); i++)
         {
         people[i]->eval();
@@ -114,13 +114,14 @@ void NSGA2_Generation::evalParetoFront()
     int numNotInParetoFront = 0;
     int currentParetoFront = 1;
 
-    for (auto indiv : people)
+    for (auto &indiv : people)
         {
         indiv->crowdingDistance = indiv->paretoFront = -1;
         }
 
     do
         {
+        std::vector<std::shared_ptr<NSGA2_Individual>> currentFront;
         numNotInParetoFront = 0;
 
         for (auto &indiv : people)
@@ -132,27 +133,27 @@ void NSGA2_Generation::evalParetoFront()
 
             bool isDominated = false;
 
-            for (auto other : people)
+            for (auto &other : people)
                 {
-                if (other->paretoFront != -1)
+                if ((other->paretoFront != -1) || isDominated)
                     {
                     continue;
                     }
-
-                isDominated |= other->dominates(indiv);
-
-                if (isDominated)
-                    {
-                    break;
-                    }
+                isDominated = isDominated || (indiv->isDominatedBy(other));
                 }
 
             if (!isDominated)
                 {
-                indiv->paretoFront = currentParetoFront;
+                currentFront.push_back(indiv);
+                continue;
                 }
 
             numNotInParetoFront++;
+            }
+
+        for (auto &indiv : currentFront)
+            {
+            indiv->paretoFront = currentParetoFront;
             }
 
         currentParetoFront++;
@@ -171,7 +172,7 @@ void NSGA2_Generation::operator += (std::shared_ptr<NSGA2_Individual> other)
 
 void NSGA2_Generation::operator +=(std::shared_ptr<NSGA2_Generation> other)
 {
-    for (auto individual : other->people)
+    for (auto &individual : other->people)
         {
         this->operator +=(individual);
         }
@@ -198,22 +199,49 @@ std::vector<std::shared_ptr<NSGA2_Individual>>
     return ParetoFront;
 }
 
-void NSGA2_Generation::print(int paretoFront)
+void NSGA2_Generation::print(std::string filename, int paretoFront)
 {
     auto front = getParetoFront(paretoFront);
 
-    //Prints at most five elements
-    unsigned numElements = (front.size() < 5 ? front.size() : 5);
-
-    for (unsigned indiv = 0; indiv < numElements; indiv++)
+    if (filename == "NO_FILE_GIVEN")
         {
-        front[indiv]->print();
+        //Prints at most five elements
+        unsigned numElements = (front.size() < 5 ? front.size() : 5);
+
+        for (unsigned indiv = 0; indiv < numElements; indiv++)
+            {
+            front[indiv]->print();
+            }
+
+        if (numElements < front.size())
+            {
+            std::cout << "[other " << front.size() - numElements << " elements suppressed]"
+                      << std::endl;
+            }
         }
-
-    if (numElements < front.size())
+    else
         {
-        std::cout << "[other " << front.size() - numElements << " elements suppressed]"
-                  << std::endl;
+        std::ofstream OutFile(filename.c_str());
+
+        //Header: Parameter Names
+        OutFile << "# ";
+        for (unsigned par = 0; par < front.front()->getNumParameters(); par++)
+            {
+            OutFile << front.front()->getParameter(par)->get_ParamName() << " --- ";
+            }
+        OutFile << std::endl;
+
+        //Prints the Parameters
+        for (auto &indiv : front)
+            {
+            for (unsigned par = 0; par < indiv->getNumParameters(); par++)
+                {
+                OutFile << indiv->getParameter(par)->evaluate() << "\t";
+                }
+            OutFile << std::endl;
+            }
+
+        OutFile.close();
         }
 }
 
