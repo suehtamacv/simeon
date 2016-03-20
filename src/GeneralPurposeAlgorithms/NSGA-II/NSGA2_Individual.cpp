@@ -45,23 +45,43 @@ void NSGA2_Individual::eval()
     isEvaluated = true;
 }
 
-void NSGA2_Individual::print()
+std::string NSGA2_Individual::print(bool pretty)
 {
-    std::cout << "Individual: ";
-
-    for (auto &g : Gene)
+    if (pretty)
         {
-        std::cout << g << " ";
+        std::cout << "Individual: ";
+
+        for (auto &g : Gene)
+            {
+            std::cout << g << " ";
+            }
+
+        std::cout << std::endl;
+
+        for (auto &p : Parameters)
+            {
+            std::cout << p->get_ParamName() << ": " << p->evaluate() << "  ";
+            }
+
+        std::cout << std::endl;
+        return "";
         }
-
-    std::cout << std::endl;
-
-    for (auto &p : Parameters)
+    else
         {
-        std::cout << p->get_ParamName() << ": " << p->evaluate() << "  ";
-        }
+        std::string indiv = "";
+        for (auto &p : Parameters)
+            {
+            indiv += std::to_string(p->evaluate());
+            indiv += " ";
+            }
 
-    std::cout << std::endl;
+        for (auto &g : Gene)
+            {
+            indiv += std::to_string(g);
+            indiv += " ";
+            }
+        return indiv;
+        }
 }
 
 std::shared_ptr<NSGA2_Parameter> NSGA2_Individual::getParameter(

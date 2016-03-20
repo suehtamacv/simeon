@@ -62,7 +62,7 @@ public:
     /**
      * @brief print prints details about this Individual.
      */
-    void print();
+    std::string print(bool pretty = true);
 
     /**
      * @brief getParameterValue returns the value of the i-th Parameter.

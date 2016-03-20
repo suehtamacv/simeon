@@ -234,11 +234,7 @@ void NSGA2_Generation::print(std::string filename, int paretoFront)
         //Prints the Parameters
         for (auto &indiv : front)
             {
-            for (unsigned par = 0; par < indiv->getNumParameters(); par++)
-                {
-                OutFile << indiv->getParameter(par)->evaluate() << "\t";
-                }
-            OutFile << std::endl;
+            OutFile << indiv->print(false) << std::endl;
             }
 
         OutFile.close();
