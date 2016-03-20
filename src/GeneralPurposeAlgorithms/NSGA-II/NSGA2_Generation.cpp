@@ -242,64 +242,38 @@ void NSGA2_Generation::print(std::string filename, int paretoFront)
 }
 
 void NSGA2_Generation::breed(
-    NSGA2_Individual &a, NSGA2_Individual &b, NSGA2_Generation &dest)
+    unsigned int a, unsigned int b, NSGA2_Generation &dest)
 {
-    auto iterator_a = people.begin();
-    auto iterator_b = people.begin();
-
-    int found = 0;
-
-    //finds iterators to the two individuals
-    for (auto indiv = people.begin(); indiv != people.end(); ++indiv)
-        {
-        if (**indiv == a)
-            {
-            iterator_a = indiv;
-            found++;
-            }
-
-        if (**indiv == b)
-            {
-            iterator_b = indiv;
-            found++;
-            }
-
-        if (found == 2)
-            {
-            break;
-            }
-        }
-
-    if (iterator_a == iterator_b)
+    if (a == b)
         {
         return;
         }
 
-    if (found == 2)
-        {
-        std::uniform_real_distribution<double> dist(0, 1);
-        std::vector<int> GeneA = a.getGenes(), GeneB = b.getGenes();
+    auto iterator_a = people.begin() + a;
+    auto iterator_b = people.begin() + b;
 
-        if (dist(random_generator) < NSGA2::breedingProb)   //breeds
+    std::uniform_real_distribution<double> dist(0, 1);
+    std::vector<int> GeneA = people[a]->getGenes(), GeneB = people[b]->getGenes();
+
+    if (dist(random_generator) < NSGA2::breedingProb)   //breeds
+        {
+        for (unsigned int i = 0; i < GeneA.size(); ++i)
             {
-            for (unsigned int i = 0; i < GeneA.size(); ++i)
+            if (dist(random_generator) < 0.5)
                 {
-                if (dist(random_generator) < 0.5)
-                    {
-                    std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
-                    }
+                std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
                 }
             }
-
-        auto newIndivA = a.clone(), newIndivB = b.clone();
-        newIndivA->setGene(GeneA);
-        newIndivB->setGene(GeneB);
-        dest += newIndivA;
-        dest += newIndivB;
-
-        people.erase(iterator_a);
-        people.erase(iterator_b);
         }
+
+    auto newIndivA = people[a]->clone(), newIndivB = people[b]->clone();
+    newIndivA->setGene(GeneA);
+    newIndivB->setGene(GeneB);
+    dest += newIndivA;
+    dest += newIndivB;
+
+    people.erase(iterator_a);
+    people.erase(iterator_b);
 }
 
 std::shared_ptr<NSGA2_Individual> NSGA2_Generation::binaryTournament()

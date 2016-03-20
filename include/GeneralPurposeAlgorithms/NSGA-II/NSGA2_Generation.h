@@ -65,7 +65,7 @@ protected:
     void evalCrowdingDistances();
     void evalParetoFront();
 
-    void breed(NSGA2_Individual &a, NSGA2_Individual &b, NSGA2_Generation &dest);
+    void breed(unsigned int a, unsigned int b, NSGA2_Generation &dest);
 };
 
 #endif // NSGA2_GENERATION_H
