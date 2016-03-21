@@ -3,7 +3,7 @@
 
 InLineAmplifier::InLineAmplifier(Fiber &Segment) : EDFA(-Segment.get_Gain())
 {
-    //Each LineAmplifier compensates the losses of the previous fiber segment.
+
 }
 
 Gain &InLineAmplifier::get_Gain()

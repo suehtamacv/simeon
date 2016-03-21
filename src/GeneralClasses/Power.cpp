@@ -51,3 +51,13 @@ double Power::in_Watts() const
 {
     return value_Watts;
 }
+
+bool Power::operator <(const Power &P) const
+{
+    return value_Watts < P.value_Watts;
+}
+
+double Power::operator /(const Power &P) const
+{
+    return value_Watts / P.value_Watts;
+}

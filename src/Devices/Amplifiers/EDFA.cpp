@@ -5,7 +5,7 @@ Gain EDFA::NoiseFigure = Gain(5);
 
 EDFA::EDFA(Gain G) : Amplifier(G)
 {
-    calculate_NoisePower();
+    set_Gain(G);
 }
 
 void EDFA::calculate_NoisePower()

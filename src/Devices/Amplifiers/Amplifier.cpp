@@ -14,6 +14,8 @@ Power &Amplifier::get_Noise()
 void Amplifier::set_Gain(Gain G)
 {
     AmplifierGain = G;
+    deviceTF =
+        std::make_shared<TransferFunction>(std::pow(G.in_Linear(), 2));
     calculate_NoisePower();
 }
 
@@ -25,4 +27,9 @@ double Amplifier::get_CapEx()
 double Amplifier::get_OpEx()
 {
     return 0.1;
+}
+
+TransferFunction &Amplifier::get_TransferFunction(unsigned int)
+{
+    return *deviceTF.get();
 }

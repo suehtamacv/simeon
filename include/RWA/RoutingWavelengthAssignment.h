@@ -11,6 +11,9 @@ class ModulationScheme;
 class Topology;
 class Route;
 
+extern bool considerAseNoise;
+extern bool considerFilterImperfection;
+
 namespace WA
 {
 class WavelengthAssignmentAlgorithm;

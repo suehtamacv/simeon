@@ -2,6 +2,13 @@
 #define SIGNAL_H
 
 #include <GeneralClasses/Power.h>
+#include <GeneralClasses/SpectralDensity.h>
+#include <vector>
+#include <memory>
+#include <map>
+
+extern bool considerAseNoise;
+extern bool considerFilterImperfection;
 
 /**
  * @brief The Signal class represents a signal that propagates through the
@@ -23,8 +30,7 @@ public:
      * @brief Signal is the standard constructor of a Signal. Creates a signal
      * with power InputPower and OSNR InputOSNR.
      */
-    Signal();
-
+    Signal(unsigned int numSlots = 1);
     /**
      * @brief operator *= multiplies the Signal by a gain, effectively rescaling
      * both the signal and the noise.
@@ -36,7 +42,11 @@ public:
      * @return a signal after adding the noise.
      */
     Signal &operator +=(Power &);
-
+    /**
+     * @brief operator *= multiplies this signal spectral density by a transfer function.
+     * @return a signal after the transfer function.
+     */
+    Signal &operator *=(TransferFunction &);
     /**
      * @brief get_OSNR returns the Signal-To-Noise Ratio of the Signal.
      * @return the Signal-To-Noise Ratio of the Signal.
@@ -48,9 +58,24 @@ public:
      */
     Power get_NoisePower();
 
+    Power get_SpectralPower();
+
+    double get_SignalPowerRatio();
+
+    double get_PowerRatioThreshold();
+
+    static unsigned long  numFrequencySamples;
+
+    unsigned int numSlots;
+
 private:
     Power SignalPower;
     Power NoisePower;
+    double frequencyRange;
+
+    std::map<int, Power> originalSpecDensityCache ;
+    std::shared_ptr<SpectralDensity> signalSpecDensity;
+
 };
 
 #endif // SIGNAL_H

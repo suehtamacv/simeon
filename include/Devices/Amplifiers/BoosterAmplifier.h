@@ -22,6 +22,7 @@ public:
     BoosterAmplifier();
 
     Gain &get_Gain();
+
     std::shared_ptr<Device> clone();
 };
 

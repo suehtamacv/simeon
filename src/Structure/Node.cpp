@@ -155,6 +155,7 @@ Signal &Node::bypass(Signal &S)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
+        S *= it->get_TransferFunction(S.numSlots);
         }
 
     return S;
@@ -166,6 +167,7 @@ Signal &Node::drop(Signal &S)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
+        S *= it->get_TransferFunction(S.numSlots);
 
         if ((it->DevType == Device::SplitterDevice) ||
                 (it->DevType == Device::SSSDevice))
@@ -193,6 +195,7 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
+        S *= (*it)->get_TransferFunction(S.numSlots);
         }
 
     return S;

@@ -16,6 +16,7 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
 
@@ -24,6 +25,7 @@ public:
 private:
     Gain RegeneratorGain;
     Power RegeneratorNoise;
+    std::shared_ptr<TransferFunction> deviceTF;
 };
 
 #endif // REGENERATOR_H

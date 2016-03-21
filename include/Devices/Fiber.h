@@ -22,6 +22,7 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
 
@@ -31,6 +32,7 @@ private:
     double SpanLength;
     Gain NetLoss;
     Power NoisePower;
+    std::shared_ptr<TransferFunction> deviceTF;
 };
 
 #endif // FIBER_H

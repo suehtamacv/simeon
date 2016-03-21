@@ -1,12 +1,17 @@
 #include <Devices/SSS.h>
 #include <Structure/Node.h>
+#include <Structure/Slot.h>
+#include <GeneralClasses/PhysicalConstants.h>
+#include <GeneralClasses/Signal.h>
+#include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
 
 Gain SSS::SSSLoss(-5);
 
 SSS::SSS(Node *parent) :
-    Device(Device::SSSDevice), NoisePower(0, Power::Watt), parent(parent)
+    Device(Device::SSSDevice),
+    NoisePower(0, Power::Watt), parent(parent)
 {
-
+    filterOrder = SpectralDensity::GaussianOrder;
 }
 
 Gain &SSS::get_Gain()
@@ -53,4 +58,21 @@ double SSS::get_CapEx()
 double SSS::get_OpEx()
 {
     return 0.2;
+}
+
+TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
+{
+    if(transFunctionsCache.count(numSlots) == 0)
+        {
+        double freqVar = numSlots * Slot::BSlot / 2;
+        transFunctionsCache.emplace(numSlots,
+                                    GaussianTransferFunction(
+                                        PhysicalConstants::freq - freqVar,
+                                        PhysicalConstants::freq + freqVar,
+                                        Signal::numFrequencySamples,
+                                        filterOrder,
+                                        std::pow(get_Gain().in_Linear(), 2)));
+        }
+
+    return transFunctionsCache.at(numSlots);
 }

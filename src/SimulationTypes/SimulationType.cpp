@@ -4,10 +4,12 @@
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
+#include <GeneralClasses/SpectralDensity.h>
 
 using namespace Simulations;
 
 SimulationType::Network_Type SimulationType::Type;
+std::vector<SimulationType::Metric_Type> SimulationType::Metrics;
 
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
     boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
@@ -38,6 +40,21 @@ SimulationType::SimulationTypeNicknames =
     SIMULATION_TYPE
 #undef X
     ;
+
+SimulationType::MetricTypeBimap SimulationType::MetricTypes =
+        boost::assign::list_of<SimulationType::MetricTypeBimap::relation>
+#define X(a,b,c) (a,b)
+        METRIC_TYPE
+#undef X
+       ;
+
+SimulationType::MetricTypeNicknameBimap SimulationType::MetricTypesNicknames =
+        boost::assign::list_of<SimulationType::MetricTypeNicknameBimap::relation>
+#define X(a,b,c) (a,c)
+        METRIC_TYPE
+#undef X
+#undef METRIC_TYPE
+        ;
 
 SimulationType::SimulationType(Simulation_Type SimType) : SimType(SimType)
 {
@@ -76,6 +93,77 @@ void SimulationType::load()
         }
     while (1);
 
+    std::cout << std::endl << "-> Select a blocking metric." << std::endl;
+
+    do
+    {
+        std::vector<SimulationType::Metric_Type> chosenMetrics;
+
+        do
+        {
+            unsigned int numPossibleMetrics = 0;
+
+            for (auto &metric : SimulationType::MetricTypes.left)
+                {
+                if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
+                              metric.first) != chosenMetrics.end())
+                    {
+                    continue;
+                    } //Verifies whether the metric has already been chosen.
+
+                std::cout << "(" << metric.first << ")\t" << metric.second << std::endl;
+                numPossibleMetrics++;
+                }
+
+            if(numPossibleMetrics == 0)
+            {
+                break;
+            }
+
+            int Metric;
+            std::cin >> Metric;
+
+            if (std::cin.fail() ||
+                    SimulationType::MetricTypes.left.count((SimulationType::Metric_Type) Metric) == 0)
+                {
+                std::cin.clear();
+                std::cin.ignore();
+
+                if(Metric == -1 && !chosenMetrics.empty())
+                {
+                    break;
+                }
+
+                std::cerr << "Invalid Metric." << std::endl;
+            }
+            else if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
+                               (SimulationType::Metric_Type) Metric) == chosenMetrics.end())
+                {
+                chosenMetrics.push_back((SimulationType::Metric_Type) Metric);
+                } //Verifies that the metric hasn't been chosen.
+
+            std::cout << std::endl << "-> Select a blocking metric. (-1 to exit)" << std::endl;
+
+        }
+        while(1);
+
+        for(unsigned int i = 0; i < chosenMetrics.size(); i++)
+        {
+            if(chosenMetrics.at(i) == SimulationType::Metric_Type::asenoise)
+            {
+                considerAseNoise = true;
+                Metrics.push_back(SimulationType::Metric_Type::asenoise);
+            }
+
+            if(chosenMetrics.at(i) == SimulationType::Metric_Type::filterimperfection)
+            {
+                considerFilterImperfection = true;
+                SpectralDensity::define_SignalsFilterOrder();
+                Metrics.push_back(SimulationType::Metric_Type::filterimperfection);
+            }
+        }
+    }
+    while(0); //Dummy do-while. Only to encapsulate reading.
 }
 
 void SimulationType::save(std::string SimConfigFileName)
@@ -88,6 +176,17 @@ void SimulationType::save(std::string SimConfigFileName)
     SimConfigFile << "  [general]" << std::endl << std::endl;
     SimConfigFile << "  SimulationType = " << SimulationTypeNicknames.left.at(
                       SimType) << std::endl;
+    SimConfigFile << "  Metrics =";
+    for(auto &metric : Metrics)
+    {
+        SimConfigFile << " " << SimulationType::MetricTypesNicknames.left.at(metric);
+    }
+    SimConfigFile << std::endl;
+
+    if(considerFilterImperfection)
+    {
+        SimConfigFile << "  FilterOrder = " << SpectralDensity::GaussianOrder << std::endl;
+    }
 
 }
 
@@ -151,7 +250,9 @@ std::shared_ptr<SimulationType> SimulationType::open()
 
     options_description ConfigDesctription("Configurations Data");
     ConfigDesctription.add_options()("general.SimulationType",
-                                     value<std::string>()->required(), "Simulation Type");
+                                     value<std::string>()->required(), "Simulation Type")
+            ("general.Metrics", value<std::vector<std::string>>()->multitoken(), "Metrics")
+            ("general.FilterOrder", value<int>(), "Filter Order");
 
     variables_map VariablesMap;
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
@@ -162,16 +263,40 @@ std::shared_ptr<SimulationType> SimulationType::open()
     notify(VariablesMap);
 
     std::string SimType = VariablesMap["general.SimulationType"].as<std::string>();
-    Simulation_Type Sim_Type = SimulationTypeNicknames.right.at(SimType);
+    Simulation_Type Sim_Type = SimulationTypeNicknames.right.at(SimType);    
 
     std::shared_ptr<SimulationType> simulation;
-
     switch (Sim_Type)
         {
-#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); simulation->load_file(ConfigFileName); break;
+#define X(a,b,c,d) case a: simulation = std::make_shared<d>(); break;
             SIMULATION_TYPE
 #undef X
         }
+
+    std::vector<std::string> MetricsList = VariablesMap.find("general.Metrics")->second.as<std::vector<std::string>>();
+
+    for(auto &metric : MetricsList)
+    {        
+        std::stringstream SimMetrics(metric);
+        std::string Aux;
+        while(!SimMetrics.eof())
+            {
+            SimMetrics >> Aux;
+            Metrics.push_back((SimulationType::Metric_Type) SimulationType::MetricTypesNicknames.right.at(Aux));
+
+            if(SimulationType::MetricTypesNicknames.right.at(Aux) == SimulationType::Metric_Type::filterimperfection)
+            {
+                considerFilterImperfection = true;
+                SpectralDensity::GaussianOrder = VariablesMap["general.FilterOrder"].as<int>();
+            }
+            if(SimulationType::MetricTypesNicknames.right.at(Aux) == SimulationType::Metric_Type::asenoise)
+            {
+                considerAseNoise = true;
+            }
+            }        
+    }
+
+    simulation->load_file(ConfigFileName);
 
     return simulation;
 }

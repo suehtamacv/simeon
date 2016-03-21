@@ -340,6 +340,15 @@ void Simulation_TransparencyAnalysis::print()
     std::cout << std::endl <<
               "  A Transparency Analysis Simulation is about to start with the following parameters: "
               << std::endl;
+    std::cout << "-> Metrics =" <<std::endl;
+    for(auto &metric : Metrics)
+    {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
+    }
+    if(considerFilterImperfection)
+    {
+        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
+    }
     std::cout << "-> Minimum Average Span Length = " << minAvgLinkSpan << std::endl;
     std::cout << "-> Maximum Average Span Length = " << maxAvgLinkSpan << std::endl;
     std::cout << "-> Minimum OSNR = " << minAvgLinkSpan << std::endl;

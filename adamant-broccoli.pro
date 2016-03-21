@@ -97,7 +97,13 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
+    src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
+    src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
+    src/GeneralClasses/SpectralDensity.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -206,7 +212,13 @@ HEADERS += \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
+    include/GeneralClasses/TransferFunctions/TransferFunction.h \
+    include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
+    include/GeneralClasses/SpectralDensity.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

@@ -29,6 +29,7 @@ public:
 
     Gain &get_Gain();
     std::shared_ptr<Device> clone();
+
 private:
     unsigned numPorts;
     Node &Destination;

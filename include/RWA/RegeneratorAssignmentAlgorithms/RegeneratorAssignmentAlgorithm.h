@@ -12,6 +12,9 @@ class TransparentSegment;
 class Link;
 class Node;
 
+extern bool considerAseNoise;
+extern bool considerFilterImperfection;
+
 /**
  * @brief The RegeneratorAssignmentAlgorithm class assigns which nodes will use
  * regenerators, given a call and a set of links found by the RoutingAlgorithm.

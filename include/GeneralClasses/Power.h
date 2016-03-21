@@ -53,6 +53,10 @@ public:
      */
     Power &operator+=(Power &P);
 
+    bool operator<(const Power &P) const;
+
+    double operator/(const Power &P) const;
+
     /**
      * @brief in_dBm returns the value of this Power in dBm.
      * @return the value of this Power in dBm.

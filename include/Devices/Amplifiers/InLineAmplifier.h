@@ -28,6 +28,7 @@ public:
     Gain &get_Gain();
 
     std::shared_ptr<Device> clone();
+
 };
 
 #endif // LINEAMPLIFIER_H

@@ -27,6 +27,7 @@ public:
     Amplifier(Gain G);
 
     Power &get_Noise();
+    TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
 
@@ -52,6 +53,7 @@ private:
      */
     virtual void calculate_NoisePower() = 0;
 
+    std::shared_ptr<TransferFunction> deviceTF;
 };
 
 #endif // AMPLIFIER_H
