@@ -17,13 +17,11 @@ SpectralDensity::SpectralDensity
     if(specDensityMap.count(freqValues) == 0)
         {
         arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
-        std::cout << thisSpecDensity << std::endl;
         for (auto& val : thisSpecDensity)
             {
             val = std::exp2l( (-2) * pow( 2 * (val - PhysicalConstants::freq) / SBW_3dB,
                                           2 * GaussianOrder));
             }
-        std::cout << thisSpecDensity << std::endl;
         specDensityMap.emplace(freqValues, thisSpecDensity);
         }
     specDensity = specDensityMap[freqValues];
