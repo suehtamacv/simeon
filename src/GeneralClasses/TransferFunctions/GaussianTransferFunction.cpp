@@ -6,11 +6,9 @@ GaussianTransferFunction::GaussianTransferFunction
  unsigned int filterOrder, double scale) :
     TransferFunction(freqMin, freqMax, numSamples, scale)
 {
-    frequencySamples.transform(
-        [&filterOrder] (double val)
+    for (auto& val : frequencySamples)
         {
-        return (std::exp( (-2) * std::log(2) * pow(2 * (val - PhysicalConstants::freq) / BW_3dB,
-                                    2 * filterOrder)));
+        val = std::exp2l( (-2) * pow(2 * (val - PhysicalConstants::freq) / BW_3dB,
+                                     2 * filterOrder));
         }
-    );
 }

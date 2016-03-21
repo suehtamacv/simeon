@@ -25,7 +25,7 @@ public:
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
 
 #define METRIC_TYPE \
-    X(asenoise, "Ase Noise", "asenoise") \
+    X(asenoise, "ASE Noise", "asenoise") \
     X(filterimperfection, "Filter Imperfection", "filterimperfection")
 
 #define X(a,b,c) a,
