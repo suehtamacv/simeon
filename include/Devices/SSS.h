@@ -35,6 +35,7 @@ private:
     Power NoisePower;
     Node *parent;
     std::map<int, TransferFunction> transFunctionsCache;
+    std::shared_ptr<TransferFunction> deviceTF;
 };
 
 #endif // SSS_H

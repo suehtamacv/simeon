@@ -12,6 +12,8 @@ SSS::SSS(Node *parent) :
     NoisePower(0, Power::Watt), parent(parent)
 {
     filterOrder = SpectralDensity::GaussianOrder;
+    deviceTF = std::make_shared<TransferFunction>
+               (std::pow(get_Gain().in_Linear(), 2));
 }
 
 Gain &SSS::get_Gain()
@@ -62,17 +64,23 @@ double SSS::get_OpEx()
 
 TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
 {
-    if(transFunctionsCache.count(numSlots) == 0)
+    if (considerFilterImperfection)
         {
-        double freqVar = numSlots * Slot::BSlot / 2;
-        transFunctionsCache.emplace(numSlots,
-                                    GaussianTransferFunction(
-                                        PhysicalConstants::freq - freqVar,
-                                        PhysicalConstants::freq + freqVar,
-                                        Signal::numFrequencySamples,
-                                        filterOrder,
-                                        std::pow(get_Gain().in_Linear(), 2)));
+        if(transFunctionsCache.count(numSlots) == 0)
+            {
+            double freqVar = numSlots * Slot::BSlot / 2;
+            transFunctionsCache.emplace(numSlots,
+                                        GaussianTransferFunction(
+                                            PhysicalConstants::freq - freqVar,
+                                            PhysicalConstants::freq + freqVar,
+                                            Signal::numFrequencySamples,
+                                            filterOrder,
+                                            std::pow(get_Gain().in_Linear(), 2)));
+            }
+        return transFunctionsCache.at(numSlots);
         }
-
-    return transFunctionsCache.at(numSlots);
+    else
+        {
+        return *deviceTF;
+        }
 }
