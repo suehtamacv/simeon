@@ -155,7 +155,10 @@ Signal &Node::bypass(Signal &S)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
-        S *= it->get_TransferFunction(S.numSlots);
+        if (considerFilterImperfection)
+            {
+            S *= it->get_TransferFunction(S.numSlots);
+            }
         }
 
     return S;
