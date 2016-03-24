@@ -12,7 +12,7 @@ public:
     /**
      * @brief BW_3dB is the bandwidth of optical filter at 3 dB.
      */
-    static constexpr double BW_3dB = 40e9; // Perguntar se é 41e9 ou 40e9
+    static constexpr double BW_3dB = 41e9;
 
 };
 
