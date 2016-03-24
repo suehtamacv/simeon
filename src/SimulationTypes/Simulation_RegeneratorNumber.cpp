@@ -385,7 +385,8 @@ void Simulation_RegeneratorNumber::print()
     }
     if(considerFilterImperfection)
     {
-        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
     }
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;

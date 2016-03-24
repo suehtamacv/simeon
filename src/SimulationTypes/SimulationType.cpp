@@ -186,7 +186,9 @@ void SimulationType::save(std::string SimConfigFileName)
 
     if(considerFilterImperfection)
         {
-        SimConfigFile << "  FilterOrder = " << SpectralDensity::GaussianOrder <<
+        SimConfigFile << "  TxFilterOrder = " << SpectralDensity::TxFilterOrder <<
+                      std::endl;
+        SimConfigFile << "  GaussianFilterOrder = " << SpectralDensity::GaussianOrder <<
                       std::endl;
         }
 
@@ -254,7 +256,8 @@ std::shared_ptr<SimulationType> SimulationType::open()
     ConfigDesctription.add_options()("general.SimulationType",
                                      value<std::string>()->required(), "Simulation Type")
     ("general.Metrics", value<std::vector<std::string>>()->multitoken(), "Metrics")
-    ("general.FilterOrder", value<int>(), "Filter Order");
+    ("general.TxFilterOrder", value<int>(), "Tx Filter Order")
+    ("general.GaussianFilterOrder", value<int>(), "Gaussian Filter Order");;
 
     variables_map VariablesMap;
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
@@ -292,7 +295,8 @@ std::shared_ptr<SimulationType> SimulationType::open()
                     SimulationType::Metric_Type::filterimperfection)
                 {
                 considerFilterImperfection = true;
-                SpectralDensity::GaussianOrder = VariablesMap["general.FilterOrder"].as<int>();
+                SpectralDensity::TxFilterOrder = VariablesMap["general.TxFilterOrder"].as<int>();
+                SpectralDensity::GaussianOrder = VariablesMap["general.GaussianFilterOrder"].as<int>();
                 }
             if(SimulationType::MetricTypesNicknames.right.at(Aux) ==
                     SimulationType::Metric_Type::asenoise)

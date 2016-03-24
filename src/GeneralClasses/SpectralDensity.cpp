@@ -7,6 +7,7 @@ std::map<std::pair<double, double>, arma::rowvec>
 SpectralDensity::specDensityMap;
 
 int SpectralDensity::GaussianOrder = 1;
+int SpectralDensity::TxFilterOrder = 1;
 
 SpectralDensity::SpectralDensity
 (double freqMin, double freqMax, unsigned int numSamples) : densityScaling(1),
@@ -20,7 +21,7 @@ SpectralDensity::SpectralDensity
         for (auto& val : thisSpecDensity)
             {
             val = std::exp2l( (-2) * pow( 2 * (val - PhysicalConstants::freq) / SBW_3dB,
-                                          2 * GaussianOrder));
+                                          2 * TxFilterOrder));
             }
         specDensityMap.emplace(freqValues, thisSpecDensity);
         }
@@ -40,7 +41,7 @@ SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
 
 void SpectralDensity::define_SignalsFilterOrder()
 {
-    std::cout << std::endl << "-> Enter the SSS optical filter order." << std::endl;
+    std::cout << std::endl << "-> Enter the transmitted signal optical filter order. " << std::endl;
 
     do
         {
@@ -48,13 +49,37 @@ void SpectralDensity::define_SignalsFilterOrder()
         int filterOrder;
         std::cin >> filterOrder;
 
-        if (std::cin.fail() || filterOrder < 1)
+        if (std::cin.fail() || filterOrder < 1 || filterOrder > 10)
             {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid Filter Order." << std::endl;
-            std::cout << std::endl << "-> Enter the SSS optical filter order." << std::endl;
+            std::cout << std::endl << "-> Enter the transmitted signal optical filter order." << std::endl;
+            }
+        else
+            {
+            TxFilterOrder = filterOrder;
+            break;
+            }
+        }
+    while (1);
+
+    std::cout << std::endl << "-> Enter the path SSSs optical filter order." << std::endl;
+
+    do
+        {
+
+        int filterOrder;
+        std::cin >> filterOrder;
+
+        if (std::cin.fail() || filterOrder < 1 || filterOrder > 10)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid Filter Order." << std::endl;
+            std::cout << std::endl << "-> Enter the path SSSs optical filter order." << std::endl;
             }
         else
             {

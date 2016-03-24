@@ -86,7 +86,8 @@ void Simulation_NetworkLoad::print()
     }
     if(considerFilterImperfection)
     {
-        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
     }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;

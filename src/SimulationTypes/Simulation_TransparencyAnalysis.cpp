@@ -347,7 +347,8 @@ void Simulation_TransparencyAnalysis::print()
     }
     if(considerFilterImperfection)
     {
-        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
     }
     std::cout << "-> Minimum Average Span Length = " << minAvgLinkSpan << std::endl;
     std::cout << "-> Maximum Average Span Length = " << maxAvgLinkSpan << std::endl;

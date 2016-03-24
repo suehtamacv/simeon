@@ -14,6 +14,7 @@ public:
      * used on transmitedsignal spectral density calculations.
      */
     static constexpr double SBW_3dB = 40e9;
+    static int TxFilterOrder;
     static int GaussianOrder;
 
     static void define_SignalsFilterOrder();
