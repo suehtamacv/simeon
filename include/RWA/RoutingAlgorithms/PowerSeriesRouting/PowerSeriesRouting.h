@@ -16,9 +16,8 @@ public:
 #define PSRVARIANTS \
     X(Variant_AWR, "Adaptative Weighing Routing", "awr", AdaptativeWeighingRouting) \
     X(Variant_LocalPSR, "Local PSR", "localPSR", LocalPowerSeriesRouting) \
-    X(Variant_TensorialPSR, "Tensorial PSR", "tensorialPSR", TensorialPowerSeriesRouting) \
     X(Variant_MatricialPSR, "Matricial PSR (Standard)", "matricialPSR", MatricialPowerSeriesRouting) \
-
+    X(Variant_TensorialPSR, "Tensorial PSR", "tensorialPSR", TensorialPowerSeriesRouting)
 
 #define X(a,b,c,d) a,
     enum Variants

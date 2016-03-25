@@ -18,9 +18,10 @@ public:
     X(German, "German", "data/topologies/German") \
     X(NSFNet, "NSFNet", "data/topologies/NSFNet") \
     X(PacificBell, "Pacific Bell", "data/topologies/PacificBell") \
+    X(P2P4, "Point-to-Point with 4 nodes", "data/topologies/P2P4") \
     X(Top1, "Topology 1", "data/topologies/Top1") \
-    X(USBackbone, "US Backbone", "data/topologies/USBackbone")\
-    X(P2P4, "Point-to-Point with 4 nodes", "data/topologies/P2P4") //Code Name, Official Name, FilePath
+    X(Top2, "Topology 2", "data/topologies/Top2") \
+    X(USBackbone, "US Backbone", "data/topologies/USBackbone") //Code Name, Official Name, FilePath
 
 #define X(a,b,c) a,
     enum DefaultTopologies
