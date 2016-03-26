@@ -67,6 +67,7 @@ public:
     void set_avgSpanLength(double avgSpanLength);
 
     unsigned long get_NumRegenerators();
+    unsigned long get_NumTranslucentNodes();
 
     double get_CapEx();
     double get_OpEx();

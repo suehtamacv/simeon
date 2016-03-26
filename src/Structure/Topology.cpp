@@ -272,6 +272,18 @@ unsigned long Topology::get_NumRegenerators()
     return NReg;
 }
 
+unsigned long Topology::get_NumTranslucentNodes()
+{
+    unsigned long numTranslucentNodes = 0;
+
+    for (auto &node : Nodes)
+        {
+        numTranslucentNodes += (node->get_NumRegenerators() != 0);
+        }
+
+    return numTranslucentNodes;
+}
+
 void Topology::set_avgSpanLength(double avgSpanLength)
 {
     for (auto &link : Links)

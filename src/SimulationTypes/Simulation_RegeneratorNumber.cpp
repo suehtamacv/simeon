@@ -51,7 +51,8 @@ void Simulation_RegeneratorNumber::run()
             std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
                       << simulations[i]->get_CallBlockingProbability() << std::endl;
             OutFile << simulations[i]->Generator->T->get_NumRegenerators() << "\t"
-                    << simulations[i]->get_CallBlockingProbability() << std::endl;
+                    << simulations[i]->get_CallBlockingProbability() << "\t"
+                    << simulations[i]->Generator->T->get_NumTranslucentNodes() << std::endl;
             }
 
         }
@@ -378,16 +379,19 @@ void Simulation_RegeneratorNumber::print()
     std::cout << std::endl <<
               "  A Number of Regenerators Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
@@ -442,6 +446,16 @@ void Simulation_RegeneratorNumber::createSimulations()
         std::shared_ptr<RoutingWavelengthAssignment> RWA(
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
+
+        if (!simulations.empty() &&
+                Generator->T->get_NumRegenerators() ==
+                simulations.back()->Generator->T->get_NumRegenerators())
+            {
+            //If RP is setting a low number of regenerators, adjancent simulations
+            //might have the same number of regenerators. This conditional avoids
+            //repeated simulations.
+            continue;
+            }
 
         //Push simulation into stack
         simulations.push_back(
