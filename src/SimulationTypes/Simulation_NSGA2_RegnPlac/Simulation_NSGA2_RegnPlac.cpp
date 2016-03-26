@@ -21,11 +21,8 @@ Simulation_NSGA2_RegnPlac::Simulation_NSGA2_RegnPlac() :
 {
     auto maxBitrate = std::max_element(TransmissionBitrate::DefaultBitrates.begin(),
                                        TransmissionBitrate::DefaultBitrates.end());
-    auto maxScheme = std::max_element(ModulationScheme::DefaultSchemes.begin(),
-                                      ModulationScheme::DefaultSchemes.end());
-    int MaxNumSlots = maxScheme->get_NumSlots(*maxBitrate);
-    RegnMax = std::floor(Link::NumSlots / MaxNumSlots) * std::ceil(
-                  maxBitrate->get_Bitrate() / RegeneratorAssignmentAlgorithm::RegeneratorBitrate);
+    RegnMax = Link::NumSlots * std::ceil(maxBitrate->get_Bitrate() /
+                                         RegeneratorAssignmentAlgorithm::RegeneratorBitrate);
 }
 
 void Simulation_NSGA2_RegnPlac::Individual::createIndividual()
@@ -200,15 +197,17 @@ void Simulation_NSGA2_RegnPlac::print()
     std::cout << std::endl <<
               "  A MORP-3O Regenerator Placement Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
