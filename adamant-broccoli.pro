@@ -103,7 +103,8 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
     src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
     src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
-    src/GeneralClasses/SpectralDensity.cpp
+    src/GeneralClasses/SpectralDensity.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -218,7 +219,8 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
     include/GeneralClasses/TransferFunctions/TransferFunction.h \
     include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
-    include/GeneralClasses/SpectralDensity.h
+    include/GeneralClasses/SpectralDensity.h \
+    include/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

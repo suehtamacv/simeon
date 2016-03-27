@@ -86,13 +86,13 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
             break;
 
         case MSU:
-            RP_Alg = std::make_shared<MostSimultaneouslyUsed>(
-                         T, RWA, OptimizationLoad, NumCalls);
+            RP_Alg = std::make_shared<MostSimultaneouslyUsed>
+                     (T, RWA, OptimizationLoad, NumCalls);
             break;
 
         case MU:
-            RP_Alg = std::make_shared<MostUsed>(
-                         T, RWA, OptimizationLoad, NumCalls);
+            RP_Alg = std::make_shared<MostUsed>
+                     (T, RWA, OptimizationLoad, NumCalls);
             break;
 
         case NDF:
@@ -107,6 +107,11 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
         case SQP_Var:
             RP_Alg = std::make_shared<SignalQualityPrediction_Variants>
                      (T, RWA, OptimizationLoad, NumCalls);
+            break;
+
+        case Empty:
+            RP_Alg = std::make_shared<Empty_RegeneratorPlacementAlgorithm>
+                     (T);
             break;
         }
 

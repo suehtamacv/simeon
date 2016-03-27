@@ -24,8 +24,8 @@ public:
     X(MU, "Most Used", "MU") \
     X(NDF, "Nodal Degree First", "NDF") \
     X(SQP, "Signal Quality Prediction", "SQP") \
-    X(SQP_Var, "Signal Quality Prediction (Variants)", "SQP_Var" ) //X Macros
-
+    X(SQP_Var, "Signal Quality Prediction (Variants)", "SQP_Var" ) \
+    X(Empty, "Empty RP Algorithm", "Empty") //X Macros
 
 #define X(a,b,c) a,
     enum RegeneratorPlacementAlgorithms
