@@ -6,6 +6,8 @@
 
 class Node;
 
+namespace Devices
+{
 /**
  * @brief The SSS class represents a spectrum selective switch.
  */
@@ -37,5 +39,6 @@ private:
     std::map<int, TransferFunction> transFunctionsCache;
     std::shared_ptr<TransferFunction> deviceTF;
 };
+}
 
 #endif // SSS_H

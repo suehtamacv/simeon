@@ -4,8 +4,14 @@
 #include <Devices/Amplifiers/EDFA.h>
 
 class Node;
-class Fiber;
 
+namespace Devices
+{
+class Fiber;
+}
+
+namespace Devices
+{
 /**
  * @brief The PreAmplifier class represents a Pre-Amplifier.
  *
@@ -35,5 +41,6 @@ private:
     Node &Destination;
     Fiber &Segment;
 };
+}
 
 #endif // PREAMPLIFIER_H

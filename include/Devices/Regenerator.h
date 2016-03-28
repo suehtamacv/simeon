@@ -3,6 +3,8 @@
 
 #include "Device.h"
 
+namespace Devices
+{
 /**
  * @brief The Regenerator class represents a electronic regenerator.
  */
@@ -27,5 +29,6 @@ private:
     Power RegeneratorNoise;
     std::shared_ptr<TransferFunction> deviceTF;
 };
+}
 
 #endif // REGENERATOR_H

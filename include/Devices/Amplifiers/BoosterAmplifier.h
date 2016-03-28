@@ -3,6 +3,8 @@
 
 #include <Devices/Amplifiers/EDFA.h>
 
+namespace Devices
+{
 /**
  * @brief The BoosterAmplifier class represents a booster amplifier. In the
  * considered architecture it is on the node's exit.
@@ -25,5 +27,6 @@ public:
 
     std::shared_ptr<Device> clone();
 };
+}
 
 #endif // BOOSTERAMPLIFIER_H

@@ -3,6 +3,8 @@
 #include <Devices/SSS.h>
 #include <Structure/Node.h>
 
+using namespace Devices;
+
 PreAmplifier::PreAmplifier(Fiber &Segment, Node &Destination) : EDFA(Gain(0)) ,
     Destination(Destination), Segment(Segment)
 {
@@ -30,7 +32,7 @@ Gain &PreAmplifier::get_Gain()
     return AmplifierGain;
 }
 
-std::shared_ptr<Device> PreAmplifier::clone()
+std::shared_ptr<Devices::Device> PreAmplifier::clone()
 {
-    return std::shared_ptr<Device>(new PreAmplifier(*this));
+    return std::shared_ptr<Devices::Device>(new PreAmplifier(*this));
 }

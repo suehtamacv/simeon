@@ -3,6 +3,8 @@
 
 #include <Devices/Device.h>
 
+namespace Devices
+{
 /**
  * @brief The Amplifier class represents an amplifier, that amplifies a signal
  * and generates noise.
@@ -55,5 +57,6 @@ private:
 
     std::shared_ptr<TransferFunction> deviceTF;
 };
+}
 
 #endif // AMPLIFIER_H

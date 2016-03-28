@@ -9,6 +9,8 @@
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
 
+using namespace Devices;
+
 Node::NodeArchitecture Node::Default_Arch;
 
 Node::NodeTypeBimap Node::NodeTypes =

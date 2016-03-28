@@ -28,7 +28,13 @@ SOURCES += src/main.cpp \
     src/GeneralClasses/ModulationScheme.cpp \
     src/GeneralClasses/Power.cpp \
     src/GeneralClasses/Signal.cpp \
+    src/GeneralClasses/SpectralDensity.cpp \
+    src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
+    src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
     src/GeneralClasses/TransmissionBitrate.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
+    src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Individual.cpp \
@@ -41,6 +47,7 @@ SOURCES += src/main.cpp \
     src/RWA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.cpp \
     src/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.cpp \
+    src/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/MostUsed.cpp \
     src/RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.cpp \
@@ -97,14 +104,7 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp \
-    src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
-    src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
-    src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
-    src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
-    src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
-    src/GeneralClasses/SpectralDensity.cpp \
-    src/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.cpp
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -130,7 +130,13 @@ HEADERS += \
     include/GeneralClasses/Power.h \
     include/GeneralClasses/RandomGenerator.h \
     include/GeneralClasses/Signal.h \
+    include/GeneralClasses/SpectralDensity.h \
+    include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
+    include/GeneralClasses/TransferFunctions/TransferFunction.h \
     include/GeneralClasses/TransmissionBitrate.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
+    include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
     include/GeneralPurposeAlgorithms/NSGA-2.h \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2.h \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.h \
@@ -151,6 +157,7 @@ HEADERS += \
     include/RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h \
     include/RWA/RegeneratorPlacementAlgorithms.h \
     include/RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h \
+    include/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h \
     include/RWA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h \
     include/RWA/RegeneratorPlacementAlgorithms/MostUsed.h \
     include/RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h \
@@ -213,14 +220,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h \
-    include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
-    include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
-    include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
-    include/GeneralClasses/TransferFunctions/TransferFunction.h \
-    include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
-    include/GeneralClasses/SpectralDensity.h \
-    include/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

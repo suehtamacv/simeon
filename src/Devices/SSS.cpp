@@ -5,6 +5,8 @@
 #include <GeneralClasses/Signal.h>
 #include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
 
+using namespace Devices;
+
 Gain SSS::SSSLoss(-5);
 
 SSS::SSS(Node *parent) :
@@ -26,9 +28,9 @@ Power &SSS::get_Noise()
     return NoisePower;
 }
 
-std::shared_ptr<Device> SSS::clone()
+std::shared_ptr<Devices::Device> SSS::clone()
 {
-    return std::shared_ptr<Device>(new SSS(*this));
+    return std::shared_ptr<Devices::Device>(new SSS(*this));
 }
 
 double SSS::get_CapEx()

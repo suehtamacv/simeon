@@ -8,7 +8,10 @@
 #include <iostream>
 
 class Link;
+namespace Devices
+{
 class Device;
+}
 
 class Node
 {
@@ -65,8 +68,8 @@ public:
     const int ID;
     std::vector<std::weak_ptr<Node>> Neighbours;
     std::vector<std::shared_ptr<Link>> Links;
-    std::vector<std::shared_ptr<Device>> Devices;
-    std::vector<std::shared_ptr<Device>> Regenerators;
+    std::vector<std::shared_ptr<Devices::Device>> Devices;
+    std::vector<std::shared_ptr<Devices::Device>> Regenerators;
 
     NodeArchitecture get_NodeArch();
     NodeType get_NodeType();

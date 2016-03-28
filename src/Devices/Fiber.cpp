@@ -1,5 +1,7 @@
 #include <Devices/Fiber.h>
 
+using namespace Devices;
+
 double Fiber::alphaFiber = 0.22;
 
 Fiber::Fiber(double SpanLength) :

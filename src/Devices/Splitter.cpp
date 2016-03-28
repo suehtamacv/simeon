@@ -1,6 +1,8 @@
 #include <Devices/Splitter.h>
 #include <Structure/Node.h>
 
+using namespace Devices;
+
 Splitter::Splitter(Node *parent) : Device(Device::SplitterDevice),
     parent(parent),
     NumPorts(parent->Neighbours.size()),
@@ -33,9 +35,9 @@ void Splitter::set_NumPorts(int NumPorts)
                (std::pow(get_Gain().in_Linear(), 2));
 }
 
-std::shared_ptr<Device> Splitter::clone()
+std::shared_ptr<Devices::Device> Splitter::clone()
 {
-    return std::shared_ptr<Device>(new Splitter(parent));
+    return std::shared_ptr<Devices::Device>(new Splitter(parent));
 }
 
 double Splitter::get_CapEx()

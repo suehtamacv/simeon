@@ -3,6 +3,8 @@
 
 #include <Devices/Device.h>
 
+namespace Devices
+{
 /**
  * @brief The Fiber class represents a Fiber segment.
  */
@@ -34,5 +36,6 @@ private:
     Power NoisePower;
     std::shared_ptr<TransferFunction> deviceTF;
 };
+}
 
 #endif // FIBER_H

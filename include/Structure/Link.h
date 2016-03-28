@@ -10,8 +10,12 @@
 class Node;
 class Call;
 class Slot;
-class Device;
 class Topology;
+namespace Devices
+{
+class Device;
+}
+
 
 class Link
 {
@@ -28,7 +32,7 @@ public:
     std::weak_ptr<Node> Origin;
     std::weak_ptr<Node> Destination;
     std::vector<std::shared_ptr<Slot>> Slots;
-    std::vector<std::shared_ptr<Device>> Devices;
+    std::vector<std::shared_ptr<Devices::Device>> Devices;
 
     double Length;
     int numLineAmplifiers;

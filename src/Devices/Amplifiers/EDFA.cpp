@@ -1,6 +1,8 @@
 #include <Devices/Amplifiers/EDFA.h>
 #include <GeneralClasses/PhysicalConstants.h>
 
+using namespace Devices;
+
 Gain EDFA::NoiseFigure = Gain(5);
 
 EDFA::EDFA(Gain G) : Amplifier(G)

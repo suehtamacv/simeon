@@ -6,6 +6,8 @@
 #include <GeneralClasses/Power.h>
 #include <GeneralClasses/TransferFunctions/TransferFunction.h>
 
+namespace Devices
+{
 /**
  * @brief The Device class represents in a generic way a device on the network.
  */
@@ -66,5 +68,6 @@ public:
      */
     virtual std::shared_ptr<Device> clone() = 0;
 };
+}
 
 #endif // DEVICE_H

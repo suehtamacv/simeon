@@ -9,6 +9,8 @@
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 
+using namespace Devices;
+
 int Link::NumSlots = 64;
 double Link::DefaultAvgSpanLength = -1;
 

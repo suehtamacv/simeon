@@ -1,5 +1,7 @@
 #include <Devices/Amplifiers/Amplifier.h>
 
+using namespace Devices;
+
 Amplifier::Amplifier(Gain G) : Device(Device::AmplifierDevice),
     AmplifierGain(G), NoisePower(0)
 {
