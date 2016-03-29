@@ -66,3 +66,9 @@ unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate)
                                          PhysicalConstants::numPolarizations *
                                          log2(M)));
 }
+
+std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme)
+{
+    out << "Scheme " << scheme.M << "QAM";
+    return out;
+}

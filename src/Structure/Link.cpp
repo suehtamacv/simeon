@@ -242,3 +242,10 @@ void Link::set_AvgSpanLength(double avgSpanLength)
     AvgSpanLength = avgSpanLength;
     create_Devices();
 }
+
+std::ostream& operator <<(std::ostream &out, const Link &link)
+{
+    out << "Link: (" << *(link.Origin.lock()) << " -> " << *
+        (link.Destination.lock()) << "), length = " << link.Length << "km";
+    return out;
+}

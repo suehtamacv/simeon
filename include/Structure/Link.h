@@ -54,6 +54,8 @@ public:
     static void save(std::string, std::shared_ptr<Topology> T);
     void set_AvgSpanLength(double avgSpanLength);
 
+    friend std::ostream& operator<<(std::ostream &out, const Link &link);
+
 private:
     void create_Slots();
     void create_Devices();

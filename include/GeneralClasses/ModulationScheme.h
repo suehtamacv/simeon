@@ -4,23 +4,24 @@
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 #include <vector>
+#include <ostream>
 
 /**
  * @brief The ModulationScheme class represents a modulation scheme.
  */
 class ModulationScheme
 {
-public:
-/**
-  * In DEFAULT_MODULATIONSCHEMES there are the default modulation schemes used
-  * through the simulator. To add a new M-QAM scheme, add to the list
-  * X(M, Gain(SNR_PER_BIT, Gain::dB)).
-  **/
+    /**
+    * In DEFAULT_MODULATIONSCHEMES there are the default modulation schemes used
+    * through the simulator. To add a new M-QAM scheme, add to the list
+    * X(M, Gain(SNR_PER_BIT, Gain::dB)).
+    **/
 #define DEFAULT_MODULATIONSCHEMES \
   X(4, Gain(6.8, Gain::dB)) \
   X(16, Gain(10.5, Gain::dB)) \
   X(64, Gain(14.8, Gain::dB)) //X Macros
 
+public:
     /**
      * @brief ModulationScheme is the standard constructor for a ModulationScheme.
      * @param M is the number of points in the QAM constellation.
@@ -76,6 +77,8 @@ public:
      */
     static std::vector<ModulationScheme> DefaultSchemes;
 
+    friend std::ostream& operator <<(std::ostream &out,
+                                     const ModulationScheme &scheme);
 private:
     unsigned int M;
     Gain SNR_Per_Bit;

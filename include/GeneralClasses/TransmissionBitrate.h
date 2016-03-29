@@ -2,6 +2,7 @@
 #define TRANSMISSIONBITRATE_H
 
 #include <vector>
+#include <ostream>
 
 /**
  * @brief The TransmissionBitrate class represents a transmission bitrate.
@@ -37,6 +38,8 @@ public:
     bool operator ==(const TransmissionBitrate &) const;
 
     static std::vector<TransmissionBitrate> DefaultBitrates;
+
+    friend std::ostream& operator <<(std::ostream &out, const TransmissionBitrate &br);
 private:
     double Bitrate;
 };

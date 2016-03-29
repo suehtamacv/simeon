@@ -95,6 +95,9 @@ public:
     double get_OpEx();
 
     static void load() {}
+
+    friend std::ostream& operator<<(std::ostream &out, const Node& node);
+
 private:
     NodeType Type;
     NodeArchitecture Architecture;
