@@ -35,6 +35,6 @@ bool TransmissionBitrate::operator ==(const TransmissionBitrate &other) const
 
 std::ostream& operator <<(std::ostream &out, const TransmissionBitrate &br)
 {
-    out << "BitRate " << (br.Bitrate / 1E9) << "Gbps";
+    out << "BitRate: " << (br.Bitrate / 1E9) << "Gbps";
     return out;
 }

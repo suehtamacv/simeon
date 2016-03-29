@@ -1,11 +1,4 @@
-#include "GeneralClasses.h"
-#include "Devices.h"
-#include "Structure.h"
-#include "Calls.h"
-#include "RWA.h"
 #include "SimulationTypes.h"
-
-#include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
 
 namespace Simulations
 {

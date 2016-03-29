@@ -41,7 +41,9 @@ SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
 
 void SpectralDensity::define_SignalsFilterOrder()
 {
-    std::cout << std::endl << "-> Enter the transmitted signal optical filter order. " << std::endl;
+    std::cout << std::endl <<
+              "-> Enter the transmitted signal optical filter order. "
+              << std::endl;
 
     do
         {
@@ -55,7 +57,9 @@ void SpectralDensity::define_SignalsFilterOrder()
             std::cin.ignore();
 
             std::cerr << "Invalid Filter Order." << std::endl;
-            std::cout << std::endl << "-> Enter the transmitted signal optical filter order." << std::endl;
+            std::cout << std::endl <<
+                      "-> Enter the transmitted signal optical filter order."
+                      << std::endl;
             }
         else
             {
@@ -65,7 +69,9 @@ void SpectralDensity::define_SignalsFilterOrder()
         }
     while (1);
 
-    std::cout << std::endl << "-> Enter the path SSSs optical filter order." << std::endl;
+    std::cout << std::endl
+              << "-> Enter the path SSSs optical filter order."
+              << std::endl;
 
     do
         {
@@ -79,7 +85,9 @@ void SpectralDensity::define_SignalsFilterOrder()
             std::cin.ignore();
 
             std::cerr << "Invalid Filter Order." << std::endl;
-            std::cout << std::endl << "-> Enter the path SSSs optical filter order." << std::endl;
+            std::cout << std::endl
+                      << "-> Enter the path SSSs optical filter order."
+                      << std::endl;
             }
         else
             {

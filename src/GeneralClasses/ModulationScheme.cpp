@@ -69,6 +69,6 @@ unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate)
 
 std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme)
 {
-    out << "Scheme " << scheme.M << "QAM";
+    out << "Scheme: " << scheme.M << "QAM";
     return out;
 }

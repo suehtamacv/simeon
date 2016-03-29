@@ -57,15 +57,10 @@ public:
      * @return the Noise Power of the Signal.
      */
     Power get_NoisePower();
-
     Power get_SpectralPower();
-
     double get_SignalPowerRatio();
-
     double get_PowerRatioThreshold();
-
-    static unsigned long  numFrequencySamples;
-
+    static constexpr unsigned long numFrequencySamples = 25;
     unsigned int numSlots;
 
 private:

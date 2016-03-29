@@ -310,6 +310,6 @@ double Node::get_OpEx()
 
 std::ostream& operator <<(std::ostream &out, const Node& node)
 {
-    out << "Node " << node.ID;
+    out << "Node: " << node.ID;
     return out;
 }

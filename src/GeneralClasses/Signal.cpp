@@ -5,7 +5,6 @@
 
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
-unsigned long Signal::numFrequencySamples = 25;
 
 Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
     SignalPower(InputPower),
@@ -60,17 +59,16 @@ Power Signal::get_SpectralPower()
 
 double Signal::get_SignalPowerRatio()
 {
-
-    if(originalSpecDensityCache.count(numSlots) == 0)
+    if (!originalSpecDensityCache.count(numSlots))
         {
         SpectralDensity originSD(PhysicalConstants::freq - frequencyRange,
-                                 PhysicalConstants::freq + frequencyRange, numFrequencySamples);
+                                 PhysicalConstants::freq + frequencyRange,
+                                 numFrequencySamples);
 
-        originalSpecDensityCache.emplace(numSlots,
-                                         Power(TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
-                                               * originSD.densityScaling, Power::Watt));
+        originalSpecDensityCache.emplace(numSlots, Power(
+                                             TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
+                                             * originSD.densityScaling, Power::Watt));
         }
-
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }
 
