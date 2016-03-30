@@ -24,6 +24,11 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
+    /**
+     * @brief get_TransferFunction returns the transfer function that represents the device's frequency response.
+     * @param numSlots is the number of slots used to calculate the transfer function.
+     * @return the transfer function that represents the device's frequency response.
+     */
     TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
@@ -34,6 +39,9 @@ private:
     double SpanLength;
     Gain NetLoss;
     Power NoisePower;
+    /**
+     * @brief deviceTF  is this device's transfer function.
+     */
     std::shared_ptr<TransferFunction> deviceTF;
 };
 }

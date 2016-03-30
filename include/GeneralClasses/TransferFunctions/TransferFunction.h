@@ -10,17 +10,45 @@
 class TransferFunction
 {
 public:
+    /**
+     * @brief TransferFunction is a constructor for a TransferFunction.
+     * @param freqMin is the begining of the signal's bandwidth.
+     * @param freqMax is the end of the signal's bandwidth.
+     * @param numSamples is the number of frequency samples along the bandwidth.
+     * @param scale is the result of the gains and losses over this transfer function.
+     */
     TransferFunction(double freqMin, double freqMax,
                      unsigned long int numSamples, double scale);
+    /**
+     * @brief TransferFunction is a constructor for a TransferFunction.
+     * @param scale is the result of the gains and losses over this transfer function.
+     */
     TransferFunction(double scale);
 
-    //Vector contendo os valores da função de transferência a serem multiplicados com a densidade espectral do sinal.
-    arma::rowvec frequencySamples;
-    double scale;
-    bool isImpulseTransferFunction;
 
+    /**
+     * @brief frequencySamples is a vector with the frequency samples along the signal's bandwidth.
+     */
+    arma::rowvec frequencySamples;
+    /**
+     * @brief scale is the result of the gains and losses over this transfer function.
+     */
+    double scale;
+    /**
+     * @brief isImpulseTransferFunction is a flag to indicate that this transfer function doesn't applies changes to a signal spectral density.
+     */
+    bool isImpulseTransferFunction;
+    /**
+     * @brief freqMin is the begining of the signal's bandwidth.
+     */
     double freqMin;
+    /**
+     * @brief freqMax is the end of the signal's bandwidth.
+     */
     double freqMax;
+    /**
+     * @brief numSamples is the number of frequency samples along the bandwidth.
+     */
     unsigned long int numSamples;
 };
 

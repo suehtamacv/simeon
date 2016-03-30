@@ -3,9 +3,20 @@
 
 #include <GeneralClasses/TransferFunctions/TransferFunction.h>
 
+/**
+ * @brief The GaussianTransferFunction class represents the impulse response of a Gaussian filter.
+ */
 class GaussianTransferFunction : public TransferFunction
 {
 public:
+    /**
+     * @brief GaussianTransferFunction is a constructor for a GaussianTransferFunction.
+     * @param freqMin is the begining of the signal's bandwidth.
+     * @param freqMax is the end of the signal's bandwidth.
+     * @param numSamples is the number of frequency samples along the bandwidth.
+     * @param filterOrder is the order of this Gaussian function.
+     * @param scale is the result of the gains and losses over this transfer function.
+     */
     GaussianTransferFunction(double freqMin, double freqMax,
                              unsigned long int numSamples, unsigned int filterOrder, double scale);
 

@@ -57,18 +57,44 @@ public:
      * @return the Noise Power of the Signal.
      */
     Power get_NoisePower();
+    /**
+     * @brief get_SpectralPower returns the power of the Signal along a spectral density curve.
+     * @return the power of the Signal along a spectral density curve.
+     */
     Power get_SpectralPower();
+    /**
+     * @brief get_SignalPowerRatio returns the ratio of this signal's original and final spectral density power.
+     * @return the ratio of this signal's original and final spectral density power.
+     */
     double get_SignalPowerRatio();
+    /**
+     * @brief get_PowerRatioThreshold returns the power ratio threshold for blocking a call.
+     * @return the power ratio threshold for blocking a call.
+     */
     double get_PowerRatioThreshold();
+    /**
+     * @brief numFrequencySamples number of samples along the signal's bandwidth.
+     */
     static constexpr unsigned long numFrequencySamples = 25;
+    /**
+     * @brief numSlots is the number of slots occupied by this Signal.
+     */
     unsigned int numSlots;
 
 private:
     Power SignalPower;
     Power NoisePower;
+    /**
+     * @brief frequencyRange is half of the signal's bandwith.
+     */
     double frequencyRange;
-
+    /**
+     * @brief originalSpecDensityCache is a map with the spectral density power of a signal, given a number of slots.
+     */
     std::map<int, Power> originalSpecDensityCache ;
+    /**
+     * @brief signalSpecDensity is this signal's spectral density.
+     */
     std::shared_ptr<SpectralDensity> signalSpecDensity;
 
 };

@@ -48,8 +48,8 @@ public:
      */
     virtual Power &get_Noise() = 0;
     /**
-     * @brief get_TransferFunction returns the transfer function that represents the device's frequency response
-     * @return the transfer function that represents the device's frequency response
+     * @brief get_TransferFunction returns the transfer function that represents the device's frequency response.
+     * @return the transfer function that represents the device's frequency response.
      */
     virtual TransferFunction &get_TransferFunction(unsigned int numSlots) = 0;
     /**
