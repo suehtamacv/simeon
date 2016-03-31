@@ -10,8 +10,8 @@ int SpectralDensity::GaussianOrder = 1;
 int SpectralDensity::TxFilterOrder = 1;
 
 SpectralDensity::SpectralDensity
-(double freqMin, double freqMax, unsigned int numSamples) : densityScaling(1),
-    freqMin(freqMin), freqMax(freqMax)
+(double freqMin, double freqMax, unsigned int numSamples) :
+    densityScaling(1), freqMin(freqMin), freqMax(freqMax)
 {
     std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
 

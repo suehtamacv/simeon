@@ -14,7 +14,8 @@ Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
         {
         frequencyRange = numSlots * Slot::BSlot / 2;
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                            frequencyRange, PhysicalConstants::freq + frequencyRange, numFrequencySamples);
+                            frequencyRange, PhysicalConstants::freq + frequencyRange,
+                            (int) numFrequencySamples);
         }
 }
 
