@@ -49,7 +49,7 @@ private:
      */
     std::map<int, TransferFunction> transFunctionsCache;
     /**
-     * @brief deviceTF  is this device's transfer function.
+     * @brief deviceTF  is the device's transfer function.
      */
     std::shared_ptr<TransferFunction> deviceTF;
 };

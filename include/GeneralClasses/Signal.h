@@ -93,7 +93,7 @@ private:
      */
     std::map<int, Power> originalSpecDensityCache ;
     /**
-     * @brief signalSpecDensity is this signal's spectral density.
+     * @brief signalSpecDensity is the signal's spectral density.
      */
     std::shared_ptr<SpectralDensity> signalSpecDensity;
 

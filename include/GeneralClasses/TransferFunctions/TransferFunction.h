@@ -24,8 +24,6 @@ public:
      * @param scale is the result of the gains and losses over this transfer function.
      */
     TransferFunction(double scale);
-
-
     /**
      * @brief frequencySamples is a vector with the frequency samples along the signal's bandwidth.
      */
@@ -35,7 +33,8 @@ public:
      */
     double scale;
     /**
-     * @brief isImpulseTransferFunction is a flag to indicate that this transfer function doesn't applies changes to a signal spectral density.
+     * @brief isImpulseTransferFunction is a flag to indicate that this transfer function doesn't
+     * apply changes to a signal spectral density.
      */
     bool isImpulseTransferFunction;
     /**

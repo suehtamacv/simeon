@@ -3,10 +3,20 @@
 
 #include <GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h>
 
+/**
+ * @brief The TrapezoidalRule class represents the Trapezoidal Rule numerical integration method.
+ */
 class TrapezoidalRule : public IntegrationMethod
 {
 public:
+    /**
+     * @brief TrapezoidalRule is a constructor for a TrapezoidalRule object.
+     */
     TrapezoidalRule(arma::mat &, double);
+    /**
+     * @brief calculate is used to compute the SimpsonsRule integration method.
+     * @return the result of the calculations.
+     */
     double calculate();
 };
 
