@@ -8,7 +8,10 @@
 
 namespace Simulations
 {
-
+/**
+ * @brief The SimulationType class represents a simulation that can be run by
+ * this simulator.
+ */
 class SimulationType
 {
 public:
@@ -24,7 +27,7 @@ public:
     X(regnum, "Number of Regenerators", "regnum", Simulation_RegeneratorNumber) \
     X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
 
-#define METRIC_TYPE \
+#define PHYSICAL_IMPAIRMENTS \
     X(asenoise, "ASE Noise", "asenoise") \
     X(filterimperfection, "Filter Imperfection", "filterimperfection")
 
@@ -36,6 +39,10 @@ public:
 #undef X
 
 #define X(a,b,c,d) a,
+    /**
+     * @brief The Simulation_Type enum defines the type of simulation that is
+     * being created.
+     */
     enum Simulation_Type
     {
         SIMULATION_TYPE
@@ -43,9 +50,13 @@ public:
 #undef X
 
 #define X(a,b,c) a,
-    enum Metric_Type
+    /**
+     * @brief The Physical_Impairment enum represents the physical impairments
+     * that are being considered on this simulation.
+     */
+    enum Physical_Impairment
     {
-        METRIC_TYPE
+        PHYSICAL_IMPAIRMENTS
     };
 #undef X
 
@@ -65,22 +76,50 @@ public:
     static SimulationTypeNameBimap SimulationTypeNames;
     typedef boost::bimap<Simulation_Type, std::string> SimulationTypeNicknameBimap;
     static SimulationTypeNameBimap SimulationTypeNicknames;
-    typedef boost::bimap<Metric_Type, std::string> MetricTypeBimap;
+    typedef boost::bimap<Physical_Impairment, std::string> MetricTypeBimap;
     static MetricTypeBimap MetricTypes;
-    typedef boost::bimap<Metric_Type, std::string> MetricTypeNicknameBimap;
+    typedef boost::bimap<Physical_Impairment, std::string> MetricTypeNicknameBimap;
     static MetricTypeNicknameBimap MetricTypesNicknames;
 
-    static std::vector<SimulationType::Metric_Type> Metrics;
+    static std::vector<SimulationType::Physical_Impairment> Metrics;
 
+    /**
+     * @brief run silently runs a simulation.
+     */
     virtual void run() = 0;
+    /**
+     * @brief load loads the parameters required to the simulation.
+     */
     virtual void load() = 0;
+    /**
+     * @brief print runs the simulation, and prints its results.
+     */
     virtual void print() = 0;
+    /**
+     * @brief save saves the parameters of the simulation into a file.
+     */
     virtual void save(std::string) = 0;
+    /**
+     * @brief load_file loads a file containing parameters to a simulation.
+     */
     virtual void load_file(std::string) = 0;
+    /**
+     * @brief help prints a description of this simulation.
+     */
     virtual void help() = 0;
 
+    /**
+     * @brief Type is the type of network being considered (e.g. Transparent or
+     * Translucent)
+     */
     static Network_Type Type;
+    /**
+     * @brief Chosen_Topology is the default topology chosen to run this simulation.
+     */
     Topology::DefaultTopologies Chosen_Topology;
+    /**
+     * @brief T is a pointer to a "master" Topology.
+     */
     std::shared_ptr<Topology> T;
 };
 

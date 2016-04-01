@@ -12,9 +12,18 @@
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_PSROptimization class is the PSR Optimization simulation.
+ *
+ * This simulation runs the Particle Swarm Optimization algorithm to find a set
+ * of coefficients that minimize the call blocking probability of the network.
+ */
 class Simulation_PSROptimization : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_PSROptimization is the default constructor.
+     */
     Simulation_PSROptimization();
 
     void help();

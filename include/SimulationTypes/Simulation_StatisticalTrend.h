@@ -13,9 +13,19 @@ namespace Simulations
 
 class NetworkSimulation;
 
+/**
+ * @brief The Simulation_StatisticalTrend class represents a statistical trend
+ * analysis.
+ *
+ * This simulation repeats a fixed-parameter network simulation, in order to
+ * evaluate any statistical trends on the results.
+ */
 class Simulation_StatisticalTrend : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_StatisticalTrend is the default constructor.
+     */
     Simulation_StatisticalTrend();
 
     void run();

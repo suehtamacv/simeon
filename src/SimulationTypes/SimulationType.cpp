@@ -9,7 +9,7 @@
 using namespace Simulations;
 
 SimulationType::Network_Type SimulationType::Type;
-std::vector<SimulationType::Metric_Type> SimulationType::Metrics;
+std::vector<SimulationType::Physical_Impairment> SimulationType::Metrics;
 
 SimulationType::NetworkTypeBimap SimulationType::NetworkTypes =
     boost::assign::list_of<SimulationType::NetworkTypeBimap::relation>
@@ -44,16 +44,16 @@ SimulationType::SimulationTypeNicknames =
 SimulationType::MetricTypeBimap SimulationType::MetricTypes =
     boost::assign::list_of<SimulationType::MetricTypeBimap::relation>
 #define X(a,b,c) (a,b)
-    METRIC_TYPE
+    PHYSICAL_IMPAIRMENTS
 #undef X
     ;
 
 SimulationType::MetricTypeNicknameBimap SimulationType::MetricTypesNicknames =
     boost::assign::list_of<SimulationType::MetricTypeNicknameBimap::relation>
 #define X(a,b,c) (a,c)
-    METRIC_TYPE
+    PHYSICAL_IMPAIRMENTS
 #undef X
-#undef METRIC_TYPE
+#undef PHYSICAL_IMPAIRMENTS
     ;
 
 SimulationType::SimulationType(Simulation_Type SimType) : SimType(SimType)
@@ -67,7 +67,7 @@ void SimulationType::load()
               << std::endl;
     do
         {
-        std::vector<SimulationType::Metric_Type> chosenMetrics;
+        std::vector<SimulationType::Physical_Impairment> chosenMetrics;
 
         do
             {
@@ -94,7 +94,7 @@ void SimulationType::load()
             std::cin >> Metric;
 
             if (std::cin.fail() ||
-                    !SimulationType::MetricTypes.left.count((SimulationType::Metric_Type) Metric))
+                    !SimulationType::MetricTypes.left.count((SimulationType::Physical_Impairment) Metric))
                 {
                 std::cin.clear();
                 std::cin.ignore();
@@ -107,9 +107,9 @@ void SimulationType::load()
                 std::cerr << "Invalid Metric." << std::endl;
                 }
             else if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
-                               (SimulationType::Metric_Type) Metric) == chosenMetrics.end())
+                               (SimulationType::Physical_Impairment) Metric) == chosenMetrics.end())
                 {
-                chosenMetrics.push_back((SimulationType::Metric_Type) Metric);
+                chosenMetrics.push_back((SimulationType::Physical_Impairment) Metric);
                 } //Verifies that the metric hasn't been chosen.
 
             std::cout << std::endl << "-> Select a blocking metric. (-1 to exit)"
@@ -119,17 +119,17 @@ void SimulationType::load()
 
         for(unsigned int i = 0; i < chosenMetrics.size(); i++)
             {
-            if(chosenMetrics.at(i) == SimulationType::Metric_Type::asenoise)
+            if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::asenoise)
                 {
                 considerAseNoise = true;
-                Metrics.push_back(SimulationType::Metric_Type::asenoise);
+                Metrics.push_back(SimulationType::Physical_Impairment::asenoise);
                 }
 
-            if(chosenMetrics.at(i) == SimulationType::Metric_Type::filterimperfection)
+            if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::filterimperfection)
                 {
                 considerFilterImperfection = true;
                 SpectralDensity::define_SignalsFilterOrder();
-                Metrics.push_back(SimulationType::Metric_Type::filterimperfection);
+                Metrics.push_back(SimulationType::Physical_Impairment::filterimperfection);
                 }
             }
         }
@@ -288,18 +288,18 @@ std::shared_ptr<SimulationType> SimulationType::open()
         while(!SimMetrics.eof())
             {
             SimMetrics >> Aux;
-            Metrics.push_back((SimulationType::Metric_Type)
+            Metrics.push_back((SimulationType::Physical_Impairment)
                               SimulationType::MetricTypesNicknames.right.at(Aux));
 
             if(SimulationType::MetricTypesNicknames.right.at(Aux) ==
-                    SimulationType::Metric_Type::filterimperfection)
+                    SimulationType::Physical_Impairment::filterimperfection)
                 {
                 considerFilterImperfection = true;
                 SpectralDensity::TxFilterOrder = VariablesMap["general.TxFilterOrder"].as<int>();
                 SpectralDensity::GaussianOrder = VariablesMap["general.GaussianFilterOrder"].as<int>();
                 }
             if(SimulationType::MetricTypesNicknames.right.at(Aux) ==
-                    SimulationType::Metric_Type::asenoise)
+                    SimulationType::Physical_Impairment::asenoise)
                 {
                 considerAseNoise = true;
                 }

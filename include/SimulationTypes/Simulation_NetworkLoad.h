@@ -10,9 +10,20 @@
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_NetworkLoad class is the simulation that varies the
+ * network load and analyses the effect on the call blocking probability.
+ *
+ * This simulation varies the network load, and analyzes the network performance
+ * in terms of predefined metrics, such as call blocking probability,
+ * or slot blocking probability.
+ */
 class Simulation_NetworkLoad : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_NetworkLoad is the default constructor.
+     */
     Simulation_NetworkLoad();
 
     void help();
