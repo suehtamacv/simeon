@@ -77,8 +77,8 @@ public:
      */
     static std::vector<ModulationScheme> DefaultSchemes;
 
-    friend std::ostream& operator <<(std::ostream &out,
-                                     const ModulationScheme &scheme);
+    friend std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme);
+
 private:
     unsigned int M;
     Gain SNR_Per_Bit;

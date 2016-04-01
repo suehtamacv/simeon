@@ -6,17 +6,48 @@
 #include <algorithm>
 #include <iostream>
 
+/**
+ * @brief The ParticleSwarmOptimization class is represents the PSO Algorithm.
+ * Its simulates a swarm of particles, that travel over the solution spaces to find
+ * a fit solution.
+ * @tparam PositionType is the type of the "position" of a particle. For example,
+ * a continuous travel would use a double or a long double.
+ * @tparam Fitness is the class that is used to evaluate the fitness of each
+ * particle. Such class must have a operator() that returns a PositionType, the
+ * fitness of this particle.
+ * @tparam Comparator is used to compare whether one particle is fitter than the
+ * other. It must have a operator(PSO_Particle A, PSO_Particle B) that returs true
+ * iff A is fitter than B.
+ */
 template<class PositionType, class Fitness, class Comparator>
 class ParticleSwarmOptimization
 {
 public:
+    /**
+     * @brief ParticleSwarmOptimization is the standard constructor of a PSO Optimization.
+     * @param P is the number of particles on each generation of the swarm.
+     * @param G is the number of generations.
+     * @param N is the number of dimensions of each particle's position.
+     * @param XMin is the minimum possible position, on each dimension.
+     * @param XMax is the maximum possible position, on each dimension.
+     * @param VMin is the minimum possible velocity, on each dimension.
+     * @param VMax is the maximum possible velocity, on each dimension.
+     */
     ParticleSwarmOptimization(unsigned int P, unsigned int G, unsigned int N,
                               PositionType XMin, PositionType XMax, PositionType VMin, PositionType VMax);
 
+    /**
+     * @brief Particles is a vector with the current generation particles.
+     */
     std::vector<std::shared_ptr<PSO_Particle<PositionType>>> Particles;
-
+    /**
+     * @brief BestParticle is a pointer to the best particle ever found.
+     */
     std::shared_ptr<PSO_Particle<PositionType>> BestParticle;
 
+    /**
+     * @brief run_generation runs the next generation on the PSO Optimization.
+     */
     void run_generation();
 
 private:

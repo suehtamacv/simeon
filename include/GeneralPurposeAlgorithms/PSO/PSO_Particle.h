@@ -7,24 +7,45 @@
 #include <cmath>
 #include <GeneralClasses/RandomGenerator.h>
 
+/**
+ * @brief The PSO_Particle class represents a particle to the PSO Optimization.
+ * @tparam PositionType represents the same that the homonym class represents on
+ * the ParticleSwarmOptimization.
+ */
 template<class PositionType>
 class PSO_Particle
 {
 public:
+    /**
+     * @brief PSO_Particle is the standard constructor for a particle on the PSO
+     * optimization.
+     * @param N is the number of dimensions on this particle's position.
+     * @param XMin is the minimum possible position, on each dimension.
+     * @param XMax is the maximum possible position, on each dimension.
+     */
     PSO_Particle(unsigned int N, PositionType XMin, PositionType XMax);
-    void initialize(PositionType XMin, PositionType XMax);
 
     std::vector<PositionType> X; //Position
     std::vector<PositionType> V; //Velocity
     std::vector<PositionType> P; //Best position so far
 
+    /**
+     * @brief currentFit is the current fit of this particle.
+     */
     PositionType currentFit;
+    /**
+     * @brief bestFit is the best fit ever found by this particle.
+     */
     PositionType bestFit;
-
+    /**
+     * @brief Neighbour are pointers to this particle neighbours.
+     */
     std::weak_ptr<PSO_Particle> Neighbour[2];
 
 private:
     unsigned int N;
+    void initialize(PositionType XMin, PositionType XMax);
+
 };
 
 template<class PositionType>
