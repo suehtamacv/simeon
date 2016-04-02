@@ -7,6 +7,11 @@
 namespace PSR
 {
 
+/**
+ * @brief The cHopDistance class has, as cost, the distance between the call's
+ * origin and destination nodes, measured in terms of how many links there are
+ * in the route between them found by the minimum hops algorithm.
+ */
 class cHopDistance : public Cost
 {
 public:

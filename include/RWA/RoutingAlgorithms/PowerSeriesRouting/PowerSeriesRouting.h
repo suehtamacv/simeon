@@ -5,6 +5,7 @@
 #include <armadillo>
 #include <vector>
 
+//! Calculations and costs to the Power Series Routing (PSR) routing algorithm.
 namespace PSR
 {
 class Cost;

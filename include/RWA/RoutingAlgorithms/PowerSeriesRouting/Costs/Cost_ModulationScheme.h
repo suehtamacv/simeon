@@ -8,6 +8,10 @@
 namespace PSR
 {
 
+/**
+ * @brief The cModulationScheme class has, as cost, the modulation scheme used
+ * by this connection, normalized by the greatest modulation scheme available.
+ */
 class cModulationScheme : public Cost
 {
 public:

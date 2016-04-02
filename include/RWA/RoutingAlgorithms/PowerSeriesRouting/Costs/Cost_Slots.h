@@ -7,6 +7,11 @@
 namespace PSR
 {
 
+/**
+ * @brief The cSlots class has, as cost, the quantity of slots required by this
+ * connection, normalized by the highest possible amount of slots required by
+ * any connection.
+ */
 class cSlots : public Cost
 {
 public:

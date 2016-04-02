@@ -7,6 +7,11 @@
 namespace PSR
 {
 
+/**
+ * @brief The cLinkLength class has, as cost, how big this link is compared to the
+ * other links in the topology. The links are put in crescent order, from 0 to N,
+ * and then the i-th link on the list will have i/N as cost.
+ */
 class cLinkLength : public Cost
 {
 public:

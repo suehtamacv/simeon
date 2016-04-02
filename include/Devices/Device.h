@@ -6,6 +6,7 @@
 #include <GeneralClasses/Power.h>
 #include <GeneralClasses/TransferFunctions/TransferFunction.h>
 
+//! Optical Devices.
 namespace Devices
 {
 /**

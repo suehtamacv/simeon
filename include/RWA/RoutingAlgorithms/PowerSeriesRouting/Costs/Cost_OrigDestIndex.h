@@ -6,6 +6,13 @@
 
 namespace PSR
 {
+
+/**
+ * @brief The cOrigDestIndex class has, as cost, the index of this origin destination
+ * pair. The pairs are put in a crescent list [0-1 0-2 ... 1-0 1-2 ... N-(N-1) ],
+ * with N * (N-1) elements. Each origin destination pair will have, as cost, its
+ * index on the list normalized by N * (N-1).
+ */
 class cOrigDestIndex : public Cost
 {
 public:

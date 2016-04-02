@@ -8,6 +8,10 @@
 namespace PSR
 {
 
+/**
+ * @brief The cBitrate class has, as cost, the bitrate of the call, normalized
+ * by the greatest bitrate possible.
+ */
 class cBitrate : public Cost
 {
 public:
