@@ -1,8 +1,8 @@
 #include <SimulationTypes/Simulation_TransparencyAnalysis.h>
-#include <RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
-#include <RWA/WavelengthAssignmentAlgorithms/FirstFit.h>
-#include <RWA/RoutingWavelengthAssignment.h>
-#include <RWA/Route.h>
+#include <RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
+#include <RMSA/RoutingWavelengthAssignment.h>
+#include <RMSA/Route.h>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 #include <GeneralClasses/Signal.h>
@@ -73,13 +73,13 @@ void Simulation_TransparencyAnalysis::run()
                 }
 
             std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
-            std::shared_ptr<WA::FirstFit> FF(new WA::FirstFit(TopCopy));
+            std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
-            RoutingWavelengthAssignment RWA(SP, FF, ModulationScheme::DefaultSchemes,
+            RoutingWavelengthAssignment RMSA(SP, FF, ModulationScheme::DefaultSchemes,
                                             TopCopy);
             std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
 
-            if (RWA.routeCall(C) != nullptr)
+            if (RMSA.routeCall(C) != nullptr)
                 {
                 TransparentPoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
                 }

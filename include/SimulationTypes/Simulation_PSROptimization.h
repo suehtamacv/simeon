@@ -3,11 +3,11 @@
 
 #include <SimulationTypes/SimulationType.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
-#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
 namespace Simulations
 {
@@ -41,7 +41,7 @@ private:
 
     PowerSeriesRouting::Variants Variant;
 
-    static WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    static SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     static RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;

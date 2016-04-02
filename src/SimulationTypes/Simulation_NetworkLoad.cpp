@@ -3,7 +3,7 @@
 #include <Structure/Link.h>
 #include <Structure/Node.h>
 #include <Calls/CallGenerator.h>
-#include <RWA/RoutingWavelengthAssignment.h>
+#include <RMSA/RoutingWavelengthAssignment.h>
 #include <iostream>
 #include <boost/assert.hpp>
 #include <boost/assign.hpp>
@@ -19,7 +19,7 @@ Simulation_NetworkLoad::Simulation_NetworkLoad() : SimulationType(
 
     Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) - 1;
     WavAssign_Algorithm =
-        (WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms) - 1;
+        (SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms) - 1;
     RegPlacement_Algorithm =
         (RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms) - 1;
     RegAssignment_Algorithm =
@@ -97,7 +97,7 @@ void Simulation_NetworkLoad::print()
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
@@ -151,14 +151,14 @@ void Simulation_NetworkLoad::load()
 
     Link::load(T);
 
-    //RWA Algorithms
+    //RMSA Algorithms
         {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
 
         if (Type == TranslucentNetwork)
             {
@@ -301,12 +301,12 @@ void Simulation_NetworkLoad::save(std::string SimConfigFileName)
 
     Link::save(SimConfigFileName, T);
 
-    simulations.front()->RWA->R_Alg->save(SimConfigFileName);
-    simulations.front()->RWA->WA_Alg->save(SimConfigFileName);
+    simulations.front()->RMSA->R_Alg->save(SimConfigFileName);
+    simulations.front()->RMSA->WA_Alg->save(SimConfigFileName);
     if(Type == TranslucentNetwork)
         {
         RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
-        simulations.front()->RWA->RA_Alg->save(SimConfigFileName);
+        simulations.front()->RMSA->RA_Alg->save(SimConfigFileName);
         }
 
     SimConfigFile.open(SimConfigFileName,
@@ -379,7 +379,7 @@ void Simulation_NetworkLoad::load_file(std::string ConfigFileName)
     Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
-        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     if(Type == Network_Type::TranslucentNetwork)
         {
@@ -441,11 +441,11 @@ void Simulation_NetworkLoad::create_Simulations()
         //Creates a copy of the topology.
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
-        //Creates the RWA Algorithms
+        //Creates the RMSA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
-        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+        std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+            SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
@@ -459,16 +459,16 @@ void Simulation_NetworkLoad::create_Simulations()
             RA_Alg = nullptr;
             }
 
-        //Creates the Call Generator and the RWA Object
+        //Creates the Call Generator and the RMSA Object
         std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy, load));
-        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+        std::shared_ptr<RoutingWavelengthAssignment> RMSA(
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
 
         //Push simulation into stack
         simulations.push_back(
             std::shared_ptr<NetworkSimulation>(new NetworkSimulation(
-                    Generator, RWA, NumCalls)));
+                    Generator, RMSA, NumCalls)));
 
         }
 }
@@ -479,19 +479,19 @@ void Simulation_NetworkLoad::place_Regenerators(std::shared_ptr<Topology> T)
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
             Routing_Algorithm, T);
-    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             WavAssign_Algorithm, T);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
         RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
             RegAssignment_Algorithm, T);
-    std::shared_ptr<RoutingWavelengthAssignment> RWA(
+    std::shared_ptr<RoutingWavelengthAssignment> RMSA(
         new RoutingWavelengthAssignment(
             R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg =
         RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
-            RegPlacement_Algorithm, T, RWA, NetworkLoadMin, NumCalls, runLoadNX);
+            RegPlacement_Algorithm, T, RMSA, NetworkLoadMin, NumCalls, runLoadNX);
 
     RP_Alg->placeRegenerators();
 }

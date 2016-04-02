@@ -1,17 +1,17 @@
 #include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
-#include <RWA/Route.h>
+#include <RMSA/Route.h>
 #include <Calls.h>
-#include <RWA/RoutingWavelengthAssignment.h>
+#include <RMSA/RoutingWavelengthAssignment.h>
 #include <iostream>
 
 using namespace Simulations;
 
 NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
-                                     std::shared_ptr<RoutingWavelengthAssignment> RWA,
+                                     std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                                      unsigned long NumMaxCalls) :
-    Generator(Generator), RWA(RWA), NumMaxCalls(NumMaxCalls)
+    Generator(Generator), RMSA(RMSA), NumMaxCalls(NumMaxCalls)
 {
     NumCalls = 0;
     NumBlockedCalls = 0;
@@ -43,7 +43,7 @@ void NetworkSimulation::run()
 
 void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 {
-    auto route = RWA->routeCall(evt->Parent);
+    auto route = RMSA->routeCall(evt->Parent);
     evt->Parent->CallEnding.lock()->route = evt->route = route;
 
     BOOST_ASSERT_MSG(evt->Parent->Status != Call::Not_Evaluated,

@@ -22,11 +22,11 @@ public:
     /**
      * @brief NetworkSimulation is the default constructor of a network simulation.
      * @param Generator is a pointer to a call generator object.
-     * @param RWA is a pointer to a RoutingWavelengthAssignment object.
+     * @param RMSA is a pointer to a RoutingWavelengthAssignment object.
      * @param NumMaxCalls is the number of call requests that will be simulated.
      */
     NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
-                      std::shared_ptr<RoutingWavelengthAssignment> RWA,
+                      std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                       long unsigned NumMaxCalls);
 
     /**
@@ -44,9 +44,9 @@ public:
      */
     std::shared_ptr<CallGenerator> Generator;
     /**
-     * @brief RWA is a pointer to this simulation's RWA object.
+     * @brief RMSA is a pointer to this simulation's RMSA object.
      */
-    std::shared_ptr<RoutingWavelengthAssignment> RWA;
+    std::shared_ptr<RoutingWavelengthAssignment> RMSA;
 
     /**
      * @brief NumMaxCalls is the number of call requests that will be simulated.

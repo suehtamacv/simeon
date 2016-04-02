@@ -6,6 +6,7 @@
 #include <boost/bimap.hpp>
 #include <Structure/Topology.h>
 
+//! Simulations that can run over this simulator.
 namespace Simulations
 {
 /**

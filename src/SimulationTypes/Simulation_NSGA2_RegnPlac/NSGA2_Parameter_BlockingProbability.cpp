@@ -1,6 +1,6 @@
 #include "include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h"
 #include "include/Calls/CallGenerator.h"
-#include "include/RWA/RoutingWavelengthAssignment.h"
+#include "include/RMSA/RoutingWavelengthAssignment.h"
 #include "include/SimulationTypes/NetworkSimulation.h"
 
 using namespace Simulations::NSGA2_Parameters;
@@ -34,21 +34,21 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
 
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
-        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+        std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+            SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 Sim.WavAssign_Algorithm, T);
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
             RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
                 Sim.RegAssignment_Algorithm, T);
 
-        //Creates the Call Generator and the RWA Object
+        //Creates the Call Generator and the RMSA Object
         std::shared_ptr<CallGenerator> Generator(new CallGenerator(T,
                 Sim.NetworkLoad));
-        std::shared_ptr<RoutingWavelengthAssignment> RWA(
+        std::shared_ptr<RoutingWavelengthAssignment> RMSA(
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
 
-        value = NetworkSimulation(Generator, RWA, Sim.NumCalls)
+        value = NetworkSimulation(Generator, RMSA, Sim.NumCalls)
                     .get_CallBlockingProbability();
         isEvaluated = true;
         }

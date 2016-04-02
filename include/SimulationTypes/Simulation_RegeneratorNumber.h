@@ -5,7 +5,7 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <SimulationTypes/SimulationType.h>
 #include <vector>
-#include "RWA.h"
+#include "RMSA.h"
 
 namespace Simulations
 {
@@ -49,7 +49,7 @@ private:
 
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
-    WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;

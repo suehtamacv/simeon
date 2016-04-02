@@ -1,10 +1,10 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
 #include <iomanip>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Calls.h>
-#include <RWA.h>
+#include <RMSA.h>
 #include <Structure/Link.h>
 #include <sstream>
 #include <boost/assert.hpp>
@@ -19,7 +19,7 @@ double Simulation_PSROptimization::OptimizationLoad;
 std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
 PowerSeriesRouting::Variants Simulation_PSROptimization::Fitness::Variant;
-WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
 Simulation_PSROptimization::RegPlacement_Algorithm;
@@ -107,11 +107,11 @@ void Simulation_PSROptimization::load()
 
     Link::load(T);
 
-    //RWA Algorithms
+    //RMSA Algorithms
         {
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
 
         if (Type == TranslucentNetwork)
             {
@@ -363,7 +363,7 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
-                  WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                  SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.left.at(
                       WavAssign_Algorithm) << std::endl;
     if(Type == TranslucentNetwork)
         {
@@ -437,7 +437,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
 
     WavAssign_Algorithm =
-        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     if(Type == Network_Type::TranslucentNetwork)
         {
@@ -523,7 +523,7 @@ void Simulation_PSROptimization::print()
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
@@ -573,11 +573,11 @@ double Simulation_PSROptimization::Fitness::operator()(
     //Creates a copy of the topology.
     auto TopologyCopy = std::make_shared<Topology>(*T);
 
-    //Creates the RWA Algorithms
+    //Creates the RMSA Algorithms
     auto R_Alg = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
 
-    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
@@ -594,15 +594,15 @@ double Simulation_PSROptimization::Fitness::operator()(
     //Initializes routing algorithm with the particle.
     R_Alg->initCoefficients(particle.get()->X);
 
-    //Creates the Call Generator and the RWA Object
+    //Creates the Call Generator and the RMSA Object
     auto Generator = std::make_shared<CallGenerator>(TopologyCopy,
                      Simulation_PSROptimization::OptimizationLoad,
                      TransmissionBitrate::DefaultBitrates);
-    auto RWA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg, RA_Alg,
+    auto RMSA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg, RA_Alg,
                ModulationScheme::DefaultSchemes, TopologyCopy);
 
     return
-        NetworkSimulation(Generator, RWA, Simulation_PSROptimization::NumCalls).
+        NetworkSimulation(Generator, RMSA, Simulation_PSROptimization::NumCalls).
         get_CallBlockingProbability();
 }
 

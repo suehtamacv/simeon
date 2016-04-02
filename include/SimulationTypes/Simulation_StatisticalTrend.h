@@ -2,11 +2,11 @@
 #define SIMULATION_BOXPLOT_H
 
 #include "SimulationType.h"
-#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
 namespace Simulations
 {
@@ -46,7 +46,7 @@ private:
 
     RoutingAlgorithm::RoutingAlgorithms
     Routing_Algorithm;
-    WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;

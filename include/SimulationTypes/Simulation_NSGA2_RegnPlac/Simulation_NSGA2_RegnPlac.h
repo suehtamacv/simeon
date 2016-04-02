@@ -3,9 +3,9 @@
 
 #include "../SimulationType.h"
 #include <GeneralPurposeAlgorithms/NSGA-2.h>
-#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
 namespace Simulations
 {
@@ -52,7 +52,7 @@ public:
      * @brief WavAssign_Algorithm is the wavelength assignment algorithm used by
      * the network simulation of each individual.
      */
-    WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     /**
      * @brief RegAssignment_Algorithm is the regenerator assignment algorithm used
