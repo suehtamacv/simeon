@@ -79,7 +79,7 @@ public:
     /**
      * @brief generate_Call chooses at random an origin, a destination, a bitrate
      * and creates a call. Its arrival time and duration are chosen with the
-     * exponential distributions determined by h and mu.
+     * exponential distributions determined by \a h and \a mu.
      *
      * @return a shared_ptr to a Call.
      */

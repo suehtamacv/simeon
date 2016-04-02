@@ -10,9 +10,19 @@
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_NSGA2_RegnPlac class runs MORP regenerator placement
+ * algorithm. This simulation uses the NSGA-2 genetic algorithm to find a
+ * suitable set of transparent and translucent nodes, in order to fit
+ * simultaneously call blocking probability, CapEx and OpEx constraints.
+ */
 class Simulation_NSGA2_RegnPlac : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_NSGA2_RegnPlac is the standard constructor for this
+     * topology.
+     */
     Simulation_NSGA2_RegnPlac();
 
     void help();
@@ -22,13 +32,32 @@ public:
     void load_file(std::string);
     void print();
 
+    /**
+     * @brief NumCalls is the number of calls that must be simulated by each
+     * individual on the NSGA2 Optimization.
+     */
     double NumCalls;
+    /**
+     * @brief NetworkLoad is the network load, in Erlangs, over which the simulation
+     * of each individual is run.
+     */
     double NetworkLoad;
 
-    RoutingAlgorithm::RoutingAlgorithms
-    Routing_Algorithm;
+    /**
+     * @brief Routing_Algorithm is the routing algorithm used by the network simulation
+     * of each individual.
+     */
+    RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    /**
+     * @brief WavAssign_Algorithm is the wavelength assignment algorithm used by
+     * the network simulation of each individual.
+     */
     WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
     WavAssign_Algorithm;
+    /**
+     * @brief RegAssignment_Algorithm is the regenerator assignment algorithm used
+     * by the network simulation of each individual.
+     */
     RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
