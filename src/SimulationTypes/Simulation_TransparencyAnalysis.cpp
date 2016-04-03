@@ -13,6 +13,8 @@
 #include <map>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() :
     SimulationType(Simulation_Type::transparency)

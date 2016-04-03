@@ -1,10 +1,12 @@
-#include "include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.h"
+#include "include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.h"
 #include <set>
 #include <Calls/Call.h>
 #include <GeneralClasses/TransmissionBitrate.h>
-#include <RWA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
+
+using namespace ROUT;
 
 PSR::cHopDistance::cHopDistance(int NMin, int NMax, std::shared_ptr<Topology> T)
     : Cost(NMin, NMax, T, Cost::hopdistance)

@@ -6,6 +6,8 @@
 #include "GeneralClasses/ModulationScheme.h"
 #include <map>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -70,6 +72,7 @@ private:
     std::map <CallProperties, arma::rowvec> cache;
 };
 
+}
 }
 
 #endif // COST_NOISE_H

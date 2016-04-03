@@ -1,4 +1,4 @@
-#include <RWA/TransparentSegment.h>
+#include <RMSA/TransparentSegment.h>
 #include <Structure/Link.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>

@@ -1,8 +1,10 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
 #include <set>
+
+using namespace ROUT;
 
 PSR::cOrigDestIndex::cOrigDestIndex
 (int NMin, int NMax, std::shared_ptr<Topology> T) :

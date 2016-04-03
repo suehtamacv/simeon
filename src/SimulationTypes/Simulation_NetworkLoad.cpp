@@ -11,6 +11,8 @@
 #include <map>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 Simulation_NetworkLoad::Simulation_NetworkLoad() : SimulationType(
         Simulation_Type::networkload)
@@ -19,7 +21,7 @@ Simulation_NetworkLoad::Simulation_NetworkLoad() : SimulationType(
 
     Routing_Algorithm = (RoutingAlgorithm::RoutingAlgorithms) - 1;
     WavAssign_Algorithm =
-        (SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms) - 1;
+        (SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms) - 1;
     RegPlacement_Algorithm =
         (RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms) - 1;
     RegAssignment_Algorithm =
@@ -79,16 +81,19 @@ void Simulation_NetworkLoad::print()
     std::cout << std::endl <<
               "  A Network Load Variation Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
@@ -97,7 +102,7 @@ void Simulation_NetworkLoad::print()
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
+              SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)

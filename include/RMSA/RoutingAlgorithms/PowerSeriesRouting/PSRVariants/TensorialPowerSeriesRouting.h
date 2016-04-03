@@ -3,6 +3,14 @@
 
 #include "../PowerSeriesRouting.h"
 
+namespace ROUT
+{
+/**
+ * @brief The TensorialPowerSeriesRouting class is a type of Power Series Routing
+ * algorithm. Differently from MatricialPowerSeriesRouting, this PSR uses the
+ * Krönecker product to produce, from a reduced set of coefficients, the large set
+ * required to calculate the power series.
+ */
 class TensorialPowerSeriesRouting : public PowerSeriesRouting
 {
 public:
@@ -16,5 +24,6 @@ private:
     arma::mat coefs_matrix;
     void calculate_CoefsMatrix();
 };
+}
 
 #endif // TENSORIALPOWERSERIESROUTING_H

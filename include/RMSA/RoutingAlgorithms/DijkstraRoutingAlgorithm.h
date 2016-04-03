@@ -3,6 +3,7 @@
 
 #include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 
+namespace ROUT {
 /**
  * @brief The DijkstraRoutingAlgorithm class is a class of routing algorithms
  * whose routes are determined using the Dijkstra Shortest Path algorithm.
@@ -16,5 +17,6 @@ public:
     virtual double get_Cost(std::weak_ptr<Link> link,
                             std::shared_ptr<Call> C) = 0;
 };
+}
 
 #endif // DIJKSTRAROUTINGALGORITHM_H

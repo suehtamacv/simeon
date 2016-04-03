@@ -4,6 +4,8 @@
 #include "include/SimulationTypes/NetworkSimulation.h"
 
 using namespace Simulations::NSGA2_Parameters;
+using namespace ROUT;
+using namespace SA;
 
 NSGA2_Parameter_BlockingProbability::NSGA2_Parameter_BlockingProbability(
     std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim) :
@@ -34,7 +36,7 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
 
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
-        std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+        std::shared_ptr<SpectrumAssignmentAlgorithm> WA_Alg =
             SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 Sim.WavAssign_Algorithm, T);
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =

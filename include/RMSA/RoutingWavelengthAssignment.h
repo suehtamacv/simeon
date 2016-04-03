@@ -5,7 +5,6 @@
 #include <memory>
 #include <Calls/Call.h>
 
-class RoutingAlgorithm;
 class RegeneratorAssignmentAlgorithm;
 class ModulationScheme;
 class Topology;
@@ -14,6 +13,10 @@ class Route;
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
 
+namespace ROUT
+{
+class RoutingAlgorithm;
+}
 namespace SA
 {
 class SpectrumAssignmentAlgorithm;
@@ -36,7 +39,7 @@ public:
      * @param Schemes is a vector with the possible modulation schemes.
      * @param T is a pointer to the topology.
      */
-    RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
+    RoutingWavelengthAssignment(std::shared_ptr<ROUT::RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
                                 std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
                                 std::vector<ModulationScheme> Schemes,
@@ -50,7 +53,7 @@ public:
      * @param Schemes is a vector with the possible modulation schemes.
      * @param T is a pointer to the topology.
      */
-    RoutingWavelengthAssignment(std::shared_ptr<RoutingAlgorithm>  R_Alg,
+    RoutingWavelengthAssignment(std::shared_ptr<ROUT::RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
                                 std::vector<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
@@ -58,7 +61,7 @@ public:
     /**
      * @brief R_Alg is a pointer to the RoutingAlgorithm.
      */
-    std::shared_ptr<RoutingAlgorithm> R_Alg;
+    std::shared_ptr<ROUT::RoutingAlgorithm> R_Alg;
     /**
      * @brief WA_Alg is a pointer to the SpectrumAssignmentAlgorithm.
      */

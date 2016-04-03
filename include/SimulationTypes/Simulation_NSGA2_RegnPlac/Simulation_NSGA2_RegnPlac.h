@@ -47,7 +47,7 @@ public:
      * @brief Routing_Algorithm is the routing algorithm used by the network simulation
      * of each individual.
      */
-    RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     /**
      * @brief WavAssign_Algorithm is the wavelength assignment algorithm used by
      * the network simulation of each individual.

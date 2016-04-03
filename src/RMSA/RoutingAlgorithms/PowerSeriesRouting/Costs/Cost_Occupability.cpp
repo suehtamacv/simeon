@@ -1,7 +1,9 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 #include <cmath>
+
+using namespace ROUT;
 
 PSR::cOccupability::cOccupability(int NMin, int NMax,
                                   std::shared_ptr<Topology> T)

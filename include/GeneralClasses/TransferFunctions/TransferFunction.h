@@ -12,7 +12,7 @@ class TransferFunction
 public:
     /**
      * @brief TransferFunction is a constructor for a TransferFunction.
-     * @param freqMin is the begining of the signal's bandwidth.
+     * @param freqMin is the beginning of the signal's bandwidth.
      * @param freqMax is the end of the signal's bandwidth.
      * @param numSamples is the number of frequency samples along the bandwidth.
      * @param scale is the result of the gains and losses over this transfer function.
@@ -38,7 +38,7 @@ public:
      */
     bool isImpulseTransferFunction;
     /**
-     * @brief freqMin is the begining of the signal's bandwidth.
+     * @brief freqMin is the beginning of the signal's bandwidth.
      */
     double freqMin;
     /**

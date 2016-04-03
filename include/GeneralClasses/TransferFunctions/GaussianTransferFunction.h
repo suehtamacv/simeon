@@ -11,7 +11,7 @@ class GaussianTransferFunction : public TransferFunction
 public:
     /**
      * @brief GaussianTransferFunction is a constructor for a GaussianTransferFunction.
-     * @param freqMin is the begining of the signal's bandwidth.
+     * @param freqMin is the beginning of the signal's bandwidth.
      * @param freqMax is the end of the signal's bandwidth.
      * @param numSamples is the number of frequency samples along the bandwidth.
      * @param filterOrder is the order of this Gaussian function.

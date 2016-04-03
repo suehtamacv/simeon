@@ -4,6 +4,8 @@
 #include "Cost.h"
 #include <map>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -29,6 +31,7 @@ private:
     };
 };
 
+}
 }
 
 #endif // CLINKLENGTH_H

@@ -1,5 +1,7 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h>
 #include <Structure/Link.h>
+
+using namespace ROUT;
 
 PSR::cContiguity::cContiguity(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::contiguity)

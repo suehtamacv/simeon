@@ -3,6 +3,13 @@
 
 #include <RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
 
+namespace ROUT
+{
+/**
+ * @brief The LengthOccupationRoutingAvailability class represents the Length and
+ * Occupation Routing algorithm (availability variant). Its link cost is a
+ * ponderation with the link length and its availability.
+ */
 class LengthOccupationRoutingAvailability : public DijkstraRoutingAlgorithm
 {
 public:
@@ -12,5 +19,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // LENGTHOCCUPATIONROUTINGAVAILABILITY_H

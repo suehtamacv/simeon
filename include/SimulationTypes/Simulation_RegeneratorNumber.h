@@ -47,8 +47,7 @@ private:
     unsigned long stepRegNumber;
     unsigned int numTranslucentNodes;
 
-    RoutingAlgorithm::RoutingAlgorithms
-    Routing_Algorithm;
+    ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms

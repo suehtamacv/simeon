@@ -39,7 +39,7 @@ private:
 
     std::shared_ptr<PSO_Particle<double>> BestParticle;
 
-    PowerSeriesRouting::Variants Variant;
+    ROUT::PowerSeriesRouting::Variants Variant;
 
     static SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
@@ -53,7 +53,7 @@ private:
 
     int NMin;
     int NMax;
-    static std::vector<std::shared_ptr<PSR::Cost>> Costs;
+    static std::vector<std::shared_ptr<ROUT::PSR::Cost>> Costs;
 
     std::string CoefficientsFilename;
     std::string LogFilename;
@@ -80,7 +80,7 @@ private:
     struct Fitness
     {
         static std::shared_ptr<Topology> T;
-        static PowerSeriesRouting::Variants Variant;
+        static ROUT::PowerSeriesRouting::Variants Variant;
         double operator()(std::shared_ptr<PSO_Particle<double>>);
     };
 

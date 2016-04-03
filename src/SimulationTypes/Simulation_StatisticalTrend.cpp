@@ -9,6 +9,8 @@
 #include <map>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 Simulation_StatisticalTrend::Simulation_StatisticalTrend() :
     SimulationType(Simulation_Type::statisticaltrend)

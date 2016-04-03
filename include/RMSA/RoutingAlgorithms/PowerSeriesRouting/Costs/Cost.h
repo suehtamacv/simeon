@@ -9,9 +9,10 @@ class Link;
 class Call;
 class Topology;
 
+namespace ROUT
+{
 namespace PSR
 {
-
 /**
  * @brief The Cost class represents a cost to the PSR.
  */
@@ -106,7 +107,7 @@ protected:
     int NMin, NMax;
     std::shared_ptr<Topology> T;
 };
-
+}
 }
 
 #endif // COST_H

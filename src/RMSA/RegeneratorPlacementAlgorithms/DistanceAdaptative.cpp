@@ -1,4 +1,4 @@
-#include <RWA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 #include <Structure/Node.h>

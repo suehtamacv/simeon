@@ -1,8 +1,10 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
+
+using namespace ROUT;
 
 PSR::Cost::CostNameBimap PSR::Cost::CostsNames =
     boost::assign::list_of<PSR::Cost::CostNameBimap::relation>

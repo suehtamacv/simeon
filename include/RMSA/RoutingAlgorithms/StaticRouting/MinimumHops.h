@@ -1,9 +1,15 @@
 #ifndef MINIMUMHOPS_H
 #define MINIMUMHOPS_H
 
-#include <RMSA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h>
 
-class MinimumHops : public StaticRoutingAlgorithm
+namespace ROUT
+{
+/**
+ * @brief The MinimumHops class represents the Minimum Hops routing algorithm.
+ * The link cost of each link is 1.
+ */
+class MinimumHops : public FixedRoutingAlgorithm
 {
 public:
     MinimumHops(std::shared_ptr<Topology> T);
@@ -12,5 +18,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // MINIMUMHOPS_H

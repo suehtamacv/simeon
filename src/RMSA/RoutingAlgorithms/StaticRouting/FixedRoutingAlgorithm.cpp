@@ -1,15 +1,17 @@
-#include <RWA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h>
 #include <Calls/Call.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 
-StaticRoutingAlgorithm::StaticRoutingAlgorithm
+using namespace ROUT;
+
+FixedRoutingAlgorithm::FixedRoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg) :
     DijkstraRoutingAlgorithm(T, RoutAlg)
 {
 }
 
-std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(
+std::vector<std::weak_ptr<Link>> FixedRoutingAlgorithm::route(
                                   std::shared_ptr<Call> C)
 {
     if (Routes.empty())
@@ -20,7 +22,7 @@ std::vector<std::weak_ptr<Link>> StaticRoutingAlgorithm::route(
     return Routes[std::make_pair(C->Origin.lock()->ID, C->Destination.lock()->ID)];
 }
 
-void StaticRoutingAlgorithm::precalculate_Routes()
+void FixedRoutingAlgorithm::precalculate_Routes()
 {
     for (auto &orig : T->Nodes)
         {

@@ -1,5 +1,5 @@
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms.h>
 #include <cmath>
 #include <algorithm>
 #include <iostream>
@@ -8,7 +8,7 @@
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
-#include <RWA/TransparentSegment.h>
+#include <RMSA/TransparentSegment.h>
 #include <Structure/Topology.h>
 
 RegeneratorAssignmentAlgorithm::RegAssignNameBimap

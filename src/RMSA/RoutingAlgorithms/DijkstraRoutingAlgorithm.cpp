@@ -1,4 +1,4 @@
-#include <RWA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
 #include <Calls/Call.h>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
@@ -7,6 +7,8 @@
 #include <limits>
 #include <map>
 #include <set>
+
+using namespace ROUT;
 
 DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlgType) :

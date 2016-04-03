@@ -1,9 +1,15 @@
 #ifndef SHORTESTPATH_H
 #define SHORTESTPATH_H
 
-#include <RMSA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h>
 
-class ShortestPath : public StaticRoutingAlgorithm
+namespace ROUT
+{
+/**
+ * @brief The ShortestPath class represents the Shortest Path routing algorithm.
+ * The link cost of each link is its length.
+ */
+class ShortestPath : public FixedRoutingAlgorithm
 {
 public:
     ShortestPath(std::shared_ptr<Topology> T);
@@ -12,5 +18,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // SHORTESTPATH_H

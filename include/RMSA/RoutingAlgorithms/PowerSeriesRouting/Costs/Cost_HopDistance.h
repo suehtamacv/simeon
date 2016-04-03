@@ -4,6 +4,8 @@
 #include "Cost.h"
 #include <map>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -34,6 +36,7 @@ private:
     };
 };
 
+}
 }
 
 #endif // CHOPDISTANCE_H

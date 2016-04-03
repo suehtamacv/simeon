@@ -5,6 +5,8 @@
 #include <map>
 #include <GeneralClasses/TransmissionBitrate.h>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -23,6 +25,7 @@ private:
     std::map<TransmissionBitrate, arma::rowvec> cache;
 };
 
+}
 }
 
 #endif // BITRATE_H

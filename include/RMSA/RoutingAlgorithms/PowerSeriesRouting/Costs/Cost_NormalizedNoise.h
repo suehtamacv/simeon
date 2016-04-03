@@ -6,6 +6,8 @@
 #include <GeneralClasses/ModulationScheme.h>
 #include <map>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -25,6 +27,7 @@ private:
     std::map <std::shared_ptr<Link>, arma::rowvec> cache;
 };
 
+}
 }
 
 #endif // CNORMNOISE_H

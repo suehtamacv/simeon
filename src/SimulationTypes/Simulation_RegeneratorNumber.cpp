@@ -7,6 +7,8 @@
 #include <map>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 Simulation_RegeneratorNumber::Simulation_RegeneratorNumber() :
     SimulationType(Simulation_Type::regnum), hasLoaded(false)

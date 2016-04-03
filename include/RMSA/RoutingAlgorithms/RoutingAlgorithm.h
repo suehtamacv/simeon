@@ -9,6 +9,9 @@ class Topology;
 class Call;
 class Link;
 
+//! Contains the routing algorithms
+namespace ROUT
+{
 /**
  * @brief The RoutingAlgorithm class searches for a route, given a Call.
  */
@@ -50,5 +53,6 @@ public:
 
     std::shared_ptr<Topology> T;
 };
+}
 
 #endif // ROUTINGALGORITHM_H

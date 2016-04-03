@@ -13,6 +13,8 @@
 #include <SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
 
@@ -127,7 +129,7 @@ void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
                   RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) <<
                   std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
-                  SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.left.at(
+                  SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.left.at(
                       WavAssign_Algorithm) << std::endl;
     SimConfigFile << "  RegeneratorAssignmentAlgorithm = " <<
                   RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(
@@ -176,7 +178,7 @@ void Simulation_NSGA2_RegnPlac::load_file(std::string ConfigFileName)
     Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
-        SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
+        SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     RegAssignment_Algorithm =
         RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(
@@ -214,7 +216,7 @@ void Simulation_NSGA2_RegnPlac::print()
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
+              SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     std::cout << "-> Regenerator Assignment Algorithm = " <<
@@ -240,7 +242,7 @@ void Simulation_NSGA2_RegnPlac::load()
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
+            SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
 
         //Regenerator Assignment Algorithm
         RegAssignment_Algorithm =

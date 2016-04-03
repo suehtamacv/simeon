@@ -8,9 +8,12 @@
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <Structure/Topology.h>
 
+using namespace ROUT;
+using namespace SA;
+
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm> R_Alg,
-    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
+    std::shared_ptr<SpectrumAssignmentAlgorithm> WA_Alg,
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
     std::vector<ModulationScheme> Schemes,
     std::shared_ptr<Topology> T) :
@@ -21,7 +24,7 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
 
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm>  R_Alg,
-    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
+    std::shared_ptr<SpectrumAssignmentAlgorithm> WA_Alg,
     std::vector<ModulationScheme> Schemes,
     std::shared_ptr<Topology> T) :
     R_Alg(R_Alg), WA_Alg(WA_Alg), Schemes(Schemes), T(T)

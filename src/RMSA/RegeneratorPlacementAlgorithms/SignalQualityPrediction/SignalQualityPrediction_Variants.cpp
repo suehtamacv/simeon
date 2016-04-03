@@ -1,9 +1,9 @@
-#include "include/RWA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.h"
-#include "RWA/RoutingAlgorithms.h"
+#include "include/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.h"
+#include "RMSA/RoutingAlgorithms.h"
 #include <Calls/Call.h>
 #include <Structure/Topology.h>
 #include <Structure/Link.h>
-#include <RWA/TransparentSegment.h>
+#include <RMSA/TransparentSegment.h>
 #include <boost/assign.hpp>
 
 SignalQualityPrediction_Variants::SQPVariantNameBimap
@@ -74,17 +74,17 @@ void SignalQualityPrediction_Variants::chooseSQPVariant()
 
 void SignalQualityPrediction_Variants::evaluateLNMax()
 {
-    std::shared_ptr<StaticRoutingAlgorithm> RAlg;
+    std::shared_ptr<ROUT::FixedRoutingAlgorithm> RAlg;
 
     //Choose adequate Routing Algorithm
     switch (Type)
         {
         case HopsNumber:
-            RAlg = std::make_shared<MinimumHops>(T);
+            RAlg = std::make_shared<ROUT::MinimumHops>(T);
             break;
 
         case Distance:
-            RAlg = std::make_shared<ShortestPath>(T);
+            RAlg = std::make_shared<ROUT::ShortestPath>(T);
             break;
         }
 

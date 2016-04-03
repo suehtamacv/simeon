@@ -145,16 +145,16 @@ void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
 void SignalQualityPrediction::evaluateLNMax()
 {
     LNMax.clear();
-    std::shared_ptr<RoutingAlgorithm> R_Alg;
+    std::shared_ptr<ROUT::RoutingAlgorithm> R_Alg;
 
     switch (Type)
         {
         case Distance:
-            R_Alg = std::make_shared<ShortestPath>(T);
+            R_Alg = std::make_shared<ROUT::ShortestPath>(T);
             break;
 
         case HopsNumber:
-            R_Alg = std::make_shared<MinimumHops>(T);
+            R_Alg = std::make_shared<ROUT::MinimumHops>(T);
             break;
         }
 

@@ -1,4 +1,4 @@
-#include <RWA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h>
 #include <random>
 #include <boost/assert.hpp>
 #include <GeneralClasses/RandomGenerator.h>

@@ -3,6 +3,13 @@
 
 #include <RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
 
+namespace ROUT
+{
+/**
+ * @brief The LengthOccupationRoutingContiguity class represents the Length and
+ * Occupation Routing algorithm (contiguity variant). Its link cost is a
+ * ponderation with the link length and its contiguity.
+ */
 class LengthOccupationRoutingContiguity : public DijkstraRoutingAlgorithm
 {
 public:
@@ -12,5 +19,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // LENGTHOCCUPATIONROUTINGCONTIGUITY_H

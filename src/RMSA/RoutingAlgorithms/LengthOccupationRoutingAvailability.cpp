@@ -1,6 +1,8 @@
-#include <RWA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h>
+#include <RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
+
+using namespace ROUT;
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
     std::shared_ptr<Topology> T) :

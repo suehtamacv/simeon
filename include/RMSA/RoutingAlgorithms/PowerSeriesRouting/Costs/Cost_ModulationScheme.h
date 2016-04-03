@@ -5,6 +5,8 @@
 #include <map>
 #include <GeneralClasses/ModulationScheme.h>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -23,6 +25,7 @@ private:
     std::map<ModulationScheme, arma::rowvec> cache;
 };
 
+}
 }
 
 #endif // CMODULATIONSCHEME_H

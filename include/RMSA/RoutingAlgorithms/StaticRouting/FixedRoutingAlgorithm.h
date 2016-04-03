@@ -6,10 +6,17 @@
 
 class Link;
 
-class StaticRoutingAlgorithm : public DijkstraRoutingAlgorithm
+namespace ROUT
+{
+/**
+ * @brief The FixedRoutingAlgorithm class represents the Dijkstra-based routing
+ * algorithms whose route between a certain pair of nodes does not change as the
+ * simulation progresses.
+ */
+class FixedRoutingAlgorithm : public DijkstraRoutingAlgorithm
 {
 public:
-    StaticRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg);
+    FixedRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg);
 
     std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C);
 
@@ -17,5 +24,6 @@ public:
 private:
     void precalculate_Routes();
 };
+}
 
 #endif // STATICROUTINGALGORITHM_H

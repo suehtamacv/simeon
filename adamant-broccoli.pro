@@ -59,6 +59,7 @@ SOURCES += src/main.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.cpp \
     src/RMSA/Route.cpp \
     src/RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.cpp \
+    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
     src/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.cpp \
@@ -83,7 +84,6 @@ SOURCES += src/main.cpp \
     src/RMSA/RoutingAlgorithms/RoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.cpp \
     src/RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.cpp \
     src/RMSA/RoutingWavelengthAssignment.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/BestFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/ExactFit.cpp \
@@ -170,6 +170,7 @@ HEADERS += \
     include/RMSA/Route.h \
     include/RMSA/RoutingAlgorithms.h \
     include/RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h \
+    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h \
     include/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
     include/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \
     include/RMSA/RoutingAlgorithms/RoutingAlgorithm.h \
@@ -196,7 +197,6 @@ HEADERS += \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h \
     include/RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h \
     include/RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/StaticRoutingAlgorithm.h \
     include/RMSA/RoutingWavelengthAssignment.h \
     include/RMSA/SpectrumAssignmentAlgorithms.h \
     include/RMSA/SpectrumAssignmentAlgorithms/BestFit.h \

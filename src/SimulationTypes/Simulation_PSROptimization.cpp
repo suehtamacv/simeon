@@ -13,6 +13,8 @@
 #include <map>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;

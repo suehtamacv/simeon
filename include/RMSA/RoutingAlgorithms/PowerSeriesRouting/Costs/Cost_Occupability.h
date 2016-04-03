@@ -3,6 +3,8 @@
 
 #include "Cost.h"
 
+namespace ROUT
+{
 namespace PSR
 {
 /**
@@ -20,6 +22,7 @@ private:
     arma::mat cache;
 };
 
+}
 }
 
 #endif // COST_OCCUPABILITY_H

@@ -4,6 +4,8 @@
 #include <map>
 #include "Cost.h"
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -23,6 +25,7 @@ private:
     void createCache();
     std::map<std::pair<int, int>, arma::rowvec> cache;
 };
+}
 }
 
 #endif // CORIGDESTINDEX_H

@@ -1,8 +1,10 @@
-#include "include/RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_LinkLength.h"
+#include "include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_LinkLength.h"
 #include <set>
 #include <Structure/Link.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
+
+using namespace ROUT;
 
 PSR::cLinkLength::cLinkLength(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::linklength)

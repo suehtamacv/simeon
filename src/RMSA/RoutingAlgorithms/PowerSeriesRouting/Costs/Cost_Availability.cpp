@@ -1,7 +1,9 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 #include <cmath>
+
+using namespace ROUT;
 
 PSR::cAvailability::cAvailability(int NMin, int NMax,
                                   std::shared_ptr<Topology> T)

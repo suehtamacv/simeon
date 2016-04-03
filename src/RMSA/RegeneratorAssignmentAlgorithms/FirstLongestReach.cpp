@@ -1,5 +1,5 @@
-#include <RWA/RegeneratorAssignmentAlgorithms/FirstLongestReach.h>
-#include <RWA/TransparentSegment.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/FirstLongestReach.h>
+#include <RMSA/TransparentSegment.h>
 #include <Structure/Node.h>
 #include <Structure/Link.h>
 #include <Calls/Call.h>

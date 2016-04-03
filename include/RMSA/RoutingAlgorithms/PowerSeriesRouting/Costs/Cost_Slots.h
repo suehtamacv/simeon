@@ -4,6 +4,8 @@
 #include "Cost.h"
 #include <map>
 
+namespace ROUT
+{
 namespace PSR
 {
 
@@ -23,6 +25,7 @@ private:
     std::map<unsigned int, arma::rowvec> cache;
 };
 
+}
 }
 
 #endif // CSLOTS_H

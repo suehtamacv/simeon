@@ -5,12 +5,19 @@
 #include <armadillo>
 #include <vector>
 
+namespace ROUT
+{
+
 //! Calculations and costs to the Power Series Routing (PSR) routing algorithm.
 namespace PSR
 {
 class Cost;
 }
 
+/**
+ * @brief The PowerSeriesRouting class represents the Power Series Routing algorithm.
+ * Its link cost is a truncated power series of carefully chosen costs.
+ */
 class PowerSeriesRouting : public DijkstraRoutingAlgorithm
 {
 public:
@@ -66,6 +73,7 @@ protected:
     static arma::mat defaultcoefficients;
     static std::vector<std::shared_ptr<PSR::Cost>> defaultcosts;
 };
+}
 
 #endif // POWERSERIESROUTING_H
 

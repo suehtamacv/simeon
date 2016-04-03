@@ -1,10 +1,12 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
 #include <iostream>
 #include <algorithm>
 #include <boost/program_options.hpp>
 #include <boost/assign.hpp>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
+
+using namespace ROUT;
 
 arma::mat PowerSeriesRouting::defaultcoefficients;
 std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;

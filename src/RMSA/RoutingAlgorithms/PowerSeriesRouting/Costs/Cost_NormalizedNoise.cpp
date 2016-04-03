@@ -1,7 +1,9 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h>
 #include <Calls/Call.h>
 #include <Structure.h>
 #include <map>
+
+using namespace ROUT;
 
 PSR::cNormNoise::cNormNoise(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::normnoise)

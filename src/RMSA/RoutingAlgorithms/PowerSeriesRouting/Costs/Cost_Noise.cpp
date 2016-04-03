@@ -1,6 +1,8 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h>
 #include <Structure.h>
 #include <Calls/Call.h>
+
+using namespace ROUT;
 
 PSR::cNoise::cNoise(
     int NMin, int NMax, std::shared_ptr<Topology> T) :

@@ -1,9 +1,11 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 #include <Calls/Call.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 #include <algorithm>
+
+using namespace ROUT;
 
 LocalPowerSeriesRouting::LocalPowerSeriesRouting(std::shared_ptr<Topology> T)
     : PowerSeriesRouting(T, localPSR)

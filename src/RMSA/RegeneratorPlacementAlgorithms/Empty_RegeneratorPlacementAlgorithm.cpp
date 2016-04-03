@@ -1,4 +1,4 @@
-#include "include/RWA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h"
+#include "include/RMSA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h"
 
 Empty_RegeneratorPlacementAlgorithm::Empty_RegeneratorPlacementAlgorithm
 (std::shared_ptr<Topology> T) : RegeneratorPlacementAlgorithm(T)

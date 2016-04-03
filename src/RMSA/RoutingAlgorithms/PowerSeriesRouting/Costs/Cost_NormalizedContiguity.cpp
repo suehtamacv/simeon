@@ -1,5 +1,7 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h>
 #include <Structure/Link.h>
+
+using namespace ROUT;
 
 PSR::cNormContiguity::cNormContiguity(
     int NMin, int NMax, std::shared_ptr<Topology> T) :

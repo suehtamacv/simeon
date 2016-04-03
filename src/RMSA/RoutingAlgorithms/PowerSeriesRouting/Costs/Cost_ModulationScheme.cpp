@@ -1,5 +1,7 @@
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h>
+#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h>
 #include <Calls/Call.h>
+
+using namespace ROUT;
 
 PSR::cModulationScheme::cModulationScheme(
     int NMin, int NMax, std::shared_ptr<Topology> T) :
