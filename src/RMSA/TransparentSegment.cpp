@@ -2,6 +2,7 @@
 #include <Structure/Link.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
+#include <Calls/Call.h>
 
 TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
                                        ModulationScheme ModScheme, unsigned int NumRegUsed) :
@@ -85,3 +86,37 @@ unsigned int TransparentSegment::get_MaxContigSlots()
     return MaxSlots;
 }
 
+int TransparentSegment::get_Contiguity(std::shared_ptr<Call> C)
+{
+    int NumRequiredSlots = ModScheme.get_NumSlots(C->Bitrate);
+    int Contiguity = 0;
+    int CurrentFreeSlots = 0;
+
+    auto Slots = std::vector<bool>(Link::NumSlots, true);
+    for (auto &link : Links)
+        {
+        for (unsigned i = 0; i < Slots.size(); ++i)
+            {
+            Slots[i] = Slots[i] && link.lock()->isSlotFree(i);
+            }
+        }
+
+    for (int s = 0; s < Link::NumSlots; s++)
+        {
+        if (Slots[s])
+            {
+            CurrentFreeSlots++;
+            }
+        else
+            {
+            CurrentFreeSlots = 0;
+            }
+
+        if (CurrentFreeSlots >= NumRequiredSlots)
+            {
+            Contiguity++;
+            }
+        }
+
+    return Contiguity;
+}

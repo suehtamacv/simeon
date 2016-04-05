@@ -121,7 +121,6 @@ TransparentSegment RegeneratorAssignmentAlgorithm::createTransparentSegment(
 {
 
     std::vector<std::weak_ptr<Link>> SegmentLinks = segmentLinks(Links, start, end);
-
     return TransparentSegment(SegmentLinks,
                               getMostEfficientScheme(C, SegmentLinks),
                               NumRegUsed);

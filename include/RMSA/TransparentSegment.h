@@ -10,6 +10,7 @@
 class Link;
 class Node;
 class Slot;
+class Call;
 
 /**
  * @brief The TransparentSegment class is a set of links, into which a call is
@@ -72,6 +73,15 @@ public:
      * @return the maximum number of adjacent free slots in the TransparentSegment.
      */
     unsigned int get_MaxContigSlots();
+    /**
+     * @brief get_Contiguity returns the contiguity measure of this segment. This
+     * measure is how many ways it is possible to allocate the required slots by
+     * Call C on this segment.
+     * @param C is the Call against whom the contiguity measured is calculated.
+     * @return in how many ways it is possible to allocate the required slots by
+     * Call C on this segment.
+     */
+    int get_Contiguity(std::shared_ptr<Call> C);
 };
 
 #endif // TRANSPARENTSEGMENT_H
