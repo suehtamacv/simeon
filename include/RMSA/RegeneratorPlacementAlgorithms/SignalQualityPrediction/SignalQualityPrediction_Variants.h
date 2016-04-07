@@ -4,12 +4,16 @@
 #include "SignalQualityPrediction.h"
 #include <boost/bimap.hpp>
 
+namespace RP
+{
+namespace SQP
+{
 class SignalQualityPrediction_Variants : public SignalQualityPrediction
 {
 public:
 #define SQPVARIANTS \
-  X(mSCH, "Minimum Scheme") \
-  X(MSCH, "Maximum Scheme")
+    X(mSCH, "Minimum Scheme") \
+    X(MSCH, "Maximum Scheme")
 
 #define X(a,b) a,
     enum SQP_Variants
@@ -38,5 +42,7 @@ private:
 
     void evaluateLNMax();
 };
+}
+}
 
 #endif // SIGNALQUALITYPREDICTION_VARIANTS_H

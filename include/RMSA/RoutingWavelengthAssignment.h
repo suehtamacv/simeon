@@ -5,7 +5,6 @@
 #include <memory>
 #include <Calls/Call.h>
 
-class RegeneratorAssignmentAlgorithm;
 class ModulationScheme;
 class Topology;
 class Route;
@@ -20,6 +19,10 @@ class RoutingAlgorithm;
 namespace SA
 {
 class SpectrumAssignmentAlgorithm;
+}
+namespace RA
+{
+class RegeneratorAssignmentAlgorithm;
 }
 
 /**
@@ -41,7 +44,7 @@ public:
      */
     RoutingWavelengthAssignment(std::shared_ptr<ROUT::RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
-                                std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
+                                std::shared_ptr<RA::RegeneratorAssignmentAlgorithm> RA_Alg,
                                 std::vector<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
 
@@ -70,7 +73,7 @@ public:
      * @brief RA_Alg is a pointer to the RegeneratorAssignmentAlgorithm. If the
      * simulation is transparent, this pointer must be nullptr.
      */
-    std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
+    std::shared_ptr<RA::RegeneratorAssignmentAlgorithm> RA_Alg;
     /**
      * @brief Schemes is a vector with the possible modulation schemes.
      */

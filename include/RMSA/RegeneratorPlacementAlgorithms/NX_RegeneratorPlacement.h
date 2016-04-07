@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 
+namespace RP
+{
 /**
  * @brief The NX_RegeneratorPlacement class is a type of RegeneratorPlacementAlgorithm.
  */
@@ -24,8 +26,15 @@ public:
 
     virtual void load() = 0;
 
+    /**
+     * @brief NX_N is the number of translucent nodes.
+     */
     unsigned static NX_N;
+    /**
+     * @brief NX_X is the number of regenerators per node.
+     */
     unsigned static NX_X;
 };
+}
 
 #endif // NX_REGENERATORPLACEMENT_H

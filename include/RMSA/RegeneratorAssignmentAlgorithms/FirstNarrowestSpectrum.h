@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
+namespace RA
+{
 /**
  * @brief The FirstNarrowestSpectrum class implements the First Narrowest Spectrum
  * RegeneratorAssignmentAlgorithm.
@@ -26,5 +28,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // FIRSTNARROWESTSPECTRUM_H

@@ -5,6 +5,8 @@
 
 namespace ROUT
 {
+namespace PSR
+{
 /**
  * @brief The TensorialPowerSeriesRouting class is a type of Power Series Routing
  * algorithm. Differently from MatricialPowerSeriesRouting, this PSR uses the
@@ -24,6 +26,7 @@ private:
     arma::mat coefs_matrix;
     void calculate_CoefsMatrix();
 };
+}
 }
 
 #endif // TENSORIALPOWERSERIESROUTING_H

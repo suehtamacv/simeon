@@ -15,6 +15,9 @@ class Node;
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
 
+//! Contains the Regenerator Assignment Algorithms.
+namespace RA
+{
 /**
  * @brief The RegeneratorAssignmentAlgorithm class assigns which nodes will use
  * regenerators, given a call and a set of links found by the RoutingAlgorithm.
@@ -131,13 +134,32 @@ public:
             std::weak_ptr<Node> end,
             unsigned int NumRegUsed);
 
+    /**
+     * @brief RegAssAlgType is the type of regenerator assignment algorithm.
+     */
     RegeneratorAssignmentAlgorithms RegAssAlgType;
 
+    /**
+     * @brief define_RegeneratorAssignmentAlgorithm asks the user to define a
+     * regenerator assignment algorithm.
+     * @return the chosen regenerator assignment algorithm.
+     */
     static RegeneratorAssignmentAlgorithms define_RegeneratorAssignmentAlgorithm();
+    /**
+     * @brief create_RegeneratorAssignmentAlgorithm creates a new regenerator
+     * assignment algorithm.
+     * @return a pointer to the created RA algorithm.
+     */
     static std::shared_ptr<RegeneratorAssignmentAlgorithm>
     create_RegeneratorAssignmentAlgorithm(
         RegeneratorAssignmentAlgorithms, std::shared_ptr<Topology>);
+    /**
+     * @brief load loads parameters required to run the RA algorithm.
+     */
     virtual void load() = 0;
+    /**
+     * @brief save saves the loaded parameters on a file.
+     */
     virtual void save(std::string) = 0;
 private:
     std::vector<std::weak_ptr<Link>> segmentLinks(
@@ -145,5 +167,6 @@ private:
                                       std::weak_ptr<Node> start,
                                       std::weak_ptr<Node> end);
 };
+}
 
 #endif // REGENERATORASSIGNMENTALGORITHM_H

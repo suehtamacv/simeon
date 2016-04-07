@@ -4,6 +4,8 @@
 #include <GeneralClasses/RandomGenerator.h>
 #include <Structure/Topology.h>
 
+using namespace RP;
+
 NodalDegreeFirst::NodalDegreeFirst(std::shared_ptr<Topology> T) :
     NX_RegeneratorPlacement(T)
 {

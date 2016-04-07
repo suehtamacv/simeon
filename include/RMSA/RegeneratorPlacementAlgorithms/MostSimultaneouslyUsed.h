@@ -6,9 +6,22 @@
 
 class RoutingWavelengthAssignment;
 
+namespace RP
+{
+/**
+ * @brief The MostSimultaneouslyUsed class represents the Most Simultaneously Used
+ * RP algorithm.
+ *
+ * It runs an opaque simulation and computes the maximum amount of regenerators that
+ * were simultaneously used on each node. Then it divides the regenerators proportionally
+ * to this number.
+ */
 class MostSimultaneouslyUsed : public RegeneratorPlacementAlgorithm
 {
 public:
+    /**
+     * @brief MostSimultaneouslyUsed is the standard constructor.
+     */
     MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
                            std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                            double NetworkLoad,
@@ -36,5 +49,6 @@ private:
     static unsigned MSU_NumTotalReg;
 
 };
+}
 
 #endif // MOSTSIMULTANEOUSLYUSED_H

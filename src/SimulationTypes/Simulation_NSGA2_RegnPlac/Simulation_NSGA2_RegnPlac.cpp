@@ -15,6 +15,7 @@
 using namespace Simulations;
 using namespace ROUT;
 using namespace SA;
+using namespace RA;
 
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
 

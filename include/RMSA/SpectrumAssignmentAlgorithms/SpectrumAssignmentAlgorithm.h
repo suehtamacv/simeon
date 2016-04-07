@@ -69,7 +69,13 @@ public:
     static std::shared_ptr<SpectrumAssignmentAlgorithm>
     create_SpectrumAssignmentAlgorithm(SpectrumAssignmentAlgorithms,
                                          std::shared_ptr<Topology>);
+    /**
+     * @brief load loads the parameters required to run the SA algorithm.
+     */
     virtual void load() = 0;
+    /**
+     * @brief save saves the loaded parameters on a file.
+     */
     virtual void save(std::string) = 0;
 
     std::shared_ptr<Topology> T;

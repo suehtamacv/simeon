@@ -13,12 +13,14 @@
 #include <map>
 
 using namespace Simulations;
-using namespace ROUT;
+using namespace ROUT::PSR;
 using namespace SA;
+using namespace RA;
+using namespace RP;
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
-std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
+std::vector<std::shared_ptr<Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
 PowerSeriesRouting::Variants Simulation_PSROptimization::Fitness::Variant;
 SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
@@ -190,13 +192,13 @@ void Simulation_PSROptimization::load()
 
     do
         {
-        std::vector<PSR::Cost::PossibleCosts> chosenCosts;
+        std::vector<Cost::PossibleCosts> chosenCosts;
 
         do
             {
             int numPossibleCosts = 0;
 
-            for (auto &cost : PSR::Cost::CostsNames.left)
+            for (auto &cost : Cost::CostsNames.left)
                 {
                 if (std::find(chosenCosts.begin(), chosenCosts.end(),
                               cost.first) != chosenCosts.end())
@@ -217,7 +219,7 @@ void Simulation_PSROptimization::load()
             std::cin >> Cost;
 
             if (std::cin.fail() ||
-                    PSR::Cost::CostsNames.left.count((PSR::Cost::PossibleCosts) Cost) == 0)
+                    Cost::CostsNames.left.count((Cost::PossibleCosts) Cost) == 0)
                 {
                 std::cin.clear();
                 std::cin.ignore();
@@ -230,11 +232,10 @@ void Simulation_PSROptimization::load()
                 std::cerr << "Invalid Cost." << std::endl;
                 }
             else if (std::find(chosenCosts.begin(), chosenCosts.end(),
-                               (PSR::Cost::PossibleCosts) Cost) == chosenCosts.end())
+                               (Cost::PossibleCosts) Cost) == chosenCosts.end())
                 {
-                chosenCosts.push_back((PSR::Cost::PossibleCosts) Cost);
-                Costs.push_back(PSR::Cost::createCost(
-                                    (PSR::Cost::PossibleCosts) Cost, NMin, NMax, T));
+                chosenCosts.push_back((Cost::PossibleCosts) Cost);
+                Costs.push_back(Cost::createCost((Cost::PossibleCosts) Cost, NMin, NMax, T));
                 } //Verifies that the cost hasn't been chosen.
 
             std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
@@ -383,7 +384,7 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     SimConfigFile << "  PSRCosts =";
     for(auto &cost : Costs)
         {
-        SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
+        SimConfigFile << " " << Cost::CostsNicknames.left.at(cost->Type);
         }
     SimConfigFile << std::endl;
     SimConfigFile << "  PSRVariant =" << PowerSeriesRouting::VariantNicknames.
@@ -463,9 +464,8 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
         while(PSR_Costs.tellg() != -1) // Reading the last cost twice
             {
             PSR_Costs >> Aux;
-            Costs.push_back(PSR::Cost::createCost(
-                                (PSR::Cost::PossibleCosts) PSR::Cost::CostsNicknames.right.at(Aux), NMin, NMax,
-                                T));
+            Costs.push_back(Cost::createCost((Cost::PossibleCosts)
+                                             Cost::CostsNicknames.right.at(Aux), NMin, NMax, T));
             }
         }
 
@@ -510,16 +510,19 @@ void Simulation_PSROptimization::print()
     std::cout << std::endl <<
               "  A Power Series Routing PSO Optimization Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
@@ -543,7 +546,7 @@ void Simulation_PSROptimization::print()
     std::cout << "-> PSR Costs =" << std::endl;
     for(auto &cost : Costs)
         {
-        std::cout << "\t-> " << PSR::Cost::CostsNames.left.at(cost->Type) <<
+        std::cout << "\t-> " << Cost::CostsNames.left.at(cost->Type) <<
                   std::endl;
         }
 
@@ -600,8 +603,9 @@ double Simulation_PSROptimization::Fitness::operator()(
     auto Generator = std::make_shared<CallGenerator>(TopologyCopy,
                      Simulation_PSROptimization::OptimizationLoad,
                      TransmissionBitrate::DefaultBitrates);
-    auto RMSA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg, RA_Alg,
-               ModulationScheme::DefaultSchemes, TopologyCopy);
+    auto RMSA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg,
+                RA_Alg,
+                ModulationScheme::DefaultSchemes, TopologyCopy);
 
     return
         NetworkSimulation(Generator, RMSA, Simulation_PSROptimization::NumCalls).
@@ -631,7 +635,7 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
         {
         for (auto &cost : Costs)
             {
-            OutFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
+            OutFile << " " << Cost::CostsNicknames.left.at(cost->Type);
             }
         OutFile << std::endl;
         }

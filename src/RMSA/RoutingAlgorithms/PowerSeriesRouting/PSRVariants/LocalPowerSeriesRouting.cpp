@@ -5,7 +5,7 @@
 #include <Structure/Topology.h>
 #include <algorithm>
 
-using namespace ROUT;
+using namespace ROUT::PSR;
 
 LocalPowerSeriesRouting::LocalPowerSeriesRouting(std::shared_ptr<Topology> T)
     : PowerSeriesRouting(T, localPSR)

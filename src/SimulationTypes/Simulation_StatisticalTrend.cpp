@@ -11,6 +11,8 @@
 using namespace Simulations;
 using namespace ROUT;
 using namespace SA;
+using namespace RA;
+using namespace RP;
 
 Simulation_StatisticalTrend::Simulation_StatisticalTrend() :
     SimulationType(Simulation_Type::statisticaltrend)

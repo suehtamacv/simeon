@@ -39,13 +39,13 @@ private:
 
     std::shared_ptr<PSO_Particle<double>> BestParticle;
 
-    ROUT::PowerSeriesRouting::Variants Variant;
+    ROUT::PSR::PowerSeriesRouting::Variants Variant;
 
     static SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    static RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    static RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    static RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    static RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     static double NumCalls;
@@ -80,7 +80,7 @@ private:
     struct Fitness
     {
         static std::shared_ptr<Topology> T;
-        static ROUT::PowerSeriesRouting::Variants Variant;
+        static ROUT::PSR::PowerSeriesRouting::Variants Variant;
         double operator()(std::shared_ptr<PSO_Particle<double>>);
     };
 

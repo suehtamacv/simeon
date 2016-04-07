@@ -6,6 +6,8 @@
 #include <Structure/Topology.h>
 #include <GeneralClasses/RandomGenerator.h>
 
+using namespace RP;
+
 MostUsed::MostUsed(std::shared_ptr<Topology> T,
                    std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                    double NetworkLoad,

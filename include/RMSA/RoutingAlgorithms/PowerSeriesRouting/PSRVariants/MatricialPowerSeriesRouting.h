@@ -5,6 +5,8 @@
 
 namespace ROUT
 {
+namespace PSR
+{
 /**
  * @brief The MatricialPowerSeriesRouting class is the standard Power Series Routing
  * algorithm. Its cost is a truncated power series of carefully chosen costs.
@@ -17,6 +19,7 @@ public:
                                 std::vector<std::shared_ptr<PSR::Cost>> Costs);
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 };
+}
 }
 
 #endif // MATRICIALPOWERSERIESROUTING_H

@@ -6,6 +6,16 @@
 
 class RoutingWavelengthAssignment;
 
+namespace RP
+{
+/**
+ * @brief The MostUsed class is the standard constructor for the Most Used RP
+ * algorithm.
+ *
+ * It runs an opaque simulation, and computes how many regenerators were used on
+ * each node. Then, it allocates regenerators on the N that were most used, and
+ * puts X regenerators on each one.
+ */
 class MostUsed : public NX_RegeneratorPlacement
 {
 public:
@@ -25,5 +35,6 @@ private:
     long long unsigned NumCalls;
     std::vector<TransmissionBitrate> Bitrates;
 };
+}
 
 #endif // MOSTUSED_H

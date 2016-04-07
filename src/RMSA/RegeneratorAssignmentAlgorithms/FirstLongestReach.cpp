@@ -4,6 +4,8 @@
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 
+using namespace RA;
+
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
                                      std::vector<ModulationScheme> ModulationSchemes) :
     RegeneratorAssignmentAlgorithm(T, FLR, ModulationSchemes)

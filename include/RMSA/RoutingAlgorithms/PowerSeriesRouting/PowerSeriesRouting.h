@@ -14,6 +14,8 @@ namespace PSR
 class Cost;
 }
 
+namespace PSR
+{
 /**
  * @brief The PowerSeriesRouting class represents the Power Series Routing algorithm.
  * Its link cost is a truncated power series of carefully chosen costs.
@@ -73,6 +75,7 @@ protected:
     static arma::mat defaultcoefficients;
     static std::vector<std::shared_ptr<PSR::Cost>> defaultcosts;
 };
+}
 }
 
 #endif // POWERSERIESROUTING_H

@@ -10,6 +10,7 @@
 
 using namespace ROUT;
 using namespace SA;
+using namespace RA;
 
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm> R_Alg,

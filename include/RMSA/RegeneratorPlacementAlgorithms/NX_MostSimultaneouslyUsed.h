@@ -6,9 +6,19 @@
 
 class RoutingWavelengthAssignment;
 
+namespace RP
+{
+/**
+ * @brief The NX_MostSimultaneouslyUsed class is a variant of the MostSimultaneouslyUsed
+ * RP algorithm that is NX.
+ */
 class NX_MostSimultaneouslyUsed : public NX_RegeneratorPlacement
 {
 public:
+    /**
+     * @brief NX_MostSimultaneouslyUsed is the standard constructor for the
+     * NX_MostSimultaneouslyUsed RP algorithm.
+     */
     NX_MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
                               std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                               double NetworkLoad,
@@ -26,5 +36,6 @@ private:
     std::vector<TransmissionBitrate> Bitrates;
 
 };
+}
 
 #endif // NX_MOSTSIMULTANEOUSLYUSED_H

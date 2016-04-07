@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace RP;
+
 RegeneratorPlacementAlgorithm::RegPlaceNameBimap
 RegeneratorPlacementAlgorithm::RegeneratorPlacementNames =
     boost::assign::list_of<RegeneratorPlacementAlgorithm::RegPlaceNameBimap::relation>
@@ -100,12 +102,12 @@ RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
             break;
 
         case SQP:
-            RP_Alg = std::make_shared<SignalQualityPrediction>
+            RP_Alg = std::make_shared<SQP::SignalQualityPrediction>
                      (T, RWA, OptimizationLoad, NumCalls);
             break;
 
         case SQP_Var:
-            RP_Alg = std::make_shared<SignalQualityPrediction_Variants>
+            RP_Alg = std::make_shared<SQP::SignalQualityPrediction_Variants>
                      (T, RWA, OptimizationLoad, NumCalls);
             break;
 

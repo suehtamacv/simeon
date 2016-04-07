@@ -9,6 +9,8 @@
 using namespace Simulations;
 using namespace ROUT;
 using namespace SA;
+using namespace RA;
+using namespace RP;
 
 Simulation_RegeneratorNumber::Simulation_RegeneratorNumber() :
     SimulationType(Simulation_Type::regnum), hasLoaded(false)

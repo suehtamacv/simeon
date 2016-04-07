@@ -6,10 +6,10 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
 
-using namespace ROUT;
+using namespace ROUT::PSR;
 
 arma::mat PowerSeriesRouting::defaultcoefficients;
-std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::defaultcosts;
+std::vector<std::shared_ptr<Cost>> PowerSeriesRouting::defaultcosts;
 bool PowerSeriesRouting::hasLoaded = false;
 
 PowerSeriesRouting::VariantNameBimap PowerSeriesRouting::VariantNames =
@@ -223,7 +223,7 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     return true;
 }
 
-std::vector<std::shared_ptr<PSR::Cost>> PowerSeriesRouting::get_Costs()
+std::vector<std::shared_ptr<Cost>> PowerSeriesRouting::get_Costs()
 {
     return Costs;
 }

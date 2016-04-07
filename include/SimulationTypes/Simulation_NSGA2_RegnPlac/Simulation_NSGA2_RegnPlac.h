@@ -58,7 +58,7 @@ public:
      * @brief RegAssignment_Algorithm is the regenerator assignment algorithm used
      * by the network simulation of each individual.
      */
-    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
 private:

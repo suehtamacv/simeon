@@ -3,6 +3,8 @@
 #include <Structure/Topology.h>
 #include <Structure/Node.h>
 
+using namespace RP;
+
 int DistanceAdaptative::DA_NumTotalRegenerators;
 
 DistanceAdaptative::DistanceAdaptative(std::shared_ptr<Topology> T) :

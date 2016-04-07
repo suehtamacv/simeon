@@ -10,6 +10,9 @@ extern bool considerFilterImperfection;
 class RoutingWavelengthAssignment;
 class Topology;
 
+//! Contains the Regenerator Placement Algorithms.
+namespace RP
+{
 /**
  * @brief The RegeneratorPlacementAlgorithm class decides how to insert the
  * regenerators over the network
@@ -41,6 +44,10 @@ public:
     RegPlaceNicknameBimap;
     static RegPlaceNicknameBimap RegeneratorPlacementNicknames;
 
+    /**
+     * @brief isNXAlgorithm is true iff the RP algorithm is NX, i.e., it allocates
+     * N translucent nodes, putting X regenerators on each one.
+     */
     bool isNXAlgorithm;
 
     /**
@@ -57,16 +64,39 @@ public:
      */
     virtual void placeRegenerators(unsigned = 0, unsigned = 0) = 0;
 
+    /**
+     * @brief define_RegeneratorPlacementAlgorithm asks the user to define the
+     * RP algorithm.
+     * @return the chosen RP algorithm.
+     */
     static RegeneratorPlacementAlgorithms define_RegeneratorPlacementAlgorithm();
+    /**
+     * @brief create_RegeneratorPlacementAlgorithm creates a new RP algorithm.
+     * @param RMSA is the RoutingWavelengthAssignment object required to run a
+     * network simulation on the RP algorithms that require one.
+     * @param OptimizationLoad is the Load where the opaque simulation will run.
+     * @param NumCalls is the number of calls that will be executed by the RP
+     * algorithm optimization.
+     * @param runLoad is true iff this function is expected to run the load()
+     * function of the RP algorithm.
+     * @return the created RP algorithm.
+     */
     static std::shared_ptr<RegeneratorPlacementAlgorithm>
     create_RegeneratorPlacementAlgorithm(RegeneratorPlacementAlgorithms,
                                          std::shared_ptr<Topology>,
-                                         std::shared_ptr<RoutingWavelengthAssignment> RWA,
+                                         std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                                          double OptimizationLoad,
                                          long long NumCalls,
                                          bool runLoad = true);
+    /**
+     * @brief load loads required parameters to the RP algorithm.
+     */
     virtual void load() = 0;
+    /**
+     * @brief save saves the loaded parameters on a file.
+     */
     static void save(std::string, RegeneratorPlacementAlgorithms);
 };
+}
 
 #endif // REGENERATORPLACEMENTALGORITHM_H

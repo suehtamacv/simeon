@@ -4,6 +4,10 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include "SignalQualityPrediction.h"
 
+namespace RP
+{
+namespace SQP
+{
 class SQP_NetworkSimulation : public Simulations::NetworkSimulation
 {
     friend class SignalQualityPrediction;
@@ -21,5 +25,7 @@ private:
 
     std::vector<long int> NodeUsage;
 };
+}
+}
 
 #endif // SQP_NETWORKSIMULATION_H

@@ -6,6 +6,11 @@
 #include <GeneralClasses/ModulationScheme.h>
 #include <map>
 
+namespace RP
+{
+//!Contains the operations related to the Signal Quality Prediction RP algorithm.
+namespace SQP
+{
 class SignalQualityPrediction : public NX_RegeneratorPlacement
 {
 public:
@@ -50,5 +55,7 @@ protected:
 
     void evaluateLNMax();
 };
+}
+}
 
 #endif // SIGNALQUALITYPREDICTION_H

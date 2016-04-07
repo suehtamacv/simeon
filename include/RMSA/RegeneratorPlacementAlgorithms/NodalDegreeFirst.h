@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
+namespace RP
+{
 /**
  * @brief The NodalDegreeFirst class implements the Nodal Degree First (NDF)
  * regenerator placement algorithm.
@@ -19,5 +21,6 @@ public:
     void placeRegenerators(unsigned N, unsigned X);
     void load();
 };
+}
 
 #endif // NODALDEGREEFIRST_H

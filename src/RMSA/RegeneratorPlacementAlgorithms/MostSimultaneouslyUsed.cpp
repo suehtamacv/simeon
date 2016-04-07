@@ -4,6 +4,8 @@
 #include <Calls/CallGenerator.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 
+using namespace RP;
+
 unsigned MostSimultaneouslyUsed::MSU_NumTotalReg;
 
 MostSimultaneouslyUsed::MostSimultaneouslyUsed(std::shared_ptr<Topology> T,

@@ -6,6 +6,7 @@
 using namespace Simulations::NSGA2_Parameters;
 using namespace ROUT;
 using namespace SA;
+using namespace RA;
 
 NSGA2_Parameter_BlockingProbability::NSGA2_Parameter_BlockingProbability(
     std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim) :

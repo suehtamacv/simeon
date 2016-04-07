@@ -47,9 +47,9 @@ private:
     ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     void create_Simulations();

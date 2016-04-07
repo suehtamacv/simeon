@@ -7,6 +7,8 @@
 
 namespace ROUT
 {
+namespace PSR
+{
 /**
  * @brief The LocalPowerSeriesRouting class represents the Local variant of the
  * Power Series Routing algorithm. Its similar to the MatricialPowerSeriesRouting,
@@ -26,6 +28,7 @@ private:
     std::map<std::pair<int, int>, arma::mat> coef_matrices;
     std::vector<std::pair<int, int>> origDestPairs;
 };
+}
 }
 
 #endif // LOCALPOWERSERIESROUTING_H

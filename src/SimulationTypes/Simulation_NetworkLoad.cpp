@@ -13,6 +13,8 @@
 using namespace Simulations;
 using namespace ROUT;
 using namespace SA;
+using namespace RA;
+using namespace RP;
 
 Simulation_NetworkLoad::Simulation_NetworkLoad() : SimulationType(
         Simulation_Type::networkload)

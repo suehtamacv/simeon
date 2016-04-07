@@ -1,5 +1,7 @@
 #include "include/RMSA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h"
 
+using namespace RP;
+
 Empty_RegeneratorPlacementAlgorithm::Empty_RegeneratorPlacementAlgorithm
 (std::shared_ptr<Topology> T) : RegeneratorPlacementAlgorithm(T)
 {

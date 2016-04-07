@@ -4,6 +4,8 @@
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <GeneralClasses/ModulationScheme.h>
 
+namespace RA
+{
 /**
  * @brief The FirstLongestReach class implements the First Longest Reach
  * RegeneratorAssignmentAlgorithm.
@@ -28,5 +30,6 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 
 #endif // FIRSTLONGESTREACH_H

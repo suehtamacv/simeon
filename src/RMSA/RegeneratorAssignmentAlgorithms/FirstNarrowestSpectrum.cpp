@@ -5,6 +5,8 @@
 #include <Calls/Call.h>
 #include <RMSA/TransparentSegment.h>
 
+using namespace RA;
+
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
         std::vector<ModulationScheme> Schemes) :
     RegeneratorAssignmentAlgorithm(T, FNS, Schemes)

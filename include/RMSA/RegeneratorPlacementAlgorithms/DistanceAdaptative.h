@@ -3,6 +3,14 @@
 
 #include "RegeneratorPlacementAlgorithm.h"
 
+namespace RP
+{
+/**
+ * @brief The DistanceAdaptative class implements the Distance Adaptative RP algorithm.
+ *
+ * It distributes the regenerators proportionally to the length of the links
+ * connected to each node.
+ */
 class DistanceAdaptative : public RegeneratorPlacementAlgorithm
 {
 public:
@@ -13,5 +21,6 @@ public:
 private:
     static int DA_NumTotalRegenerators;
 };
+}
 
 #endif // DISTANCEADAPTATIVE_H

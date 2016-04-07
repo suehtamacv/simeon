@@ -5,6 +5,8 @@
 
 namespace ROUT
 {
+namespace PSR
+{
 /**
  * @brief The AdaptativeWeighingRouting class represents the Adaptative
  * Weighing Routing algorithm. It is a type of PSR algorithm. Its cost is a power
@@ -18,6 +20,7 @@ public:
                               std::vector<std::shared_ptr<PSR::Cost>> Costs);
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 };
+}
 }
 
 #endif // ADAPTATIVEWEIGHINGROUTING_H
