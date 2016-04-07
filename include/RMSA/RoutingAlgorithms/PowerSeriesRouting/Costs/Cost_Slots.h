@@ -17,6 +17,12 @@ namespace PSR
 class cSlots : public Cost
 {
 public:
+    /**
+     * @brief cSlots is the standard constructor for the cSlots cost.
+     * @param NMin is the minimum exponent to the cost.
+     * @param NMax is the maximum exponent to the cost.
+     * @param T is the topology.
+     */
     cSlots(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link>, std::shared_ptr<Call>);
 

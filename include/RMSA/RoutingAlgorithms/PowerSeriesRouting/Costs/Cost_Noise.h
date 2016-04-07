@@ -18,6 +18,12 @@ namespace PSR
 class cNoise : public Cost
 {
 public:
+    /**
+     * @brief cNoise is the standard constructor for the cNoise cost.
+     * @param NMin is the minimum exponent to the cost.
+     * @param NMax is the maximum exponent to the cost.
+     * @param T is the topology.
+     */
     cNoise(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 

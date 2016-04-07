@@ -17,6 +17,12 @@ namespace PSR
 class cNormContiguity : public Cost
 {
 public:
+    /**
+     * @brief cNormContiguity is the standard constructor for the cNormContiguity cost.
+     * @param NMin is the minimum exponent to the cost.
+     * @param NMax is the maximum exponent to the cost.
+     * @param T is the topology.
+     */
     cNormContiguity(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 

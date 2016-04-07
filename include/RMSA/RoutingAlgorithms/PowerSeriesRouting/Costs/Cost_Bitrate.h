@@ -17,6 +17,12 @@ namespace PSR
 class cBitrate : public Cost
 {
 public:
+    /**
+     * @brief cBitrate is the standard constructor for the cBitrate cost.
+     * @param NMin is the minimum exponent to the cost.
+     * @param NMax is the maximum exponent to the cost.
+     * @param T is the topology.
+     */
     cBitrate(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link>, std::shared_ptr<Call> C);
 

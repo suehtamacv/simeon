@@ -5,9 +5,18 @@
 
 namespace SA
 {
+/**
+ * @brief The MostUsed class represents the Most Used spectrum assignment algorithm.
+ * It tries to allocate the requistion on the block of slots that are used the most
+ * on the entire network.
+ */
 class MostUsed : public SpectrumAssignmentAlgorithm
 {
 public:
+    /**
+     * @brief MostUsed is the standard constructor for the Most Used SA algorithm
+     * @param T is the Topology.
+     */
     MostUsed(std::shared_ptr<Topology> T);
 
     std::map<std::weak_ptr<Link>,

@@ -44,11 +44,28 @@ public:
     SpectrumAssignmentAlgorithms SpecAssAlgType;
     SpectrumAssignmentAlgorithm (std::shared_ptr<Topology> T, SpectrumAssignmentAlgorithms SpecAssAlgType);
 
+    /**
+     * @brief assignSlots assigns the slots on the transparent segment.
+     * @param C is the Call where the slots will be assigned.
+     * @param Seg is the transparent segment will be assigned.
+     * @return a map that associates, to each pointer to a Link, a vector containing
+     * the slots used by this Call on the link.
+     */
     virtual std::map<std::weak_ptr<Link>,
             std::vector<std::weak_ptr<Slot>>,
             std::owner_less<std::weak_ptr<Link>>>
             assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) = 0;
+    /**
+     * @brief define_SpectrumAssignmentAlgorithm asks the user to define a spectrum
+     * assignment algorithm.
+     * @return the chosen spectrum assignment algorithm.
+     */
     static SpectrumAssignmentAlgorithms define_SpectrumAssignmentAlgorithm();
+    /**
+     * @brief create_SpectrumAssignmentAlgorithm creates a spectrum assignment
+     * algorithm.
+     * @return a pointer to the created spectrum assignment algorithm.
+     */
     static std::shared_ptr<SpectrumAssignmentAlgorithm>
     create_SpectrumAssignmentAlgorithm(SpectrumAssignmentAlgorithms,
                                          std::shared_ptr<Topology>);

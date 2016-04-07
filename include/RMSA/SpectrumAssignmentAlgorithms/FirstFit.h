@@ -5,6 +5,11 @@
 
 namespace SA
 {
+/**
+ * @brief The FirstFit class represents the First Fit spectrum assignment algorithm.
+ * It tries to allocate the requisition on the first block of slots that are capable
+ * of containing the requisition.
+ */
 class FirstFit : public SpectrumAssignmentAlgorithm
 {
 public:

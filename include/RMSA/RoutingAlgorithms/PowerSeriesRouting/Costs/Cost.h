@@ -100,7 +100,9 @@ public:
      * @return the number of exponents.
      */
     int get_N();
-
+    /**
+     * @brief Type identifies the type of this cost.
+     */
     PossibleCosts Type;
 
 protected:
