@@ -4,7 +4,7 @@
 #include <Calls/Call.h>
 #include <cmath>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cDistance::cDistance(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::distance)

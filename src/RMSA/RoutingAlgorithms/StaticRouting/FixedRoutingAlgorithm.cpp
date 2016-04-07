@@ -3,7 +3,7 @@
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 FixedRoutingAlgorithm::FixedRoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg) :

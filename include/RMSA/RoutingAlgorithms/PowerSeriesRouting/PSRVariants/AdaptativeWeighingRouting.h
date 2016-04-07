@@ -3,6 +3,8 @@
 
 #include "../PowerSeriesRouting.h"
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -20,6 +22,7 @@ public:
                               std::vector<std::shared_ptr<PSR::Cost>> Costs);
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 };
+}
 }
 }
 

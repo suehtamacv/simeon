@@ -1,7 +1,7 @@
 #include <RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
 #include <Structure/Link.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
     FixedRoutingAlgorithm(T, SP)

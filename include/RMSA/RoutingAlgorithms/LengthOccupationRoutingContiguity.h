@@ -3,6 +3,8 @@
 
 #include <RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
 
+namespace RMSA
+{
 namespace ROUT
 {
 /**
@@ -19,6 +21,7 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 }
 
 #endif // LENGTHOCCUPATIONROUTINGCONTIGUITY_H

@@ -4,6 +4,8 @@
 #include "NX_RegeneratorPlacement.h"
 #include <GeneralClasses/TransmissionBitrate.h>
 
+namespace RMSA
+{
 class RoutingWavelengthAssignment;
 
 namespace RP
@@ -36,6 +38,7 @@ private:
     std::vector<TransmissionBitrate> Bitrates;
 
 };
+}
 }
 
 #endif // NX_MOSTSIMULTANEOUSLYUSED_H

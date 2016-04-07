@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-using namespace SA;
+using namespace RMSA::SA;
 
 SpectrumAssignmentAlgorithm::SpecAssignAlgNameBimap
 SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames =

@@ -6,7 +6,7 @@
 #include <RMSA/TransparentSegment.h>
 #include <boost/assign.hpp>
 
-using namespace RP::SQP;
+using namespace RMSA::RP::SQP;
 
 SignalQualityPrediction_Variants::SQPVariantNameBimap
 SignalQualityPrediction_Variants::SQPVariantNames =

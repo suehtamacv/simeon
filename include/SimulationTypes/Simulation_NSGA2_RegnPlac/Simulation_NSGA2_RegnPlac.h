@@ -47,18 +47,18 @@ public:
      * @brief Routing_Algorithm is the routing algorithm used by the network simulation
      * of each individual.
      */
-    ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     /**
      * @brief WavAssign_Algorithm is the wavelength assignment algorithm used by
      * the network simulation of each individual.
      */
-    SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
+    RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     /**
      * @brief RegAssignment_Algorithm is the regenerator assignment algorithm used
      * by the network simulation of each individual.
      */
-    RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
 private:
@@ -70,7 +70,7 @@ private:
     class Sim_NSGA2;
 };
 
-class Simulation_NSGA2_RegnPlac::Individual : public NSGA2_Individual
+class Simulation_NSGA2_RegnPlac::Individual : public NSGA_II::NSGA2_Individual
 {
     friend class Simulation_NSGA2_RegnPlac;
 
@@ -85,7 +85,7 @@ private:
     Simulation_NSGA2_RegnPlac &Sim;
 };
 
-class Simulation_NSGA2_RegnPlac::Sim_NSGA2 : public NSGA2
+class Simulation_NSGA2_RegnPlac::Sim_NSGA2 : public NSGA_II::NSGA2
 {
     friend class Simulation_NSGA2_RegnPlac;
 

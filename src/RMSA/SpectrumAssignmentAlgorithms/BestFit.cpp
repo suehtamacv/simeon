@@ -4,7 +4,7 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
-using namespace SA;
+using namespace RMSA::SA;
 
 BestFit::BestFit(std::shared_ptr<Topology> T) :
     SpectrumAssignmentAlgorithm(T, SpectrumAssignmentAlgorithm::BF)

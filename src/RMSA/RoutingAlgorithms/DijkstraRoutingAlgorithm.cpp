@@ -8,7 +8,7 @@
 #include <map>
 #include <set>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlgType) :

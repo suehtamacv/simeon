@@ -7,10 +7,13 @@
 
 class ModulationScheme;
 class Topology;
-class Route;
 
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
+
+//! Routing, Modulation and Spectrum Assignment Algorithms.
+namespace RMSA
+{
 
 namespace ROUT
 {
@@ -24,6 +27,7 @@ namespace RA
 {
 class RegeneratorAssignmentAlgorithm;
 }
+class Route;
 
 /**
  * @brief The RoutingWavelengthAssignment class is a container to the routing,
@@ -92,5 +96,6 @@ public:
      */
     std::shared_ptr<Route> routeCall(std::shared_ptr<Call> C);
 };
+}
 
 #endif // ROUTINGWAVELENGTHASSIGNMENT_H

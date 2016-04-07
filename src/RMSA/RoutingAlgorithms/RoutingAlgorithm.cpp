@@ -4,7 +4,7 @@
 #include <fstream>
 #include <RMSA/RoutingAlgorithms.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
     boost::assign::list_of<RoutingAlgorithm::RoutAlgNameBimap::relation>

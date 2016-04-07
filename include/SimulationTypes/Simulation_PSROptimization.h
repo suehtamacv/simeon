@@ -37,15 +37,15 @@ private:
     bool hasLoaded;
     bool hasRun;
 
-    std::shared_ptr<PSO_Particle<double>> BestParticle;
+    std::shared_ptr<PSO::PSO_Particle<double>> BestParticle;
 
-    ROUT::PSR::PowerSeriesRouting::Variants Variant;
+    RMSA::ROUT::PSR::PowerSeriesRouting::Variants Variant;
 
-    static SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
+    static RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    static RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    static RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    static RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    static RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     static double NumCalls;
@@ -53,7 +53,7 @@ private:
 
     int NMin;
     int NMax;
-    static std::vector<std::shared_ptr<ROUT::PSR::Cost>> Costs;
+    static std::vector<std::shared_ptr<RMSA::ROUT::PSR::Cost>> Costs;
 
     std::string CoefficientsFilename;
     std::string LogFilename;
@@ -80,11 +80,11 @@ private:
     struct Fitness
     {
         static std::shared_ptr<Topology> T;
-        static ROUT::PSR::PowerSeriesRouting::Variants Variant;
-        double operator()(std::shared_ptr<PSO_Particle<double>>);
+        static RMSA::ROUT::PSR::PowerSeriesRouting::Variants Variant;
+        double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };
 
-    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+    std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
             PSO_Optim;
 
     void printCoefficients(std::string file, bool override = true);

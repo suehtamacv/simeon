@@ -3,6 +3,8 @@
 
 #include "SpectrumAssignmentAlgorithm.h"
 
+namespace RMSA
+{
 namespace SA
 {
 /**
@@ -27,4 +29,6 @@ public:
     void save(std::string);
 };
 }
+}
+
 #endif // EXACTFIT_H

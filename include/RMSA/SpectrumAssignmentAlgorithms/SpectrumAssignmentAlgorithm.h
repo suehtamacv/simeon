@@ -9,6 +9,8 @@ class Call;
 class Slot;
 class Topology;
 
+namespace RMSA
+{
 //! Contains the spectrum assignment algorithms.
 namespace SA
 {
@@ -42,7 +44,8 @@ public:
     static SpecAssignAlgNicknameBimap SpectrumAssignmentAlgorithmNicknames;
 
     SpectrumAssignmentAlgorithms SpecAssAlgType;
-    SpectrumAssignmentAlgorithm (std::shared_ptr<Topology> T, SpectrumAssignmentAlgorithms SpecAssAlgType);
+    SpectrumAssignmentAlgorithm (std::shared_ptr<Topology> T,
+                                 SpectrumAssignmentAlgorithms SpecAssAlgType);
 
     /**
      * @brief assignSlots assigns the slots on the transparent segment.
@@ -68,7 +71,7 @@ public:
      */
     static std::shared_ptr<SpectrumAssignmentAlgorithm>
     create_SpectrumAssignmentAlgorithm(SpectrumAssignmentAlgorithms,
-                                         std::shared_ptr<Topology>);
+                                       std::shared_ptr<Topology>);
     /**
      * @brief load loads the parameters required to run the SA algorithm.
      */
@@ -81,4 +84,6 @@ public:
     std::shared_ptr<Topology> T;
 };
 }
+}
+
 #endif // SPECTRUMASSIGNMENTALGORITHM_H

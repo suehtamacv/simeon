@@ -3,7 +3,7 @@
 #include <Calls/Call.h>
 #include <cmath>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cAvailability::cAvailability(int NMin, int NMax,
                                   std::shared_ptr<Topology> T)

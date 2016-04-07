@@ -4,7 +4,11 @@
 #include <memory>
 
 class Call;
+
+namespace RMSA
+{
 class Route;
+}
 
 /**
  * @brief The Event class represents an event that happened in the network. Is
@@ -55,7 +59,7 @@ public:
      * @brief route is a pointer to the Route used to stablish the Parent Call.
      * If did not succeeded to stablish, then this is a pointer to nullptr.
      */
-    std::shared_ptr<Route> route;
+    std::shared_ptr<RMSA::Route> route;
 };
 
 #endif // EVENT_H

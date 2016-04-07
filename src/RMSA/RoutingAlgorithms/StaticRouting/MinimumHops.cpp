@@ -1,6 +1,6 @@
 #include <RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
     FixedRoutingAlgorithm(T, MH)

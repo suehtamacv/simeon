@@ -7,6 +7,7 @@
 #include <iostream>
 
 using namespace Simulations;
+using namespace RMSA;
 
 NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                                      std::shared_ptr<RoutingWavelengthAssignment> RMSA,

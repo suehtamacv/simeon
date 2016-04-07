@@ -7,13 +7,17 @@
 
 class Topology;
 class Call;
-class Route;
-class TransparentSegment;
 class Link;
 class Node;
 
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
+
+namespace RMSA
+{
+
+class Route;
+class TransparentSegment;
 
 //! Contains the Regenerator Assignment Algorithms.
 namespace RA
@@ -167,6 +171,7 @@ private:
                                       std::weak_ptr<Node> start,
                                       std::weak_ptr<Node> end);
 };
+}
 }
 
 #endif // REGENERATORASSIGNMENTALGORITHM_H

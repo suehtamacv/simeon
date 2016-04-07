@@ -3,6 +3,8 @@
 
 #include "RegeneratorPlacementAlgorithm.h"
 
+namespace RMSA
+{
 namespace RP
 {
 /**
@@ -21,6 +23,7 @@ public:
 private:
     static int DA_NumTotalRegenerators;
 };
+}
 }
 
 #endif // DISTANCEADAPTATIVE_H

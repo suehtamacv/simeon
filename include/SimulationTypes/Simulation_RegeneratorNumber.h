@@ -47,12 +47,12 @@ private:
     unsigned long stepRegNumber;
     unsigned int numTranslucentNodes;
 
-    ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
-    SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
+    RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     void createSimulations();

@@ -10,6 +10,7 @@
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace RMSA;
 using namespace Simulations;
 using namespace ROUT;
 using namespace SA;

@@ -3,6 +3,8 @@
 
 #include "Cost.h"
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -28,6 +30,7 @@ private:
     arma::mat cache;
 };
 
+}
 }
 }
 

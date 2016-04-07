@@ -3,6 +3,8 @@
 
 #include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h>
 
+namespace RMSA
+{
 namespace ROUT
 {
 /**
@@ -18,6 +20,7 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 }
 
 #endif // SHORTESTPATH_H

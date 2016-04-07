@@ -6,6 +6,8 @@
 #include <GeneralClasses/ModulationScheme.h>
 #include <map>
 
+namespace RMSA
+{
 namespace RP
 {
 //!Contains the operations related to the Signal Quality Prediction RP algorithm.
@@ -55,6 +57,7 @@ protected:
 
     void evaluateLNMax();
 };
+}
 }
 }
 

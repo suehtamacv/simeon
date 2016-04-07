@@ -1,7 +1,7 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 #include <Structure/Topology.h>
 
-using namespace RP;
+using namespace RMSA::RP;
 
 unsigned NX_RegeneratorPlacement::NX_N;
 unsigned NX_RegeneratorPlacement::NX_X;

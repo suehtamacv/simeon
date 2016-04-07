@@ -7,8 +7,11 @@
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
 
-class RoutingWavelengthAssignment;
 class Topology;
+
+namespace RMSA
+{
+class RoutingWavelengthAssignment;
 
 //! Contains the Regenerator Placement Algorithms.
 namespace RP
@@ -97,6 +100,7 @@ public:
      */
     static void save(std::string, RegeneratorPlacementAlgorithms);
 };
+}
 }
 
 #endif // REGENERATORPLACEMENTALGORITHM_H

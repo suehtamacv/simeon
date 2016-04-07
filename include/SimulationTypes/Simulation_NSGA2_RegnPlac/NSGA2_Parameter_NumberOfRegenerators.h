@@ -11,7 +11,7 @@ namespace NSGA2_Parameters
  * @brief The NSGA2_Parameter_NumberOfRegenerators class is a parameter to the
  * MORP algorithm, that implements the number of electronic regenerators parameter.
  */
-class NSGA2_Parameter_NumberOfRegenerators : public NSGA2_Parameter
+class NSGA2_Parameter_NumberOfRegenerators : public NSGA_II::NSGA2_Parameter
 {
     friend class Simulation_NSGA2_RegnPlac;
 

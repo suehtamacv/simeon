@@ -2,7 +2,7 @@
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
     std::shared_ptr<Topology> T) :

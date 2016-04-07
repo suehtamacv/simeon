@@ -9,7 +9,7 @@
 #include <Calls.h>
 #include <boost/assign.hpp>
 
-using namespace RP::SQP;
+using namespace RMSA::RP::SQP;
 
 bool SignalQualityPrediction::chosenType = false;
 SignalQualityPrediction::SQP_Type SignalQualityPrediction::Type;

@@ -4,6 +4,7 @@
 #include "include/SimulationTypes/NetworkSimulation.h"
 
 using namespace Simulations::NSGA2_Parameters;
+using namespace RMSA;
 using namespace ROUT;
 using namespace SA;
 using namespace RA;

@@ -3,6 +3,8 @@
 
 #include "../PowerSeriesRouting.h"
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -26,6 +28,7 @@ private:
     arma::mat coefs_matrix;
     void calculate_CoefsMatrix();
 };
+}
 }
 }
 

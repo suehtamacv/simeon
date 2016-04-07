@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 
+namespace RMSA
+{
 namespace RP
 {
 /**
@@ -35,6 +37,7 @@ public:
      */
     unsigned static NX_X;
 };
+}
 }
 
 #endif // NX_REGENERATORPLACEMENT_H

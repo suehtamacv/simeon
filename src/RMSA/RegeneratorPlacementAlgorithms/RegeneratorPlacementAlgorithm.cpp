@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-using namespace RP;
+using namespace RMSA::RP;
 
 RegeneratorPlacementAlgorithm::RegPlaceNameBimap
 RegeneratorPlacementAlgorithm::RegeneratorPlacementNames =

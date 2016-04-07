@@ -5,6 +5,8 @@
 #include <armadillo>
 #include <vector>
 
+namespace RMSA
+{
 namespace ROUT
 {
 
@@ -75,6 +77,7 @@ protected:
     static arma::mat defaultcoefficients;
     static std::vector<std::shared_ptr<PSR::Cost>> defaultcosts;
 };
+}
 }
 }
 

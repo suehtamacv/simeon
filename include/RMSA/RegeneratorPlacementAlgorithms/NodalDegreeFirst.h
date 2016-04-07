@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
+namespace RMSA
+{
 namespace RP
 {
 /**
@@ -21,6 +23,7 @@ public:
     void placeRegenerators(unsigned N, unsigned X);
     void load();
 };
+}
 }
 
 #endif // NODALDEGREEFIRST_H

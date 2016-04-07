@@ -4,6 +4,8 @@
 #include "Cost.h"
 #include <map>
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -37,6 +39,7 @@ private:
     };
 };
 
+}
 }
 }
 

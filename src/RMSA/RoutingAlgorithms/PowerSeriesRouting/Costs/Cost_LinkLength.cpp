@@ -4,7 +4,7 @@
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cLinkLength::cLinkLength(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::linklength)

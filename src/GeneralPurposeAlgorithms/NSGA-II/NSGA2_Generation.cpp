@@ -8,6 +8,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace NSGA_II;
+
 NSGA2_Generation::NSGA2_Generation() : isEvaluated(false)
 {
 

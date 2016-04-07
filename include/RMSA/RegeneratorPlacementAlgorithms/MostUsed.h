@@ -6,6 +6,8 @@
 
 class RoutingWavelengthAssignment;
 
+namespace RMSA
+{
 namespace RP
 {
 /**
@@ -35,6 +37,7 @@ private:
     long long unsigned NumCalls;
     std::vector<TransmissionBitrate> Bitrates;
 };
+}
 }
 
 #endif // MOSTUSED_H

@@ -4,6 +4,8 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 #include <GeneralClasses/TransmissionBitrate.h>
 
+namespace RMSA
+{
 class RoutingWavelengthAssignment;
 
 namespace RP
@@ -49,6 +51,7 @@ private:
     static unsigned MSU_NumTotalReg;
 
 };
+}
 }
 
 #endif // MOSTSIMULTANEOUSLYUSED_H

@@ -1,7 +1,7 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 
-using namespace ROUT::PSR;
+using namespace RMSA::ROUT::PSR;
 
 MatricialPowerSeriesRouting::MatricialPowerSeriesRouting
 (std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::matPSR)

@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <iostream>
 
+//! Particle Swarm Optimization
+namespace PSO
+{
 /**
  * @brief The ParticleSwarmOptimization class is represents the PSO Algorithm.
  * Its simulates a swarm of particles, that travel over the solution spaces to find
@@ -197,6 +200,7 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::updatePositions()
                 }
             }
         }
+}
 }
 
 #endif // PARTICLESWARMOPTIMIZATION_H

@@ -3,6 +3,8 @@
 
 #include "SpectrumAssignmentAlgorithm.h"
 
+namespace RMSA
+{
 namespace SA
 {
 /**
@@ -26,6 +28,7 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 }
 
 #endif // CONTIGUITYFIT_H

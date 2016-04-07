@@ -4,6 +4,8 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include "SignalQualityPrediction.h"
 
+namespace RMSA
+{
 namespace RP
 {
 namespace SQP
@@ -25,6 +27,7 @@ private:
 
     std::vector<long int> NodeUsage;
 };
+}
 }
 }
 

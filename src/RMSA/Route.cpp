@@ -5,6 +5,8 @@
 #include <Structure/Node.h>
 #include <Structure/Link.h>
 
+using namespace RMSA;
+
 Route::Route(std::vector<TransparentSegment> Segments,
              std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
              Slots) : Segments(Segments), Slots(Slots)

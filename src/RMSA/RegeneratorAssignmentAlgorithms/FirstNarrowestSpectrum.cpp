@@ -5,7 +5,7 @@
 #include <Calls/Call.h>
 #include <RMSA/TransparentSegment.h>
 
-using namespace RA;
+using namespace RMSA::RA;
 
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
         std::vector<ModulationScheme> Schemes) :
@@ -17,7 +17,7 @@ FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
 
 }
 
-std::vector<TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
+std::vector<RMSA::TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
     std::shared_ptr<Call> C,
     std::vector<std::weak_ptr<Link> > Links)
 {

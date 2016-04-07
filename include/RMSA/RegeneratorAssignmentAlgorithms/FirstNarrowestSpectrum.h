@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
+namespace RMSA
+{
 namespace RA
 {
 /**
@@ -28,6 +30,7 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 }
 
 #endif // FIRSTNARROWESTSPECTRUM_H

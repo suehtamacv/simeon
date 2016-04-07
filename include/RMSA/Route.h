@@ -6,6 +6,8 @@
 #include <memory>
 #include <RMSA/TransparentSegment.h>
 
+namespace RMSA
+{
 /**
  * @brief The Route class is the result of RMSA Algorithms. Contains a set of
  * transparent segments, over which a Call can be implemented. Each Transparent
@@ -79,5 +81,6 @@ public:
                            std::weak_ptr<Node> orig,
                            std::weak_ptr<Node> dest);
 };
+}
 
 #endif // ROUTE_H

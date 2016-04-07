@@ -4,6 +4,10 @@
 #include <vector>
 #include <memory>
 
+//! Non Sorting Genetic Algorithm II
+namespace NSGA_II
+{
+
 class NSGA2_Generation;
 
 /**
@@ -73,6 +77,7 @@ protected:
 
     unsigned int generation;
 };
+}
 
 #endif // NSGA2_H
 

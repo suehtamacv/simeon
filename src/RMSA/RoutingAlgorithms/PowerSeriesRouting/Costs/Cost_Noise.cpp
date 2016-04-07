@@ -2,7 +2,7 @@
 #include <Structure.h>
 #include <Calls/Call.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cNoise::cNoise(
     int NMin, int NMax, std::shared_ptr<Topology> T) :

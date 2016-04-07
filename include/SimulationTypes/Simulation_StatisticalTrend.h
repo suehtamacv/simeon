@@ -8,6 +8,8 @@
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h>
 
+using namespace RMSA;
+
 namespace Simulations
 {
 

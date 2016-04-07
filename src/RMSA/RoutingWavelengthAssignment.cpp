@@ -8,6 +8,7 @@
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <Structure/Topology.h>
 
+using namespace RMSA;
 using namespace ROUT;
 using namespace SA;
 using namespace RA;

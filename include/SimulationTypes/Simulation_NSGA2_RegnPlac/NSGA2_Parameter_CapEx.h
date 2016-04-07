@@ -11,7 +11,7 @@ namespace NSGA2_Parameters
  * @brief The NSGA2_Parameter_CapEx class is a parameter to the  MORP algorithm,
  * that implements the CapEx cost parameter.
  */
-class NSGA2_Parameter_CapEx : public NSGA2_Parameter
+class NSGA2_Parameter_CapEx : public NSGA_II::NSGA2_Parameter
 {
     friend class Simulation_NSGA2_RegnPlac;
 

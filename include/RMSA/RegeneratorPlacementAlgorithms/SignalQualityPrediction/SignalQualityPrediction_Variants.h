@@ -4,6 +4,8 @@
 #include "SignalQualityPrediction.h"
 #include <boost/bimap.hpp>
 
+namespace RMSA
+{
 namespace RP
 {
 namespace SQP
@@ -42,6 +44,7 @@ private:
 
     void evaluateLNMax();
 };
+}
 }
 }
 

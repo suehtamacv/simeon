@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "Calls.h"
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cBitrate::cBitrate(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::bitrate)

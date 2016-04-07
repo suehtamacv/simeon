@@ -4,6 +4,8 @@
 #include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 #include <GeneralClasses/ModulationScheme.h>
 
+namespace RMSA
+{
 namespace RA
 {
 /**
@@ -30,6 +32,7 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 }
 
 #endif // FIRSTLONGESTREACH_H

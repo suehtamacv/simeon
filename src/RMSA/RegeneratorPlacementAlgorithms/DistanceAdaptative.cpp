@@ -3,7 +3,7 @@
 #include <Structure/Topology.h>
 #include <Structure/Node.h>
 
-using namespace RP;
+using namespace RMSA::RP;
 
 int DistanceAdaptative::DA_NumTotalRegenerators;
 

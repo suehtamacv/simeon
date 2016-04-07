@@ -1,7 +1,7 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 
-using namespace ROUT::PSR;
+using namespace RMSA::ROUT::PSR;
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting
 (std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::AWR)

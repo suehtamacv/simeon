@@ -1,7 +1,7 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h>
 #include "Calls/Call.h"
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cSlots::cSlots(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::slots)

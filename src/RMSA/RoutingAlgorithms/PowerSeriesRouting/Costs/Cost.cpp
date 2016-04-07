@@ -4,36 +4,35 @@
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT::PSR;
 
-PSR::Cost::CostNameBimap PSR::Cost::CostsNames =
-    boost::assign::list_of<PSR::Cost::CostNameBimap::relation>
+Cost::CostNameBimap Cost::CostsNames =
+    boost::assign::list_of<Cost::CostNameBimap::relation>
 #define X(a,b,c,d) (a,b)
     POSSIBLECOSTS
 #undef X
     ;
 
-PSR::Cost::CostNicknameBimap PSR::Cost::CostsNicknames =
-    boost::assign::list_of<PSR::Cost::CostNicknameBimap::relation>
+Cost::CostNicknameBimap Cost::CostsNicknames =
+    boost::assign::list_of<Cost::CostNicknameBimap::relation>
 #define X(a,b,c,d) (a,c)
     POSSIBLECOSTS
 #undef X
     ;
 
-PSR::Cost::Cost(int NMin, int NMax, std::shared_ptr<Topology> T,
-                PossibleCosts Type) : Type(Type), NMin(NMin), NMax(NMax), T(T)
+Cost::Cost(int NMin, int NMax, std::shared_ptr<Topology> T,
+           PossibleCosts Type) : Type(Type), NMin(NMin), NMax(NMax), T(T)
 {
 
 }
 
-std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
-        int NMax, std::shared_ptr<Topology> T)
+std::shared_ptr<Cost> Cost::createCost(PossibleCosts cost, int NMin, int NMax,
+                                       std::shared_ptr<Topology> T)
 {
-    std::shared_ptr<PSR::Cost> Cost;
+    std::shared_ptr<Cost> Cost;
 
     switch (cost)
         {
-            using namespace PSR;
 #define X(a,b,c,d) case a: Cost = std::make_shared<d>(NMin, NMax, T);  break;
             POSSIBLECOSTS
 #undef X
@@ -42,23 +41,22 @@ std::shared_ptr<PSR::Cost> PSR::Cost::createCost(PossibleCosts cost, int NMin,
     return Cost;
 }
 
-int PSR::Cost::get_NMin()
+int Cost::get_NMin()
 {
     return NMin;
 }
 
-int PSR::Cost::get_NMax()
+int Cost::get_NMax()
 {
     return NMax;
 }
 
-int PSR::Cost::get_N()
+int Cost::get_N()
 {
     return NMax - NMin + 1;
 }
 
-double PSR::Cost::getCost(
-    int N, std::weak_ptr<Link> link, std::shared_ptr<Call> C)
+double Cost::getCost(int N, std::weak_ptr<Link> link, std::shared_ptr<Call> C)
 {
     BOOST_ASSERT_MSG((N <= NMax) && (N >= NMin), "Invalid N requested");
     return getCost(link, C)(N - NMin);

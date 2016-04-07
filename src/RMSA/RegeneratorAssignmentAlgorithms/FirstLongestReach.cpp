@@ -4,7 +4,7 @@
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 
-using namespace RA;
+using namespace RMSA::RA;
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
                                      std::vector<ModulationScheme> ModulationSchemes) :
@@ -13,7 +13,7 @@ FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
 
 }
 
-std::vector<TransparentSegment> FirstLongestReach::assignRegenerators(
+std::vector<RMSA::TransparentSegment> FirstLongestReach::assignRegenerators(
     std::shared_ptr<Call> C,
     std::vector<std::weak_ptr<Link> > Links)
 {

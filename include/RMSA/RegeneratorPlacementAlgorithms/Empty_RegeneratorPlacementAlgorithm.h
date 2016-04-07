@@ -3,6 +3,8 @@
 
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 
+namespace RMSA
+{
 namespace RP
 {
 /**
@@ -19,6 +21,7 @@ public:
     void placeRegenerators(unsigned, unsigned);
     void load();
 };
+}
 }
 
 #endif // EMPTY_REGENERATORPLACEMENTALGORITHM_H

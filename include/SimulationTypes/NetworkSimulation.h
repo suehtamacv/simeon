@@ -5,8 +5,12 @@
 #include <fstream>
 
 class CallGenerator;
-class RoutingWavelengthAssignment;
 class Event;
+
+namespace RMSA
+{
+class RoutingWavelengthAssignment;
+}
 
 namespace Simulations
 {
@@ -26,7 +30,7 @@ public:
      * @param NumMaxCalls is the number of call requests that will be simulated.
      */
     NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
-                      std::shared_ptr<RoutingWavelengthAssignment> RMSA,
+                      std::shared_ptr<RMSA::RoutingWavelengthAssignment> RMSA,
                       long unsigned NumMaxCalls);
 
     /**
@@ -46,7 +50,7 @@ public:
     /**
      * @brief RMSA is a pointer to this simulation's RMSA object.
      */
-    std::shared_ptr<RoutingWavelengthAssignment> RMSA;
+    std::shared_ptr<RMSA::RoutingWavelengthAssignment> RMSA;
 
     /**
      * @brief NumMaxCalls is the number of call requests that will be simulated.

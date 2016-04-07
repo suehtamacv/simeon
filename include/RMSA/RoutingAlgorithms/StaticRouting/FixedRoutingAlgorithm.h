@@ -6,6 +6,8 @@
 
 class Link;
 
+namespace RMSA
+{
 namespace ROUT
 {
 /**
@@ -24,6 +26,7 @@ public:
 private:
     void precalculate_Routes();
 };
+}
 }
 
 #endif // STATICROUTINGALGORITHM_H

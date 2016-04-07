@@ -9,6 +9,8 @@ class Link;
 class Call;
 class Topology;
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -109,6 +111,7 @@ protected:
     int NMin, NMax;
     std::shared_ptr<Topology> T;
 };
+}
 }
 }
 

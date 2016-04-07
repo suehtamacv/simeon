@@ -11,7 +11,8 @@
 #include <RMSA/TransparentSegment.h>
 #include <Structure/Topology.h>
 
-using namespace RA;
+using namespace RMSA;
+using namespace RMSA::RA;
 
 RegeneratorAssignmentAlgorithm::RegAssignNameBimap
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames =

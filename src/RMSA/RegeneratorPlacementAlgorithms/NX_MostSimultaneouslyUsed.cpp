@@ -7,7 +7,7 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <GeneralClasses/RandomGenerator.h>
 
-using namespace RP;
+using namespace RMSA::RP;
 
 NX_MostSimultaneouslyUsed::NX_MostSimultaneouslyUsed(std::shared_ptr<Topology>
         T, std::shared_ptr<RoutingWavelengthAssignment> RMSA, double NetworkLoad,

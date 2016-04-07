@@ -7,6 +7,8 @@
 #include <cmath>
 #include <GeneralClasses/RandomGenerator.h>
 
+namespace PSO
+{
 /**
  * @brief The PSO_Particle class represents a particle to the PSO Optimization.
  * @tparam PositionType represents the same that the homonym class represents on
@@ -67,6 +69,7 @@ void PSO_Particle<PositionType>::initialize(PositionType, PositionType XMax)
         {
         x = distribution(random_generator);
         }
+}
 }
 
 #endif // PSO_PARTICLE_H

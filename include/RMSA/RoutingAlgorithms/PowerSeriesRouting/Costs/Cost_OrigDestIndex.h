@@ -4,6 +4,8 @@
 #include <map>
 #include "Cost.h"
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -31,6 +33,7 @@ private:
     void createCache();
     std::map<std::pair<int, int>, arma::rowvec> cache;
 };
+}
 }
 }
 

@@ -3,7 +3,7 @@
 #include <Structure.h>
 #include <map>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cNormNoise::cNormNoise(int NMin, int NMax, std::shared_ptr<Topology> T) :
     Cost(NMin, NMax, T, Cost::normnoise)

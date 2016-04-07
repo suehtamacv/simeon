@@ -4,6 +4,9 @@
 #include <vector>
 #include <memory>
 
+namespace NSGA_II
+{
+
 class NSGA2_Individual;
 
 /**
@@ -67,5 +70,6 @@ protected:
 
     void breed(unsigned int a, unsigned int b, NSGA2_Generation &dest);
 };
+}
 
 #endif // NSGA2_GENERATION_H

@@ -6,6 +6,8 @@
 #include <GeneralClasses/ModulationScheme.h>
 #include <map>
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -33,6 +35,7 @@ private:
     std::map <std::shared_ptr<Link>, arma::rowvec> cache;
 };
 
+}
 }
 }
 

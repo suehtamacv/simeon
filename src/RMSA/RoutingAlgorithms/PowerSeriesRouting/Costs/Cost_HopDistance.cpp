@@ -6,7 +6,7 @@
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cHopDistance::cHopDistance(int NMin, int NMax, std::shared_ptr<Topology> T)
     : Cost(NMin, NMax, T, Cost::hopdistance)

@@ -2,7 +2,7 @@
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
     std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, LORc)

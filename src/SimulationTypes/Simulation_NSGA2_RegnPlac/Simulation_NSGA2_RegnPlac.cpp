@@ -12,10 +12,12 @@
 #include <boost/program_options.hpp>
 #include <SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h>
 
+using namespace RMSA;
 using namespace Simulations;
 using namespace ROUT;
 using namespace SA;
 using namespace RA;
+using namespace NSGA_II;
 
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
 

@@ -11,7 +11,7 @@ namespace NSGA2_Parameters
  * @brief The NSGA2_Parameter_BlockingProbability class is a parameter to the
  * MORP algorithm, that implements the Call Request Blocking Probability parameter.
  */
-class NSGA2_Parameter_BlockingProbability : public NSGA2_Parameter
+class NSGA2_Parameter_BlockingProbability : public NSGA_II::NSGA2_Parameter
 {
     friend class Simulation_NSGA2_RegnPlac;
 

@@ -5,6 +5,8 @@
 #include <vector>
 #include <map>
 
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -28,6 +30,7 @@ private:
     std::map<std::pair<int, int>, arma::mat> coef_matrices;
     std::vector<std::pair<int, int>> origDestPairs;
 };
+}
 }
 }
 

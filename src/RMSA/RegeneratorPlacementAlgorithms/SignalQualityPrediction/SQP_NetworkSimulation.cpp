@@ -7,7 +7,7 @@
 #include <Structure/Topology.h>
 #include <Structure/Link.h>
 
-using namespace RP::SQP;
+using namespace RMSA::RP::SQP;
 
 SQP_NetworkSimulation::SQP_NetworkSimulation(std::shared_ptr<CallGenerator>
         Generator, std::shared_ptr<RoutingWavelengthAssignment> RMSA,

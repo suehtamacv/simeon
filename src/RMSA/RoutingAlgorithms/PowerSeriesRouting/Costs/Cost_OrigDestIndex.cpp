@@ -4,7 +4,7 @@
 #include <Calls/Call.h>
 #include <set>
 
-using namespace ROUT;
+using namespace RMSA::ROUT;
 
 PSR::cOrigDestIndex::cOrigDestIndex
 (int NMin, int NMax, std::shared_ptr<Topology> T) :

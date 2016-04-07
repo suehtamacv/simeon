@@ -5,6 +5,8 @@
 #include <boost/assert.hpp>
 #include <iostream>
 
+using namespace NSGA_II;
+
 NSGA2_Individual::NSGA2_Individual() :
     crowdingDistance(-1),
     paretoFront(-1),

@@ -12,11 +12,13 @@
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace RMSA;
 using namespace Simulations;
 using namespace ROUT::PSR;
 using namespace SA;
 using namespace RA;
 using namespace RP;
+using namespace PSO;
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;

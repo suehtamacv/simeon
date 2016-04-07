@@ -1,7 +1,7 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 
-using namespace ROUT::PSR;
+using namespace RMSA::ROUT::PSR;
 
 TensorialPowerSeriesRouting::TensorialPowerSeriesRouting
 (std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::tenPSR)

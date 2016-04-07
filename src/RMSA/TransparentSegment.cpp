@@ -4,6 +4,8 @@
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
 
+using namespace RMSA;
+
 TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
                                        ModulationScheme ModScheme, unsigned int NumRegUsed) :
     Links(Links), ModScheme(ModScheme), NumRegUsed(NumRegUsed)

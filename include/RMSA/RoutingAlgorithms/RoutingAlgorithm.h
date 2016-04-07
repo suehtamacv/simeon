@@ -9,6 +9,8 @@ class Topology;
 class Call;
 class Link;
 
+namespace RMSA
+{
 //! Contains the routing algorithms
 namespace ROUT
 {
@@ -53,6 +55,7 @@ public:
 
     std::shared_ptr<Topology> T;
 };
+}
 }
 
 #endif // ROUTINGALGORITHM_H

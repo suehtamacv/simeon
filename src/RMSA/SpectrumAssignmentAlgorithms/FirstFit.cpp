@@ -3,7 +3,7 @@
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 
-using namespace SA;
+using namespace RMSA::SA;
 
 FirstFit::FirstFit(std::shared_ptr<Topology> T) :
     SpectrumAssignmentAlgorithm(T, SpectrumAssignmentAlgorithms::FF)

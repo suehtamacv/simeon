@@ -3,6 +3,8 @@
 
 #include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
 
+namespace RMSA
+{
 namespace SA
 {
 /**
@@ -22,6 +24,7 @@ public:
     void load() {}
     void save(std::string);
 };
+}
 }
 
 #endif // FIRSTFIT_H

@@ -4,7 +4,7 @@
 #include <Calls/CallGenerator.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 
-using namespace RP;
+using namespace RMSA::RP;
 
 unsigned MostSimultaneouslyUsed::MSU_NumTotalReg;
 

@@ -12,6 +12,8 @@ class Node;
 class Slot;
 class Call;
 
+namespace RMSA
+{
 /**
  * @brief The TransparentSegment class is a set of links, into which a call is
  * implemented.
@@ -83,5 +85,6 @@ public:
      */
     int get_Contiguity(std::shared_ptr<Call> C);
 };
+}
 
 #endif // TRANSPARENTSEGMENT_H

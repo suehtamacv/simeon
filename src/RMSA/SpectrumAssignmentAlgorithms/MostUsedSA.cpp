@@ -4,7 +4,7 @@
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
 
-using namespace SA;
+using namespace RMSA::SA;
 
 MostUsed::MostUsed(std::shared_ptr<Topology> T) :
     SpectrumAssignmentAlgorithm(T, MU)

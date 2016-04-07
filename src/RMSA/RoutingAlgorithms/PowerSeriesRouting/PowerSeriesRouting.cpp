@@ -6,7 +6,7 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
 
-using namespace ROUT::PSR;
+using namespace RMSA::ROUT::PSR;
 
 arma::mat PowerSeriesRouting::defaultcoefficients;
 std::vector<std::shared_ptr<Cost>> PowerSeriesRouting::defaultcosts;
