@@ -60,7 +60,7 @@ public:
      * @param H is the TransferFunction.
      * @return a reference to this object.
      */
-    SpectralDensity &operator*=(TransferFunction &H);
+    SpectralDensity &operator*=(TF::TransferFunction &H);
 };
 
 #endif // SPECTRALDENSITY_H

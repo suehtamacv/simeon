@@ -1,6 +1,7 @@
 #include <Devices/Amplifiers/Amplifier.h>
 
 using namespace Devices;
+using namespace TF;
 
 Amplifier::Amplifier(Gain G) : Device(Device::AmplifierDevice),
     AmplifierGain(G), NoisePower(0)
@@ -16,8 +17,7 @@ Power &Amplifier::get_Noise()
 void Amplifier::set_Gain(Gain G)
 {
     AmplifierGain = G;
-    deviceTF =
-        std::make_shared<TransferFunction>(std::pow(G.in_Linear(), 2));
+    deviceTF = std::make_shared<TransferFunction>(std::pow(G.in_Linear(), 2));
     calculate_NoisePower();
 }
 

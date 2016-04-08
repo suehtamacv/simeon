@@ -3,6 +3,8 @@
 #include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
 
+using namespace TF;
+
 std::map<std::pair<double, double>, arma::rowvec>
 SpectralDensity::specDensityMap;
 

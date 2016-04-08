@@ -6,6 +6,7 @@
 #include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
 
 using namespace Devices;
+using namespace TF;
 
 Gain SSS::SSSLoss(-5);
 

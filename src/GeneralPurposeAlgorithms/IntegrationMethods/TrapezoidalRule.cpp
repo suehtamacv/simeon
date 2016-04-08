@@ -1,5 +1,7 @@
 #include "include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h"
 
+using namespace NumericMethods;
+
 TrapezoidalRule::TrapezoidalRule(arma::mat &YPoints, double XRange)
     : IntegrationMethod(YPoints, XRange)
 {

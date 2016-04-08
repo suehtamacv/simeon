@@ -1,6 +1,7 @@
 #include <Devices/Fiber.h>
 
 using namespace Devices;
+using namespace TF;
 
 double Fiber::alphaFiber = 0.22;
 

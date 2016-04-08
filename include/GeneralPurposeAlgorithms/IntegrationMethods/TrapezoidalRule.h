@@ -3,6 +3,8 @@
 
 #include <GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h>
 
+namespace NumericMethods
+{
 /**
  * @brief The TrapezoidalRule class represents the Trapezoidal Rule numerical integration method.
  */
@@ -19,5 +21,6 @@ public:
      */
     double calculate();
 };
+}
 
 #endif // TRAPEZOIDALRULE_H

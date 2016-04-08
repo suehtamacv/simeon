@@ -1,6 +1,8 @@
 #include "GeneralClasses/TransferFunctions/GaussianTransferFunction.h"
 #include <GeneralClasses/PhysicalConstants.h>
 
+using namespace TF;
+
 GaussianTransferFunction::GaussianTransferFunction
 (double freqMin, double freqMax, unsigned long int numSamples,
  unsigned int filterOrder, double scale) :

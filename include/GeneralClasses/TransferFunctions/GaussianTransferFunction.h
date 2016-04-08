@@ -3,6 +3,8 @@
 
 #include <GeneralClasses/TransferFunctions/TransferFunction.h>
 
+namespace TF
+{
 /**
  * @brief The GaussianTransferFunction class represents the impulse response of a Gaussian filter.
  */
@@ -26,5 +28,6 @@ public:
     static constexpr double BW_3dB = 41e9;
 
 };
+}
 
 #endif // GAUSSIANTRANSFERFUNCTION_H

@@ -3,6 +3,9 @@
 
 #include <armadillo>
 
+//! Contains miscelaneous numeric methods required by the simulator.
+namespace NumericMethods
+{
 /**
  * @brief The IntegrationMethod class represents a numerical integration method.
  */
@@ -31,5 +34,6 @@ public:
      */
     void setValues(arma::mat&, double);
 };
+}
 
 #endif // INTEGRATIONMETHOD_H

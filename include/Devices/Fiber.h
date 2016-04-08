@@ -29,7 +29,7 @@ public:
      * @param numSlots is the number of slots used to calculate the transfer function.
      * @return the transfer function that represents the device's frequency response.
      */
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
+    TF::TransferFunction &get_TransferFunction(unsigned int numSlots);
     double get_CapEx();
     double get_OpEx();
 
@@ -42,7 +42,7 @@ private:
     /**
      * @brief deviceTF  is the device's transfer function.
      */
-    std::shared_ptr<TransferFunction> deviceTF;
+    std::shared_ptr<TF::TransferFunction> deviceTF;
 };
 }
 

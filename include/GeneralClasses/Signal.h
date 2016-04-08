@@ -46,7 +46,7 @@ public:
      * @brief operator *= multiplies this signal spectral density by a transfer function.
      * @return a signal after the transfer function.
      */
-    Signal &operator *=(TransferFunction &);
+    Signal &operator *=(TF::TransferFunction &);
     /**
      * @brief get_OSNR returns the Signal-To-Noise Ratio of the Signal.
      * @return the Signal-To-Noise Ratio of the Signal.

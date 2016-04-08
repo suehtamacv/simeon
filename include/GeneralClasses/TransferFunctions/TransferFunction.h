@@ -4,6 +4,10 @@
 #include <armadillo>
 #include <vector>
 
+
+//! Contains models for the transfer functions of optical devices.
+namespace TF
+{
 /**
  * @brief The TransferFunction class represents the absolute value squared of a transfer function.
  */
@@ -50,5 +54,6 @@ public:
      */
     unsigned long int numSamples;
 };
+}
 
 #endif // TRANSFERFUNCTION_H

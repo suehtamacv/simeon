@@ -2,6 +2,7 @@
 #include <Structure/Node.h>
 
 using namespace Devices;
+using namespace TF;
 
 Splitter::Splitter(Node *parent) : Device(Device::SplitterDevice),
     parent(parent),
@@ -18,7 +19,7 @@ Gain &Splitter::get_Gain()
     if (NumPorts != parent->Neighbours.size())
         {
         set_NumPorts(parent->Neighbours.size());
-        }    
+        }
     return SplitterLoss;
 }
 

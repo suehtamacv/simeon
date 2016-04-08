@@ -3,6 +3,9 @@
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
 
+using namespace TF;
+using namespace NumericMethods;
+
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 

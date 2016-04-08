@@ -52,7 +52,7 @@ public:
      * @brief get_TransferFunction returns the transfer function that represents the device's frequency response.
      * @return the transfer function that represents the device's frequency response.
      */
-    virtual TransferFunction &get_TransferFunction(unsigned int numSlots) = 0;
+    virtual TF::TransferFunction &get_TransferFunction(unsigned int numSlots) = 0;
     /**
      * @brief get_CapEx returns the CapEx cost of the device.
      * @return the CapEx cost of the device.

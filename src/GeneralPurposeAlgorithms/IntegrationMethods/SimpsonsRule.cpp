@@ -1,5 +1,7 @@
 #include "include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h"
 
+using namespace NumericMethods;
+
 SimpsonsRule::SimpsonsRule(arma::mat &YPoints, double XRange)
     : IntegrationMethod(YPoints, XRange)
 {

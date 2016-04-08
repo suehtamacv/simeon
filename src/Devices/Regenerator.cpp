@@ -1,6 +1,7 @@
 #include <Devices/Regenerator.h>
 
 using namespace Devices;
+using namespace TF;
 
 Regenerator::Regenerator() : Device(Device::RegeneratorDevice),
     RegeneratorGain(Gain(0)), RegeneratorNoise(Power(0, Power::Watt))

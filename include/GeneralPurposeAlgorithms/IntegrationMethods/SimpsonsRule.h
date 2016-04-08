@@ -3,6 +3,8 @@
 
 #include <include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h>
 
+namespace NumericMethods
+{
 /**
  * @brief The SimpsonsRule class represents the Simpson's Rule numerical integration method.
  */
@@ -19,5 +21,6 @@ public:
      */
     double calculate();
 };
+}
 
 #endif // SIMPSONSRULE_H
