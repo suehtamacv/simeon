@@ -66,13 +66,16 @@ void Simulation_PowerRatioThreshold::run()
 
             #pragma omp ordered
                 {
-                std::cout << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t"
+                std::cout << simulations[i]->RMSA->T->get_PowerRatioThreshold()<< "\t\t\t"
                         << simulations[i]->get_CallBlockingProbability() << std::endl;
-                OutFile << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t"
+                OutFile << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
                         << simulations[i]->get_CallBlockingProbability() << std::endl;
                 }
             }
     }
+    // Saving Sim. Configurations
+    std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
+    save(ConfigFileName);
 }
 
 void Simulation_PowerRatioThreshold::load()
@@ -178,19 +181,19 @@ void Simulation_PowerRatioThreshold::load()
         }
     while (1);
 
-    std::cout << std::endl << "-> Define the minimum power ratio threshold." << std::endl;
+    std::cout << std::endl << "-> Define the minimum power ratio threshold (%)." << std::endl;
 
     do
         {
-        std::cin >> MinPowerRatioThreshold;
+        std::cin >> PowerRatioThresholdMin;
 
-        if (std::cin.fail() || MinPowerRatioThreshold < 0 || MinPowerRatioThreshold >= 1.0)
+        if (std::cin.fail() || PowerRatioThresholdMin < 0 || PowerRatioThresholdMin >= 1.0*100)
             {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid power ratio threshold." << std::endl;
-            std::cout << std::endl << "-> Define the minimum power ratio threshold." << std::endl;
+            std::cout << std::endl << "-> Define the minimum power ratio threshold (%)." << std::endl;
             }
         else
             {
@@ -199,19 +202,19 @@ void Simulation_PowerRatioThreshold::load()
         }
     while (1);
 
-    std::cout << std::endl << "-> Define the maximum power ratio threshold." << std::endl;
+    std::cout << std::endl << "-> Define the maximum power ratio threshold (%)." << std::endl;
 
     do
         {
-        std::cin >> MaxPowerRatioThreshold;
+        std::cin >> PowerRatioThresholdMax;
 
-        if (std::cin.fail() || MaxPowerRatioThreshold < MinPowerRatioThreshold || MaxPowerRatioThreshold > 1.0)
+        if (std::cin.fail() || PowerRatioThresholdMax < PowerRatioThresholdMin || PowerRatioThresholdMax > 1.0*100)
             {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid power ratio threshold." << std::endl;
-            std::cout << std::endl << "-> Define the maximum power ratio threshold." << std::endl;
+            std::cout << std::endl << "-> Define the maximum power ratio threshold (%)." << std::endl;
             }
         else
             {
@@ -220,7 +223,7 @@ void Simulation_PowerRatioThreshold::load()
         }
     while (1);
 
-    std::cout << std::endl << "-> Define the power ratio threshold step." << std::endl;
+    std::cout << std::endl << "-> Define the power ratio threshold step (%)." << std::endl;
 
     do
         {
@@ -232,7 +235,7 @@ void Simulation_PowerRatioThreshold::load()
             std::cin.ignore();
 
             std::cerr << "Invalid power ratio threshold." << std::endl;
-            std::cout << std::endl << "-> Define the power ratio threshold step." << std::endl;
+            std::cout << std::endl << "-> Define the power ratio threshold step (%)." << std::endl;
             }
         else
             {
@@ -271,12 +274,147 @@ void Simulation_PowerRatioThreshold::load()
 
 void Simulation_PowerRatioThreshold::save(std::string SimConfigFileName)
 {
+    SimulationType::save(SimConfigFileName);
 
+    std::ofstream SimConfigFile(SimConfigFileName,
+                                std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
+                      Type) << std::endl;
+
+    SimConfigFile.close();
+
+    Link::save(SimConfigFileName, T);
+
+    simulations.front()->RMSA->R_Alg->save(SimConfigFileName);
+    simulations.front()->RMSA->WA_Alg->save(SimConfigFileName);
+    if(Type == TranslucentNetwork)
+        {
+        RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
+        simulations.front()->RMSA->RA_Alg->save(SimConfigFileName);
+        }
+
+    SimConfigFile.open(SimConfigFileName,
+                       std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
+    SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
+    SimConfigFile << "  NetworkLoad = " << NetworkLoad << std::endl;
+    SimConfigFile << "  PowerRatioThresholdMin = " << PowerRatioThresholdMin << std::endl;
+    SimConfigFile << "  PowerRatioThresholdMax= " << PowerRatioThresholdMax << std::endl;
+    SimConfigFile << "  PowerRatioThresholdStep = " << PowerRatioThresholdStep << std::endl;
+
+    if(Type == TranslucentNetwork)
+        {
+        SimConfigFile << "  numTranslucentNodes = " << NX_RegeneratorPlacement::NX_N <<
+                      std::endl;
+        SimConfigFile << "  numReg = " << NX_RegeneratorPlacement::NX_X << std::endl;
+        }
+
+    SimConfigFile << std::endl;
+    T->save(SimConfigFileName);
 }
 
 void Simulation_PowerRatioThreshold::load_file(std::string ConfigFileName)
 {
+    using namespace boost::program_options;
 
+    options_description ConfigDesctription("Configurations Data");
+    ConfigDesctription.add_options()("general.SimulationType",
+                                     value<std::string>()->required(), "Simulation Type")
+    ("general.NetworkType", value<std::string>()->required(), "Network Type")
+    ("general.AvgSpanLength", value<long double>()->required(),
+     "Distance Between Inline Amps.")
+    ("algorithms.RoutingAlgorithm", value<std::string>()->required(),
+     "Routing Algorithm")
+    ("algorithms.WavelengthAssignmentAlgorithm", value<std::string>()->required(),
+     "Wavelength Assignment Algorithm")
+    ("algorithms.RegeneratorPlacementAlgorithm", value<std::string>(),
+     "Regenerator Placement Algorithm")
+    ("algorithms.RegeneratorAssignmentAlgorithm", value<std::string>(),
+     "Regenerator Assignment Algorithm")
+    ("sim_info.NumCalls", value<long double>()->required(), "Number of Calls")
+    ("sim_info.NetworkLoad", value<long double>()->required(), "Network Load")
+    ("sim_info.PowerRatioThresholdMin", value<long double>()->required(),
+     "Min. Power Ratio Threshold")
+    ("sim_info.PowerRatioThresholdMax", value<long double>()->required(),
+     "Max. Power Ratio Threshold")
+    ("sim_info.PowerRatioThresholdStep", value<long double>()->required(),
+     "Power Ratio Threshold Step")
+    ("sim_info.numTranslucentNodes", value<long double>(),
+     "Number of Translucent Nodes")
+    ("sim_info.numReg", value<long double>(), "Num. of Regenerators per Node");
+
+    variables_map VariablesMap;
+
+    std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
+    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+
+    store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
+          VariablesMap);
+    ConfigFile.close();
+    notify(VariablesMap);
+
+    T = std::shared_ptr<Topology>(new Topology(ConfigFileName));
+    Type = NetworkTypesNicknames.right.at(
+               VariablesMap["general.NetworkType"].as<std::string>());
+    Link::DefaultAvgSpanLength =
+        VariablesMap["general.AvgSpanLength"].as<long double>();
+    T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
+    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
+                            VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
+    WavAssign_Algorithm =
+        SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
+            VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
+    if(Type == Network_Type::TranslucentNetwork)
+        {
+        RegPlacement_Algorithm =
+            RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.right.at(
+                VariablesMap["algorithms.RegeneratorPlacementAlgorithm"].as<std::string>());
+        RegAssignment_Algorithm =
+            RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.right.at(
+                VariablesMap["algorithms.RegeneratorAssignmentAlgorithm"].as<std::string>());
+        NX_RegeneratorPlacement::NX_N =
+            VariablesMap["sim_info.numTranslucentNodes"].as<long double>();
+        NX_RegeneratorPlacement::NX_X =
+            VariablesMap["sim_info.numReg"].as<long double>();
+        }
+    NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
+    NetworkLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
+    PowerRatioThresholdMin = VariablesMap["sim_info.PowerRatioThresholdMin"].as<long double>();
+    PowerRatioThresholdMax = VariablesMap["sim_info.PowerRatioThresholdMax"].as<long double>();
+    PowerRatioThresholdStep = VariablesMap["sim_info.PowerRatioThresholdStep"].as<long double>();
+
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
+    create_Simulations();
+
+    hasLoaded = true;
+    runLoadNX = false;
 }
 
 void Simulation_PowerRatioThreshold::print()
@@ -324,9 +462,9 @@ void Simulation_PowerRatioThreshold::print()
         }
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << NetworkLoad << std::endl;
-    std::cout << "-> Maximum Power Ratio Threshold = " << MaxPowerRatioThreshold << std::endl;
-    std::cout << "-> Minimum Power Ratio Threshold = " << MinPowerRatioThreshold << std::endl;
-    std::cout << "-> Power Ratio Threshold Step = " << PowerRatioThresholdStep << std::endl;
+    std::cout << "-> Minimum Power Ratio Threshold (%) = " << PowerRatioThresholdMin << std::endl;
+    std::cout << "-> Maximum Power Ratio Threshold (%) = " << PowerRatioThresholdMax << std::endl;
+    std::cout << "-> Power Ratio Threshold Step (%) = " << PowerRatioThresholdStep << std::endl;
 }
 
 void Simulation_PowerRatioThreshold::create_Simulations()
@@ -336,13 +474,13 @@ void Simulation_PowerRatioThreshold::create_Simulations()
         place_Regenerators(T);
         }
 
-    for (double prt = MinPowerRatioThreshold; prt <= MaxPowerRatioThreshold;
+    for (double prt = PowerRatioThresholdMin; prt <= PowerRatioThresholdMax;
             prt += PowerRatioThresholdStep)
         {
 
         //Creates a copy of the topology.
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
-        TopologyCopy->set_PowerRatioThreshold(prt);
+        TopologyCopy->set_PowerRatioThreshold(1.0*prt/100); // The prt value is in percentage.
 
         //Creates the RMSA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =

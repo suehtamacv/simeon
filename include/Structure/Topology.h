@@ -138,7 +138,7 @@ public:
      */
     double AvgSpanLength;
     /**
-     * @brief PowerRatioThreshold is the power ratio threshold for blocking a call.
+     * @brief PowerRatioThreshold is the power ratio threshold for blocking a call in percentage.
      */
     double PowerRatioThreshold;
     /**

@@ -29,7 +29,7 @@ public:
     bool runLoadNX;
     double NumCalls;
     double NetworkLoad;
-    double MinPowerRatioThreshold, MaxPowerRatioThreshold, PowerRatioThresholdStep;
+    double PowerRatioThresholdMin, PowerRatioThresholdMax, PowerRatioThresholdStep;
 
     std::string FileName;
 
