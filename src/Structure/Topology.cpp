@@ -29,8 +29,10 @@ Topology::Topology()
     LongestLink = -1;
 }
 
-Topology::Topology(const Topology &topology)
+Topology::Topology(const Topology &topology, double PRThreshold)
 {
+    PowerRatioThreshold = PRThreshold;
+
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
@@ -291,4 +293,9 @@ void Topology::set_avgSpanLength(double avgSpanLength)
         link.second->set_AvgSpanLength(avgSpanLength);
         }
     AvgSpanLength = avgSpanLength;
+}
+
+double Topology::get_PowerRatioThreshold()
+{
+    return PowerRatioThreshold;
 }

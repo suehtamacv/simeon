@@ -46,7 +46,7 @@ public:
     /**
      * @brief Topology is the copy constructor for a Topology.
      */
-    Topology(const Topology &topology);
+    Topology(const Topology &topology, double PRThreshold = 0.6); // Default Power Ratio Threshold.
     /**
     * @brief Topology is the basic constructor for a Topology.
     * @param TopologyFileName is the file in which the Topology was stored.
@@ -137,6 +137,15 @@ public:
      * all the links in this topology.
      */
     double AvgSpanLength;
+    /**
+     * @brief PowerRatioThreshold is the power ratio threshold for blocking a call.
+     */
+    double PowerRatioThreshold;
+    /**
+     * @brief get_PowerRatioThreshold returns the power ratio threshold for blocking a call.
+     * @return is the power ratio threshold for blocking a call.
+     */
+    double get_PowerRatioThreshold();
 private:
     double LongestLink;
 };

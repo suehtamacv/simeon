@@ -63,82 +63,79 @@ SimulationType::SimulationType(Simulation_Type SimType) : SimType(SimType)
 
 void SimulationType::load()
 {
-    if(SimType != Simulation_Type::pratiothreshold)
+    std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
+              << std::endl;
+    do
         {
-        std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
-                  << std::endl;
+        std::vector<SimulationType::Physical_Impairment> chosenMetrics;
+
         do
             {
-            std::vector<SimulationType::Physical_Impairment> chosenMetrics;
+            unsigned int numPossibleMetrics = 0;
 
-            do
+            for (auto &metric : SimulationType::MetricTypes.left)
                 {
-                unsigned int numPossibleMetrics = 0;
-
-                for (auto &metric : SimulationType::MetricTypes.left)
+                if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
+                              metric.first) != chosenMetrics.end())
                     {
-                    if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
-                                  metric.first) != chosenMetrics.end())
-                        {
-                        continue;
-                        } //Verifies whether the metric has already been chosen.
+                    continue;
+                    } //Verifies whether the metric has already been chosen.
 
-                    std::cout << "(" << metric.first << ")\t" << metric.second << std::endl;
-                    numPossibleMetrics++;
-                    }
+                std::cout << "(" << metric.first << ")\t" << metric.second << std::endl;
+                numPossibleMetrics++;
+                }
 
-                if(numPossibleMetrics == 0)
+            if(numPossibleMetrics == 0)
+                {
+                break;
+                }
+
+            int Metric;
+            std::cin >> Metric;
+
+            if (std::cin.fail() ||
+                    !SimulationType::MetricTypes.left.count((SimulationType::Physical_Impairment)
+                            Metric))
+                {
+                std::cin.clear();
+                std::cin.ignore();
+
+                if(Metric == -1)
                     {
                     break;
                     }
 
-                int Metric;
-                std::cin >> Metric;
-
-                if (std::cin.fail() ||
-                        !SimulationType::MetricTypes.left.count((SimulationType::Physical_Impairment)
-                                Metric))
-                    {
-                    std::cin.clear();
-                    std::cin.ignore();
-
-                    if(Metric == -1)
-                        {
-                        break;
-                        }
-
-                    std::cerr << "Invalid impairment." << std::endl;
-                    }
-                else if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
-                                   (SimulationType::Physical_Impairment) Metric) == chosenMetrics.end())
-                    {
-                    chosenMetrics.push_back((SimulationType::Physical_Impairment) Metric);
-                    } //Verifies that the metric hasn't been chosen.
-
-                std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
-                          << std::endl;
+                std::cerr << "Invalid impairment." << std::endl;
                 }
-            while(1);
-
-            for(unsigned int i = 0; i < chosenMetrics.size(); i++)
+            else if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
+                               (SimulationType::Physical_Impairment) Metric) == chosenMetrics.end())
                 {
-                if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::asenoise)
-                    {
-                    considerAseNoise = true;
-                    Metrics.push_back(SimulationType::Physical_Impairment::asenoise);
-                    }
+                chosenMetrics.push_back((SimulationType::Physical_Impairment) Metric);
+                } //Verifies that the metric hasn't been chosen.
 
-                if(chosenMetrics.at(i) ==
-                        SimulationType::Physical_Impairment::filterimperfection)
-                    {
-                    considerFilterImperfection = true;
-                    SpectralDensity::define_SignalsFilterOrder();
-                    Metrics.push_back(SimulationType::Physical_Impairment::filterimperfection);
-                    }
+            std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
+                      << std::endl;
+            }
+        while(1);
+
+        for(unsigned int i = 0; i < chosenMetrics.size(); i++)
+            {
+            if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::asenoise)
+                {
+                considerAseNoise = true;
+                Metrics.push_back(SimulationType::Physical_Impairment::asenoise);
+                }
+
+            if(chosenMetrics.at(i) ==
+                    SimulationType::Physical_Impairment::filterimperfection)
+                {
+                considerFilterImperfection = true;
+                SpectralDensity::define_SignalsFilterOrder();
+                Metrics.push_back(SimulationType::Physical_Impairment::filterimperfection);
                 }
             }
-        while(0); //Dummy do-while. Only to encapsulate reading.
         }
+    while(0); //Dummy do-while. Only to encapsulate reading.
 
     std::cout << std::endl << "-> Choose a topology." << std::endl;
 

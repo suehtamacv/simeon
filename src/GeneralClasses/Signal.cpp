@@ -75,8 +75,3 @@ double Signal::get_SignalPowerRatio()
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }
-
-double Signal::get_PowerRatioThreshold()
-{
-    return 0.6;
-}
