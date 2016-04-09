@@ -68,7 +68,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
-                     S.get_SignalPowerRatio() < T->get_PowerRatioThreshold()))
+                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                 {
                 Segments.push_back(Segment);
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
