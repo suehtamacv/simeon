@@ -341,7 +341,8 @@ void Simulation_PowerRatioThreshold::create_Simulations()
         {
 
         //Creates a copy of the topology.
-        std::shared_ptr<Topology> TopologyCopy(new Topology(*T, prt));
+        std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
+        TopologyCopy->set_PowerRatioThreshold(prt);
 
         //Creates the RMSA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =

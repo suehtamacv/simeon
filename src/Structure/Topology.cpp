@@ -27,15 +27,17 @@ Topology::Topology()
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
+
+    PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 }
 
-Topology::Topology(const Topology &topology, double PRThreshold)
+Topology::Topology(const Topology &topology)
 {
-    PowerRatioThreshold = PRThreshold;
-
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
+
+    PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 
     for (auto &node : topology.Nodes)
         {
@@ -74,6 +76,8 @@ Topology::Topology(std::string TopologyFileName)
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
+
+    PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 
     options_description TopologyDescription("Topology");
     TopologyDescription.add_options()
@@ -298,4 +302,9 @@ void Topology::set_avgSpanLength(double avgSpanLength)
 double Topology::get_PowerRatioThreshold()
 {
     return PowerRatioThreshold;
+}
+
+void Topology::set_PowerRatioThreshold(double PRThreshold)
+{
+    PowerRatioThreshold = PRThreshold;
 }
