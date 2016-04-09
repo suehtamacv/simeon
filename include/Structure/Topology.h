@@ -146,7 +146,10 @@ public:
      * @return is the power ratio threshold for blocking a call.
      */
     double get_PowerRatioThreshold();
-
+    /**
+     * @brief set_PowerRatioThreshold is used to set the power ratio threshold for blocking a call.
+     * @param PRThreshold is the new power ratio threshold for blocking a call.
+     */
     void set_PowerRatioThreshold(double PRThreshold);
 
 private:

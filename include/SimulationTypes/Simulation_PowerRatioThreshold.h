@@ -11,9 +11,21 @@
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_PowerRatioThreshold class is the simulation
+ * that varies the power ratio threshold and analyzes the effect on
+ * the call blocking probability.
+ *
+ * This simulation varies the power ratio threshold for the filter
+ * imperfection physical impairment, and analyzes the network
+ * performance in terms of call blocking probability.
+ */
 class Simulation_PowerRatioThreshold : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_PowerRatioThreshold is the default constructor.
+     */
     Simulation_PowerRatioThreshold();
 
     void help();
