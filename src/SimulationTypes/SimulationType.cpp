@@ -63,77 +63,82 @@ SimulationType::SimulationType(Simulation_Type SimType) : SimType(SimType)
 
 void SimulationType::load()
 {
-    std::cout << std::endl << "-> Select a blocking metric. (-1 to exit)"
-              << std::endl;
-    do
+    if(SimType != Simulation_Type::pratiothreshold)
         {
-        std::vector<SimulationType::Physical_Impairment> chosenMetrics;
-
+        std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
+                  << std::endl;
         do
             {
-            unsigned int numPossibleMetrics = 0;
+            std::vector<SimulationType::Physical_Impairment> chosenMetrics;
 
-            for (auto &metric : SimulationType::MetricTypes.left)
+            do
                 {
-                if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
-                              metric.first) != chosenMetrics.end())
+                unsigned int numPossibleMetrics = 0;
+
+                for (auto &metric : SimulationType::MetricTypes.left)
                     {
-                    continue;
-                    } //Verifies whether the metric has already been chosen.
+                    if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
+                                  metric.first) != chosenMetrics.end())
+                        {
+                        continue;
+                        } //Verifies whether the metric has already been chosen.
 
-                std::cout << "(" << metric.first << ")\t" << metric.second << std::endl;
-                numPossibleMetrics++;
-                }
+                    std::cout << "(" << metric.first << ")\t" << metric.second << std::endl;
+                    numPossibleMetrics++;
+                    }
 
-            if(numPossibleMetrics == 0)
-                {
-                break;
-                }
-
-            int Metric;
-            std::cin >> Metric;
-
-            if (std::cin.fail() ||
-                    !SimulationType::MetricTypes.left.count((SimulationType::Physical_Impairment) Metric))
-                {
-                std::cin.clear();
-                std::cin.ignore();
-
-                if(Metric == -1)
+                if(numPossibleMetrics == 0)
                     {
                     break;
                     }
 
-                std::cerr << "Invalid Metric." << std::endl;
-                }
-            else if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
-                               (SimulationType::Physical_Impairment) Metric) == chosenMetrics.end())
-                {
-                chosenMetrics.push_back((SimulationType::Physical_Impairment) Metric);
-                } //Verifies that the metric hasn't been chosen.
+                int Metric;
+                std::cin >> Metric;
 
-            std::cout << std::endl << "-> Select a blocking metric. (-1 to exit)"
-                      << std::endl;
+                if (std::cin.fail() ||
+                        !SimulationType::MetricTypes.left.count((SimulationType::Physical_Impairment)
+                                Metric))
+                    {
+                    std::cin.clear();
+                    std::cin.ignore();
+
+                    if(Metric == -1)
+                        {
+                        break;
+                        }
+
+                    std::cerr << "Invalid impairment." << std::endl;
+                    }
+                else if (std::find(chosenMetrics.begin(), chosenMetrics.end(),
+                                   (SimulationType::Physical_Impairment) Metric) == chosenMetrics.end())
+                    {
+                    chosenMetrics.push_back((SimulationType::Physical_Impairment) Metric);
+                    } //Verifies that the metric hasn't been chosen.
+
+                std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
+                          << std::endl;
+                }
+            while(1);
+
+            for(unsigned int i = 0; i < chosenMetrics.size(); i++)
+                {
+                if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::asenoise)
+                    {
+                    considerAseNoise = true;
+                    Metrics.push_back(SimulationType::Physical_Impairment::asenoise);
+                    }
+
+                if(chosenMetrics.at(i) ==
+                        SimulationType::Physical_Impairment::filterimperfection)
+                    {
+                    considerFilterImperfection = true;
+                    SpectralDensity::define_SignalsFilterOrder();
+                    Metrics.push_back(SimulationType::Physical_Impairment::filterimperfection);
+                    }
+                }
             }
-        while(1);
-
-        for(unsigned int i = 0; i < chosenMetrics.size(); i++)
-            {
-            if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::asenoise)
-                {
-                considerAseNoise = true;
-                Metrics.push_back(SimulationType::Physical_Impairment::asenoise);
-                }
-
-            if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::filterimperfection)
-                {
-                considerFilterImperfection = true;
-                SpectralDensity::define_SignalsFilterOrder();
-                Metrics.push_back(SimulationType::Physical_Impairment::filterimperfection);
-                }
-            }
+        while(0); //Dummy do-while. Only to encapsulate reading.
         }
-    while(0); //Dummy do-while. Only to encapsulate reading.
 
     std::cout << std::endl << "-> Choose a topology." << std::endl;
 
@@ -295,8 +300,10 @@ std::shared_ptr<SimulationType> SimulationType::open()
                     SimulationType::Physical_Impairment::filterimperfection)
                 {
                 considerFilterImperfection = true;
-                SpectralDensity::TxFilterOrder = VariablesMap["general.TxFilterOrder"].as<int>();
-                SpectralDensity::GaussianOrder = VariablesMap["general.GaussianFilterOrder"].as<int>();
+                SpectralDensity::TxFilterOrder =
+                    VariablesMap["general.TxFilterOrder"].as<int>();
+                SpectralDensity::GaussianOrder =
+                    VariablesMap["general.GaussianFilterOrder"].as<int>();
                 }
             if(SimulationType::MetricTypesNicknames.right.at(Aux) ==
                     SimulationType::Physical_Impairment::asenoise)
