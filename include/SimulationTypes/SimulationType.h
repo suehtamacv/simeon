@@ -26,7 +26,8 @@ public:
     X(networkload, "Network Load Variation", "networkload", Simulation_NetworkLoad) \
     X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization", Simulation_PSROptimization) \
     X(regnum, "Number of Regenerators", "regnum", Simulation_RegeneratorNumber) \
-    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
+    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend) \
+    X(pratiothreshold, "Power Ratio Threshold Variation", "pratiothreshold", Simulation_PowerRatioThreshold)
 
 #define PHYSICAL_IMPAIRMENTS \
     X(asenoise, "ASE Noise", "asenoise") \
