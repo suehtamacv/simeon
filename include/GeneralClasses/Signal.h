@@ -68,11 +68,6 @@ public:
      */
     double get_SignalPowerRatio();
     /**
-     * @brief get_PowerRatioThreshold returns the power ratio threshold for blocking a call.
-     * @return the power ratio threshold for blocking a call.
-     */
-    double get_PowerRatioThreshold();
-    /**
      * @brief numFrequencySamples number of samples along the signal's bandwidth.
      */
     static constexpr unsigned long numFrequencySamples = 25;

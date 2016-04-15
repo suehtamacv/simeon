@@ -7,6 +7,7 @@
 #include <SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.h>
 #include <SimulationTypes/Simulation_PSROptimization.h>
 #include <SimulationTypes/Simulation_RegeneratorNumber.h>
+#include <SimulationTypes/Simulation_PowerRatioThreshold.h>
 
 #endif // SIMULATIONTYPES_H
 
