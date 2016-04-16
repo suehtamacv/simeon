@@ -72,7 +72,7 @@ public:
      * @brief kShortestPaths is the number of shortest paths that will be searched
      * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.
      */
-    static constexpr int kShortestPaths = 3;
+    static constexpr int kShortestPaths = 5;
 
 private:
     std::vector<std::vector<std::weak_ptr<Link>>> dijkstra(std::shared_ptr<Call> C);

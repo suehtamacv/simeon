@@ -220,26 +220,47 @@ RoutingAlgorithm::yen(std::shared_ptr<Call> C)
 
         for (unsigned n = 0; n < lastShortRoute.size(); ++n)
             {
+            auto spurNode = lastShortRoute.at(n).lock()->Origin;
+            auto rootPath = std::vector<std::weak_ptr<Link>>(lastShortRoute.begin(),
+                            lastShortRoute.begin() + n);
+
+            std::vector<std::weak_ptr<Node>> deactivatedNodes;
+            std::vector<std::weak_ptr<Link>> deactivatedLinks;
+
             //Deactives some nodes and links
-            for (unsigned link = 0; link <= n; ++link)
+            for (auto &link : rootPath)
                 {
-                lastShortRoute.at(link).lock()->set_LinkInactive();
-                lastShortRoute.at(link).lock()->Origin.lock()->set_NodeInactive();
+                link.lock()->Origin.lock()->set_NodeInactive();
+                deactivatedNodes.push_back(link.lock()->Origin);
+                }
+            for (auto &previousRoutes : RouteLinks)
+                {
+                if (previousRoutes.size() < n)
+                    {
+                    continue;
+                    }
+
+                bool shareRoot = true;
+                for (unsigned link = 0; (link < n) && shareRoot; ++link)
+                    {
+                    shareRoot &= (rootPath[link].lock() == previousRoutes[link].lock());
+                    }
+                if (shareRoot)
+                    {
+                    previousRoutes[n].lock()->set_LinkInactive();
+                    deactivatedLinks.push_back(previousRoutes[n]);
+                    }
                 }
 
-            auto dummyC = std::make_shared<Call>(lastShortRoute.at(n).lock()->Origin,
-                                                 C->Destination, C->Bitrate);
+            auto dummyC = std::make_shared<Call>(spurNode, C->Destination, C->Bitrate);
             auto alternativeRoute = dijkstra(dummyC).front();
 
             if (!alternativeRoute.empty())
                 {
                 foundRoute = true;
-                auto testRoute = std::vector<std::weak_ptr<Link>>
-                                 (lastShortRoute.begin(), lastShortRoute.begin() + n);
+                auto testRoute = rootPath;
                 testRoute.insert(testRoute.end(), alternativeRoute.begin(),
                                  alternativeRoute.end());
-                assert(testRoute[0].lock()->Origin.lock() == C->Origin.lock());
-                assert(testRoute.back().lock()->Destination.lock() == C->Destination.lock());
                 double routeCost = get_RoutingCost(testRoute, C);
                 if (routeCost < minRouteCost)
                     {
@@ -249,10 +270,13 @@ RoutingAlgorithm::yen(std::shared_ptr<Call> C)
                 }
 
             //Reactivates nodes and links
-            for (unsigned link = 0; link <= n; ++link)
+            for (auto &node : deactivatedNodes)
                 {
-                lastShortRoute.at(link).lock()->set_LinkActive();
-                lastShortRoute.at(link).lock()->Origin.lock()->set_NodeActive();
+                node.lock()->set_NodeActive();
+                }
+            for (auto &link : deactivatedLinks)
+                {
+                link.lock()->set_LinkActive();
                 }
 
             }

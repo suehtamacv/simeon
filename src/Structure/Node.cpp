@@ -312,13 +312,11 @@ double Node::get_OpEx()
 
 void Node::set_NodeActive()
 {
-    BOOST_ASSERT_MSG(!isActive, "Trying to set an active node as active");
     isActive = true;
 }
 
 void Node::set_NodeInactive()
 {
-    BOOST_ASSERT_MSG(isActive, "Trying to set an inactive node as inactive");
     isActive = false;
 }
 

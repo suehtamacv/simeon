@@ -247,13 +247,11 @@ void Link::set_AvgSpanLength(double avgSpanLength)
 
 void Link::set_LinkActive()
 {
-    BOOST_ASSERT_MSG(!isActive, "Trying to set an active link as active");
     isActive = true;
 }
 
 void Link::set_LinkInactive()
 {
-    BOOST_ASSERT_MSG(isActive, "Trying to set an inactive link as inactive");
     isActive = false;
 }
 
