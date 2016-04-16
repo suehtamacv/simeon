@@ -8,6 +8,9 @@
 
 using namespace RMSA::ROUT;
 
+RoutingAlgorithm::RoutingType RoutingAlgorithm::RoutType;
+bool RoutingAlgorithm::hasLoadedRoutingType = false;
+
 RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
     boost::assign::list_of<RoutingAlgorithm::RoutAlgNameBimap::relation>
 #define X(a,b,c,d) (a,b)
@@ -23,9 +26,23 @@ RoutingAlgorithm::RoutingAlgorithmNicknames =
 #undef X
     ;
 
+RoutingAlgorithm::RoutTypeNameBimap RoutingAlgorithm::RoutingTypesNames =
+    boost::assign::list_of<RoutingAlgorithm::RoutTypeNameBimap::relation>
+#define X(a,b,c) (a,b)
+    ROUTING_TYPE
+#undef X
+    ;
+
+RoutingAlgorithm::RoutTypeNicknameBimap RoutingAlgorithm::RoutingTypesNicknames
+    = boost::assign::list_of<RoutingAlgorithm::RoutTypeNicknameBimap::relation>
+#define X(a,b,c) (a,c)
+      ROUTING_TYPE
+#undef X
+      ;
+
 RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
-                                   RoutingAlgorithms RoutAlgType) :
-    RoutAlgType(RoutAlgType), T(T)
+                                   RoutingAlgorithms RoutAlg) :
+    RoutAlg(RoutAlg), T(T)
 {
 
 }
@@ -83,7 +100,19 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
 std::vector<std::vector<std::weak_ptr<Link>>>
 RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {
-    return yen(C);
+    switch (RoutType)
+        {
+        case dijkstra_alg:
+            return dijkstra(C);
+            break;
+
+        case yen_alg:
+            return yen(C);
+            break;
+        }
+
+    //fallback
+    return dijkstra(C);
 }
 
 void RoutingAlgorithm::save(std::string SimConfigFileName)
@@ -95,7 +124,7 @@ void RoutingAlgorithm::save(std::string SimConfigFileName)
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithmNicknames.left.at(
-                      RoutAlgType)
+                      RoutAlg)
                   << std::endl;
 }
 
@@ -204,12 +233,6 @@ RoutingAlgorithm::yen(std::shared_ptr<Call> C)
     std::vector<std::vector<std::weak_ptr<Link>>> RouteLinks;
     RouteLinks.push_back(dijkstra(C).back());
 
-    std::clog << "Rota 1: " << std::endl;
-    for (auto &link : RouteLinks.back())
-        {
-        std::clog << *(link.lock()) << std::endl;
-        }
-
     while (RouteLinks.size() < kShortestPaths)
         {
         bool foundRoute = false;
@@ -220,7 +243,7 @@ RoutingAlgorithm::yen(std::shared_ptr<Call> C)
 
         for (unsigned n = 0; n < lastShortRoute.size(); ++n)
             {
-            auto spurNode = lastShortRoute.at(n).lock()->Origin;
+            auto spurNode = lastShortRoute[n].lock()->Origin;
             auto rootPath = std::vector<std::weak_ptr<Link>>(lastShortRoute.begin(),
                             lastShortRoute.begin() + n);
 
@@ -285,11 +308,6 @@ RoutingAlgorithm::yen(std::shared_ptr<Call> C)
             break;
             }
         RouteLinks.push_back(currShortestRoute);
-        std::clog << "Rota " << RouteLinks.size() << ": " << std::endl;
-        for (auto &link : RouteLinks.back())
-            {
-            std::clog << *(link.lock()) << std::endl;
-            }
         }
 
     return RouteLinks;
@@ -306,4 +324,43 @@ double RoutingAlgorithm::get_RoutingCost(std::vector<std::weak_ptr<Link>> links,
         }
 
     return cost;
+}
+
+void RoutingAlgorithm::load()
+{
+    if (hasLoadedRoutingType)
+        {
+        return;
+        }
+
+    std::cout << std::endl << "-> Choose a routing type." << std::endl;
+
+    do
+        {
+        for (auto &routing : RoutingTypesNames.left)
+            {
+            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
+            }
+
+        int Routing_Type;
+        std::cin >> Routing_Type;
+
+        if (std::cin.fail() || RoutingTypesNames.left.count
+                ((RoutingType) Routing_Type) == 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid routing type." << std::endl;
+            std::cout << std::endl << "-> Choose a routing type." << std::endl;
+            }
+        else
+            {
+            RoutType = (RoutingType) Routing_Type;
+            break;
+            }
+        }
+    while (1);
+
+    hasLoadedRoutingType = true;
 }

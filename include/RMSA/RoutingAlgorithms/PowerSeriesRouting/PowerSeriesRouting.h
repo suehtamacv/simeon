@@ -50,6 +50,8 @@ public:
 
     void load();
     void save(std::string);
+    std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
+
     bool initCoefficients(std::vector<double> X);
     bool initCoefficients(std::string);
 

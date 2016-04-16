@@ -9,10 +9,11 @@ FixedRoutingAlgorithm::FixedRoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg) :
     RoutingAlgorithm(T, RoutAlg)
 {
+
 }
 
-std::vector<std::vector<std::weak_ptr<Link>>> FixedRoutingAlgorithm::route(
-    std::shared_ptr<Call> C)
+std::vector<std::vector<std::weak_ptr<Link>>>
+FixedRoutingAlgorithm::route(std::shared_ptr<Call> C)
 {
     if (Routes.empty())
         {

@@ -17,7 +17,10 @@ public:
     MinimumHops(std::shared_ptr<Topology> T);
 
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
-    void load() {}
+    void load()
+    {
+        RoutingAlgorithm::load();
+    }
     void save(std::string);
 };
 }

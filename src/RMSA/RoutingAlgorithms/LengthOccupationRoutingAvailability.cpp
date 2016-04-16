@@ -28,3 +28,9 @@ void LengthOccupationRoutingAvailability::save(std::string SimConfigFileName)
 {
     RoutingAlgorithm::save(SimConfigFileName);
 }
+
+std::vector<std::vector<std::weak_ptr<Link>>>
+LengthOccupationRoutingAvailability::route(std::shared_ptr<Call> C)
+{
+    return RoutingAlgorithm::route(C);
+}

@@ -18,7 +18,11 @@ public:
     LengthOccupationRoutingAvailability(std::shared_ptr<Topology> T);
 
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
-    void load() {}
+    std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
+    void load()
+    {
+        RoutingAlgorithm::load();
+    }
     void save(std::string);
 };
 }
