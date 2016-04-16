@@ -1,5 +1,6 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
+#include <Structure/Link.h>
 
 using namespace RMSA::ROUT::PSR;
 
@@ -19,6 +20,11 @@ TensorialPowerSeriesRouting::TensorialPowerSeriesRouting
 double TensorialPowerSeriesRouting::get_Cost
 (std::weak_ptr<Link> link, std::shared_ptr<Call> C)
 {
+    if (!link.lock()->is_LinkActive())
+        {
+        return std::numeric_limits<double>::max();
+        }
+
     arma::mat cost_matrix = arma::ones(1);
 
     for (auto &cost : Costs)

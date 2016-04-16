@@ -21,8 +21,8 @@ class RoutingAlgorithm
 {
 public:
 #define ROUTING_TYPE \
-    X(dijkstra, "Dijkstra Shortest Path Algorithm") \
-    X(yen, "Yen K-Shortest Path Algorithm")
+    X(dijkstra_alg, "Dijkstra Shortest Path Algorithm") \
+    X(yen_alg, "Yen K-Shortest Path Algorithm")
 
 #define ROUTING_ALGORITHM \
     X(AWR, "Adaptative Weighing Routing", "AWR", PSR::AdaptativeWeighingRouting) \
@@ -68,9 +68,17 @@ public:
 
     std::shared_ptr<Topology> T;
 
+    /**
+     * @brief kShortestPaths is the number of shortest paths that will be searched
+     * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.
+     */
+    static constexpr int kShortestPaths = 3;
+
 private:
-    std::vector<std::vector<std::weak_ptr<Link>>>
-    dijkstraShortestPath(std::shared_ptr<Call> C);
+    std::vector<std::vector<std::weak_ptr<Link>>> dijkstra(std::shared_ptr<Call> C);
+    std::vector<std::vector<std::weak_ptr<Link>>> yen(std::shared_ptr<Call> C);
+
+    double get_RoutingCost(std::vector<std::weak_ptr<Link>>, std::shared_ptr<Call>);
 };
 }
 }

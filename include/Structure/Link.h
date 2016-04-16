@@ -145,11 +145,31 @@ public:
      */
     void set_AvgSpanLength(double avgSpanLength);
 
+    /**
+     * @brief is_LinkActive returns true iff this link is active, i.e., new connections can
+     * pass through it. If it's inactive, no new traffic can pass through this link.
+     * @return true iff this link is active.
+     */
+    bool is_LinkActive() const
+    {
+        return isActive;
+    }
+    /**
+     * @brief set_LinkActive sets the link as active.
+     */
+    void set_LinkActive();
+    /**
+     * @brief set_LinkInactive sets the link as inactive.
+     */
+    void set_LinkInactive();
+
     friend std::ostream& operator<<(std::ostream &out, const Link &link);
 
 private:
     void create_Slots();
     void create_Devices();
+
+    bool isActive;
 };
 
 #endif // LINK_H

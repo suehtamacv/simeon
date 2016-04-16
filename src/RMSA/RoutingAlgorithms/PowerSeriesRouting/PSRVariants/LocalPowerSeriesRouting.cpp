@@ -2,6 +2,7 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
 #include <Calls/Call.h>
 #include <Structure/Node.h>
+#include <Structure/Link.h>
 #include <Structure/Topology.h>
 #include <algorithm>
 
@@ -49,6 +50,11 @@ LocalPowerSeriesRouting::LocalPowerSeriesRouting
 double LocalPowerSeriesRouting::get_Cost
 (std::weak_ptr<Link> link, std::shared_ptr<Call> C)
 {
+    if (!link.lock()->is_LinkActive())
+        {
+        return std::numeric_limits<double>::max();
+        }
+
     arma::mat cost_matrix = arma::ones(1);
     auto origDestPair = std::make_pair(C->Origin.lock()->ID,
                                        C->Destination.lock()->ID);

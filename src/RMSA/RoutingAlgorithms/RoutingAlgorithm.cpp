@@ -80,6 +80,12 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
     return R_Alg;
 }
 
+std::vector<std::vector<std::weak_ptr<Link>>>
+RoutingAlgorithm::route(std::shared_ptr<Call> C)
+{
+    return yen(C);
+}
+
 void RoutingAlgorithm::save(std::string SimConfigFileName)
 {
     std::ofstream SimConfigFile(SimConfigFileName,
@@ -93,8 +99,8 @@ void RoutingAlgorithm::save(std::string SimConfigFileName)
                   << std::endl;
 }
 
-std::vector<std::vector<std::weak_ptr<Link>>>
-RoutingAlgorithm::dijkstraShortestPath(std::shared_ptr<Call> C)
+std::vector<std::vector<std::weak_ptr<Link>>> RoutingAlgorithm::dijkstra(
+    std::shared_ptr<Call> C)
 {
     /** Attention: this code breaks if there are nodes in the Topology with the
      * same ID. This should not happen. The nodes must have sequential ID. **/
@@ -127,6 +133,11 @@ RoutingAlgorithm::dijkstraShortestPath(std::shared_ptr<Call> C)
 
         for (auto &node : CurrentNode->Neighbours)
             {
+            if (!node.lock()->is_NodeActive())
+                {
+                continue;
+                }
+
             auto locknode = node.lock();
             double newLength = MinDistance[CurrentNode->ID] +
                                get_Cost(T->Links.at(std::make_pair(CurrentNode->ID, locknode->ID)), C);
@@ -188,7 +199,87 @@ RoutingAlgorithm::dijkstraShortestPath(std::shared_ptr<Call> C)
 }
 
 std::vector<std::vector<std::weak_ptr<Link>>>
-RoutingAlgorithm::route(std::shared_ptr<Call> C)
+RoutingAlgorithm::yen(std::shared_ptr<Call> C)
 {
-    return dijkstraShortestPath(C);
+    std::vector<std::vector<std::weak_ptr<Link>>> RouteLinks;
+    RouteLinks.push_back(dijkstra(C).back());
+
+    std::clog << "Rota 1: " << std::endl;
+    for (auto &link : RouteLinks.back())
+        {
+        std::clog << *(link.lock()) << std::endl;
+        }
+
+    while (RouteLinks.size() < kShortestPaths)
+        {
+        bool foundRoute = false;
+
+        auto lastShortRoute = RouteLinks.back();
+        auto currShortestRoute = RouteLinks.back();
+        double minRouteCost = std::numeric_limits<double>::max();
+
+        for (unsigned n = 0; n < lastShortRoute.size(); ++n)
+            {
+            //Deactives some nodes and links
+            for (unsigned link = 0; link <= n; ++link)
+                {
+                lastShortRoute.at(link).lock()->set_LinkInactive();
+                lastShortRoute.at(link).lock()->Origin.lock()->set_NodeInactive();
+                }
+
+            auto dummyC = std::make_shared<Call>(lastShortRoute.at(n).lock()->Origin,
+                                                 C->Destination, C->Bitrate);
+            auto alternativeRoute = dijkstra(dummyC).front();
+
+            if (!alternativeRoute.empty())
+                {
+                foundRoute = true;
+                auto testRoute = std::vector<std::weak_ptr<Link>>
+                                 (lastShortRoute.begin(), lastShortRoute.begin() + n);
+                testRoute.insert(testRoute.end(), alternativeRoute.begin(),
+                                 alternativeRoute.end());
+                assert(testRoute[0].lock()->Origin.lock() == C->Origin.lock());
+                assert(testRoute.back().lock()->Destination.lock() == C->Destination.lock());
+                double routeCost = get_RoutingCost(testRoute, C);
+                if (routeCost < minRouteCost)
+                    {
+                    minRouteCost = routeCost;
+                    currShortestRoute = testRoute;
+                    }
+                }
+
+            //Reactivates nodes and links
+            for (unsigned link = 0; link <= n; ++link)
+                {
+                lastShortRoute.at(link).lock()->set_LinkActive();
+                lastShortRoute.at(link).lock()->Origin.lock()->set_NodeActive();
+                }
+
+            }
+        if (!foundRoute)
+            {
+            break;
+            }
+        RouteLinks.push_back(currShortestRoute);
+        std::clog << "Rota " << RouteLinks.size() << ": " << std::endl;
+        for (auto &link : RouteLinks.back())
+            {
+            std::clog << *(link.lock()) << std::endl;
+            }
+        }
+
+    return RouteLinks;
+}
+
+double RoutingAlgorithm::get_RoutingCost(std::vector<std::weak_ptr<Link>> links,
+        std::shared_ptr<Call> C)
+{
+    double cost = 0;
+
+    for (auto &link : links)
+        {
+        cost += get_Cost(link, C);
+        }
+
+    return cost;
 }

@@ -15,6 +15,11 @@ double LengthOccupationRoutingAvailability::get_Cost(
     std::weak_ptr<Link> link,
     std::shared_ptr<Call>)
 {
+    if (!link.lock()->is_LinkActive())
+        {
+        return std::numeric_limits<double>::max();
+        }
+
     return 1.0 + link.lock()->Length / T->get_LengthLongestLink() -
            link.lock()->get_Availability() / (double) Link::NumSlots;
 }

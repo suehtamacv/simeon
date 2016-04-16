@@ -207,11 +207,32 @@ public:
      */
     static void load() {}
 
+    /**
+     * @brief is_NodeActive returns true iff this node is active, i.e., new connections can
+     * pass through it. If it's inactive, no new traffic can pass through this node.
+     * @return true iff this node is active.
+     */
+    bool is_NodeActive() const
+    {
+        return isActive;
+    }
+    /**
+     * @brief set_NodeActive sets the node as active.
+     */
+    void set_NodeActive();
+    /**
+     * @brief set_NodeInactive sets the node as inactive.
+     */
+    void set_NodeInactive();
+
+
     friend std::ostream& operator<<(std::ostream &out, const Node& node);
 
 private:
     NodeType Type;
     NodeArchitecture Architecture;
+    bool isActive;
+
     void create_Devices();
     unsigned int NumUsedRegenerators;
     unsigned long long TotalNumRequestedRegenerators;

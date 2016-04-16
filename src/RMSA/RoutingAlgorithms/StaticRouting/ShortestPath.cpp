@@ -13,6 +13,11 @@ double ShortestPath::get_Cost(
     std::weak_ptr<Link> link,
     std::shared_ptr<Call>)
 {
+    if (!link.lock()->is_LinkActive())
+        {
+        return std::numeric_limits<double>::max();
+        }
+
     return link.lock()->Length;
 }
 
