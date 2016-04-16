@@ -96,6 +96,7 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
     if (!LinkExists)
         {
         Neighbours.push_back(N);
+        N.lock()->isNeighbourOf.push_back(Link->Origin);
         Links.push_back(Link);
         }
 }

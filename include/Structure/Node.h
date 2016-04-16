@@ -84,6 +84,11 @@ public:
      */
     std::vector<std::weak_ptr<Node>> Neighbours;
     /**
+     * @brief isNeighbourOf is a vector containing the nodes which this node is
+     * a neighbour of.
+     */
+    std::vector<std::weak_ptr<Node>> isNeighbourOf;
+    /**
      * @brief Links is a vector containing the links whose origin node is this
      * node.
      */
