@@ -17,8 +17,8 @@ DijkstraRoutingAlgorithm::DijkstraRoutingAlgorithm
 
 }
 
-std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
-                                  std::shared_ptr<Call> C)
+std::vector<std::vector<std::weak_ptr<Link>>> DijkstraRoutingAlgorithm::route(
+    std::shared_ptr<Call> C)
 {
     /** Attention: this code breaks if there are nodes in the Topology with the
      * same ID. This should not happen. The nodes must have sequential ID. **/
@@ -74,7 +74,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
     if (Precedent[CurrentNode] == -1)
         {
         RouteLinks.clear();
-        return RouteLinks;
+        return {RouteLinks};
         }
 
     while (Precedent[CurrentNode] != -1)
@@ -90,7 +90,7 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
         if (CurrentNode == -1)
             {
             RouteLinks.clear(); //Could not find route. Returns empty vector.
-            return RouteLinks;
+            return {RouteLinks};
             }
         }
 
@@ -108,5 +108,5 @@ std::vector<std::weak_ptr<Link>> DijkstraRoutingAlgorithm::route(
         RouteLinks.clear();
         }
 
-    return RouteLinks;
+    return {RouteLinks};
 }

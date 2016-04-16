@@ -40,7 +40,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     std::shared_ptr<Call> C)
 {
 
-    std::vector<std::weak_ptr<Link>> Links;
+    std::vector<std::vector<std::weak_ptr<Link>>> Links;
     std::vector<TransparentSegment> Segments;
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
@@ -60,37 +60,40 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                 return nullptr;
                 }
 
-            int requiredSlots = scheme.get_NumSlots(C->Bitrate);
-            TransparentSegment Segment(Links, scheme, 0);
-            Signal S(requiredSlots);
-            S = Segment.bypass(S);            
-
-            if ((!considerAseNoise ||
-                    S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
-                    (!considerFilterImperfection ||
-                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
+            for (auto &links : Links)
                 {
-                Segments.push_back(Segment);
-                auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
+                int requiredSlots = scheme.get_NumSlots(C->Bitrate);
+                TransparentSegment Segment(links, scheme, 0);
+                Signal S(requiredSlots);
+                S = Segment.bypass(S);
 
-                if (SegmentSlots.empty())
+                if ((!considerAseNoise ||
+                        S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
+                        (!considerFilterImperfection ||
+                         S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                     {
-                    if (scheme == Schemes.back())
+                    Segments.push_back(Segment);
+                    auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
+
+                    if (SegmentSlots.empty())
                         {
-                        C->Status = Call::Blocked;
-                        return nullptr;
+                        if (scheme == Schemes.back())
+                            {
+                            C->Status = Call::Blocked;
+                            continue;
+                            }
+
+                        continue;
                         }
 
+                    Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+                    goto callImplemented;
+                    }
+                else if (scheme == Schemes.back())
+                    {
+                    C->Status = Call::Blocked;
                     continue;
                     }
-
-                Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
-                break;
-                }
-            else if (scheme == Schemes.back())
-                {
-                C->Status = Call::Blocked;
-                return nullptr;
                 }
             }
         }
@@ -104,29 +107,34 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             return nullptr;
             }
 
-        Segments = RA_Alg->assignRegenerators(C, Links);
-
-        if (Segments.empty())
+        for (auto &links : Links)
             {
-            C->Status = Call::Blocked;
-            return nullptr;
-            }
+            Segments = RA_Alg->assignRegenerators(C, links);
 
-        for (auto &segment : Segments)
-            {
-            auto SegmentSlots = WA_Alg->assignSlots(C, segment);
-
-            if (SegmentSlots.empty())
+            if (Segments.empty())
                 {
                 C->Status = Call::Blocked;
-                Slots.clear();
-                return nullptr;
+                continue;
                 }
 
-            Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+            for (auto &segment : Segments)
+                {
+                auto SegmentSlots = WA_Alg->assignSlots(C, segment);
+
+                if (SegmentSlots.empty())
+                    {
+                    C->Status = Call::Blocked;
+                    Slots.clear();
+                    continue;
+                    }
+
+                Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+                goto callImplemented;
+                }
             }
         }
 
+callImplemented:
     if (C->Status == Call::Not_Evaluated)
         {
         C->Status = Call::Implemented;

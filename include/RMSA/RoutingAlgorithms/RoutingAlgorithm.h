@@ -49,7 +49,7 @@ public:
     static RoutingAlgorithms define_RoutingAlgorithm();
     static std::shared_ptr<RoutingAlgorithm> create_RoutingAlgorithm(
         RoutingAlgorithms, std::shared_ptr<Topology>);
-    virtual std::vector<std::weak_ptr<Link>> route(std::shared_ptr<Call> C) = 0;
+    virtual std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C) = 0;
     virtual void load() = 0;
     virtual void save(std::string) = 0;
 

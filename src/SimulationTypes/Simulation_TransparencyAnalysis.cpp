@@ -79,7 +79,7 @@ void Simulation_TransparencyAnalysis::run()
             std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
             RoutingWavelengthAssignment RMSA(SP, FF, ModulationScheme::DefaultSchemes,
-                                            TopCopy);
+                                             TopCopy);
             std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
 
             if (RMSA.routeCall(C) != nullptr)
@@ -343,16 +343,19 @@ void Simulation_TransparencyAnalysis::print()
     std::cout << std::endl <<
               "  A Transparency Analysis Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Minimum Average Span Length = " << minAvgLinkSpan << std::endl;
     std::cout << "-> Maximum Average Span Length = " << maxAvgLinkSpan << std::endl;
     std::cout << "-> Minimum OSNR = " << minAvgLinkSpan << std::endl;
@@ -374,10 +377,10 @@ void Simulation_TransparencyAnalysis::find_OriginDestination()
                 }
 
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-            auto links = SP.route(DummyCall);
+            auto routes = SP.route(DummyCall);
             double length = 0;
 
-            for (auto link : links)
+            for (auto link : routes.front())
                 {
                 length += link.lock()->Length;
                 }

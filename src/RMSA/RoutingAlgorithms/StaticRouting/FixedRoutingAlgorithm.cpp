@@ -11,8 +11,8 @@ FixedRoutingAlgorithm::FixedRoutingAlgorithm
 {
 }
 
-std::vector<std::weak_ptr<Link>> FixedRoutingAlgorithm::route(
-                                  std::shared_ptr<Call> C)
+std::vector<std::vector<std::weak_ptr<Link>>> FixedRoutingAlgorithm::route(
+    std::shared_ptr<Call> C)
 {
     if (Routes.empty())
         {
