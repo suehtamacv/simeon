@@ -7,7 +7,7 @@ using namespace RMSA::ROUT;
 
 FixedRoutingAlgorithm::FixedRoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg) :
-    DijkstraRoutingAlgorithm(T, RoutAlg)
+    RoutingAlgorithm(T, RoutAlg)
 {
 }
 
@@ -36,7 +36,7 @@ void FixedRoutingAlgorithm::precalculate_Routes()
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
             auto DummyOrigDest = std::make_pair(orig->ID, dest->ID);
 
-            Routes.emplace(DummyOrigDest, DijkstraRoutingAlgorithm::route(DummyCall));
+            Routes.emplace(DummyOrigDest, RoutingAlgorithm::route(DummyCall));
             }
         }
 }

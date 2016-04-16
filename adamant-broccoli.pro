@@ -58,7 +58,6 @@ SOURCES += src/main.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.cpp \
     src/RMSA/Route.cpp \
-    src/RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
     src/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
@@ -170,7 +169,6 @@ HEADERS += \
     include/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h \
     include/RMSA/Route.h \
     include/RMSA/RoutingAlgorithms.h \
-    include/RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h \
     include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h \
     include/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
     include/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \

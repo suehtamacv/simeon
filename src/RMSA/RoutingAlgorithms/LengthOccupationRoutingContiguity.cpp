@@ -5,7 +5,7 @@
 using namespace RMSA::ROUT;
 
 LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
-    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, LORc)
+    std::shared_ptr<Topology> T) : RoutingAlgorithm(T, LORc)
 {
 
 }

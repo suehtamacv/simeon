@@ -6,7 +6,7 @@ using namespace RMSA::ROUT;
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
     std::shared_ptr<Topology> T) :
-    DijkstraRoutingAlgorithm(T, LORa)
+    RoutingAlgorithm(T, LORa)
 {
 
 }

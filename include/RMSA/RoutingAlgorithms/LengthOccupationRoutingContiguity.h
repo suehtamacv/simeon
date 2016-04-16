@@ -1,7 +1,7 @@
 #ifndef LENGTHOCCUPATIONROUTINGCONTIGUITY_H
 #define LENGTHOCCUPATIONROUTINGCONTIGUITY_H
 
-#include <RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 
 namespace RMSA
 {
@@ -12,7 +12,7 @@ namespace ROUT
  * Occupation Routing algorithm (contiguity variant). Its link cost is a
  * ponderation with the link length and its contiguity.
  */
-class LengthOccupationRoutingContiguity : public DijkstraRoutingAlgorithm
+class LengthOccupationRoutingContiguity : public RoutingAlgorithm
 {
 public:
     LengthOccupationRoutingContiguity(std::shared_ptr<Topology> T);

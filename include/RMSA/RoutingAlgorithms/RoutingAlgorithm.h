@@ -20,6 +20,10 @@ namespace ROUT
 class RoutingAlgorithm
 {
 public:
+#define ROUTING_TYPE \
+    X(dijkstra, "Dijkstra Shortest Path Algorithm") \
+    X(yen, "Yen K-Shortest Path Algorithm")
+
 #define ROUTING_ALGORITHM \
     X(AWR, "Adaptative Weighing Routing", "AWR", PSR::AdaptativeWeighingRouting) \
     X(LORa, "Length and Occupation Routing - Availability", "LORa", LengthOccupationRoutingAvailability) \
@@ -29,6 +33,13 @@ public:
     X(tenPSR, "Tensorial Power Series Routing", "tenPSR", PSR::TensorialPowerSeriesRouting) \
     X(MH, "Minimum Hops", "MH", MinimumHops) \
     X(SP, "Shortest Path", "SP", ShortestPath) //Enum value, Name, Nickname, Class name.
+
+#define X(a,b) a,
+    enum RoutingType
+    {
+        ROUTING_TYPE
+    };
+#undef X
 
 #define X(a,b,c,d) a,
     enum RoutingAlgorithms
@@ -49,11 +60,17 @@ public:
     static RoutingAlgorithms define_RoutingAlgorithm();
     static std::shared_ptr<RoutingAlgorithm> create_RoutingAlgorithm(
         RoutingAlgorithms, std::shared_ptr<Topology>);
-    virtual std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C) = 0;
     virtual void load() = 0;
     virtual void save(std::string) = 0;
 
+    std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
+    virtual double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C) = 0;
+
     std::shared_ptr<Topology> T;
+
+private:
+    std::vector<std::vector<std::weak_ptr<Link>>>
+    dijkstraShortestPath(std::shared_ptr<Call> C);
 };
 }
 }
