@@ -12,22 +12,29 @@ int SpectralDensity::GaussianOrder = 1;
 int SpectralDensity::TxFilterOrder = 1;
 
 SpectralDensity::SpectralDensity
-(double freqMin, double freqMax, unsigned int numSamples) :
+(double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec) :
     densityScaling(1), freqMin(freqMin), freqMax(freqMax)
 {
-    std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
+    if(cleanSpec)
+    {
+        specDensity.zeros(numSamples);
+    }
+    else
+    {
+        std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
 
-    if(specDensityMap.count(freqValues) == 0)
-        {
-        arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
-        for (auto& val : thisSpecDensity)
+        if(specDensityMap.count(freqValues) == 0)
             {
-            val = std::exp2l( (-2) * pow( 2 * (val - PhysicalConstants::freq) / SBW_3dB,
-                                          2 * TxFilterOrder));
+            arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
+            for (auto& val : thisSpecDensity)
+                {
+                val = std::exp2l( (-2) * pow( 2 * (val - PhysicalConstants::freq) / SBW_3dB,
+                                              2 * TxFilterOrder));
+                }
+            specDensityMap.emplace(freqValues, thisSpecDensity);
             }
-        specDensityMap.emplace(freqValues, thisSpecDensity);
-        }
-    specDensity = specDensityMap[freqValues];
+        specDensity = specDensityMap[freqValues];
+    }
 }
 
 SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)

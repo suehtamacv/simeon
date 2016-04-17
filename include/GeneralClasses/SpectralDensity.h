@@ -16,7 +16,7 @@ public:
      * @param freqMax is the end of the signal's bandwidth.
      * @param numSamples is the number of frequency samples along the bandwidth.
      */
-    SpectralDensity(double freqMin, double freqMax, unsigned int numSamples);
+    SpectralDensity(double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec = false);
 
     /**
      * @brief SBW_3dB is the bandwidth of a gaussian function of order 1 to 3 dB,

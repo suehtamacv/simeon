@@ -12,14 +12,17 @@ class LinkSpectralDensity
 public:
     LinkSpectralDensity();
 
-    LinkSpectralDensity &operator *=(TF::TransferFunction &);
+    LinkSpectralDensity &operator *=(TF::TransferFunction &); // TO DO
 
-    Power get_SpectralPower();
-    std::vector<SpectralDensity> get_SlotsSpecDensity(int firstSlot, int FinalSlot);
+    Power get_SpectralPower(); // TO DO
+    void setSlot(int);
+    void clearSlot(int);
 
-    std::shared_ptr<SpectralDensity> S();
-    std::shared_ptr<SpectralDensity> X();
+    std::shared_ptr<SpectralDensity> S;
+    std::shared_ptr<SpectralDensity> X;
+
     std::vector<double> frequencyValues;
+    std::map<unsigned int, std::pair<unsigned int, unsigned int>> slotsPositionsMap;
 
     static constexpr unsigned long numFrequencySamplesPerSlot = 25;
     static unsigned long numFrequencySamples;
