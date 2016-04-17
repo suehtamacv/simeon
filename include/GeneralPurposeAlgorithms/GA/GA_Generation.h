@@ -2,6 +2,7 @@
 #define GA_GENERATION_H
 
 #include "GA.h"
+#include <set>
 
 namespace GeneticAlgorithm
 {
@@ -52,7 +53,7 @@ public:
 protected:
     bool isEvaluated;
 
-    std::vector<std::shared_ptr<GA_Individual>> people;
+    std::set<std::shared_ptr<GA_Individual>> people;
     void breed(unsigned int a, unsigned int b, GA_Generation &dest);
 };
 }

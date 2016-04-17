@@ -52,7 +52,12 @@ public:
     /**
      * @brief numIndiv is the number of Individuals in each generation.
      */
-    static constexpr unsigned int numIndiv = 100;
+    static constexpr unsigned int numIndiv = 40;
+    /**
+     * @brief alpha is the number of fitter individuals that guaranteedly survive
+     * to the next generation.
+     */
+    static constexpr unsigned int alphaIndiv = 10;
     /**
      * @brief binaryTournamentParameter is a parameter to the Binary Tournament,
      * that takes part in the Selection process. Each Individual is tested against
