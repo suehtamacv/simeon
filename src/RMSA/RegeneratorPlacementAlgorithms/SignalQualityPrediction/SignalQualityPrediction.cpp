@@ -180,7 +180,7 @@ void SignalQualityPrediction::evaluateLNMax()
                     auto DummyCall = std::make_shared<Call>(orig, dest, bitrate);
                     DummyCall->Scheme = scheme;
 
-                    auto links = R_Alg->route(DummyCall);
+                    auto links = R_Alg->route(DummyCall).front();
                     Signal S;
 
                     unsigned long LNRoute = 0;

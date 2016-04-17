@@ -30,7 +30,7 @@ PowerSeriesRouting::VariantNicknames =
 
 PowerSeriesRouting::PowerSeriesRouting
 (std::shared_ptr<Topology> T, RoutingAlgorithms RAlg) :
-    DijkstraRoutingAlgorithm(T, RAlg)
+    RoutingAlgorithm(T, RAlg)
 {
     firstTimeRun = false;
 }
@@ -38,7 +38,7 @@ PowerSeriesRouting::PowerSeriesRouting
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
                                        std::vector<std::shared_ptr<PSR::Cost>> Costs,
                                        RoutingAlgorithms RAlg) :
-    DijkstraRoutingAlgorithm(T, RAlg)
+    RoutingAlgorithm(T, RAlg)
 {
 
     firstTimeRun = false;
@@ -57,6 +57,8 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
 
 void PowerSeriesRouting::load()
 {
+    RoutingAlgorithm::load();
+
     if (hasLoaded)
         {
         coefficients = defaultcoefficients;
@@ -263,4 +265,10 @@ std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
         }
 
     return PSR;
+}
+
+std::vector<std::vector<std::weak_ptr<Link>>>
+PowerSeriesRouting::route(std::shared_ptr<Call> C)
+{
+    return RoutingAlgorithm::route(C);
 }

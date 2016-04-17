@@ -69,7 +69,7 @@ void PSR::cHopDistance::createCache()
 
             auto DummyCall = std::make_shared<Call>
                              (orig, dest, TransmissionBitrate::DefaultBitrates.front());
-            auto Links = MH->route(DummyCall);
+            auto Links = MH->route(DummyCall).front();
             double RouteLength = 0;
 
             for (auto &link : Links)

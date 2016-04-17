@@ -23,6 +23,7 @@ Link::Link(std::weak_ptr<Node> Origin,
     this->Origin = Origin;
     this->Destination = Destination;
     this->Length = Length;
+    isActive = true;
     AvgSpanLength = DefaultAvgSpanLength;
 
     create_Slots();
@@ -35,6 +36,7 @@ Link::Link(const Link &link)
     Origin = link.Origin;
     Destination = link.Destination;
     AvgSpanLength = link.AvgSpanLength;
+    isActive = link.isActive;
 
     for (auto &slot : link.Slots)
         {
@@ -241,6 +243,16 @@ void Link::set_AvgSpanLength(double avgSpanLength)
 {
     AvgSpanLength = avgSpanLength;
     create_Devices();
+}
+
+void Link::set_LinkActive()
+{
+    isActive = true;
+}
+
+void Link::set_LinkInactive()
+{
+    isActive = false;
 }
 
 std::ostream& operator <<(std::ostream &out, const Link &link)

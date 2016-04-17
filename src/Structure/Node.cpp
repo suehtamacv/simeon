@@ -39,6 +39,7 @@ Node::NodeArchNicknameBimap Node::NodeArchitecturesNicknames =
 Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
     Architecture(A)
 {
+    isActive = true;
     create_Devices();
     TotalNumRequestedRegenerators =
         MaxSimultUsedRegenerators =
@@ -47,6 +48,7 @@ Node::Node(int ID, NodeType T, NodeArchitecture A) : ID(ID), Type(T) ,
 
 Node::Node(const Node &node) : ID(node.ID)
 {
+    isActive = node.isActive;
     Type = node.Type;
     Architecture = node.Architecture;
     NumUsedRegenerators = 0;
@@ -306,6 +308,16 @@ double Node::get_OpEx()
         }
 
     return OpEx;
+}
+
+void Node::set_NodeActive()
+{
+    isActive = true;
+}
+
+void Node::set_NodeInactive()
+{
+    isActive = false;
 }
 
 std::ostream& operator <<(std::ostream &out, const Node& node)

@@ -21,7 +21,7 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 {
     NetworkSimulation::implement_call(evt);
 
-    auto Links = RMSA->R_Alg->route(evt->Parent);
+    auto Links = RMSA->R_Alg->route(evt->Parent).front();
     if (Links.empty())
         {
         return;

@@ -1,5 +1,6 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h>
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
+#include <Structure/Link.h>
 
 using namespace RMSA::ROUT::PSR;
 
@@ -19,6 +20,11 @@ AdaptativeWeighingRouting::AdaptativeWeighingRouting(std::shared_ptr<Topology>
 double AdaptativeWeighingRouting::get_Cost(
     std::weak_ptr<Link> link, std::shared_ptr<Call> C)
 {
+    if (!link.lock()->is_LinkActive())
+        {
+        return std::numeric_limits<double>::max();
+        }
+
     double Cost = 0;
 
     //Spherical coordinates for a n-sphere that represents the possible values that the AWR can take.

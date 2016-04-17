@@ -1,7 +1,7 @@
 #ifndef POWERSERIESROUTING_H
 #define POWERSERIESROUTING_H
 
-#include <RMSA/RoutingAlgorithms/DijkstraRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <armadillo>
 #include <vector>
 
@@ -22,7 +22,7 @@ namespace PSR
  * @brief The PowerSeriesRouting class represents the Power Series Routing algorithm.
  * Its link cost is a truncated power series of carefully chosen costs.
  */
-class PowerSeriesRouting : public DijkstraRoutingAlgorithm
+class PowerSeriesRouting : public RoutingAlgorithm
 {
 public:
 #define PSRVARIANTS \
@@ -50,6 +50,8 @@ public:
 
     void load();
     void save(std::string);
+    std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
+
     bool initCoefficients(std::vector<double> X);
     bool initCoefficients(std::string);
 

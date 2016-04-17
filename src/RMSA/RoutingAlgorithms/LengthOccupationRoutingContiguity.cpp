@@ -5,7 +5,7 @@
 using namespace RMSA::ROUT;
 
 LengthOccupationRoutingContiguity::LengthOccupationRoutingContiguity(
-    std::shared_ptr<Topology> T) : DijkstraRoutingAlgorithm(T, LORc)
+    std::shared_ptr<Topology> T) : RoutingAlgorithm(T, LORc)
 {
 
 }
@@ -14,6 +14,11 @@ double LengthOccupationRoutingContiguity::get_Cost(
     std::weak_ptr<Link> link,
     std::shared_ptr<Call> C)
 {
+    if (!link.lock()->is_LinkActive())
+        {
+        return std::numeric_limits<double>::max();
+        }
+
     return 1 +
            (link.lock()->Length / T->get_LengthLongestLink()) +
            (1.0 / (link.lock()->get_Contiguity(C) + 1));
@@ -22,4 +27,10 @@ double LengthOccupationRoutingContiguity::get_Cost(
 void LengthOccupationRoutingContiguity::save(std::string SimConfigFileName)
 {
     RoutingAlgorithm::save(SimConfigFileName);
+}
+
+std::vector<std::vector<std::weak_ptr<Link>>>
+LengthOccupationRoutingContiguity::route(std::shared_ptr<Call> C)
+{
+    return RoutingAlgorithm::route(C);
 }
