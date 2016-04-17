@@ -22,15 +22,13 @@ bool GA_Individual::operator <(const GA_Individual &other) const
 
 GA_Individual& GA_Individual::mutate()
 {
-    std::uniform_real_distribution<double> dist(0, 1);
+    std::uniform_int_distribution<int> dist(0, Gene.size() - 1);
 
-    for (unsigned int i = 0; i < Gene.size(); i++)
+    for (unsigned gene = 0; gene < GA::mutationPoints; ++gene)
         {
-        if (dist(random_generator) < GA::mutationProb)   //mutates
-            {
-            Gene[i] = createGene(i);
-            isEvaluated = false;
-            }
+        int g = dist(random_generator);
+        Gene[g] = createGene(g);
+        isEvaluated = false;
         }
 
     return *this;

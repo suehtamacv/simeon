@@ -38,13 +38,10 @@ public:
     virtual void createInitialGeneration() = 0;
 
     /**
-     * @brief mutationProb is the probability of mutation of each Individual's gene.
+     * @brief mutationPoints is the number of crossover points on the mutation of
+     * each individual.
      */
-    static constexpr double mutationProb = 0.1;
-    /**
-     * @brief breedingProb is the probability of breeding between Individuals.
-     */
-    static constexpr double breedingProb = 1;
+    static constexpr unsigned int mutationPoints = 2;
     /**
      * @brief numGen is the number of generations run by the NSGA2.
      */

@@ -59,14 +59,11 @@ void GA_Generation::breed(unsigned int a, unsigned int b, GA_Generation &dest)
     std::vector<int> GeneA = (*iterator_a)->getGenes(),
                      GeneB = (*iterator_b)->getGenes();
 
-    if (dist(random_generator) < GA::breedingProb)   //breeds
+    for (unsigned int i = 0; i < GeneA.size(); ++i)
         {
-        for (unsigned int i = 0; i < GeneA.size(); ++i)
+        if (dist(random_generator) < 0.5)
             {
-            if (dist(random_generator) < 0.5)
-                {
-                std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
-                }
+            std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
             }
         }
 
