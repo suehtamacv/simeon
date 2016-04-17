@@ -2,6 +2,7 @@
 #define SLOT_H
 
 #include <memory>
+#include <vector>
 
 class Link;
 
@@ -35,7 +36,18 @@ public:
      * @brief isFree is true, iff the slot is free.
      */
     bool isFree;
-
+    /**
+     * @brief firstPos is the first position of this slot along the frequency vector in LinkSpectralDensity.
+     */
+    unsigned int firstPos;
+    /**
+     * @brief lastPos is the last position of this slot along the frequency vector in LinkSpectralDensity.
+     */
+    unsigned int lastPos;
+    /**
+     * @brief frequencyValues is a vector of the frequency values that this slot represents.
+     */
+    std::vector<double> frequencyValues;
     /**
      * @brief freeSlot frees this slot, if it isn't free.
      */
@@ -44,6 +56,14 @@ public:
      * @brief useSlot uses this slot, if it isn't used.
      */
     void useSlot();
+    /**
+     * @brief numFrequencySamplesPerSlot is the number of frequency samples per slot.
+     */
+    static constexpr unsigned long numFrequencySamplesPerSlot = 25;
+
+    std::shared_ptr<SpectralDensity> S;
+
+    std::shared_ptr<SpectralDensity> X;
 };
 
 #endif // SLOT_H

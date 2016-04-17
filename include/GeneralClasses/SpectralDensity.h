@@ -15,6 +15,7 @@ public:
      * @param freqMin is the beginning of the signal's bandwidth.
      * @param freqMax is the end of the signal's bandwidth.
      * @param numSamples is the number of frequency samples along the bandwidth.
+     * @param cleanSpec is a flag for creating a rowvec of zeros as signal spectral density or not.
      */
     SpectralDensity(double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec = false);
 

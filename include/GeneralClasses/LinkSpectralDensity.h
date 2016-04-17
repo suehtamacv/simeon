@@ -3,6 +3,7 @@
 
 #include <GeneralClasses/SpectralDensity.h>
 #include <GeneralClasses/Power.h>
+#include <Structure/Slot.h>
 #include <vector>
 #include <memory>
 #include <map>
@@ -10,8 +11,9 @@
 class LinkSpectralDensity
 {
 public:
-    LinkSpectralDensity();
+    LinkSpectralDensity(std::vector<std::shared_ptr<Slot>>);
 
+    std::vector<std::shared_ptr<Slot>> LinkSlots;
     LinkSpectralDensity &operator *=(TF::TransferFunction &); // TO DO
 
     Power get_SpectralPower(); // TO DO
@@ -21,10 +23,6 @@ public:
     std::shared_ptr<SpectralDensity> S;
     std::shared_ptr<SpectralDensity> X;
 
-    std::vector<double> frequencyValues;
-    std::map<unsigned int, std::pair<unsigned int, unsigned int>> slotsPositionsMap;
-
-    static constexpr unsigned long numFrequencySamplesPerSlot = 25;
     static unsigned long numFrequencySamples;
 };
 

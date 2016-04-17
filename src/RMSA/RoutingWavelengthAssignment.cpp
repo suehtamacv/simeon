@@ -130,7 +130,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     if (C->Status == Call::Not_Evaluated)
         {
         C->Status = Call::Implemented;
-        }
+        }    
 
     return std::shared_ptr<Route>(new Route(Segments, Slots));
 }
