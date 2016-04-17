@@ -104,7 +104,10 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp \
-    src/SimulationTypes/Simulation_PowerRatioThreshold.cpp
+    src/SimulationTypes/Simulation_PowerRatioThreshold.cpp \
+    src/GeneralPurposeAlgorithms/GA/GA.cpp \
+    src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
+    src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -220,7 +223,10 @@ HEADERS += \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h \
-    include/SimulationTypes/Simulation_PowerRatioThreshold.h
+    include/SimulationTypes/Simulation_PowerRatioThreshold.h \
+    include/GeneralPurposeAlgorithms/GA/GA.h \
+    include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
+    include/GeneralPurposeAlgorithms/GA/GA_Individual.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
