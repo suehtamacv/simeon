@@ -54,7 +54,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             C->Scheme = scheme;
             Links = R_Alg->route(C);
 
-            if (Links.empty())
+            if (Links.empty() || Links.front().empty())
                 {
                 C->Status = Call::Blocked;
                 return nullptr;
