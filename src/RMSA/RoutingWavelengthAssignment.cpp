@@ -39,99 +39,136 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
 std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     std::shared_ptr<Call> C)
 {
+    if (RA_Alg == nullptr)
+        {
+        return routeCall_Transparent(C);
+        }
+    else
+        {
+        return routeCall_Translucent(C);
+        }
+}
 
-    std::vector<std::vector<std::weak_ptr<Link>>> Links;
+std::shared_ptr<Route>
+RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
+{
+    std::vector<std::vector<std::weak_ptr<Link>>> possibleRoutes;
     std::vector<TransparentSegment> Segments;
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
 
-    if (RA_Alg == nullptr)
+    for (auto scheme = Schemes.rbegin(); scheme != Schemes.rend(); ++scheme)
         {
-        for (auto scheme = Schemes.rbegin(); scheme != Schemes.rend(); ++scheme)
-            {
-            C->Scheme = *scheme;
-            Links = R_Alg->route(C);
+        C->Scheme = *scheme;
+        possibleRoutes = R_Alg->route(C);
 
-            if (Links.empty() || Links.front().empty())
-                {
-                C->Status = Call::Blocked;
-                return nullptr;
-                }
-
-            for (auto &links : Links)
-                {
-                int requiredSlots = scheme->get_NumSlots(C->Bitrate);
-                TransparentSegment Segment(links, *scheme, 0);
-                Signal S(requiredSlots);
-                S = Segment.bypass(S);
-
-                if ((!considerAseNoise ||
-                        S.get_OSNR() >= scheme->get_ThresholdOSNR(C->Bitrate)) &&
-                        (!considerFilterImperfection ||
-                         S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
-                    {
-                    Segments.push_back(Segment);
-                    auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
-
-                    if (SegmentSlots.empty())
-                        {
-                        if (*scheme == *(Schemes.begin()))
-                            {
-                            C->Status = Call::Blocked;
-                            continue;
-                            }
-                        continue;
-                        }
-
-                    Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
-                    goto callImplemented;
-                    }
-                else if (*scheme == *(Schemes.begin()))
-                    {
-                    C->Status = Call::Blocked;
-                    continue;
-                    }
-                }
-            }
-        }
-    else
-        {
-        Links = R_Alg->route(C);
-
-        if (Links.empty())
+        //There's no route
+        if (possibleRoutes.empty() || possibleRoutes.front().empty())
             {
             C->Status = Call::Blocked;
             return nullptr;
             }
 
-        for (auto &links : Links)
+        for (auto &route : possibleRoutes)
             {
-            Segments = RA_Alg->assignRegenerators(C, links);
+            C->Status = Call::Not_Evaluated;
 
-            if (Segments.empty())
+            int requiredSlots = scheme->get_NumSlots(C->Bitrate);
+            TransparentSegment Segment(route, *scheme, 0);
+            Signal S(requiredSlots);
+            S = Segment.bypass(S);
+
+            if (
+                (!considerAseNoise ||
+                 S.get_OSNR() >= scheme->get_ThresholdOSNR(C->Bitrate)) &&
+                (!considerFilterImperfection ||
+                 S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                 {
-                C->Status = Call::Blocked;
-                continue;
-                }
+                Segments.push_back(Segment);
+                auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
 
-            for (auto &segment : Segments)
-                {
-                auto SegmentSlots = WA_Alg->assignSlots(C, segment);
-
+                //There's no spectrum with this scheme
                 if (SegmentSlots.empty())
                     {
-                    C->Status = Call::Blocked;
-                    Slots.clear();
+                    //There's no scheme with any scheme
+                    if (*scheme == *(Schemes.begin()))
+                        {
+                        C->Status = Call::Blocked;
+                        continue;
+                        }
                     continue;
                     }
 
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
-                goto callImplemented;
+                break;
+                }
+            //There's no quality with any scheme
+            else if (*scheme == *(Schemes.begin()))
+                {
+                C->Status = Call::Blocked;
+                continue;
                 }
             }
         }
 
-callImplemented:
+    if (C->Status == Call::Not_Evaluated)
+        {
+        C->Status = Call::Implemented;
+        }
+
+    return std::shared_ptr<Route>(new Route(Segments, Slots));
+}
+
+std::shared_ptr<Route>
+RoutingWavelengthAssignment::routeCall_Translucent(std::shared_ptr<Call> C)
+{
+    std::vector<std::vector<std::weak_ptr<Link>>> possibleRoutes;
+    std::vector<TransparentSegment> Segments;
+    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
+        std::owner_less<std::weak_ptr<Link>>> Slots;
+
+    possibleRoutes = R_Alg->route(C);
+
+    //There's no route
+    if (possibleRoutes.empty() || possibleRoutes.front().empty())
+        {
+        C->Status = Call::Blocked;
+        return nullptr;
+        }
+
+    for (auto &route : possibleRoutes)
+        {
+        C->Status = Call::Not_Evaluated;
+        Segments = RA_Alg->assignRegenerators(C, route);
+
+        //There are no regenerators
+        if (Segments.empty())
+            {
+            C->Status = Call::Blocked;
+            continue;
+            }
+
+        for (auto &segment : Segments)
+            {
+            auto SegmentSlots = WA_Alg->assignSlots(C, segment);
+
+            //There's no spectrum inside a transparent segment
+            if (SegmentSlots.empty())
+                {
+                C->Status = Call::Blocked;
+                Slots.clear();
+                break;
+                }
+
+            Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+            }
+
+        if (C->Status != Call::Blocked)
+            {
+            break;
+            }
+        }
+
     if (C->Status == Call::Not_Evaluated)
         {
         C->Status = Call::Implemented;

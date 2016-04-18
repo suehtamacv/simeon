@@ -95,6 +95,10 @@ public:
      * to implement the Call.
      */
     std::shared_ptr<Route> routeCall(std::shared_ptr<Call> C);
+
+protected:
+    std::shared_ptr<Route> routeCall_Transparent(std::shared_ptr<Call> C);
+    std::shared_ptr<Route> routeCall_Translucent(std::shared_ptr<Call> C);
 };
 }
 
