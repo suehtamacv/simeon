@@ -91,20 +91,18 @@ void SignalQualityPrediction_Variants::evaluateLNMax()
         }
 
     auto Schemes = ModulationScheme::DefaultSchemes;
-    ModulationScheme scheme = Schemes.front();
-    std::sort(Schemes.rbegin(), Schemes.rend());
+    ModulationScheme scheme = *(Schemes.rbegin());
 
     //Choose adequate Modulation Scheme
     if (Variant == mSCH)
         {
-        scheme = Schemes.back();
+        scheme = *(Schemes.rend());
         }
     else if (Variant == MSCH)
         {
-        scheme = Schemes.front();
+        scheme = *(Schemes.rbegin());
         }
 
-    std::sort(Bitrates.rbegin(), Bitrates.rend());
     auto bitrate = Bitrates.front(); //Greatest possible bitrate
 
     unsigned maxLN = LNMax.at(std::make_pair(bitrate, scheme));

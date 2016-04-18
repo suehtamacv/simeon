@@ -17,7 +17,7 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm> R_Alg,
     std::shared_ptr<SpectrumAssignmentAlgorithm> WA_Alg,
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg,
-    std::vector<ModulationScheme> Schemes,
+    std::set<ModulationScheme> Schemes,
     std::shared_ptr<Topology> T) :
     R_Alg(R_Alg), WA_Alg(WA_Alg), RA_Alg(RA_Alg), Schemes(Schemes), T(T)
 {
@@ -27,7 +27,7 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
 RoutingWavelengthAssignment::RoutingWavelengthAssignment(
     std::shared_ptr<RoutingAlgorithm>  R_Alg,
     std::shared_ptr<SpectrumAssignmentAlgorithm> WA_Alg,
-    std::vector<ModulationScheme> Schemes,
+    std::set<ModulationScheme> Schemes,
     std::shared_ptr<Topology> T) :
     R_Alg(R_Alg), WA_Alg(WA_Alg), Schemes(Schemes), T(T)
 {
@@ -47,11 +47,9 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
     if (RA_Alg == nullptr)
         {
-        std::sort(Schemes.rbegin(), Schemes.rend());
-
-        for (auto &scheme : Schemes)
+        for (auto scheme = Schemes.rbegin(); scheme != Schemes.rend(); ++scheme)
             {
-            C->Scheme = scheme;
+            C->Scheme = *scheme;
             Links = R_Alg->route(C);
 
             if (Links.empty() || Links.front().empty())
@@ -62,13 +60,13 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
             for (auto &links : Links)
                 {
-                int requiredSlots = scheme.get_NumSlots(C->Bitrate);
-                TransparentSegment Segment(links, scheme, 0);
+                int requiredSlots = scheme->get_NumSlots(C->Bitrate);
+                TransparentSegment Segment(links, *scheme, 0);
                 Signal S(requiredSlots);
                 S = Segment.bypass(S);
 
                 if ((!considerAseNoise ||
-                        S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
+                        S.get_OSNR() >= scheme->get_ThresholdOSNR(C->Bitrate)) &&
                         (!considerFilterImperfection ||
                          S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                     {
@@ -77,19 +75,18 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
                     if (SegmentSlots.empty())
                         {
-                        if (scheme == Schemes.back())
+                        if (*scheme == *(Schemes.begin()))
                             {
                             C->Status = Call::Blocked;
                             continue;
                             }
-
                         continue;
                         }
 
                     Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                     goto callImplemented;
                     }
-                else if (scheme == Schemes.back())
+                else if (*scheme == *(Schemes.begin()))
                     {
                     C->Status = Call::Blocked;
                     continue;

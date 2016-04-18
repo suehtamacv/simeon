@@ -162,10 +162,10 @@ void SignalQualityPrediction::evaluateLNMax()
 
     for (auto &bitrate : Bitrates)
         {
-        for (auto &scheme : ModulationScheme::DefaultSchemes)
+        for (auto scheme = ModulationScheme::DefaultSchemes.rbegin();
+                scheme != ModulationScheme::DefaultSchemes.rend(); ++scheme)
             {
-
-            auto BitSchemePair = std::make_pair(bitrate, scheme);
+            auto BitSchemePair = std::make_pair(bitrate, *scheme);
             unsigned maxLN = 0;
 
             for (auto &orig : T->Nodes)
@@ -178,7 +178,7 @@ void SignalQualityPrediction::evaluateLNMax()
                         }
 
                     auto DummyCall = std::make_shared<Call>(orig, dest, bitrate);
-                    DummyCall->Scheme = scheme;
+                    DummyCall->Scheme = *scheme;
 
                     auto links = R_Alg->route(DummyCall).front();
                     Signal S;
@@ -200,8 +200,8 @@ void SignalQualityPrediction::evaluateLNMax()
                         }
 
                     if ((LNRoute > maxLN) &&
-                            (TransparentSegment(links, scheme).bypass(S).get_OSNR() >=
-                             scheme.get_ThresholdOSNR(bitrate)))
+                            (TransparentSegment(links, *scheme).bypass(S).get_OSNR() >=
+                             scheme->get_ThresholdOSNR(bitrate)))
                         {
                         maxLN = LNRoute;
                         }

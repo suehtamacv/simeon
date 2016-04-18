@@ -43,13 +43,13 @@ public:
      * @param R_Alg is a pointer to the RoutingAlgorithm.
      * @param WA_Alg is a pointer to the SpectrumAssignmentAlgorithm.
      * @param RA_Alg is a pointer to the RegeneratorAssignmentAlgorithm.
-     * @param Schemes is a vector with the possible modulation schemes.
+     * @param Schemes is a set with the possible modulation schemes.
      * @param T is a pointer to the topology.
      */
     RoutingWavelengthAssignment(std::shared_ptr<ROUT::RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
                                 std::shared_ptr<RA::RegeneratorAssignmentAlgorithm> RA_Alg,
-                                std::vector<ModulationScheme> Schemes,
+                                std::set<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
 
     /**
@@ -57,12 +57,12 @@ public:
      * RoutingWavelengthAssignment object, for a Transparent simulation.
      * @param R_Alg is a pointer to the RoutingAlgorithm.
      * @param WA_Alg is a pointer to the SpectrumAssignmentAlgorithm.
-     * @param Schemes is a vector with the possible modulation schemes.
+     * @param Schemes is a set with the possible modulation schemes.
      * @param T is a pointer to the topology.
      */
     RoutingWavelengthAssignment(std::shared_ptr<ROUT::RoutingAlgorithm>  R_Alg,
                                 std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg,
-                                std::vector<ModulationScheme> Schemes,
+                                std::set<ModulationScheme> Schemes,
                                 std::shared_ptr<Topology> T);
 
     /**
@@ -81,7 +81,7 @@ public:
     /**
      * @brief Schemes is a vector with the possible modulation schemes.
      */
-    std::vector<ModulationScheme> Schemes;
+    std::set<ModulationScheme> Schemes;
     /**
      * @brief T is a pointer to the topology.
      */

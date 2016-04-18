@@ -8,22 +8,20 @@
 using namespace RMSA::RA;
 
 FirstNarrowestSpectrum::FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
-        std::vector<ModulationScheme> Schemes) :
+        std::set<ModulationScheme> Schemes) :
     RegeneratorAssignmentAlgorithm(T, FNS, Schemes)
 {
 
-    //Sort schemes in decrescent order
-    std::sort(ModulationSchemes.rbegin(), ModulationSchemes.rend());
-
 }
 
-std::vector<RMSA::TransparentSegment> FirstNarrowestSpectrum::assignRegenerators(
+std::vector<RMSA::TransparentSegment>
+FirstNarrowestSpectrum::assignRegenerators(
     std::shared_ptr<Call> C,
     std::vector<std::weak_ptr<Link> > Links)
 {
 
     unsigned int NeededRegenerators = get_NumNeededRegenerators(C);
-    auto scheme = ModulationSchemes.begin();
+    auto scheme = ModulationSchemes.rbegin();
     std::vector<TransparentSegment> TransparentSegments;
     std::vector<std::weak_ptr<Node>> Nodes;
 
@@ -54,13 +52,13 @@ std::vector<RMSA::TransparentSegment> FirstNarrowestSpectrum::assignRegenerators
                         }
                     else
                         {
-                        if (scheme != ModulationSchemes.begin())
+                        if (scheme != ModulationSchemes.rbegin())
                             {
                             TransparentSegments.push_back(
                                 createTransparentSegment(C, Links, *s, *x, NeededRegenerators));
                             s = x;
                             r = x;
-                            scheme = ModulationSchemes.begin();
+                            scheme = ModulationSchemes.rbegin();
                             }
                         else
                             {
@@ -82,7 +80,7 @@ std::vector<RMSA::TransparentSegment> FirstNarrowestSpectrum::assignRegenerators
                         --x;
                         ++scheme;
 
-                        if (scheme == ModulationSchemes.end())
+                        if (scheme == ModulationSchemes.rend())
                             {
                             TransparentSegments.clear();
                             return TransparentSegments;

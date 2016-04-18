@@ -3,7 +3,7 @@
 #include <GeneralClasses/PhysicalConstants.h>
 #include <Structure/Slot.h>
 
-std::vector<ModulationScheme> ModulationScheme::DefaultSchemes =
+std::set<ModulationScheme> ModulationScheme::DefaultSchemes =
 {
 #define X(a,b)  ModulationScheme(a,b),
     DEFAULT_MODULATIONSCHEMES
@@ -54,13 +54,13 @@ bool ModulationScheme::operator ==(const ModulationScheme &scheme) const
     return ((M == scheme.get_M()) && (SNR_Per_Bit == scheme.get_SNR_Per_Bit()));
 }
 
-Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate)
+Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate) const
 {
-    return Gain(0.5 * BitRate.get_Bitrate() * SNR_Per_Bit.in_Linear() /
+    return Gain(0.5 * BitRate.get_Bitrate() * pow10(0.1 * SNR_Per_Bit.in_dB()) /
                 PhysicalConstants::BRef, Gain::Linear);
 }
 
-unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate)
+unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate) const
 {
     return ceil(BitRate.get_Bitrate() / (Slot::BSlot *
                                          PhysicalConstants::numPolarizations *

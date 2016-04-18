@@ -21,15 +21,11 @@ Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() :
     SimulationType(Simulation_Type::transparency)
 {
     hasLoaded = hasRun = false;
-    minModulationScheme =
-        std::shared_ptr<ModulationScheme>(new ModulationScheme(*std::min_element(
-                ModulationScheme::DefaultSchemes.begin(),
-                ModulationScheme::DefaultSchemes.end())));
-
-    maxBitrate =
-        std::shared_ptr<TransmissionBitrate>(new TransmissionBitrate(*std::max_element(
-                    TransmissionBitrate::DefaultBitrates.begin(),
-                    TransmissionBitrate::DefaultBitrates.end())));
+    minModulationScheme = std::make_shared<ModulationScheme>(*
+                          (ModulationScheme::DefaultSchemes.begin()));
+    maxBitrate = std::make_shared<TransmissionBitrate>(*std::max_element(
+                     TransmissionBitrate::DefaultBitrates.begin(),
+                     TransmissionBitrate::DefaultBitrates.end()));
 }
 
 void Simulation_TransparencyAnalysis::help()

@@ -34,7 +34,7 @@ RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames =
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithm(
     std::shared_ptr<Topology> T,
     RegeneratorAssignmentAlgorithms RegAssAlgType,
-    std::vector<ModulationScheme> &Schemes) :
+    std::set<ModulationScheme> &Schemes) :
     T(T), ModulationSchemes(Schemes), RegAssAlgType(RegAssAlgType)
 {
 
@@ -91,28 +91,27 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
     std::vector<std::weak_ptr<Link>> SegmentLinks)
 {
 
-    TransparentSegment Segment(SegmentLinks, ModulationSchemes.front(), 0);
+    TransparentSegment Segment(SegmentLinks, *(ModulationSchemes.begin()), 0);
     Signal S = Segment.bypass(Signal());
 
-    std::sort(ModulationSchemes.rbegin(), ModulationSchemes.rend());
-
-    for (auto &scheme : ModulationSchemes)
+    for (auto scheme = ModulationSchemes.rbegin();
+            scheme != ModulationSchemes.rend(); ++scheme)
         {
-        Segment.ModScheme = scheme;
+        Segment.ModScheme = *scheme;
 
         if (((!considerAseNoise ||
-                S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate))) &&
-                ((Segment.get_MaxContigSlots() >= scheme.get_NumSlots(C->Bitrate))) &&
+                S.get_OSNR() >= (*scheme).get_ThresholdOSNR(C->Bitrate))) &&
+                ((Segment.get_MaxContigSlots() >= (*scheme).get_NumSlots(C->Bitrate))) &&
                 (!considerFilterImperfection ||
                  S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
             {
-            return scheme;
+            return *scheme;
 
             }
         }
 
     BOOST_ASSERT_MSG(false, "No Scheme can implement Call in Transparent Segment.");
-    return ModulationSchemes.back();
+    return *(ModulationSchemes.end());
 }
 
 TransparentSegment RegeneratorAssignmentAlgorithm::createTransparentSegment(

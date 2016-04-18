@@ -3,7 +3,7 @@
 
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/TransmissionBitrate.h>
-#include <vector>
+#include <set>
 #include <ostream>
 
 /**
@@ -63,7 +63,7 @@ public:
      * @return the minimum OSNR acceptable to implement a Call with this scheme
      * and a certain TransmissionBitrate.
      */
-    Gain get_ThresholdOSNR(TransmissionBitrate &BitRate);
+    Gain get_ThresholdOSNR(TransmissionBitrate &BitRate) const;
     /**
      * @brief get_NumSlots calculates the number of slots necessary to implement
      * a Call with this scheme and a certain TransmissionBitrate.
@@ -71,11 +71,11 @@ public:
      * @return the number of slots necessary to implement a Call with this
      * scheme and a certain TransmissionBitrate.
      */
-    unsigned int get_NumSlots(TransmissionBitrate &BitRate);
+    unsigned int get_NumSlots(TransmissionBitrate &BitRate) const;
     /**
-     * @brief DefaultSchemes is a vector with the default Modulation Schemes.
+     * @brief DefaultSchemes is a set with the default Modulation Schemes.
      */
-    static std::vector<ModulationScheme> DefaultSchemes;
+    static std::set<ModulationScheme> DefaultSchemes;
 
     friend std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme);
 

@@ -21,10 +21,10 @@ public:
     /**
      * @brief FirstLongestReach is the standard constructor.
      * @param T is a pointer to the Topology.
-     * @param ModulationSchemes is a vector containing the possible ModulationScheme.
+     * @param ModulationSchemes is a set containing the possible ModulationScheme.
      */
     FirstLongestReach(std::shared_ptr<Topology> T,
-                      std::vector<ModulationScheme> ModulationSchemes);
+                      std::set<ModulationScheme> ModulationSchemes);
 
     std::vector<TransparentSegment> assignRegenerators(
         std::shared_ptr<Call> C,

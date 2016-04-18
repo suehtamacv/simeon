@@ -57,7 +57,6 @@ double Gain::in_Linear()
 {
     if (!calculatedLinear)
         {
-
         value_Linear = pow10(0.1 * value_dB);
         calculatedLinear = true;
         }

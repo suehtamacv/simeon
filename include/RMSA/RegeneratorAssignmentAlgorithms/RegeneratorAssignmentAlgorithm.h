@@ -57,21 +57,21 @@ public:
      * @brief RegeneratorAssignmentAlgorithm is the standard constructor for a
      * RegeneratorAssignmentAlgorithm.
      * @param T is a pointer to the Topology.
-     * @param Schemes is a vector containing the possible modulation schemes.
+     * @param Schemes is a set containing the possible modulation schemes.
      */
     RegeneratorAssignmentAlgorithm(std::shared_ptr<Topology> T,
                                    RegeneratorAssignmentAlgorithms RegAssAlgType,
-                                   std::vector<ModulationScheme> &Schemes = ModulationScheme::DefaultSchemes);
+                                   std::set<ModulationScheme> &Schemes = ModulationScheme::DefaultSchemes);
 
     /**
      * @brief T is a pointer to the Topology.
      */
     std::shared_ptr<Topology> T;
     /**
-     * @brief ModulationSchemes is a vector containing the possible modulation
+     * @brief ModulationSchemes is a set containing the possible modulation
      * schemes.
      */
-    std::vector<ModulationScheme> ModulationSchemes;
+    std::set<ModulationScheme> ModulationSchemes;
 
     /**
      * @brief assignRegenerators decides which nodes will use their regeneration

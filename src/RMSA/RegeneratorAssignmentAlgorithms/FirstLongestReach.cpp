@@ -7,7 +7,7 @@
 using namespace RMSA::RA;
 
 FirstLongestReach::FirstLongestReach(std::shared_ptr<Topology> T,
-                                     std::vector<ModulationScheme> ModulationSchemes) :
+                                     std::set<ModulationScheme> ModulationSchemes) :
     RegeneratorAssignmentAlgorithm(T, FLR, ModulationSchemes)
 {
 

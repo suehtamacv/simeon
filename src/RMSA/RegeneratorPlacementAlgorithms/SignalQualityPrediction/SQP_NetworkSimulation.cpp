@@ -28,12 +28,11 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         }
 
     long int LNMax = 0;
-    std::sort(ModulationScheme::DefaultSchemes.rbegin(),
-              ModulationScheme::DefaultSchemes.rend());
 
-    for (auto &scheme : ModulationScheme::DefaultSchemes)
+    for (auto scheme = ModulationScheme::DefaultSchemes.rbegin();
+            scheme != ModulationScheme::DefaultSchemes.rend(); ++scheme)
         {
-        LNMax = SQP->get_LNMax(evt->Parent->Bitrate, scheme);
+        LNMax = SQP->get_LNMax(evt->Parent->Bitrate, *scheme);
         if (LNMax != 0)
             {
             break;

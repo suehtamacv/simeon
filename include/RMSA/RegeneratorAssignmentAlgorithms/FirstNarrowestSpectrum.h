@@ -23,7 +23,7 @@ public:
      * @param Schemes is a vector containing the possible ModulationScheme.
      */
     FirstNarrowestSpectrum(std::shared_ptr<Topology> T,
-                           std::vector<ModulationScheme> Schemes);
+                           std::set<ModulationScheme> Schemes);
     std::vector<TransparentSegment> assignRegenerators(
         std::shared_ptr<Call> C,
         std::vector<std::weak_ptr<Link>> Links);
