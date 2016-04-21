@@ -17,6 +17,7 @@ public:
     LinkSpectralDensity &operator *=(TF::TransferFunction &); // TO DO
 
     Power get_SpectralPower(); // TO DO
+    Power get_TransmitedPower(double);
 
 
     std::vector<std::shared_ptr<SpectralDensity>> S;

@@ -34,7 +34,7 @@ Signal TransparentSegment::bypass(Signal S)
 {
     S = Links.front().lock()->Origin.lock()->add(S);
 
-    transmitedPower = Links.front().lock()->linkSpecDens->get_SpectralPower(); // COMENT. AUX.: NEW LINE
+    transmitedPower = Links.front().lock()->linkSpecDens->get_TransmitedPower(S.frequencyRange); // COMENT. AUX.: NEW LINE
 
     for (auto &it : Links)
         {

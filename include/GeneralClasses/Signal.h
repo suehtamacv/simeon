@@ -75,14 +75,13 @@ public:
      * @brief numSlots is the number of slots occupied by this Signal.
      */
     unsigned int numSlots;
-
-private:
-    Power SignalPower;
-    Power NoisePower;
     /**
      * @brief frequencyRange is half of the signal's bandwith.
      */
     double frequencyRange;
+private:
+    Power SignalPower;
+    Power NoisePower;
     /**
      * @brief originalSpecDensityCache is a map with the spectral density power of a signal, given a number of slots.
      */
