@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <GeneralClasses/LinkSpectralDensity.h>
 
 class Node;
 class Call;
@@ -146,6 +147,8 @@ public:
     void set_AvgSpanLength(double avgSpanLength);
 
     friend std::ostream& operator<<(std::ostream &out, const Link &link);
+
+    std::shared_ptr<LinkSpectralDensity> linkSpecDens; // COMENT. AUX.: NEW LINE
 
 private:
     void create_Slots();

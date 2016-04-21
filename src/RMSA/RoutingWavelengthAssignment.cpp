@@ -42,8 +42,8 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
     std::vector<std::weak_ptr<Link>> Links;
     std::vector<TransparentSegment> Segments;
-    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
-        std::owner_less<std::weak_ptr<Link>>> Slots;
+    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
+            Slots;
 
     if (RA_Alg == nullptr)
         {
@@ -63,12 +63,12 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             int requiredSlots = scheme.get_NumSlots(C->Bitrate);
             TransparentSegment Segment(Links, scheme, 0);
             Signal S(requiredSlots);
-            S = Segment.bypass(S);            
+            S = Segment.bypass(S);
 
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
-                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
+                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold())) // COMENT. AUX: ENTENDER ESSA COMPARAÇÃO PARA SLOT
                 {
                 Segments.push_back(Segment);
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
@@ -130,7 +130,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     if (C->Status == Call::Not_Evaluated)
         {
         C->Status = Call::Implemented;
-        }    
+        }
 
     return std::shared_ptr<Route>(new Route(Segments, Slots));
 }

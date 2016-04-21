@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <GeneralClasses/SpectralDensity.h>
 
 class Link;
 
@@ -60,9 +61,13 @@ public:
      * @brief numFrequencySamplesPerSlot is the number of frequency samples per slot.
      */
     static constexpr unsigned long numFrequencySamplesPerSlot = 25;
-
+    /**
+     * @brief S is the main signal spectral density.
+     */
     std::shared_ptr<SpectralDensity> S;
-
+    /**
+     * @brief X is the crosstalk from other signals.
+     */
     std::shared_ptr<SpectralDensity> X;
 };
 

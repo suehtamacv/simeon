@@ -17,11 +17,10 @@ public:
     LinkSpectralDensity &operator *=(TF::TransferFunction &); // TO DO
 
     Power get_SpectralPower(); // TO DO
-    void setSlot(int);
-    void clearSlot(int);
 
-    std::shared_ptr<SpectralDensity> S;
-    std::shared_ptr<SpectralDensity> X;
+
+    std::vector<std::shared_ptr<SpectralDensity>> S;
+    std::vector<std::shared_ptr<SpectralDensity>> X;
 
     static unsigned long numFrequencySamples;
 };

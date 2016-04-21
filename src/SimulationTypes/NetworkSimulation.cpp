@@ -60,7 +60,7 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
             {
             for (auto &slot : node.second)
                 {
-                slot.lock()->useSlot();
+                slot.lock()->useSlot(); // COMENT. AUX.: Ativando os slots.
                 }
             }
 
