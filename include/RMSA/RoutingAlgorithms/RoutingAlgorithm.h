@@ -21,6 +21,7 @@ class RoutingAlgorithm
 {
 public:
 #define ROUTING_TYPE \
+    X(bellman_ford, "Bellman-Ford Shortest Path Algorithm", "bellman_ford") \
     X(dijkstra_alg, "Dijkstra Shortest Path Algorithm", "dijkstra_alg") \
     X(yen_alg, "Yen K-Shortest Path Algorithm", "yen_alg")
 
@@ -81,6 +82,7 @@ public:
     static constexpr int kShortestPaths = 3;
 
 private:
+    std::vector<std::vector<std::weak_ptr<Link>>> bell_ford(std::shared_ptr<Call> C);
     std::vector<std::vector<std::weak_ptr<Link>>> dijkstra(std::shared_ptr<Call> C);
     std::vector<std::vector<std::weak_ptr<Link>>> yen(std::shared_ptr<Call> C);
     static bool hasLoadedRoutingType;
