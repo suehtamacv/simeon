@@ -3,7 +3,6 @@
 
 #include <GeneralClasses/Power.h>
 #include <GeneralClasses/SpectralDensity.h>
-#include <RMSA/TransparentSegment.h>
 #include <vector>
 #include <memory>
 #include <map>
@@ -31,7 +30,7 @@ public:
      * @brief Signal is the standard constructor of a Signal. Creates a signal
      * with power InputPower and OSNR InputOSNR.
      */
-    Signal(unsigned int numSlots = 1, RMSA::TransparentSegment&);
+    Signal(unsigned int numSlots = 1);
     /**
      * @brief operator *= multiplies the Signal by a gain, effectively rescaling
      * both the signal and the noise.
@@ -81,7 +80,6 @@ public:
      */
     double frequencyRange;
 
-    RMSA::TransparentSegment OpticalPath;
 private:
     Power SignalPower;
     Power NoisePower;
@@ -90,9 +88,9 @@ private:
      */
     std::map<int, Power> originalSpecDensityCache ;
     /**
-     * @brief signalSpecDensity is the signal's spectral density along the transparent segment.
+     * @brief signalSpecDensity is the signal's spectral density.
      */
-    std::vector<std::shared_ptr<SpectralDensity>> signalSpecDensity;
+    std::shared_ptr<SpectralDensity> signalSpecDensity;
     /**
      * @brief X is this signal's crosstalk interference.
      */
