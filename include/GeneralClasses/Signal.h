@@ -68,10 +68,6 @@ public:
      */
     double get_SignalPowerRatio();
     /**
-     * @brief numFrequencySamples number of samples along the signal's bandwidth.
-     */
-    static constexpr unsigned long numFrequencySamples = 25;
-    /**
      * @brief numSlots is the number of slots occupied by this Signal.
      */
     unsigned int numSlots;

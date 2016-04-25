@@ -18,9 +18,9 @@ Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
         {
         frequencyRange = numSlots * Slot::BSlot / 2;
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                                     frequencyRange, PhysicalConstants::freq + frequencyRange,
-                                     (int) numFrequencySamples);
-    }
+                            frequencyRange, PhysicalConstants::freq + frequencyRange,
+                            (int) Slot::numFrequencySamplesPerSlot * numSlots);
+        }
 }
 
 Signal &Signal::operator *=(Gain &G)
@@ -68,7 +68,7 @@ double Signal::get_SignalPowerRatio()
         {
         SpectralDensity originSD(PhysicalConstants::freq - frequencyRange,
                                  PhysicalConstants::freq + frequencyRange,
-                                 numFrequencySamples);
+                                 Slot::numFrequencySamplesPerSlot * numSlots);
 
         originalSpecDensityCache.emplace(numSlots, Power(
                                              TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()

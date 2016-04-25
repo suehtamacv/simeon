@@ -76,7 +76,7 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
                                         GaussianTransferFunction(
                                             PhysicalConstants::freq - freqVar,
                                             PhysicalConstants::freq + freqVar,
-                                            Signal::numFrequencySamples,
+                                            Slot::numFrequencySamplesPerSlot * numSlots,
                                             filterOrder,
                                             std::pow(get_Gain().in_Linear(), 2)));
             }
