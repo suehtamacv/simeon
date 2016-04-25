@@ -63,12 +63,12 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             int requiredSlots = scheme.get_NumSlots(C->Bitrate);
             TransparentSegment Segment(Links, scheme, 0);
             Signal S(requiredSlots);
-            S = Segment.bypass(S);
+            S = Segment.bypass(S); // COMENT. AUX.: VECTOR DE SPEC TEMPORÁRIO??
 
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
-                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold())) // COMENT. AUX: ENTENDER ESSA COMPARAÇÃO PARA SLOT
+                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold())) // COMENT. AUX: PROVAVELMENTE REMOVER ESSE TESTE DE FILTER IMPER.
                 {
                 Segments.push_back(Segment);
                 auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
@@ -83,6 +83,8 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
                     continue;
                     }
+
+                // COMENT. AUX.: FAZER COISAS AQUI, COLOCAR O TESTE DE FILTER IMPERFECT., USAR OS SLOTS...
 
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 break;

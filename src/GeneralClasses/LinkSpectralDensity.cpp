@@ -14,7 +14,6 @@ LinkSpectralDensity::LinkSpectralDensity(std::vector<std::shared_ptr<Slot>>
     for(auto& slot : LinkSlots)
         {
         S.push_back(slot->S);
-        X.push_back(slot->X);
         }
 }
 

@@ -2,6 +2,7 @@
 #include <Structure/Slot.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
+#include <GeneralClasses/LinkSpectralDensity.h>
 
 using namespace TF;
 using namespace NumericMethods;
@@ -9,16 +10,28 @@ using namespace NumericMethods;
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 
-Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
+Signal::Signal(unsigned int numSlots,
+               RMSA::TransparentSegment& OpticalPath) : numSlots(numSlots),
     SignalPower(InputPower),
-    NoisePower(InputPower * -InputOSNR)
+    NoisePower(InputPower * -InputOSNR), OpticalPath(OpticalPath)
 {
     if(considerFilterImperfection)
         {
         frequencyRange = numSlots * Slot::BSlot / 2;
-        signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                            frequencyRange, PhysicalConstants::freq + frequencyRange,
-                            (int) numFrequencySamples);
+
+        for(unsigned int i = 1; i <= (unsigned int) OpticalPath.Links.size(); i++)
+            {
+            signalSpecDensity.push_back(std::make_shared<SpectralDensity>
+                                        (PhysicalConstants::freq -
+                                         frequencyRange, PhysicalConstants::freq + frequencyRange,
+                                         (int) LinkSpectralDensity::numFrequencySamples *
+                                         Slot::numFrequencySamplesPerSlot, true));
+            }
+
+        signalSpecDensity.begin() = std::make_shared<SpectralDensity>
+                                    (PhysicalConstants::freq -
+                                     frequencyRange, PhysicalConstants::freq + frequencyRange,
+                                     (int) numFrequencySamples);
         }
 }
 

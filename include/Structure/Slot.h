@@ -65,10 +65,6 @@ public:
      * @brief S is the main signal spectral density.
      */
     std::shared_ptr<SpectralDensity> S;
-    /**
-     * @brief X is the crosstalk from other signals.
-     */
-    std::shared_ptr<SpectralDensity> X;
 };
 
 #endif // SLOT_H

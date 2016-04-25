@@ -20,8 +20,7 @@ public:
     Power get_TransmitedPower(double);
 
 
-    std::vector<std::shared_ptr<SpectralDensity>> S;
-    std::vector<std::shared_ptr<SpectralDensity>> X;
+    std::vector<std::shared_ptr<SpectralDensity>> S;    
 
     static unsigned long numFrequencySamples;
 };

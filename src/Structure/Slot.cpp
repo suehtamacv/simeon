@@ -19,10 +19,6 @@ Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true),
     S = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                                           frequencyRange, PhysicalConstants::freq + frequencyRange,
                                           (int) numFrequencySamplesPerSlot, true);
-
-    X = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                                          frequencyRange, PhysicalConstants::freq + frequencyRange,
-                                          (int) numFrequencySamplesPerSlot, true);
 }
 
 void Slot::freeSlot()
@@ -33,7 +29,6 @@ void Slot::freeSlot()
     for(unsigned int i = 0; i <= (unsigned int) numFrequencySamplesPerSlot - 1; i++)
         {
         S->specDensity(i) = 0;
-        X->specDensity(i) = 0;
         }
 }
 
