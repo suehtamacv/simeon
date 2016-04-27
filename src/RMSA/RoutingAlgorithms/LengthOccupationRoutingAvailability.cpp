@@ -6,7 +6,7 @@ using namespace RMSA::ROUT;
 
 LengthOccupationRoutingAvailability::LengthOccupationRoutingAvailability(
     std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, LORa)
+    RoutingCost(T, LORa)
 {
 
 }
@@ -26,11 +26,5 @@ double LengthOccupationRoutingAvailability::get_Cost(
 
 void LengthOccupationRoutingAvailability::save(std::string SimConfigFileName)
 {
-    RoutingAlgorithm::save(SimConfigFileName);
-}
-
-std::vector<std::vector<std::weak_ptr<Link>>>
-LengthOccupationRoutingAvailability::route(std::shared_ptr<Call> C)
-{
-    return RoutingAlgorithm::route(C);
+    RoutingCost::save(SimConfigFileName);
 }

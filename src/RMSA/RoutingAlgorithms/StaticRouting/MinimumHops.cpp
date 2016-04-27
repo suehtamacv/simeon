@@ -4,7 +4,7 @@
 using namespace RMSA::ROUT;
 
 MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
-    FixedRoutingAlgorithm(T, MH)
+    FixedRoutingCost(T, MH)
 {
 
 }

@@ -8,93 +8,28 @@
 
 using namespace RMSA::ROUT;
 
-RoutingAlgorithm::RoutingType RoutingAlgorithm::RoutType;
+RoutingAlgorithm::RoutingAlgorithm RoutingAlgorithm::RoutType;
 bool RoutingAlgorithm::hasLoadedRoutingType = false;
 
-RoutingAlgorithm::RoutAlgNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
-    boost::assign::list_of<RoutingAlgorithm::RoutAlgNameBimap::relation>
-#define X(a,b,c,d) (a,b)
-    ROUTING_ALGORITHM
-#undef X
-    ;
-
-RoutingAlgorithm::RoutAlgNicknameBimap
-RoutingAlgorithm::RoutingAlgorithmNicknames =
-    boost::assign::list_of<RoutingAlgorithm::RoutAlgNicknameBimap::relation>
-#define X(a,b,c,d) (a,c)
-    ROUTING_ALGORITHM
-#undef X
-    ;
-
-RoutingAlgorithm::RoutTypeNameBimap RoutingAlgorithm::RoutingTypesNames =
+RoutingAlgorithm::RoutTypeNameBimap RoutingAlgorithm::RoutingAlgorithmsNames =
     boost::assign::list_of<RoutingAlgorithm::RoutTypeNameBimap::relation>
 #define X(a,b,c) (a,b)
-    ROUTING_TYPE
+    ROUTING_ALGORITHM
 #undef X
     ;
 
-RoutingAlgorithm::RoutTypeNicknameBimap RoutingAlgorithm::RoutingTypesNicknames
+RoutingAlgorithm::RoutTypeNicknameBimap RoutingAlgorithm::RoutingAlgorithmsNicknames
     = boost::assign::list_of<RoutingAlgorithm::RoutTypeNicknameBimap::relation>
 #define X(a,b,c) (a,c)
-      ROUTING_TYPE
+      ROUTING_ALGORITHM
 #undef X
       ;
 
 RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
-                                   RoutingAlgorithms RoutAlg) :
-    RoutAlg(RoutAlg), T(T)
+                                   RoutingAlgorithm RoutType) :
+    RoutType(RoutType), T(T)
 {
 
-}
-
-RoutingAlgorithm::RoutingAlgorithms
-RoutingAlgorithm::define_RoutingAlgorithm()
-{
-    std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
-
-    do
-        {
-        for (auto &routing : RoutingAlgorithmNames.left)
-            {
-            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
-            }
-
-        int Routing_Alg;
-        std::cin >> Routing_Alg;
-
-        if (std::cin.fail() || RoutingAlgorithmNames.left.count
-                ((RoutingAlgorithms) Routing_Alg) == 0)
-            {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid routing algorithm." << std::endl;
-            std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
-            }
-        else
-            {
-            return (RoutingAlgorithms) Routing_Alg;
-            }
-        }
-    while (1);
-
-    return (RoutingAlgorithms) - 1;
-}
-
-std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
-    RoutingAlgorithms Algorithm, std::shared_ptr<Topology> T)
-{
-    std::shared_ptr<RoutingAlgorithm> R_Alg;
-
-    switch (Algorithm)
-        {
-#define X(a,b,c,d) case a: R_Alg = std::make_shared<d>(T); break;
-            ROUTING_ALGORITHM
-#undef X
-        }
-
-    R_Alg->load();
-    return R_Alg;
 }
 
 std::vector<std::vector<std::weak_ptr<Link>>>
@@ -341,7 +276,7 @@ void RoutingAlgorithm::load()
 
     do
         {
-        for (auto &routing : RoutingTypesNames.left)
+        for (auto &routing : RoutingAlgorithmsNames.left)
             {
             std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
             }
@@ -349,8 +284,8 @@ void RoutingAlgorithm::load()
         int Routing_Type;
         std::cin >> Routing_Type;
 
-        if (std::cin.fail() || RoutingTypesNames.left.count
-                ((RoutingType) Routing_Type) == 0)
+        if (std::cin.fail() || RoutingAlgorithmsNames.left.count
+                ((RoutingAlgorithm) Routing_Type) == 0)
             {
             std::cin.clear();
             std::cin.ignore();
@@ -360,7 +295,7 @@ void RoutingAlgorithm::load()
             }
         else
             {
-            RoutType = (RoutingType) Routing_Type;
+            RoutType = (RoutingAlgorithm) Routing_Type;
             break;
             }
         }

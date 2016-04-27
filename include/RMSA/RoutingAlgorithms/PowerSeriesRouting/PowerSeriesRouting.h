@@ -1,7 +1,7 @@
 #ifndef POWERSERIESROUTING_H
 #define POWERSERIESROUTING_H
 
-#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/RoutingCost.h>
 #include <armadillo>
 #include <vector>
 
@@ -22,7 +22,7 @@ namespace PSR
  * @brief The PowerSeriesRouting class represents the Power Series Routing algorithm.
  * Its link cost is a truncated power series of carefully chosen costs.
  */
-class PowerSeriesRouting : public RoutingAlgorithm
+class PowerSeriesRouting : public RoutingCost
 {
 public:
 #define PSRVARIANTS \
@@ -43,10 +43,10 @@ public:
     typedef boost::bimap<Variants, std::string> VariantNicknameBimap;
     static VariantNicknameBimap VariantNicknames;
 
-    PowerSeriesRouting(std::shared_ptr<Topology> T, RoutingAlgorithms RAlg);
+    PowerSeriesRouting(std::shared_ptr<Topology> T, RoutingCosts RCost);
     PowerSeriesRouting(std::shared_ptr<Topology> T,
                        std::vector<std::shared_ptr<PSR::Cost>> Costs,
-                       RoutingAlgorithms RAlg);
+                       RoutingCosts RCost);
 
     void load();
     void save(std::string);

@@ -4,7 +4,7 @@
 using namespace RMSA::ROUT;
 
 ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
-    FixedRoutingAlgorithm(T, SP)
+    FixedRoutingCost(T, SP)
 {
 
 }

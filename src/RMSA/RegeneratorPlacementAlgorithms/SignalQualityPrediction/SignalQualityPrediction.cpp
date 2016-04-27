@@ -2,6 +2,7 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h>
 #include <RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
 #include <RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 #include <GeneralClasses/RandomGenerator.h>

@@ -1,19 +1,19 @@
-#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h>
 #include <Calls/Call.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 
 using namespace RMSA::ROUT;
 
-FixedRoutingAlgorithm::FixedRoutingAlgorithm
-(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg) :
-    RoutingAlgorithm(T, RoutAlg)
+FixedRoutingCost::FixedRoutingCost
+(std::shared_ptr<Topology> T, RoutingCosts RoutCost) :
+    RoutingCost(T, RoutCost)
 {
 
 }
 
 std::vector<std::vector<std::weak_ptr<Link>>>
-FixedRoutingAlgorithm::route(std::shared_ptr<Call> C)
+FixedRoutingCost::route(std::shared_ptr<Call> C)
 {
     if (Routes.empty())
         {
@@ -23,7 +23,7 @@ FixedRoutingAlgorithm::route(std::shared_ptr<Call> C)
     return Routes[std::make_pair(C->Origin.lock()->ID, C->Destination.lock()->ID)];
 }
 
-void FixedRoutingAlgorithm::precalculate_Routes()
+void FixedRoutingCost::precalculate_Routes()
 {
     for (auto &orig : T->Nodes)
         {

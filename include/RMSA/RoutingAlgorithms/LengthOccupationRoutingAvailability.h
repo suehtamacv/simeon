@@ -1,7 +1,7 @@
 #ifndef LENGTHOCCUPATIONROUTINGAVAILABILITY_H
 #define LENGTHOCCUPATIONROUTINGAVAILABILITY_H
 
-#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/RoutingCost.h>
 
 namespace RMSA
 {
@@ -12,7 +12,7 @@ namespace ROUT
  * Occupation Routing algorithm (availability variant). Its link cost is a
  * ponderation with the link length and its availability.
  */
-class LengthOccupationRoutingAvailability : public RoutingAlgorithm
+class LengthOccupationRoutingAvailability : public RoutingCost
 {
 public:
     LengthOccupationRoutingAvailability(std::shared_ptr<Topology> T);
@@ -21,7 +21,7 @@ public:
     std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
     void load()
     {
-        RoutingAlgorithm::load();
+        RoutingCost::load();
     }
     void save(std::string);
 };

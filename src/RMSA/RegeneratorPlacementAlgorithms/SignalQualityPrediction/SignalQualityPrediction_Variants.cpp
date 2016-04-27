@@ -76,7 +76,7 @@ void SignalQualityPrediction_Variants::chooseSQPVariant()
 
 void SignalQualityPrediction_Variants::evaluateLNMax()
 {
-    std::shared_ptr<ROUT::FixedRoutingAlgorithm> RAlg;
+    std::shared_ptr<ROUT::FixedRoutingCost> RAlg;
 
     //Choose adequate Routing Algorithm
     switch (Type)

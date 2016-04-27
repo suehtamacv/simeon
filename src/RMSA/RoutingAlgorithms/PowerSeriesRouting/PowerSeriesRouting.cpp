@@ -29,16 +29,16 @@ PowerSeriesRouting::VariantNicknames =
 
 
 PowerSeriesRouting::PowerSeriesRouting
-(std::shared_ptr<Topology> T, RoutingAlgorithms RAlg) :
-    RoutingAlgorithm(T, RAlg)
+(std::shared_ptr<Topology> T, RoutingCosts RCost) :
+    RoutingAlgorithm(T, RCost)
 {
     firstTimeRun = false;
 }
 
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
                                        std::vector<std::shared_ptr<PSR::Cost>> Costs,
-                                       RoutingAlgorithms RAlg) :
-    RoutingAlgorithm(T, RAlg)
+                                       RoutingCosts RCost) :
+    RoutingAlgorithm(T, RCost)
 {
 
     firstTimeRun = false;

@@ -1,7 +1,7 @@
 #ifndef STATICROUTINGALGORITHM_H
 #define STATICROUTINGALGORITHM_H
 
-#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/RoutingCost.h>
 #include <map>
 
 class Link;
@@ -15,10 +15,10 @@ namespace ROUT
  * algorithms whose route between a certain pair of nodes does not change as the
  * simulation progresses.
  */
-class FixedRoutingAlgorithm : public RoutingAlgorithm
+class FixedRoutingCost : public RoutingCost
 {
 public:
-    FixedRoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg);
+    FixedRoutingCost(std::shared_ptr<Topology> T, RoutingCosts RoutCost);
 
     std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
 

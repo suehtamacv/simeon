@@ -58,7 +58,6 @@ SOURCES += src/main.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.cpp \
     src/RMSA/Route.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
     src/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.cpp \
@@ -107,7 +106,9 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_PowerRatioThreshold.cpp \
     src/GeneralPurposeAlgorithms/GA/GA.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
-    src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp
+    src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp \
+    src/RMSA/RoutingAlgorithms/RoutingCost.cpp \
+    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -172,7 +173,6 @@ HEADERS += \
     include/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h \
     include/RMSA/Route.h \
     include/RMSA/RoutingAlgorithms.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h \
     include/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
     include/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \
     include/RMSA/RoutingAlgorithms/RoutingAlgorithm.h \
@@ -226,7 +226,9 @@ HEADERS += \
     include/SimulationTypes/Simulation_PowerRatioThreshold.h \
     include/GeneralPurposeAlgorithms/GA/GA.h \
     include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
-    include/GeneralPurposeAlgorithms/GA/GA_Individual.h
+    include/GeneralPurposeAlgorithms/GA/GA_Individual.h \
+    include/RMSA/RoutingAlgorithms/RoutingCost.h \
+    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
