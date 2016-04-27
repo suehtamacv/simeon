@@ -5,14 +5,14 @@
 using namespace RMSA::ROUT::PSR;
 
 TensorialPowerSeriesRouting::TensorialPowerSeriesRouting
-(std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::tenPSR)
+(std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingCost::tenPSR)
 {
     Variant = Variant_TensorialPSR;
 }
 
 TensorialPowerSeriesRouting::TensorialPowerSeriesRouting
 (std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    PowerSeriesRouting(T, Costs, RoutingAlgorithm::tenPSR)
+    PowerSeriesRouting(T, Costs, RoutingCost::tenPSR)
 {
     Variant = Variant_TensorialPSR;
 }

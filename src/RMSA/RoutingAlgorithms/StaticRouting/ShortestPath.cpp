@@ -23,5 +23,5 @@ double ShortestPath::get_Cost(
 
 void ShortestPath::save(std::string SimConfigFileName)
 {
-    RoutingAlgorithm::save(SimConfigFileName);
+    RoutingCost::save(SimConfigFileName);
 }

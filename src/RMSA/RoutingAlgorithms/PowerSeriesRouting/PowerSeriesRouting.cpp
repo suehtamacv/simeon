@@ -30,7 +30,7 @@ PowerSeriesRouting::VariantNicknames =
 
 PowerSeriesRouting::PowerSeriesRouting
 (std::shared_ptr<Topology> T, RoutingCosts RCost) :
-    RoutingAlgorithm(T, RCost)
+    RoutingCost(T, RCost)
 {
     firstTimeRun = false;
 }
@@ -38,7 +38,7 @@ PowerSeriesRouting::PowerSeriesRouting
 PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
                                        std::vector<std::shared_ptr<PSR::Cost>> Costs,
                                        RoutingCosts RCost) :
-    RoutingAlgorithm(T, RCost)
+    RoutingCost(T, RCost)
 {
 
     firstTimeRun = false;
@@ -57,7 +57,7 @@ PowerSeriesRouting::PowerSeriesRouting(std::shared_ptr<Topology> T,
 
 void PowerSeriesRouting::load()
 {
-    RoutingAlgorithm::load();
+    RoutingCost::load();
 
     if (hasLoaded)
         {
@@ -247,7 +247,7 @@ int PowerSeriesRouting::get_N() const
 
 void PowerSeriesRouting::save(std::string SimConfigFileName)
 {
-    RoutingAlgorithm::save(SimConfigFileName);
+    RoutingCost::save(SimConfigFileName);
 }
 
 std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
@@ -265,10 +265,4 @@ std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
         }
 
     return PSR;
-}
-
-std::vector<std::vector<std::weak_ptr<Link>>>
-PowerSeriesRouting::route(std::shared_ptr<Call> C)
-{
-    return RoutingAlgorithm::route(C);
 }

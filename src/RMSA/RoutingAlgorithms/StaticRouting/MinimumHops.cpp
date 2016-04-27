@@ -23,5 +23,5 @@ double MinimumHops::get_Cost(
 
 void MinimumHops::save(std::string SimConfigFileName)
 {
-    RoutingAlgorithm::save(SimConfigFileName);
+    RoutingCost::save(SimConfigFileName);
 }

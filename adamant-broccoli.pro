@@ -108,7 +108,10 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp \
     src/RMSA/RoutingAlgorithms/RoutingCost.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.cpp
+    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.cpp \
+    src/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.cpp \
+    src/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.cpp \
+    src/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -228,7 +231,10 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
     include/GeneralPurposeAlgorithms/GA/GA_Individual.h \
     include/RMSA/RoutingAlgorithms/RoutingCost.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h
+    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h \
+    include/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h \
+    include/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.h \
+    include/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

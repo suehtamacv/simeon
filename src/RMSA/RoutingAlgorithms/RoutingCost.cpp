@@ -23,7 +23,7 @@ RoutingCost::RoutingCost(std::shared_ptr<Topology> T,
 
 }
 
-RoutingCost::RoutingCosts RoutingCost::define_RoutingAlgorithm()
+RoutingCost::RoutingCosts RoutingCost::define_RoutingCost()
 {
     std::cout << std::endl << "-> Choose a routing cost." << std::endl;
 

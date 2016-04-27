@@ -4,6 +4,7 @@
 #include <boost/bimap.hpp>
 #include <memory>
 #include <vector>
+#include "RoutingCost.h"
 
 class Topology;
 class Call;
@@ -35,13 +36,16 @@ public:
 #undef X
 
     typedef boost::bimap<RoutingAlgorithms, std::string> RoutTypeNameBimap;
-    static RoutTypeNameBimap RoutingTypesNames;
+    static RoutTypeNameBimap RoutAlgorithmNames;
     typedef boost::bimap<RoutingAlgorithms, std::string> RoutTypeNicknameBimap;
-    static RoutTypeNicknameBimap RoutingTypesNicknames;
+    static RoutTypeNicknameBimap RoutAlgorithmNicknames;
 
-    static RoutingAlgorithms RoutType;
+    RoutingAlgorithms RoutAlg;
+    std::shared_ptr<RoutingCost> RCost;
 
-    RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutType);
+    RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg);
+    RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg,
+                     RoutingCost::RoutingCosts RoutCost);
 
     static RoutingAlgorithms define_RoutingAlgorithm();
     static std::shared_ptr<RoutingAlgorithm> create_RoutingAlgorithm(
@@ -61,10 +65,6 @@ public:
     static constexpr int kShortestPaths = 3;
 
 private:
-    std::vector<std::vector<std::weak_ptr<Link>>> bell_ford(
-        std::shared_ptr<Call> C);
-    std::vector<std::vector<std::weak_ptr<Link>>> dijkstra(std::shared_ptr<Call> C);
-    std::vector<std::vector<std::weak_ptr<Link>>> yen(std::shared_ptr<Call> C);
     static bool hasLoadedRoutingType;
 
     double get_RoutingCost(std::vector<std::weak_ptr<Link>>, std::shared_ptr<Call>);

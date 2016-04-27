@@ -19,7 +19,6 @@ public:
 
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 
-    std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
     void load()
     {
         RoutingCost::load();

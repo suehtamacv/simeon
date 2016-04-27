@@ -5,14 +5,14 @@
 using namespace RMSA::ROUT::PSR;
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting
-(std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingAlgorithm::AWR)
+(std::shared_ptr<Topology> T) : PowerSeriesRouting(T, RoutingCost::AWR)
 {
     Variant = Variant_AWR;
 }
 
 AdaptativeWeighingRouting::AdaptativeWeighingRouting(std::shared_ptr<Topology>
         T, std::vector<std::shared_ptr<PSR::Cost>> Costs) :
-    PowerSeriesRouting(T, Costs, RoutingAlgorithm::AWR)
+    PowerSeriesRouting(T, Costs, RoutingCost::AWR)
 {
     Variant = Variant_AWR;
 }

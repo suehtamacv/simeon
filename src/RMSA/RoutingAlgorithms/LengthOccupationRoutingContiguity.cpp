@@ -26,11 +26,5 @@ double LengthOccupationRoutingContiguity::get_Cost(
 
 void LengthOccupationRoutingContiguity::save(std::string SimConfigFileName)
 {
-    RoutingAlgorithm::save(SimConfigFileName);
-}
-
-std::vector<std::vector<std::weak_ptr<Link>>>
-LengthOccupationRoutingContiguity::route(std::shared_ptr<Call> C)
-{
-    return RoutingAlgorithm::route(C);
+    RoutingCost::save(SimConfigFileName);
 }
