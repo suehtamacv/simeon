@@ -12,6 +12,15 @@ class Yen_RoutingAlgorithm : public RoutingAlgorithm
 public:
     Yen_RoutingAlgorithm(std::shared_ptr<Topology> T);
     std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
+
+    void load();
+    void save(std::string);
+
+    /**
+     * @brief kShortestPaths is the number of shortest paths that will be searched
+     * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.
+     */
+    static int kShortestPaths;
 };
 }
 }

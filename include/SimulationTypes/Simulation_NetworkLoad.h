@@ -45,6 +45,7 @@ private:
     std::string FileName;
 
     RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    RMSA::ROUT::RoutingCost::RoutingCosts Routing_Cost;
     RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms

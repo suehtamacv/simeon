@@ -1,9 +1,41 @@
 #include "include/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.h"
 
 using namespace RMSA::ROUT;
+int Yen_RoutingAlgorithm::kShortestPaths = 1;
 
 Yen_RoutingAlgorithm::Yen_RoutingAlgorithm(std::shared_ptr<Topology> T) :
     RoutingAlgorithm(T, yen_alg)
+{
+
+}
+
+void Yen_RoutingAlgorithm::load()
+{
+    std::cout << std::endl << "-> Define the number k of paths to Yen algorithm."
+              << std::endl;
+
+    do
+        {
+        std::cin >> kShortestPaths;
+
+        if (std::cin.fail() || kShortestPaths <= 0)
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid number of paths." << std::endl;
+            std::cout << std::endl << "-> Define the number k of paths to Yen algorithm."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+}
+
+void Yen_RoutingAlgorithm::save(std::string name)
 {
 
 }

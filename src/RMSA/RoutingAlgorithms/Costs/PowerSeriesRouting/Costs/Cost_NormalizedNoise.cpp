@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h>
 #include <Calls/Call.h>
 #include <Structure.h>
 #include <map>

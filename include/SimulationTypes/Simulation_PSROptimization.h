@@ -3,7 +3,7 @@
 
 #include <SimulationTypes/SimulationType.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.h>
 #include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>

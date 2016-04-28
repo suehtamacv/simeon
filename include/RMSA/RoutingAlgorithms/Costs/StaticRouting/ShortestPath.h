@@ -1,7 +1,7 @@
 #ifndef SHORTESTPATH_H
 #define SHORTESTPATH_H
 
-#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/FixedRoutingCost.h>
 
 namespace RMSA
 {

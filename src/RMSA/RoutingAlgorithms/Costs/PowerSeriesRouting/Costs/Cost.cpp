@@ -1,5 +1,5 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs.h>
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
 #include <Calls/Call.h>

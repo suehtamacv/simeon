@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Bitrate.h>
 #include <algorithm>
 #include "Calls.h"
 

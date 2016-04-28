@@ -1,7 +1,7 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction.h>
 #include <RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h>
-#include <RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
-#include <RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h>
 #include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
@@ -153,11 +153,11 @@ void SignalQualityPrediction::evaluateLNMax()
     switch (Type)
         {
         case Distance:
-            R_Alg = std::make_shared<ROUT::ShortestPath>(T);
+            //R_Alg = std::make_shared<ROUT::ShortestPath>(T);
             break;
 
         case HopsNumber:
-            R_Alg = std::make_shared<ROUT::MinimumHops>(T);
+            //R_Alg = std::make_shared<ROUT::MinimumHops>(T);
             break;
         }
 

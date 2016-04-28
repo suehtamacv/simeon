@@ -1,7 +1,7 @@
 #ifndef MINIMUMHOPS_H
 #define MINIMUMHOPS_H
 
-#include <RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/FixedRoutingCost.h>
 
 namespace RMSA
 {

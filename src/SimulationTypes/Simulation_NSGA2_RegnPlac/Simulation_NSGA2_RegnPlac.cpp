@@ -129,7 +129,7 @@ void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl;
     SimConfigFile << "  RoutingAlgorithm = " <<
-                  RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm) <<
+                  RoutingAlgorithm::RoutAlgorithmNicknames.left.at(Routing_Algorithm) <<
                   std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
                   SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.left.at(
@@ -178,7 +178,7 @@ void Simulation_NSGA2_RegnPlac::load_file(std::string ConfigFileName)
     Link::DefaultAvgSpanLength =
         VariablesMap["general.AvgSpanLength"].as<long double>();
     T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
-    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
+    Routing_Algorithm = RoutingAlgorithm::RoutAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
         SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
@@ -216,7 +216,7 @@ void Simulation_NSGA2_RegnPlac::print()
     std::cout << "-> Distance Between Inline Amps. = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
+              RoutingAlgorithm::RoutAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
@@ -241,6 +241,7 @@ void Simulation_NSGA2_RegnPlac::load()
     //RMSA Algorithms
         {
         //Routing Algorithm
+        Routing_Cost = RoutingCost::define_RoutingCost();
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
         //Wavelength Assignment Algorithm

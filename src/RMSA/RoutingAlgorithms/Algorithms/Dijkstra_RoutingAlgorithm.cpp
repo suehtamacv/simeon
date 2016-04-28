@@ -109,3 +109,8 @@ Dijkstra_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 
     return {RouteLinks};
 }
+
+void Dijkstra_RoutingAlgorithm::save(std::string name)
+{
+
+}

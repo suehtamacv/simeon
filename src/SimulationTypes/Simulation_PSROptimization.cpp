@@ -1,7 +1,7 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
 #include <iomanip>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Calls.h>
 #include <RMSA.h>

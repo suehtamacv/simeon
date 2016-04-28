@@ -24,11 +24,11 @@ class RoutingAlgorithm
 {
 public:
 #define ROUTING_ALGORITHM \
-    X(bellman_ford, "Bellman-Ford Shortest Path Algorithm", "bellman_ford") \
-    X(dijkstra_alg, "Dijkstra Shortest Path Algorithm", "dijkstra_alg") \
-    X(yen_alg, "Yen K-Shortest Path Algorithm", "yen_alg")
+    X(bellman_ford, "Bellman-Ford Shortest Path Algorithm", "bellman_ford", BellmanFord_RoutingAlgorithm) \
+    X(dijkstra_alg, "Dijkstra Shortest Path Algorithm", "dijkstra_alg", Dijkstra_RoutingAlgorithm) \
+    X(yen_alg, "Yen K-Shortest Path Algorithm", "yen_alg", Yen_RoutingAlgorithm)
 
-#define X(a,b,c) a,
+#define X(a,b,c,d) a,
     enum RoutingAlgorithms
     {
         ROUTING_ALGORITHM
@@ -58,14 +58,11 @@ public:
 
     std::shared_ptr<Topology> T;
 
-    /**
-     * @brief kShortestPaths is the number of shortest paths that will be searched
-     * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.
-     */
-    static constexpr int kShortestPaths = 3;
-
 private:
-    static bool hasLoadedRoutingType;
+    static bool hasLoadedRoutingCost;
+    static bool hasLoadedRoutingAlg;
+    static RoutingCost::RoutingCosts Cost;
+    static RoutingAlgorithms Alg;
 
     double get_RoutingCost(std::vector<std::weak_ptr<Link>>, std::shared_ptr<Call>);
 };

@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h>
+#include <RMSA/RoutingAlgorithms/Costs/LengthOccupationRoutingContiguity.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 

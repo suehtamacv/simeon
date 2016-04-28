@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Distance.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 #include <Calls/Call.h>

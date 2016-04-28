@@ -1,5 +1,5 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost.h>
 #include <Structure/Link.h>
 
 using namespace RMSA::ROUT::PSR;

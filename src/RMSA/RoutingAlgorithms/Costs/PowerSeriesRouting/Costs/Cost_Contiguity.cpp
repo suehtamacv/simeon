@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Contiguity.h>
 #include <Structure/Link.h>
 
 using namespace RMSA::ROUT;

@@ -1,5 +1,5 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost.h>
 #include <Calls/Call.h>
 #include <Structure/Node.h>
 #include <Structure/Link.h>

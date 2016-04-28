@@ -1,4 +1,4 @@
-#include "include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_LinkLength.h"
+#include "include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_LinkLength.h"
 #include <set>
 #include <Structure/Link.h>
 #include <Structure/Node.h>

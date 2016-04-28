@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h>
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 #include <Calls/Call.h>

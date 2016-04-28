@@ -1,4 +1,4 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Occupability.h>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 #include <cmath>

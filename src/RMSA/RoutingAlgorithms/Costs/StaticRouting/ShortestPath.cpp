@@ -1,15 +1,15 @@
-#include <RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h>
 #include <Structure/Link.h>
 
 using namespace RMSA::ROUT;
 
-MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
-    FixedRoutingCost(T, MH)
+ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
+    FixedRoutingCost(T, SP)
 {
 
 }
 
-double MinimumHops::get_Cost(
+double ShortestPath::get_Cost(
     std::weak_ptr<Link> link,
     std::shared_ptr<Call>)
 {
@@ -18,10 +18,10 @@ double MinimumHops::get_Cost(
         return std::numeric_limits<double>::max();
         }
 
-    return 1;
+    return link.lock()->Length;
 }
 
-void MinimumHops::save(std::string SimConfigFileName)
+void ShortestPath::save(std::string SimConfigFileName)
 {
     RoutingCost::save(SimConfigFileName);
 }

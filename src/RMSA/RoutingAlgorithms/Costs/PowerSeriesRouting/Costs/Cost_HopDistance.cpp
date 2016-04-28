@@ -1,8 +1,8 @@
-#include "include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.h"
+#include "include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_HopDistance.h"
 #include <set>
 #include <Calls/Call.h>
 #include <GeneralClasses/TransmissionBitrate.h>
-#include <RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 

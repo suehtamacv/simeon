@@ -1,10 +1,10 @@
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.h>
 #include <iostream>
 #include <algorithm>
 #include <boost/program_options.hpp>
 #include <boost/assign.hpp>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants.h>
 
 using namespace RMSA::ROUT::PSR;
 
