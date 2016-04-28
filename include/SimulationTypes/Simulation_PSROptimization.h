@@ -41,6 +41,7 @@ private:
 
     RMSA::ROUT::PSR::PowerSeriesRouting::Variants Variant;
 
+    static RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     static RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     static RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms

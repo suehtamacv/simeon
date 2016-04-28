@@ -102,7 +102,7 @@ void Simulation_NetworkLoad::print()
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutAlgorithmNicknames.left.at(Routing_Algorithm)
+              RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Routing Cost = " <<
               RoutingCost::RoutingCostsNicknames.left.at(Routing_Cost)
@@ -165,8 +165,10 @@ void Simulation_NetworkLoad::load()
     //RMSA Algorithms
         {
         //Routing Algorithm
-        Routing_Cost = RoutingCost::define_RoutingCost();
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
+
+        //Routing Cost
+        Routing_Cost = RoutingCost::define_RoutingCost();
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
@@ -388,7 +390,7 @@ void Simulation_NetworkLoad::load_file(std::string ConfigFileName)
     Link::DefaultAvgSpanLength =
         VariablesMap["general.AvgSpanLength"].as<long double>();
     T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
-    Routing_Algorithm = RoutingAlgorithm::RoutAlgorithmNicknames.right.at(
+    Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
         SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
@@ -454,6 +456,7 @@ void Simulation_NetworkLoad::create_Simulations()
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
         //Creates the RMSA Algorithms
+        RoutingAlgorithm::define_RoutingCost(Routing_Cost);
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
         std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =

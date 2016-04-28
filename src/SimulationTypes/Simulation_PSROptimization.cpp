@@ -115,6 +115,9 @@ void Simulation_PSROptimization::load()
 
     //RMSA Algorithms
         {
+        //Routing Algorithm
+        Routing_Algorithm = ROUT::RoutingAlgorithm::define_RoutingAlgorithm();
+
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
             SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
@@ -581,7 +584,9 @@ double Simulation_PSROptimization::Fitness::operator()(
     auto TopologyCopy = std::make_shared<Topology>(*T);
 
     //Creates the RMSA Algorithms
-    auto R_Alg = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
+    auto R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm,
+                 TopologyCopy);
+    auto RCost = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
 
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
         SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
@@ -598,16 +603,17 @@ double Simulation_PSROptimization::Fitness::operator()(
         RA_Alg = nullptr;
         }
 
-    //Initializes routing algorithm with the particle.
-    R_Alg->initCoefficients(particle.get()->X);
+    //Initializes routing cost with the particle.
+    RCost->initCoefficients(particle.get()->X);
+    //Sets the routing algorithm with the PSR cost.
+    R_Alg->RCost = RCost;
 
     //Creates the Call Generator and the RMSA Object
     auto Generator = std::make_shared<CallGenerator>(TopologyCopy,
                      Simulation_PSROptimization::OptimizationLoad,
                      TransmissionBitrate::DefaultBitrates);
     auto RMSA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg,
-                RA_Alg,
-                ModulationScheme::DefaultSchemes, TopologyCopy);
+                RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy);
 
     return
         NetworkSimulation(Generator, RMSA, Simulation_PSROptimization::NumCalls).

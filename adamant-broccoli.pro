@@ -80,8 +80,8 @@ SOURCES += src/main.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Slots.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.cpp \
     src/RMSA/RoutingAlgorithms/RoutingAlgorithm.cpp \
-    src/RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.cpp \
-    src/RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/MinimumHops.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/ShortestPath.cpp \
     src/RMSA/RoutingWavelengthAssignment.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/BestFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/ExactFit.cpp \
@@ -108,7 +108,6 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp \
     src/RMSA/RoutingAlgorithms/RoutingCost.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.cpp \
     src/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.cpp \
     src/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.cpp
@@ -200,8 +199,8 @@ HEADERS += \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Slots.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.h \
-    include/RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.h \
-    include/RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h \
+    include/RMSA/RoutingAlgorithms/Costs/MinimumHops.h \
+    include/RMSA/RoutingAlgorithms/Costs/ShortestPath.h \
     include/RMSA/RoutingWavelengthAssignment.h \
     include/RMSA/SpectrumAssignmentAlgorithms.h \
     include/RMSA/SpectrumAssignmentAlgorithms/BestFit.h \
@@ -231,10 +230,10 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
     include/GeneralPurposeAlgorithms/GA/GA_Individual.h \
     include/RMSA/RoutingAlgorithms/RoutingCost.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingCost.h \
     include/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h \
     include/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.h \
-    include/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.h
+    include/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.h \
+    include/RMSA/RoutingCosts.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

@@ -1,6 +1,7 @@
 #include "include/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h"
 #include "include/Structure/Node.h"
 #include "include/Structure/Link.h"
+#include "include/Structure/Topology.h"
 
 using namespace RMSA::ROUT;
 

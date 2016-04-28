@@ -69,6 +69,9 @@ void Simulation_StatisticalTrend::load()
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
+        //Routing Cost
+        Routing_Cost = RoutingCost::define_RoutingCost();
+
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
             SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
@@ -190,6 +193,7 @@ void Simulation_StatisticalTrend::create_Simulations()
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
         //Creates the RMSA Algorithms
+        RoutingAlgorithm::define_RoutingCost(Routing_Cost);
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
         std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
@@ -210,7 +214,7 @@ void Simulation_StatisticalTrend::create_Simulations()
         //Creates the Call Generator and the RMSA Object
         auto Generator = std::make_shared<CallGenerator>(TopologyCopy, NetworkLoad);
         auto RMSA = std::make_shared<RoutingWavelengthAssignment>(R_Alg, WA_Alg, RA_Alg,
-                   ModulationScheme::DefaultSchemes, TopologyCopy);
+                    ModulationScheme::DefaultSchemes, TopologyCopy);
 
         //Push simulation into stack
         simulations.push_back(
@@ -253,16 +257,19 @@ void Simulation_StatisticalTrend::print()
     std::cout << std::endl <<
               "  A Statistical Trend Analysis Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<

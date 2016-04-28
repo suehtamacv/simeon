@@ -2,7 +2,7 @@
 #include <set>
 #include <Calls/Call.h>
 #include <GeneralClasses/TransmissionBitrate.h>
-#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/Costs/MinimumHops.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
 

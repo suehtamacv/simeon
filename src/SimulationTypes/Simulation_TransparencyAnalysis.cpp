@@ -1,5 +1,6 @@
 #include <SimulationTypes/Simulation_TransparencyAnalysis.h>
-#include <RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 #include <RMSA/Route.h>
@@ -71,10 +72,12 @@ void Simulation_TransparencyAnalysis::run()
                     }
                 }
 
-            std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
+            auto R_Alg = RMSA::ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
+                             RoutingAlgorithm::dijkstra_alg, T);
+            R_Alg->define_RoutingCost(RoutingCost::SP);
             std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
-            RoutingWavelengthAssignment RMSA(SP, FF, ModulationScheme::DefaultSchemes,
+            RoutingWavelengthAssignment RMSA(R_Alg, FF, ModulationScheme::DefaultSchemes,
                                              TopCopy);
             std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
 

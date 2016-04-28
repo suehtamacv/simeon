@@ -81,6 +81,9 @@ void Simulation_RegeneratorNumber::load()
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
+        //Routing Cost
+        Routing_Cost = RoutingCost::define_RoutingCost();
+
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
             SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
@@ -434,6 +437,7 @@ void Simulation_RegeneratorNumber::createSimulations()
         refreshRegenerators(TopologyCopy, nreg * numTranslucentNodes);
 
         //Creates the RMSA Algorithms
+        RoutingAlgorithm::define_RoutingCost(Routing_Cost);
         std::shared_ptr<RoutingAlgorithm> R_Alg =
             RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
 

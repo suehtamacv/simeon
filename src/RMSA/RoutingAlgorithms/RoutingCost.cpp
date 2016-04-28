@@ -1,4 +1,7 @@
 #include "include/RMSA/RoutingAlgorithms/RoutingCost.h"
+#include "include/RMSA/RoutingCosts.h"
+#include <boost/assign.hpp>
+#include <iostream>
 
 using namespace RMSA::ROUT;
 
@@ -38,7 +41,7 @@ RoutingCost::RoutingCosts RoutingCost::define_RoutingCost()
         std::cin >> Routing_Cost;
 
         if (std::cin.fail() || RoutingCostsNames.left.count
-                ((RoutingAlgorithms) Routing_Cost) == 0)
+                ((RoutingCosts) Routing_Cost) == 0)
             {
             std::cin.clear();
             std::cin.ignore();
@@ -57,7 +60,7 @@ RoutingCost::RoutingCosts RoutingCost::define_RoutingCost()
 }
 
 std::shared_ptr<RoutingCost> RoutingCost::create_RoutingCost(
-    RoutingCost Cost, std::shared_ptr<Topology> T)
+    RoutingCosts Cost, std::shared_ptr<Topology> T)
 {
     std::shared_ptr<RoutingCost> R_Cost;
 

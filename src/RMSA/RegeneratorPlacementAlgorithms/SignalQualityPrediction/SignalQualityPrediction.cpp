@@ -1,7 +1,7 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction.h>
 #include <RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h>
-#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.h>
-#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Costs/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/Costs/ShortestPath.h>
 #include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
@@ -148,16 +148,17 @@ void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
 void SignalQualityPrediction::evaluateLNMax()
 {
     LNMax.clear();
-    std::shared_ptr<ROUT::RoutingAlgorithm> R_Alg;
+    auto R_Alg =
+        ROUT::RoutingAlgorithm::create_RoutingAlgorithm(RMSA->R_Alg->Alg, T);
 
     switch (Type)
         {
         case Distance:
-            //R_Alg = std::make_shared<ROUT::ShortestPath>(T);
+            R_Alg->define_RoutingCost(ROUT::RoutingCost::SP);
             break;
 
         case HopsNumber:
-            //R_Alg = std::make_shared<ROUT::MinimumHops>(T);
+            R_Alg->define_RoutingCost(ROUT::RoutingCost::MH);
             break;
         }
 

@@ -36,9 +36,9 @@ public:
 #undef X
 
     typedef boost::bimap<RoutingAlgorithms, std::string> RoutTypeNameBimap;
-    static RoutTypeNameBimap RoutAlgorithmNames;
+    static RoutTypeNameBimap RoutingAlgorithmNames;
     typedef boost::bimap<RoutingAlgorithms, std::string> RoutTypeNicknameBimap;
-    static RoutTypeNicknameBimap RoutAlgorithmNicknames;
+    static RoutTypeNicknameBimap RoutingAlgorithmNicknames;
 
     RoutingAlgorithms RoutAlg;
     std::shared_ptr<RoutingCost> RCost;
@@ -58,11 +58,13 @@ public:
 
     std::shared_ptr<Topology> T;
 
+    static void define_RoutingCost(RoutingCost::RoutingCosts Cost);
+    static RoutingCost::RoutingCosts Cost;
+    static RoutingAlgorithms Alg;
+
 private:
     static bool hasLoadedRoutingCost;
     static bool hasLoadedRoutingAlg;
-    static RoutingCost::RoutingCosts Cost;
-    static RoutingAlgorithms Alg;
 
     double get_RoutingCost(std::vector<std::weak_ptr<Link>>, std::shared_ptr<Call>);
 };
