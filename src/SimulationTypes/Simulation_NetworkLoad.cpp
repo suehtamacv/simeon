@@ -456,9 +456,9 @@ void Simulation_NetworkLoad::create_Simulations()
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
         //Creates the RMSA Algorithms
-        RoutingAlgorithm::define_RoutingCost(Routing_Cost);
         std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+            RoutingAlgorithm::create_RoutingAlgorithm
+            (Routing_Algorithm, Routing_Cost, TopologyCopy);
         std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
             SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
@@ -493,7 +493,7 @@ void Simulation_NetworkLoad::place_Regenerators(std::shared_ptr<Topology> T)
 
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
-            Routing_Algorithm, T);
+            Routing_Algorithm, Routing_Cost, T);
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
         SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             WavAssign_Algorithm, T);

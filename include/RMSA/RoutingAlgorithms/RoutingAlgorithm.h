@@ -43,13 +43,12 @@ public:
     RoutingAlgorithms RoutAlg;
     std::shared_ptr<RoutingCost> RCost;
 
-    RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg);
     RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg,
                      RoutingCost::RoutingCosts RoutCost);
 
     static RoutingAlgorithms define_RoutingAlgorithm();
     static std::shared_ptr<RoutingAlgorithm> create_RoutingAlgorithm(
-        RoutingAlgorithms, std::shared_ptr<Topology>);
+        RoutingAlgorithms, RoutingCost::RoutingCosts, std::shared_ptr<Topology>);
     virtual void load() = 0;
     virtual void save(std::string) = 0;
 
@@ -58,14 +57,10 @@ public:
 
     std::shared_ptr<Topology> T;
 
-    static void define_RoutingCost(RoutingCost::RoutingCosts Cost);
-    static RoutingCost::RoutingCosts Cost;
-    static RoutingAlgorithms Alg;
+    RoutingCost::RoutingCosts Cost;
+    RoutingAlgorithms Alg;
 
 protected:
-    static bool hasLoadedRoutingCost;
-    static bool hasLoadedRoutingAlg;
-
     double get_RoutingCost(std::vector<std::weak_ptr<Link>>, std::shared_ptr<Call>);
 };
 }

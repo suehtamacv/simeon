@@ -11,7 +11,8 @@ namespace ROUT
 class Yen_RoutingAlgorithm : public RoutingAlgorithm
 {
 public:
-    Yen_RoutingAlgorithm(std::shared_ptr<Topology> T);
+    Yen_RoutingAlgorithm(std::shared_ptr<Topology> T,
+                         RoutingCost::RoutingCosts Cost);
     std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
 
     void load();
@@ -24,7 +25,7 @@ public:
     static unsigned int kShortestPaths;
 
 private:
-    Dijkstra_RoutingAlgorithm Dijkstra;
+    std::shared_ptr<RoutingAlgorithm> Dijkstra;
 };
 }
 }

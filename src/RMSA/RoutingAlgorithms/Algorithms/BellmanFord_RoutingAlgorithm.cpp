@@ -7,8 +7,8 @@
 using namespace RMSA::ROUT;
 
 BellmanFord_RoutingAlgorithm::BellmanFord_RoutingAlgorithm(
-    std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, bellmanford)
+    std::shared_ptr<Topology> T, RoutingCost::RoutingCosts Cost) :
+    RoutingAlgorithm(T, bellmanford, Cost)
 {
 
 }

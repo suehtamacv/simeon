@@ -37,7 +37,8 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
             }
 
         std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm, T);
+            RoutingAlgorithm::create_RoutingAlgorithm(Sim.Routing_Algorithm,
+                    Sim.Routing_Cost, T);
         std::shared_ptr<SpectrumAssignmentAlgorithm> WA_Alg =
             SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 Sim.WavAssign_Algorithm, T);
@@ -53,7 +54,7 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
 
         value = NetworkSimulation(Generator, RMSA, Sim.NumCalls)
-                    .get_CallBlockingProbability();
+                .get_CallBlockingProbability();
         isEvaluated = true;
         }
 

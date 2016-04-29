@@ -148,17 +148,18 @@ void SignalQualityPrediction::placeRegenerators(unsigned N, unsigned X)
 void SignalQualityPrediction::evaluateLNMax()
 {
     LNMax.clear();
-    auto R_Alg =
-        ROUT::RoutingAlgorithm::create_RoutingAlgorithm(RMSA->R_Alg->RoutAlg, T);
+    std::shared_ptr<ROUT::RoutingAlgorithm> R_Alg;
 
     switch (Type)
         {
         case Distance:
-            R_Alg->define_RoutingCost(ROUT::RoutingCost::SP);
+            R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm
+                    (RMSA->R_Alg->RoutAlg, ROUT::RoutingCost::SP, T);
             break;
 
         case HopsNumber:
-            R_Alg->define_RoutingCost(ROUT::RoutingCost::MH);
+            R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm
+                    (RMSA->R_Alg->RoutAlg, ROUT::RoutingCost::MH, T);
             break;
         }
 

@@ -72,9 +72,8 @@ void Simulation_TransparencyAnalysis::run()
                     }
                 }
 
-            RoutingAlgorithm::define_RoutingCost(RoutingCost::SP);
             auto R_Alg = RMSA::ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
-                             RoutingAlgorithm::dijkstra, T);
+                             RoutingAlgorithm::dijkstra, RoutingCost::SP, T);
             std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
             RoutingWavelengthAssignment RMSA(R_Alg, FF, ModulationScheme::DefaultSchemes,
@@ -363,8 +362,8 @@ void Simulation_TransparencyAnalysis::print()
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()
 {
-    RoutingAlgorithm::define_RoutingCost(RoutingCost::SP);
-    Dijkstra_RoutingAlgorithm R_Alg(T);
+    auto R_Alg = RoutingAlgorithm::create_RoutingAlgorithm(
+                     RoutingAlgorithm::dijkstra, RoutingCost::SP, T);
 
     double maxLength = -1;
 
@@ -378,7 +377,7 @@ void Simulation_TransparencyAnalysis::find_OriginDestination()
                 }
 
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-            auto routes = R_Alg.route(DummyCall);
+            auto routes = R_Alg->route(DummyCall);
             double length = 0;
 
             for (auto link : routes.front())

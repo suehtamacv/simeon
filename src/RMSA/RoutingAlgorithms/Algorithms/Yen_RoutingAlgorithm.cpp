@@ -8,10 +8,11 @@
 using namespace RMSA::ROUT;
 unsigned int Yen_RoutingAlgorithm::kShortestPaths = 1;
 
-Yen_RoutingAlgorithm::Yen_RoutingAlgorithm(std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, yen), Dijkstra(T)
+Yen_RoutingAlgorithm::Yen_RoutingAlgorithm(std::shared_ptr<Topology> T,
+        RoutingCost::RoutingCosts Cost) :
+    RoutingAlgorithm(T, yen, Cost)
 {
-    Dijkstra.RCost = RCost;
+    Dijkstra = create_RoutingAlgorithm(dijkstra, Cost, T);
 }
 
 void Yen_RoutingAlgorithm::load()
@@ -49,7 +50,7 @@ std::vector<std::vector<std::weak_ptr<Link>>>
 Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {
     std::vector<std::vector<std::weak_ptr<Link>>> RouteLinks;
-    RouteLinks.push_back(Dijkstra.route(C).back());
+    RouteLinks.push_back(Dijkstra->route(C).back());
 
     while (RouteLinks.size() < kShortestPaths)
         {
@@ -94,7 +95,7 @@ Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
                 }
 
             auto dummyC = std::make_shared<Call>(spurNode, C->Destination, C->Bitrate);
-            auto alternativeRoute = Dijkstra.route(dummyC).front();
+            auto alternativeRoute = Dijkstra->route(dummyC).front();
 
             if (!alternativeRoute.empty())
                 {

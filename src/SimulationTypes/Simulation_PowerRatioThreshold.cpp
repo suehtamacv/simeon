@@ -508,9 +508,9 @@ void Simulation_PowerRatioThreshold::create_Simulations()
                                               100); // The prt value is in percentage.
 
         //Creates the RMSA Algorithms
-        RoutingAlgorithm::define_RoutingCost(Routing_Cost);
         std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, Routing_Cost,
+                    TopologyCopy);
         std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
             SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
@@ -546,7 +546,7 @@ void Simulation_PowerRatioThreshold::place_Regenerators(
 {
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
-            Routing_Algorithm, T);
+            Routing_Algorithm, Routing_Cost, T);
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
         SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             WavAssign_Algorithm, T);

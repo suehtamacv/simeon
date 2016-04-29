@@ -57,8 +57,8 @@ bool PSR::cHopDistance::Comparator::operator <(const Comparator &other) const
 void PSR::cHopDistance::createCache()
 {
     std::set<Comparator> MinimalDistance;
-    auto R_Alg = std::make_shared<ROUT::Dijkstra_RoutingAlgorithm>
-                 (T, RoutingCost::MH);
+    auto R_Alg = RoutingAlgorithm::create_RoutingAlgorithm(
+                     RoutingAlgorithm::dijkstra, RoutingCost::MH, T);
 
     for (auto &orig : T->Nodes)
         {

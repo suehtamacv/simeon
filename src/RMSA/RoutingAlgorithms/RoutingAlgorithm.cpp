@@ -9,10 +9,6 @@
 
 using namespace RMSA::ROUT;
 
-bool RoutingAlgorithm::hasLoadedRoutingCost = false;
-bool RoutingAlgorithm::hasLoadedRoutingAlg = false;
-RoutingCost::RoutingCosts RoutingAlgorithm::Cost;
-
 RoutingAlgorithm::RoutTypeNameBimap RoutingAlgorithm::RoutingAlgorithmNames =
     boost::assign::list_of<RoutingAlgorithm::RoutTypeNameBimap::relation>
 #define X(a,b,c,d) (a,b)
@@ -29,23 +25,11 @@ RoutingAlgorithm::RoutingAlgorithmNicknames
       ;
 
 RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
-                                   RoutingAlgorithms RoutAlg) :
-    RoutAlg(RoutAlg), T(T)
-{
-    if (!hasLoadedRoutingCost)
-        {
-        Cost = RoutingCost::define_RoutingCost();
-        }
-    RCost = RoutingCost::create_RoutingCost(Cost, T);
-}
-
-RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
                                    RoutingAlgorithms RoutAlg, RoutingCost::RoutingCosts RoutCost) :
     RoutAlg(RoutAlg), T(T)
 {
     Cost = RoutCost;
     RCost = RoutingCost::create_RoutingCost(Cost, T);
-    hasLoadedRoutingCost = true;
 }
 
 void RoutingAlgorithm::save(std::string SimConfigFileName)
@@ -56,9 +40,8 @@ void RoutingAlgorithm::save(std::string SimConfigFileName)
     BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
-    SimConfigFile << "  RoutingAlgorithm = " << RoutingAlgorithmNicknames.left.at(
-                      RoutAlg)
-                  << std::endl;
+    SimConfigFile << "  RoutingAlgorithm = " <<
+                  RoutingAlgorithmNicknames.left.at(RoutAlg) << std::endl;
 }
 
 double RoutingAlgorithm::get_RoutingCost(std::vector<std::weak_ptr<Link>> links,
@@ -76,44 +59,7 @@ double RoutingAlgorithm::get_RoutingCost(std::vector<std::weak_ptr<Link>> links,
 
 void RoutingAlgorithm::load()
 {
-    if (hasLoadedRoutingAlg)
-        {
-        return;
-        }
 
-    std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
-
-    do
-        {
-        for (auto &routing : RoutingAlgorithmNames.left)
-            {
-            std::cout << "(" << routing.first << ")\t" << routing.second << std::endl;
-            }
-
-        int Routing_Alg;
-        std::cin >> Routing_Alg;
-
-        if (std::cin.fail() || RoutingAlgorithmNames.left.count
-                ((RoutingAlgorithms) Routing_Alg) == 0)
-            {
-            std::cin.clear();
-            std::cin.ignore();
-
-            std::cerr << "Invalid routing type." << std::endl;
-            std::cout << std::endl << "-> Choose a routing algorithm." << std::endl;
-            }
-        else
-            {
-            RoutAlg = (RoutingAlgorithms) Routing_Alg;
-            break;
-            }
-        }
-    while (1);
-
-    auto Routing_Cost = RoutingCost::define_RoutingCost();
-    RCost = RoutingCost::create_RoutingCost(Routing_Cost, T);
-
-    hasLoadedRoutingCost = true;
 }
 
 RoutingAlgorithm::RoutingAlgorithms RoutingAlgorithm::define_RoutingAlgorithm()
@@ -150,23 +96,18 @@ RoutingAlgorithm::RoutingAlgorithms RoutingAlgorithm::define_RoutingAlgorithm()
 }
 
 std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
-    RoutingAlgorithms Alg, std::shared_ptr<Topology> T)
+    RoutingAlgorithms Alg, RoutingCost::RoutingCosts Cost,
+    std::shared_ptr<Topology> T)
 {
     std::shared_ptr<RoutingAlgorithm> R_Alg;
 
     switch (Alg)
         {
-#define X(a,b,c,d) case a: R_Alg = std::make_shared<d>(T); break;
+#define X(a,b,c,d) case a: R_Alg = std::make_shared<d>(T,Cost); break;
             ROUTING_ALGORITHM
 #undef X
         }
 
     R_Alg->load();
     return R_Alg;
-}
-
-void RoutingAlgorithm::define_RoutingCost(RoutingCost::RoutingCosts Cost)
-{
-    RoutingAlgorithm::Cost = Cost;
-    hasLoadedRoutingCost = true;
 }

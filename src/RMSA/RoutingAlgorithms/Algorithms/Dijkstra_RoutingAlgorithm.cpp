@@ -7,13 +7,6 @@
 using namespace RMSA::ROUT;
 
 Dijkstra_RoutingAlgorithm::Dijkstra_RoutingAlgorithm
-(std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, dijkstra)
-{
-
-}
-
-Dijkstra_RoutingAlgorithm::Dijkstra_RoutingAlgorithm
 (std::shared_ptr<Topology> T, RoutingCost::RoutingCosts RoutCost) :
     RoutingAlgorithm(T, dijkstra, RoutCost)
 {

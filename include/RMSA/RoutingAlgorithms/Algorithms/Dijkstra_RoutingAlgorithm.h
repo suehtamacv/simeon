@@ -10,7 +10,6 @@ namespace ROUT
 class Dijkstra_RoutingAlgorithm : public RoutingAlgorithm
 {
 public:
-    Dijkstra_RoutingAlgorithm(std::shared_ptr<Topology> T);
     Dijkstra_RoutingAlgorithm(std::shared_ptr<Topology> T,
                               RoutingCost::RoutingCosts RoutCost);
     std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
