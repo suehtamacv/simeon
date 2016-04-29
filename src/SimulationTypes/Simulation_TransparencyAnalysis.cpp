@@ -72,9 +72,9 @@ void Simulation_TransparencyAnalysis::run()
                     }
                 }
 
+            RoutingAlgorithm::define_RoutingCost(RoutingCost::SP);
             auto R_Alg = RMSA::ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
                              RoutingAlgorithm::dijkstra, T);
-            R_Alg->define_RoutingCost(RoutingCost::SP);
             std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
             RoutingWavelengthAssignment RMSA(R_Alg, FF, ModulationScheme::DefaultSchemes,

@@ -13,6 +13,13 @@ Dijkstra_RoutingAlgorithm::Dijkstra_RoutingAlgorithm
 
 }
 
+Dijkstra_RoutingAlgorithm::Dijkstra_RoutingAlgorithm
+(std::shared_ptr<Topology> T, RoutingCost::RoutingCosts RoutCost) :
+    RoutingAlgorithm(T, dijkstra, RoutCost)
+{
+
+}
+
 std::vector<std::vector<std::weak_ptr<Link>>>
 Dijkstra_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {
