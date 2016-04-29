@@ -2,6 +2,7 @@
 #define YEN_ROUTINGALGORITHM_H
 
 #include "../RoutingAlgorithm.h"
+#include "include/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h"
 
 namespace RMSA
 {
@@ -20,7 +21,10 @@ public:
      * @brief kShortestPaths is the number of shortest paths that will be searched
      * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.
      */
-    static int kShortestPaths;
+    static unsigned int kShortestPaths;
+
+private:
+    Dijkstra_RoutingAlgorithm Dijkstra;
 };
 }
 }

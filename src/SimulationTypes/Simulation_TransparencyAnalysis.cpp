@@ -1,6 +1,6 @@
 #include <SimulationTypes/Simulation_TransparencyAnalysis.h>
-#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h>
-#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/Costs/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 #include <RMSA/Route.h>
@@ -73,7 +73,7 @@ void Simulation_TransparencyAnalysis::run()
                 }
 
             auto R_Alg = RMSA::ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
-                             RoutingAlgorithm::dijkstra_alg, T);
+                             RoutingAlgorithm::dijkstra, T);
             R_Alg->define_RoutingCost(RoutingCost::SP);
             std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
@@ -363,7 +363,9 @@ void Simulation_TransparencyAnalysis::print()
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()
 {
-    ShortestPath SP(T);
+    RoutingAlgorithm::define_RoutingCost(RoutingCost::SP);
+    Dijkstra_RoutingAlgorithm R_Alg(T);
+
     double maxLength = -1;
 
     for (auto orig : T->Nodes)
@@ -376,7 +378,7 @@ void Simulation_TransparencyAnalysis::find_OriginDestination()
                 }
 
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-            auto routes = SP.route(DummyCall);
+            auto routes = R_Alg.route(DummyCall);
             double length = 0;
 
             for (auto link : routes.front())

@@ -102,10 +102,10 @@ void Simulation_NetworkLoad::print()
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNicknames.left.at(Routing_Algorithm)
+              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
     std::cout << "-> Routing Cost = " <<
-              RoutingCost::RoutingCostsNicknames.left.at(Routing_Cost)
+              RoutingCost::RoutingCostsNames.left.at(Routing_Cost)
               << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(

@@ -1,10 +1,10 @@
-#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Costs/ShortestPath.h>
 #include <Structure/Link.h>
 
 using namespace RMSA::ROUT;
 
 ShortestPath::ShortestPath(std::shared_ptr<Topology> T) :
-    FixedRoutingCost(T, SP)
+    RoutingCost(T, SP)
 {
 
 }

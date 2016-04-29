@@ -1,12 +1,17 @@
 #include "include/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.h"
+#include "include/Structure/Node.h"
+#include "include/Structure/Link.h"
+#include "include/Structure/Topology.h"
+#include "Calls/Call.h"
+#include <iostream>
 
 using namespace RMSA::ROUT;
-int Yen_RoutingAlgorithm::kShortestPaths = 1;
+unsigned int Yen_RoutingAlgorithm::kShortestPaths = 1;
 
 Yen_RoutingAlgorithm::Yen_RoutingAlgorithm(std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, yen_alg)
+    RoutingAlgorithm(T, yen), Dijkstra(T)
 {
-
+    Dijkstra.RCost = RCost;
 }
 
 void Yen_RoutingAlgorithm::load()
@@ -37,14 +42,14 @@ void Yen_RoutingAlgorithm::load()
 
 void Yen_RoutingAlgorithm::save(std::string name)
 {
-
+    RoutingAlgorithm::save(name);
 }
 
 std::vector<std::vector<std::weak_ptr<Link>>>
 Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {
     std::vector<std::vector<std::weak_ptr<Link>>> RouteLinks;
-    RouteLinks.push_back(dijkstra(C).back());
+    RouteLinks.push_back(Dijkstra.route(C).back());
 
     while (RouteLinks.size() < kShortestPaths)
         {
@@ -89,7 +94,7 @@ Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
                 }
 
             auto dummyC = std::make_shared<Call>(spurNode, C->Destination, C->Bitrate);
-            auto alternativeRoute = dijkstra(dummyC).front();
+            auto alternativeRoute = Dijkstra.route(dummyC).front();
 
             if (!alternativeRoute.empty())
                 {

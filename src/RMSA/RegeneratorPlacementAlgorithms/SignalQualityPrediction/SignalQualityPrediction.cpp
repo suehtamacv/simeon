@@ -149,7 +149,7 @@ void SignalQualityPrediction::evaluateLNMax()
 {
     LNMax.clear();
     auto R_Alg =
-        ROUT::RoutingAlgorithm::create_RoutingAlgorithm(RMSA->R_Alg->Alg, T);
+        ROUT::RoutingAlgorithm::create_RoutingAlgorithm(RMSA->R_Alg->RoutAlg, T);
 
     switch (Type)
         {

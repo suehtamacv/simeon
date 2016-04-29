@@ -24,9 +24,9 @@ class RoutingAlgorithm
 {
 public:
 #define ROUTING_ALGORITHM \
-    X(bellman_ford, "Bellman-Ford Shortest Path Algorithm", "bellman_ford", BellmanFord_RoutingAlgorithm) \
-    X(dijkstra_alg, "Dijkstra Shortest Path Algorithm", "dijkstra_alg", Dijkstra_RoutingAlgorithm) \
-    X(yen_alg, "Yen K-Shortest Path Algorithm", "yen_alg", Yen_RoutingAlgorithm)
+    X(bellmanford, "Bellman-Ford Shortest Path Algorithm", "bellmanford", BellmanFord_RoutingAlgorithm) \
+    X(dijkstra, "Dijkstra Shortest Path Algorithm", "dijkstra", Dijkstra_RoutingAlgorithm) \
+    X(yen, "Yen K-Shortest Path Algorithm", "yen", Yen_RoutingAlgorithm)
 
 #define X(a,b,c,d) a,
     enum RoutingAlgorithms
@@ -62,7 +62,7 @@ public:
     static RoutingCost::RoutingCosts Cost;
     static RoutingAlgorithms Alg;
 
-private:
+protected:
     static bool hasLoadedRoutingCost;
     static bool hasLoadedRoutingAlg;
 

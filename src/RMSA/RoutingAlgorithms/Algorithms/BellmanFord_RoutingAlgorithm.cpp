@@ -1,19 +1,21 @@
 #include "include/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.h"
 #include "include/Structure/Node.h"
 #include "include/Structure/Link.h"
+#include "include/Structure/Topology.h"
+#include "include/Calls/Call.h"
 
 using namespace RMSA::ROUT;
 
 BellmanFord_RoutingAlgorithm::BellmanFord_RoutingAlgorithm(
     std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, bellman_ford)
+    RoutingAlgorithm(T, bellmanford)
 {
 
 }
 
 void BellmanFord_RoutingAlgorithm::save(std::string name)
 {
-
+    RoutingAlgorithm::save(name);
 }
 
 std::vector<std::vector<std::weak_ptr<Link>>>

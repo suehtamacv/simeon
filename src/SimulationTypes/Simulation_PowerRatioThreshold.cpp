@@ -465,6 +465,9 @@ void Simulation_PowerRatioThreshold::print()
     std::cout << "-> Routing Algorithm = " <<
               RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
               << std::endl;
+    std::cout << "-> Routing Cost = " <<
+              RoutingCost::RoutingCostsNames.left.at(Routing_Cost)
+              << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)

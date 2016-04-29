@@ -21,9 +21,27 @@ RoutingCost::RoutAlgNicknameBimap RoutingCost::RoutingCostsNicknames =
 
 RoutingCost::RoutingCost(std::shared_ptr<Topology> T,
                          RoutingCosts RoutCost) :
-    T(T), RoutCost(RoutCost)
+    RoutCost(RoutCost), T(T)
 {
 
+}
+
+void RoutingCost::load()
+{
+
+}
+
+void RoutingCost::save(std::string filename)
+{
+    std::ofstream SimConfigFile(filename,
+                                std::ofstream::out | std::ofstream::app);
+
+    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+
+    SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
+    SimConfigFile << "  RoutingCost = " << RoutingCostsNicknames.left.at(
+                      RoutCost)
+                  << std::endl;
 }
 
 RoutingCost::RoutingCosts RoutingCost::define_RoutingCost()

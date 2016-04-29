@@ -25,6 +25,8 @@ double Simulation_PSROptimization::OptimizationLoad;
 std::vector<std::shared_ptr<Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
 PowerSeriesRouting::Variants Simulation_PSROptimization::Fitness::Variant;
+ROUT::RoutingAlgorithm::RoutingAlgorithms
+Simulation_PSROptimization::Routing_Algorithm;
 SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
@@ -532,6 +534,9 @@ void Simulation_PSROptimization::print()
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
+    std::cout << "-> Routing Algorithm = " <<
+              ROUT::RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
+              << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)

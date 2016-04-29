@@ -1,10 +1,10 @@
-#include <RMSA/RoutingAlgorithms/Costs/StaticRouting/MinimumHops.h>
+#include <RMSA/RoutingAlgorithms/Costs/MinimumHops.h>
 #include <Structure/Link.h>
 
 using namespace RMSA::ROUT;
 
 MinimumHops::MinimumHops(std::shared_ptr<Topology> T) :
-    FixedRoutingCost(T, MH)
+    RoutingCost(T, MH)
 {
 
 }

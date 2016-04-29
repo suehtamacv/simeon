@@ -2,7 +2,7 @@
 
 namespace Simulations
 {
-bool parallelism_enabled = true;
+bool parallelism_enabled = false;
 }
 
 bool considerAseNoise = false;

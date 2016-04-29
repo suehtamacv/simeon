@@ -2,6 +2,7 @@
 #include <set>
 #include <Calls/Call.h>
 #include <GeneralClasses/TransmissionBitrate.h>
+#include <RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h>
 #include <RMSA/RoutingAlgorithms/Costs/MinimumHops.h>
 #include <Structure/Link.h>
 #include <Structure/Topology.h>
@@ -56,7 +57,8 @@ bool PSR::cHopDistance::Comparator::operator <(const Comparator &other) const
 void PSR::cHopDistance::createCache()
 {
     std::set<Comparator> MinimalDistance;
-    auto MH = std::make_shared<MinimumHops>(T);
+    auto R_Alg = std::make_shared<ROUT::Dijkstra_RoutingAlgorithm>(T);
+    R_Alg->define_RoutingCost(RoutingCost::MH);
 
     for (auto &orig : T->Nodes)
         {
@@ -69,7 +71,7 @@ void PSR::cHopDistance::createCache()
 
             auto DummyCall = std::make_shared<Call>
                              (orig, dest, TransmissionBitrate::DefaultBitrates.front());
-            auto Links = MH->route(DummyCall).front();
+            auto Links = R_Alg->route(DummyCall).front();
             double RouteLength = 0;
 
             for (auto &link : Links)

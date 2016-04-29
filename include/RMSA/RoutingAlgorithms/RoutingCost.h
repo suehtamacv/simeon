@@ -47,9 +47,10 @@ public:
     static std::shared_ptr<RoutingCost> create_RoutingCost(RoutingCosts,
             std::shared_ptr<Topology>);
 
+    RoutingCosts RoutCost;
+
 protected:
     std::shared_ptr<Topology> T;
-    RoutingCosts RoutCost;
 };
 }
 }

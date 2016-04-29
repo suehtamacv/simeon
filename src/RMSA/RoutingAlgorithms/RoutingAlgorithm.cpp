@@ -10,6 +10,7 @@
 using namespace RMSA::ROUT;
 
 bool RoutingAlgorithm::hasLoadedRoutingCost = false;
+bool RoutingAlgorithm::hasLoadedRoutingAlg = false;
 RoutingCost::RoutingCosts RoutingAlgorithm::Cost;
 
 RoutingAlgorithm::RoutTypeNameBimap RoutingAlgorithm::RoutingAlgorithmNames =

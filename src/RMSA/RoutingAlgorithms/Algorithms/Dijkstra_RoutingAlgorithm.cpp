@@ -2,12 +2,13 @@
 #include "include/Structure/Node.h"
 #include "include/Structure/Link.h"
 #include "include/Structure/Topology.h"
+#include "Calls/Call.h"
 
 using namespace RMSA::ROUT;
 
 Dijkstra_RoutingAlgorithm::Dijkstra_RoutingAlgorithm
 (std::shared_ptr<Topology> T) :
-    RoutingAlgorithm(T, dijkstra_alg)
+    RoutingAlgorithm(T, dijkstra)
 {
 
 }
@@ -113,5 +114,5 @@ Dijkstra_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 
 void Dijkstra_RoutingAlgorithm::save(std::string name)
 {
-
+    RoutingAlgorithm::save(name);
 }
