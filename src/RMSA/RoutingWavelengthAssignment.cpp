@@ -75,9 +75,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
                 continue;
                 }
-            std::vector<std::weak_ptr<Slot>> tempSlots;
-            for(auto &it : SegmentSlots.begin()->second)
-                tempSlots.push_back(it);
+            std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
 
             Signal S(requiredSlots);
             S = Segment.bypass(S); // COMENT. AUX.: VECTOR DE SPEC TEMPORÁRIO??
