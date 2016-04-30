@@ -97,7 +97,9 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
         }
     else
         {
-        Links = R_Alg->route(C);
+        Links = R_Alg->route(C);        
+
+        RA_Alg->thisWA = WA_Alg;
 
         if (Links.empty())
             {

@@ -4,6 +4,7 @@
 #include <memory>
 #include <boost/bimap.hpp>
 #include <GeneralClasses/ModulationScheme.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
 
 class Topology;
 class Call;
@@ -165,6 +166,8 @@ public:
      * @brief save saves the loaded parameters on a file.
      */
     virtual void save(std::string) = 0;
+
+    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> thisWA;
 private:
     std::vector<std::weak_ptr<Link>> segmentLinks(
                                       std::vector<std::weak_ptr<Link>>Links,
