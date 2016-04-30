@@ -111,6 +111,8 @@ bool PowerSeriesRouting::initCoefficients(std::vector<double> X)
         coefficients(0, it++) = x;
         }
 
+    hasLoaded = true;
+
     return true;
 }
 
@@ -221,6 +223,8 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
             it++;
             }
         }
+
+    hasLoaded = true;
 
     return true;
 }

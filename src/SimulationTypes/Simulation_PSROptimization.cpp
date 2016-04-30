@@ -590,8 +590,7 @@ double Simulation_PSROptimization::Fitness::operator()(
 
     //Creates the RMSA Algorithms
     auto R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm,
-                 ROUT::RoutingCost::matPSR,
-                 TopologyCopy); //first with Matricial PSR. Changes later.
+                 ROUT::RoutingCost::matPSR, TopologyCopy, false); //first with Matricial PSR. Changes later.
     auto RCost = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
 
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =

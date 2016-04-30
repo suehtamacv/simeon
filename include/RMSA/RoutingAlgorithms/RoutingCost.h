@@ -45,7 +45,7 @@ public:
 
     static RoutingCosts define_RoutingCost();
     static std::shared_ptr<RoutingCost> create_RoutingCost(RoutingCosts,
-            std::shared_ptr<Topology>);
+            std::shared_ptr<Topology>, bool runLoad = true);
 
     RoutingCosts RoutCost;
 

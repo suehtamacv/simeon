@@ -7,16 +7,23 @@
 
 using namespace RMSA::ROUT;
 unsigned int Yen_RoutingAlgorithm::kShortestPaths = 1;
+bool Yen_RoutingAlgorithm::hasLoaded = false;
 
 Yen_RoutingAlgorithm::Yen_RoutingAlgorithm(std::shared_ptr<Topology> T,
-        RoutingCost::RoutingCosts Cost) :
-    RoutingAlgorithm(T, yen, Cost)
+        RoutingCost::RoutingCosts Cost, bool runLoad) :
+    RoutingAlgorithm(T, yen, Cost, runLoad)
 {
     Dijkstra = create_RoutingAlgorithm(dijkstra, Cost, T);
 }
 
 void Yen_RoutingAlgorithm::load()
 {
+    if (hasLoaded)
+        {
+        return;
+        }
+    hasLoaded = true;
+
     std::cout << std::endl << "-> Define the number k of paths to Yen algorithm."
               << std::endl;
 
@@ -49,6 +56,11 @@ void Yen_RoutingAlgorithm::save(std::string name)
 std::vector<std::vector<std::weak_ptr<Link>>>
 Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {
+    if (!hasLoaded)
+        {
+        load();
+        }
+
     std::vector<std::vector<std::weak_ptr<Link>>> RouteLinks;
     RouteLinks.push_back(Dijkstra->route(C).back());
 

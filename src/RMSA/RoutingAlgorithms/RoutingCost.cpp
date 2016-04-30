@@ -78,7 +78,7 @@ RoutingCost::RoutingCosts RoutingCost::define_RoutingCost()
 }
 
 std::shared_ptr<RoutingCost> RoutingCost::create_RoutingCost(
-    RoutingCosts Cost, std::shared_ptr<Topology> T)
+    RoutingCosts Cost, std::shared_ptr<Topology> T, bool runLoad)
 {
     std::shared_ptr<RoutingCost> R_Cost;
 
@@ -89,6 +89,9 @@ std::shared_ptr<RoutingCost> RoutingCost::create_RoutingCost(
 #undef X
         }
 
-    R_Cost->load();
+    if (runLoad)
+        {
+        R_Cost->load();
+        }
     return R_Cost;
 }

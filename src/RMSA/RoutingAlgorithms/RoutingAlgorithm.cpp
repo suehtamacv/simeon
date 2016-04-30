@@ -25,11 +25,13 @@ RoutingAlgorithm::RoutingAlgorithmNicknames
       ;
 
 RoutingAlgorithm::RoutingAlgorithm(std::shared_ptr<Topology> T,
-                                   RoutingAlgorithms RoutAlg, RoutingCost::RoutingCosts RoutCost) :
+                                   RoutingAlgorithms RoutAlg,
+                                   RoutingCost::RoutingCosts RoutCost,
+                                   bool runLoad) :
     RoutAlg(RoutAlg), T(T)
 {
     Cost = RoutCost;
-    RCost = RoutingCost::create_RoutingCost(Cost, T);
+    RCost = RoutingCost::create_RoutingCost(Cost, T, runLoad);
 }
 
 void RoutingAlgorithm::save(std::string SimConfigFileName)
@@ -97,17 +99,20 @@ RoutingAlgorithm::RoutingAlgorithms RoutingAlgorithm::define_RoutingAlgorithm()
 
 std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
     RoutingAlgorithms Alg, RoutingCost::RoutingCosts Cost,
-    std::shared_ptr<Topology> T)
+    std::shared_ptr<Topology> Top, bool runLoad)
 {
     std::shared_ptr<RoutingAlgorithm> R_Alg;
 
     switch (Alg)
         {
-#define X(a,b,c,d) case a: R_Alg = std::make_shared<d>(T,Cost); break;
+#define X(a,b,c,d) case a: R_Alg = std::make_shared<d>(Top, Cost, runLoad); break;
             ROUTING_ALGORITHM
 #undef X
         }
 
-    R_Alg->load();
+    if (runLoad)
+        {
+        R_Alg->load();
+        }
     return R_Alg;
 }

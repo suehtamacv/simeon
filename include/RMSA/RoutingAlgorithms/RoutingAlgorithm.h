@@ -44,11 +44,12 @@ public:
     std::shared_ptr<RoutingCost> RCost;
 
     RoutingAlgorithm(std::shared_ptr<Topology> T, RoutingAlgorithms RoutAlg,
-                     RoutingCost::RoutingCosts RoutCost);
+                     RoutingCost::RoutingCosts RoutCost, bool runLoad = true);
 
     static RoutingAlgorithms define_RoutingAlgorithm();
     static std::shared_ptr<RoutingAlgorithm> create_RoutingAlgorithm(
-        RoutingAlgorithms, RoutingCost::RoutingCosts, std::shared_ptr<Topology>);
+        RoutingAlgorithms, RoutingCost::RoutingCosts, std::shared_ptr<Topology>,
+            bool runLoad = true);
     virtual void load() = 0;
     virtual void save(std::string) = 0;
 

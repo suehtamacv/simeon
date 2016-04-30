@@ -110,6 +110,11 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
                 continue;
                 }
             }
+
+        if (!Slots.empty())
+            {
+            break;
+            }
         }
 
     if (C->Status == Call::Not_Evaluated)

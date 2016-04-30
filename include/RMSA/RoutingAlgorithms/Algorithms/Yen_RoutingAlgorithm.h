@@ -12,7 +12,8 @@ class Yen_RoutingAlgorithm : public RoutingAlgorithm
 {
 public:
     Yen_RoutingAlgorithm(std::shared_ptr<Topology> T,
-                         RoutingCost::RoutingCosts Cost);
+                         RoutingCost::RoutingCosts Cost,
+                         bool runLoad);
     std::vector<std::vector<std::weak_ptr<Link>>> route(std::shared_ptr<Call> C);
 
     void load();
@@ -23,6 +24,7 @@ public:
      * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.
      */
     static unsigned int kShortestPaths;
+    static bool hasLoaded;
 
 private:
     std::shared_ptr<RoutingAlgorithm> Dijkstra;
