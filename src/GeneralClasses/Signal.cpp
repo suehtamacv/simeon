@@ -23,6 +23,20 @@ Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
         }
 }
 
+Signal::Signal(std::vector<std::weak_ptr<Slot>> occupiedSlots) : occupiedSlots(occupiedSlots),
+    SignalPower(InputPower),
+    NoisePower(InputPower * -InputOSNR)
+{
+    numSlots = occupiedSlots.size();
+    if(considerFilterImperfection)
+        {
+        frequencyRange = numSlots * Slot::BSlot / 2;
+        signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
+                            frequencyRange, PhysicalConstants::freq + frequencyRange,
+                            (int) Slot::numFrequencySamplesPerSlot * numSlots);
+        }
+}
+
 Signal &Signal::operator *=(Gain &G)
 {
     SignalPower *= G;

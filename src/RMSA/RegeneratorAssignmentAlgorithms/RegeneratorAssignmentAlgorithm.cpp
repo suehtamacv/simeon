@@ -77,7 +77,11 @@ bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
 {
 
     TransparentSegment Segment(segmentLinks(Links, start, end), scheme, 0);
-    Signal S = Segment.bypass(Signal());
+
+    auto SegmentSlots = thisWA->assignSlots(C, Segment);
+    std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
+
+    Signal S = Segment.bypass(Signal(testSlots));
 
     return ((!considerAseNoise ||
              S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
@@ -92,7 +96,11 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
 {
 
     TransparentSegment Segment(SegmentLinks, ModulationSchemes.front(), 0);
-    Signal S = Segment.bypass(Signal());
+
+    auto SegmentSlots = thisWA->assignSlots(C, Segment);
+    std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
+
+    Signal S = Segment.bypass(Signal(testSlots));
 
     std::sort(ModulationSchemes.rbegin(), ModulationSchemes.rend());
 

@@ -3,6 +3,7 @@
 
 #include <GeneralClasses/Power.h>
 #include <GeneralClasses/SpectralDensity.h>
+#include <Structure/Slot.h>
 #include <vector>
 #include <memory>
 #include <map>
@@ -31,6 +32,8 @@ public:
      * with power InputPower and OSNR InputOSNR.
      */
     Signal(unsigned int numSlots = 1);
+
+    Signal(std::vector<std::weak_ptr<Slot>>);
     /**
      * @brief operator *= multiplies the Signal by a gain, effectively rescaling
      * both the signal and the noise.
@@ -75,6 +78,8 @@ public:
      * @brief frequencyRange is half of the signal's bandwith.
      */
     double frequencyRange;
+
+    std::vector<std::weak_ptr<Slot>> occupiedSlots;
 
 private:
     Power SignalPower;
