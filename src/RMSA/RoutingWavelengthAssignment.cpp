@@ -62,30 +62,31 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
             int requiredSlots = scheme.get_NumSlots(C->Bitrate);
             TransparentSegment Segment(Links, scheme, 0);
+
+            Segments.push_back(Segment);
+            auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
+            if (SegmentSlots.empty())
+                {
+                if (scheme == Schemes.back())
+                    {
+                    C->Status = Call::Blocked;
+                    return nullptr;
+                    }
+
+                continue;
+                }
+            std::vector<std::weak_ptr<Slot>> tempSlots;
+            for(auto &it : SegmentSlots.begin()->second)
+                tempSlots.push_back(it);
+
             Signal S(requiredSlots);
             S = Segment.bypass(S); // COMENT. AUX.: VECTOR DE SPEC TEMPORÁRIO??
 
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
-                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold())) // COMENT. AUX: PROVAVELMENTE REMOVER ESSE TESTE DE FILTER IMPER.
+                     S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                 {
-                Segments.push_back(Segment);
-                auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
-
-                if (SegmentSlots.empty())
-                    {
-                    if (scheme == Schemes.back())
-                        {
-                        C->Status = Call::Blocked;
-                        return nullptr;
-                        }
-
-                    continue;
-                    }
-
-                // COMENT. AUX.: FAZER COISAS AQUI, COLOCAR O TESTE DE FILTER IMPERFECT., USAR OS SLOTS...
-
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 break;
                 }
