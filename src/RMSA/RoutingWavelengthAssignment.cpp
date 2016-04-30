@@ -60,7 +60,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                 return nullptr;
                 }
 
-            int requiredSlots = scheme.get_NumSlots(C->Bitrate);
+            //int requiredSlots = scheme.get_NumSlots(C->Bitrate); // COMENT. AUX.: Remover depois de tudo.
             TransparentSegment Segment(Links, scheme, 0);
 
             Segments.push_back(Segment);
@@ -78,7 +78,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
 
             Signal S(testSlots);
-            S = Segment.bypass(S); // COMENT. AUX.: VECTOR DE SPEC TEMPORÁRIO??
+            S = Segment.bypass(S);
 
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&

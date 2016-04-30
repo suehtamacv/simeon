@@ -27,3 +27,8 @@ Power LinkSpectralDensity::get_TransmitedPower(double frequencyRange)
                                          frequencyRange * 2).calculate() * originSD.densityScaling, Power::Watt);
     return tPower;
 }
+
+void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,std::vector<std::weak_ptr<Slot>> Slots)
+{
+
+}

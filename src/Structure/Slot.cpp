@@ -37,6 +37,9 @@ void Slot::useSlot()
     BOOST_ASSERT_MSG(isFree, "Only free slots can be used.");
     isFree = false;
 
+
+
+    /*
     for(unsigned int i = 0; i <= (unsigned int) numFrequencySamplesPerSlot - 1; i++)
         {
         double freqVal = frequencyValues.at(i);
@@ -44,6 +47,7 @@ void Slot::useSlot()
                                         PhysicalConstants::freq) / SpectralDensity::SBW_3dB,
                                         2 * SpectralDensity::TxFilterOrder));
         }
+    */
 }
 
 Slot::Slot(const Slot &slot)

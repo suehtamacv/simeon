@@ -81,6 +81,10 @@ public:
 
     std::vector<std::weak_ptr<Slot>> occupiedSlots;
 
+    /**
+     * @brief signalSpecDensity is the signal's spectral density.
+     */
+    std::shared_ptr<SpectralDensity> signalSpecDensity;
 private:
     Power SignalPower;
     Power NoisePower;
@@ -88,10 +92,6 @@ private:
      * @brief originalSpecDensityCache is a map with the spectral density power of a signal, given a number of slots.
      */
     std::map<int, Power> originalSpecDensityCache ;
-    /**
-     * @brief signalSpecDensity is the signal's spectral density.
-     */
-    std::shared_ptr<SpectralDensity> signalSpecDensity;
     /**
      * @brief X is this signal's crosstalk interference.
      */

@@ -14,11 +14,11 @@ public:
     LinkSpectralDensity(std::vector<std::shared_ptr<Slot>>);
 
     std::vector<std::shared_ptr<Slot>> LinkSlots;
-    LinkSpectralDensity &operator *=(TF::TransferFunction &); // TO DO
 
     Power get_SpectralPower(); // TO DO
     Power get_TransmitedPower(double);
 
+    void updateLink(SpectralDensity, std::vector<std::weak_ptr<Slot>>);
 
     std::vector<std::shared_ptr<SpectralDensity>> S;    
 
