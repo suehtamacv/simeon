@@ -1,5 +1,6 @@
 #include <SimulationTypes/Simulation_TransparencyAnalysis.h>
-#include <RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Costs/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 #include <RMSA/Route.h>
@@ -71,14 +72,15 @@ void Simulation_TransparencyAnalysis::run()
                     }
                 }
 
-            std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
+            auto SP = RMSA::ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
+                          RoutingAlgorithm::dijkstra, RoutingCost::SP, TopCopy);
             std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
             RoutingWavelengthAssignment RMSA(SP, FF, ModulationScheme::DefaultSchemes,
                                              TopCopy);
             std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
 
-            if (RMSA.routeCall(C) != nullptr)
+            if (!RMSA.routeCall(C)->Slots.empty())
                 {
                 TransparentPoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
                 }
@@ -360,7 +362,9 @@ void Simulation_TransparencyAnalysis::print()
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()
 {
-    ShortestPath SP(T);
+    auto R_Alg = RoutingAlgorithm::create_RoutingAlgorithm(
+                     RoutingAlgorithm::dijkstra, RoutingCost::SP, T);
+
     double maxLength = -1;
 
     for (auto orig : T->Nodes)
@@ -373,10 +377,10 @@ void Simulation_TransparencyAnalysis::find_OriginDestination()
                 }
 
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-            auto routes = SP.route(DummyCall);
+            auto route = R_Alg->route(DummyCall).front();
             double length = 0;
 
-            for (auto link : routes.front())
+            for (auto link : route)
                 {
                 length += link.lock()->Length;
                 }

@@ -32,6 +32,9 @@ SOURCES += src/main.cpp \
     src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
     src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
     src/GeneralClasses/TransmissionBitrate.cpp \
+    src/GeneralPurposeAlgorithms/GA/GA.cpp \
+    src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
+    src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
@@ -58,31 +61,34 @@ SOURCES += src/main.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.cpp \
     src/RMSA/Route.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.cpp \
-    src/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.cpp \
-    src/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_LinkLength.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.cpp \
+    src/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.cpp \
+    src/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.cpp \
+    src/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/LengthOccupationRoutingAvailability.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/LengthOccupationRoutingContiguity.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/MinimumHops.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Availability.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Bitrate.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Contiguity.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Distance.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_HopDistance.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_LinkLength.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Noise.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_OrigDestIndex.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Slots.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/ShortestPath.cpp \
     src/RMSA/RoutingAlgorithms/RoutingAlgorithm.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.cpp \
-    src/RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.cpp \
+    src/RMSA/RoutingAlgorithms/RoutingCost.cpp \
     src/RMSA/RoutingWavelengthAssignment.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/BestFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/ExactFit.cpp \
@@ -104,10 +110,7 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp \
-    src/SimulationTypes/Simulation_PowerRatioThreshold.cpp \
-    src/GeneralPurposeAlgorithms/GA/GA.cpp \
-    src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
-    src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp
+    src/SimulationTypes/Simulation_PowerRatioThreshold.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -137,6 +140,9 @@ HEADERS += \
     include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
     include/GeneralClasses/TransferFunctions/TransferFunction.h \
     include/GeneralClasses/TransmissionBitrate.h \
+    include/GeneralPurposeAlgorithms/GA/GA.h \
+    include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
+    include/GeneralPurposeAlgorithms/GA/GA_Individual.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
@@ -172,33 +178,37 @@ HEADERS += \
     include/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SQP_NetworkSimulation.h \
     include/RMSA/Route.h \
     include/RMSA/RoutingAlgorithms.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/FixedRoutingAlgorithm.h \
-    include/RMSA/RoutingAlgorithms/LengthOccupationRoutingAvailability.h \
-    include/RMSA/RoutingAlgorithms/LengthOccupationRoutingContiguity.h \
+    include/RMSA/RoutingCosts.h \
     include/RMSA/RoutingAlgorithms/RoutingAlgorithm.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Availability.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Bitrate.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Contiguity.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Distance.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_HopDistance.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_LinkLength.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/MinimumHops.h \
-    include/RMSA/RoutingAlgorithms/StaticRouting/ShortestPath.h \
+    include/RMSA/RoutingAlgorithms/RoutingCost.h \
+    include/RMSA/RoutingAlgorithms/Algorithms/BellmanFord_RoutingAlgorithm.h \
+    include/RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h \
+    include/RMSA/RoutingAlgorithms/Algorithms/Yen_RoutingAlgorithm.h \
+    include/RMSA/RoutingAlgorithms/Costs/LengthOccupationRoutingAvailability.h \
+    include/RMSA/RoutingAlgorithms/Costs/LengthOccupationRoutingContiguity.h \
+    include/RMSA/RoutingAlgorithms/Costs/MinimumHops.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/AdaptativeWeighingRouting.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/LocalPowerSeriesRouting.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/MatricialPowerSeriesRouting.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants/TensorialPowerSeriesRouting.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Availability.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Bitrate.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Contiguity.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Distance.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_HopDistance.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_LinkLength.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Noise.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Occupability.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Slots.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.h \
+    include/RMSA/RoutingAlgorithms/Costs/ShortestPath.h \
     include/RMSA/RoutingWavelengthAssignment.h \
     include/RMSA/SpectrumAssignmentAlgorithms.h \
     include/RMSA/SpectrumAssignmentAlgorithms/BestFit.h \
@@ -223,10 +233,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h \
-    include/SimulationTypes/Simulation_PowerRatioThreshold.h \
-    include/GeneralPurposeAlgorithms/GA/GA.h \
-    include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
-    include/GeneralPurposeAlgorithms/GA/GA_Individual.h
+    include/SimulationTypes/Simulation_PowerRatioThreshold.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 

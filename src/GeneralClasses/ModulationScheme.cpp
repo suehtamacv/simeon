@@ -41,17 +41,17 @@ Gain ModulationScheme::get_SNR_Per_Bit() const
 
 bool ModulationScheme::operator <(const ModulationScheme &scheme) const
 {
-    return (M < scheme.get_M());
+    return (M < scheme.M);
 }
 
 bool ModulationScheme::operator >(const ModulationScheme &scheme) const
 {
-    return (M > scheme.get_M());
+    return (M > scheme.M);
 }
 
 bool ModulationScheme::operator ==(const ModulationScheme &scheme) const
 {
-    return ((M == scheme.get_M()) && (SNR_Per_Bit == scheme.get_SNR_Per_Bit()));
+    return (M == scheme.M);
 }
 
 Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate) const

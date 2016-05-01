@@ -241,6 +241,7 @@ void Simulation_NSGA2_RegnPlac::load()
     //RMSA Algorithms
         {
         //Routing Algorithm
+        Routing_Cost = RoutingCost::define_RoutingCost();
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
         //Wavelength Assignment Algorithm

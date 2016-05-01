@@ -43,7 +43,7 @@ void Simulation_PowerRatioThreshold::help()
 void Simulation_PowerRatioThreshold::run()
 {
     if(considerFilterImperfection)
-    {
+        {
         if (!hasLoaded)
             {
             load();
@@ -66,13 +66,13 @@ void Simulation_PowerRatioThreshold::run()
 
             #pragma omp ordered
                 {
-                std::cout << simulations[i]->RMSA->T->get_PowerRatioThreshold()<< "\t\t\t"
-                        << simulations[i]->get_CallBlockingProbability() << std::endl;
+                std::cout << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
+                          << simulations[i]->get_CallBlockingProbability() << std::endl;
                 OutFile << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
                         << simulations[i]->get_CallBlockingProbability() << std::endl;
                 }
             }
-    }
+        }
     // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
     save(ConfigFileName);
@@ -82,7 +82,8 @@ void Simulation_PowerRatioThreshold::load()
 {
     SimulationType::load();
 
-    BOOST_ASSERT_MSG(considerFilterImperfection, "Filter Imperfection Impairment not selected.");
+    BOOST_ASSERT_MSG(considerFilterImperfection,
+                     "Filter Imperfection Impairment not selected.");
 
     std::cout << std::endl << "-> Choose a network type." << std::endl;
 
@@ -120,6 +121,9 @@ void Simulation_PowerRatioThreshold::load()
         {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
+
+        //Routing Cost
+        Routing_Cost = RoutingCost::define_RoutingCost();
 
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
@@ -181,19 +185,22 @@ void Simulation_PowerRatioThreshold::load()
         }
     while (1);
 
-    std::cout << std::endl << "-> Define the minimum power ratio threshold (%)." << std::endl;
+    std::cout << std::endl << "-> Define the minimum power ratio threshold (%)." <<
+              std::endl;
 
     do
         {
         std::cin >> PowerRatioThresholdMin;
 
-        if (std::cin.fail() || PowerRatioThresholdMin < 0 || PowerRatioThresholdMin >= 1.0*100)
+        if (std::cin.fail() || PowerRatioThresholdMin < 0 ||
+                PowerRatioThresholdMin >= 1.0 * 100)
             {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid power ratio threshold." << std::endl;
-            std::cout << std::endl << "-> Define the minimum power ratio threshold (%)." << std::endl;
+            std::cout << std::endl << "-> Define the minimum power ratio threshold (%)." <<
+                      std::endl;
             }
         else
             {
@@ -202,19 +209,22 @@ void Simulation_PowerRatioThreshold::load()
         }
     while (1);
 
-    std::cout << std::endl << "-> Define the maximum power ratio threshold (%)." << std::endl;
+    std::cout << std::endl << "-> Define the maximum power ratio threshold (%)." <<
+              std::endl;
 
     do
         {
         std::cin >> PowerRatioThresholdMax;
 
-        if (std::cin.fail() || PowerRatioThresholdMax < PowerRatioThresholdMin || PowerRatioThresholdMax > 1.0*100)
+        if (std::cin.fail() || PowerRatioThresholdMax < PowerRatioThresholdMin ||
+                PowerRatioThresholdMax > 1.0 * 100)
             {
             std::cin.clear();
             std::cin.ignore();
 
             std::cerr << "Invalid power ratio threshold." << std::endl;
-            std::cout << std::endl << "-> Define the maximum power ratio threshold (%)." << std::endl;
+            std::cout << std::endl << "-> Define the maximum power ratio threshold (%)." <<
+                      std::endl;
             }
         else
             {
@@ -223,7 +233,8 @@ void Simulation_PowerRatioThreshold::load()
         }
     while (1);
 
-    std::cout << std::endl << "-> Define the power ratio threshold step (%)." << std::endl;
+    std::cout << std::endl << "-> Define the power ratio threshold step (%)." <<
+              std::endl;
 
     do
         {
@@ -235,7 +246,8 @@ void Simulation_PowerRatioThreshold::load()
             std::cin.ignore();
 
             std::cerr << "Invalid power ratio threshold." << std::endl;
-            std::cout << std::endl << "-> Define the power ratio threshold step (%)." << std::endl;
+            std::cout << std::endl << "-> Define the power ratio threshold step (%)." <<
+                      std::endl;
             }
         else
             {
@@ -304,9 +316,12 @@ void Simulation_PowerRatioThreshold::save(std::string SimConfigFileName)
     SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
     SimConfigFile << "  NetworkLoad = " << NetworkLoad << std::endl;
-    SimConfigFile << "  PowerRatioThresholdMin = " << PowerRatioThresholdMin << std::endl;
-    SimConfigFile << "  PowerRatioThresholdMax= " << PowerRatioThresholdMax << std::endl;
-    SimConfigFile << "  PowerRatioThresholdStep = " << PowerRatioThresholdStep << std::endl;
+    SimConfigFile << "  PowerRatioThresholdMin = " << PowerRatioThresholdMin <<
+                  std::endl;
+    SimConfigFile << "  PowerRatioThresholdMax= " << PowerRatioThresholdMax <<
+                  std::endl;
+    SimConfigFile << "  PowerRatioThresholdStep = " << PowerRatioThresholdStep <<
+                  std::endl;
 
     if(Type == TranslucentNetwork)
         {
@@ -385,9 +400,12 @@ void Simulation_PowerRatioThreshold::load_file(std::string ConfigFileName)
         }
     NumCalls = VariablesMap["sim_info.NumCalls"].as<long double>();
     NetworkLoad = VariablesMap["sim_info.NetworkLoad"].as<long double>();
-    PowerRatioThresholdMin = VariablesMap["sim_info.PowerRatioThresholdMin"].as<long double>();
-    PowerRatioThresholdMax = VariablesMap["sim_info.PowerRatioThresholdMax"].as<long double>();
-    PowerRatioThresholdStep = VariablesMap["sim_info.PowerRatioThresholdStep"].as<long double>();
+    PowerRatioThresholdMin =
+        VariablesMap["sim_info.PowerRatioThresholdMin"].as<long double>();
+    PowerRatioThresholdMax =
+        VariablesMap["sim_info.PowerRatioThresholdMax"].as<long double>();
+    PowerRatioThresholdStep =
+        VariablesMap["sim_info.PowerRatioThresholdStep"].as<long double>();
 
     std::cout << std::endl << "-> Define the file where to store the results."
               << std::endl;
@@ -444,9 +462,8 @@ void Simulation_PowerRatioThreshold::print()
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
-    std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
-              << std::endl;
+    simulations.front()->RMSA->R_Alg->print();
+    simulations.front()->RMSA->R_Alg->RCost->print();
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
@@ -462,9 +479,12 @@ void Simulation_PowerRatioThreshold::print()
         }
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << NetworkLoad << std::endl;
-    std::cout << "-> Minimum Power Ratio Threshold (%) = " << PowerRatioThresholdMin << std::endl;
-    std::cout << "-> Maximum Power Ratio Threshold (%) = " << PowerRatioThresholdMax << std::endl;
-    std::cout << "-> Power Ratio Threshold Step (%) = " << PowerRatioThresholdStep << std::endl;
+    std::cout << "-> Minimum Power Ratio Threshold (%) = " << PowerRatioThresholdMin
+              << std::endl;
+    std::cout << "-> Maximum Power Ratio Threshold (%) = " << PowerRatioThresholdMax
+              << std::endl;
+    std::cout << "-> Power Ratio Threshold Step (%) = " << PowerRatioThresholdStep
+              << std::endl;
 }
 
 void Simulation_PowerRatioThreshold::create_Simulations()
@@ -480,11 +500,13 @@ void Simulation_PowerRatioThreshold::create_Simulations()
 
         //Creates a copy of the topology.
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
-        TopologyCopy->set_PowerRatioThreshold(1.0*prt/100); // The prt value is in percentage.
+        TopologyCopy->set_PowerRatioThreshold(1.0 * prt /
+                                              100); // The prt value is in percentage.
 
         //Creates the RMSA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, Routing_Cost,
+                    TopologyCopy);
         std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
             SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
@@ -501,7 +523,8 @@ void Simulation_PowerRatioThreshold::create_Simulations()
             }
 
         //Creates the Call Generator and the RMSA Object
-        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy, NetworkLoad));
+        std::shared_ptr<CallGenerator> Generator(new CallGenerator(TopologyCopy,
+                NetworkLoad));
         std::shared_ptr<RoutingWavelengthAssignment> RMSA(
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy));
@@ -514,11 +537,12 @@ void Simulation_PowerRatioThreshold::create_Simulations()
         }
 }
 
-void Simulation_PowerRatioThreshold::place_Regenerators(std::shared_ptr<Topology> T)
+void Simulation_PowerRatioThreshold::place_Regenerators(
+    std::shared_ptr<Topology> T)
 {
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
-            Routing_Algorithm, T);
+            Routing_Algorithm, Routing_Cost, T);
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
         SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             WavAssign_Algorithm, T);

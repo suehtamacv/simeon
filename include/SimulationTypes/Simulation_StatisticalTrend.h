@@ -47,6 +47,7 @@ private:
     std::string FileName;
 
     ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    ROUT::RoutingCost::RoutingCosts Routing_Cost;
     SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms

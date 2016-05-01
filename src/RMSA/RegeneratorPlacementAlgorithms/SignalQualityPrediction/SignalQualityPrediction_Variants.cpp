@@ -1,5 +1,5 @@
 #include "include/RMSA/RegeneratorPlacementAlgorithms/SignalQualityPrediction/SignalQualityPrediction_Variants.h"
-#include "RMSA/RoutingAlgorithms.h"
+#include "RMSA/RoutingCosts.h"
 #include <Calls/Call.h>
 #include <Structure/Topology.h>
 #include <Structure/Link.h>
@@ -76,20 +76,6 @@ void SignalQualityPrediction_Variants::chooseSQPVariant()
 
 void SignalQualityPrediction_Variants::evaluateLNMax()
 {
-    std::shared_ptr<ROUT::FixedRoutingAlgorithm> RAlg;
-
-    //Choose adequate Routing Algorithm
-    switch (Type)
-        {
-        case HopsNumber:
-            RAlg = std::make_shared<ROUT::MinimumHops>(T);
-            break;
-
-        case Distance:
-            RAlg = std::make_shared<ROUT::ShortestPath>(T);
-            break;
-        }
-
     auto Schemes = ModulationScheme::DefaultSchemes;
     ModulationScheme scheme = *(Schemes.rbegin());
 

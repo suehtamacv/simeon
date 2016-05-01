@@ -81,6 +81,9 @@ void Simulation_RegeneratorNumber::load()
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
+        //Routing Cost
+        Routing_Cost = RoutingCost::define_RoutingCost();
+
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
             SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
@@ -399,9 +402,8 @@ void Simulation_RegeneratorNumber::print()
         }
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
-    std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
-              << std::endl;
+    simulations.front()->RMSA->R_Alg->print();
+    simulations.front()->RMSA->R_Alg->RCost->print();
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
@@ -435,7 +437,8 @@ void Simulation_RegeneratorNumber::createSimulations()
 
         //Creates the RMSA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, Routing_Cost,
+                    TopologyCopy);
 
         std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
             SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
@@ -474,7 +477,7 @@ void Simulation_RegeneratorNumber::placeRegenerators(
 {
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
-            Routing_Algorithm, Top);
+            Routing_Algorithm, Routing_Cost, Top);
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
         SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             WavAssign_Algorithm, Top);

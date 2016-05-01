@@ -49,6 +49,11 @@ public:
      */
     RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     /**
+     * @brief Routing_Cost is the routing cost used by the network simulation of
+     * each individual.
+     */
+    RMSA::ROUT::RoutingCost::RoutingCosts Routing_Cost;
+    /**
      * @brief WavAssign_Algorithm is the wavelength assignment algorithm used by
      * the network simulation of each individual.
      */

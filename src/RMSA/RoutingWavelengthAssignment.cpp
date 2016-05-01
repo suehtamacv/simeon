@@ -57,9 +57,10 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> Slots;
 
-    for (auto scheme = Schemes.rbegin(); scheme != Schemes.rend(); ++scheme)
+    for (auto schPtr = Schemes.rbegin(); schPtr != Schemes.rend(); ++schPtr)
         {
-        C->Scheme = *scheme;
+        auto scheme = *schPtr;
+        C->Scheme = scheme;
         possibleRoutes = R_Alg->route(C);
 
         //There's no route
@@ -71,16 +72,18 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
 
         for (auto &route : possibleRoutes)
             {
+            Segments.clear();
+            Slots.clear();
             C->Status = Call::Not_Evaluated;
 
-            int requiredSlots = scheme->get_NumSlots(C->Bitrate);
-            TransparentSegment Segment(route, *scheme, 0);
+            int requiredSlots = scheme.get_NumSlots(C->Bitrate);
+            TransparentSegment Segment(route, scheme, 0);
             Signal S(requiredSlots);
             S = Segment.bypass(S);
 
             if (
                 (!considerAseNoise ||
-                 S.get_OSNR() >= scheme->get_ThresholdOSNR(C->Bitrate)) &&
+                 S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                 (!considerFilterImperfection ||
                  S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                 {
@@ -91,7 +94,7 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
                 if (SegmentSlots.empty())
                     {
                     //There's no scheme with any scheme
-                    if (*scheme == *(Schemes.begin()))
+                    if (scheme == *(Schemes.begin()))
                         {
                         C->Status = Call::Blocked;
                         continue;
@@ -103,11 +106,16 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
                 break;
                 }
             //There's no quality with any scheme
-            else if (*scheme == *(Schemes.begin()))
+            else if (scheme == *(Schemes.begin()))
                 {
                 C->Status = Call::Blocked;
                 continue;
                 }
+            }
+
+        if (!Slots.empty())
+            {
+            break;
             }
         }
 

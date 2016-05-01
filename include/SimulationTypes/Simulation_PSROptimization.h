@@ -3,7 +3,7 @@
 
 #include <SimulationTypes/SimulationType.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
-#include <RMSA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.h>
 #include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
@@ -41,6 +41,7 @@ private:
 
     RMSA::ROUT::PSR::PowerSeriesRouting::Variants Variant;
 
+    static RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
     static RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
     static RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
