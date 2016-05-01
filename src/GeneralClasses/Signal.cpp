@@ -23,11 +23,12 @@ Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
         }
 }
 
-Signal::Signal(std::vector<std::weak_ptr<Slot>> occupiedSlots) : occupiedSlots(occupiedSlots),
+Signal::Signal(std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
+               std::owner_less<std::weak_ptr<Link>>>  occupiedSlots) : occupiedSlots(occupiedSlots),
     SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
-    numSlots = occupiedSlots.size();
+    numSlots = occupiedSlots.begin()->second.size();
     if(considerFilterImperfection)
         {
         frequencyRange = numSlots * Slot::BSlot / 2;

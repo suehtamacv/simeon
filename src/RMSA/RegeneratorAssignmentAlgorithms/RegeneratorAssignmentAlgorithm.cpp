@@ -10,6 +10,7 @@
 #include <Calls/Call.h>
 #include <RMSA/TransparentSegment.h>
 #include <Structure/Topology.h>
+#include <RMSA/SpectrumAssignmentAlgorithms.h>
 
 using namespace RMSA;
 using namespace RMSA::RA;
@@ -77,11 +78,8 @@ bool RegeneratorAssignmentAlgorithm::isThereSpectrumAndOSNR(
 {
 
     TransparentSegment Segment(segmentLinks(Links, start, end), scheme, 0);
-
-    auto SegmentSlots = thisWA->assignSlots(C, Segment);
-    std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
-
-    Signal S = Segment.bypass(Signal(testSlots));
+    auto SegmentSlots = thisRMSA->WA_Alg->assignSlots(C, Segment);
+    Signal S = Segment.bypass(Signal(SegmentSlots));
 
     return ((!considerAseNoise ||
              S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
@@ -96,11 +94,8 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
 {
 
     TransparentSegment Segment(SegmentLinks, ModulationSchemes.front(), 0);
-
-    auto SegmentSlots = thisWA->assignSlots(C, Segment);
-    std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
-
-    Signal S = Segment.bypass(Signal(testSlots));
+    auto SegmentSlots = thisRMSA->WA_Alg->assignSlots(C, Segment);
+    Signal S = Segment.bypass(Signal(SegmentSlots));
 
     std::sort(ModulationSchemes.rbegin(), ModulationSchemes.rend());
 

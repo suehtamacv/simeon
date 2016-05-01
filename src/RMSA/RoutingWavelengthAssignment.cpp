@@ -75,9 +75,8 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
 
                 continue;
                 }
-            std::vector<std::weak_ptr<Slot>> testSlots = SegmentSlots.begin()->second;
 
-            Signal S(testSlots);
+            Signal S(SegmentSlots);
             S = Segment.bypass(S);
 
             if ((!considerAseNoise ||
@@ -99,7 +98,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
         {
         Links = R_Alg->route(C);        
 
-        RA_Alg->thisWA = WA_Alg;
+        RA_Alg->thisRMSA = this;
 
         if (Links.empty())
             {

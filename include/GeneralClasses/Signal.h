@@ -33,7 +33,9 @@ public:
      */
     Signal(unsigned int numSlots = 1);
 
-    Signal(std::vector<std::weak_ptr<Slot>>);
+    Signal(std::map<std::weak_ptr<Link>,
+           std::vector<std::weak_ptr<Slot>>,
+           std::owner_less<std::weak_ptr<Link>>>);
     /**
      * @brief operator *= multiplies the Signal by a gain, effectively rescaling
      * both the signal and the noise.
@@ -79,7 +81,10 @@ public:
      */
     double frequencyRange;
 
-    std::vector<std::weak_ptr<Slot>> occupiedSlots;
+    std::map<std::weak_ptr<Link>,
+        std::vector<std::weak_ptr<Slot>>,
+        std::owner_less<std::weak_ptr<Link>>> occupiedSlots;
+    //std::vector<std::weak_ptr<Slot>> occupiedSlots;
 
     /**
      * @brief signalSpecDensity is the signal's spectral density.
