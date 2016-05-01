@@ -254,6 +254,11 @@ void PowerSeriesRouting::save(std::string SimConfigFileName)
     RoutingCost::save(SimConfigFileName);
 }
 
+void PowerSeriesRouting::print()
+{
+    RoutingCost::print();
+}
+
 std::shared_ptr<PowerSeriesRouting> PowerSeriesRouting::createPSR(
     std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost>> Costs,
     Variants Variant)

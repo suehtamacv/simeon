@@ -28,3 +28,8 @@ void LengthOccupationRoutingAvailability::save(std::string SimConfigFileName)
 {
     RoutingCost::save(SimConfigFileName);
 }
+
+void LengthOccupationRoutingAvailability::print()
+{
+    RoutingCost::print();
+}

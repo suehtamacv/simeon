@@ -116,3 +116,8 @@ void Dijkstra_RoutingAlgorithm::save(std::string name)
 {
     RoutingAlgorithm::save(name);
 }
+
+void Dijkstra_RoutingAlgorithm::print()
+{
+    RoutingAlgorithm::print();
+}

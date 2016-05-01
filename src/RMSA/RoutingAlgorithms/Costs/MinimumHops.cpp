@@ -25,3 +25,8 @@ void MinimumHops::save(std::string SimConfigFileName)
 {
     RoutingCost::save(SimConfigFileName);
 }
+
+void MinimumHops::print()
+{
+    RoutingCost::print();
+}

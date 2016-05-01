@@ -18,7 +18,7 @@ public:
 
     void load();
     void save(std::string);
-
+    void print();
     /**
      * @brief kShortestPaths is the number of shortest paths that will be searched
      * by the KSP Algorithms, like Yen on Eppstein,  if one of them is choosed.

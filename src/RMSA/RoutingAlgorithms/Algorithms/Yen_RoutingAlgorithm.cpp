@@ -53,6 +53,11 @@ void Yen_RoutingAlgorithm::save(std::string name)
     RoutingAlgorithm::save(name);
 }
 
+void Yen_RoutingAlgorithm::print()
+{
+    RoutingAlgorithm::print();
+}
+
 std::vector<std::vector<std::weak_ptr<Link>>>
 Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {

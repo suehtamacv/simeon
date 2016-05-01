@@ -50,6 +50,7 @@ public:
 
     void load();
     void save(std::string);
+    void print();
 
     bool initCoefficients(std::vector<double> X);
     bool initCoefficients(std::string);

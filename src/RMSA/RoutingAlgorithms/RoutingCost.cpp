@@ -95,3 +95,9 @@ std::shared_ptr<RoutingCost> RoutingCost::create_RoutingCost(
         }
     return R_Cost;
 }
+
+void RoutingCost::print()
+{
+    std::cout << "-> Routing Cost = " << RoutingCostsNames.left.at(
+                  RoutCost) << std::endl;
+}

@@ -274,12 +274,8 @@ void Simulation_StatisticalTrend::print()
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
-    std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
-              << std::endl;
-    std::cout << "-> Routing Cost = " <<
-              RoutingCost::RoutingCostsNames.left.at(Routing_Cost)
-              << std::endl;
+    simulations.front()->RMSA->R_Alg->print();
+    simulations.front()->RMSA->R_Alg->RCost->print();
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)

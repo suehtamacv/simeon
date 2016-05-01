@@ -116,3 +116,9 @@ std::shared_ptr<RoutingAlgorithm> RoutingAlgorithm::create_RoutingAlgorithm(
         }
     return R_Alg;
 }
+
+void RoutingAlgorithm::print()
+{
+    std::cout << "-> Routing Algorithm = " << RoutingAlgorithmNames.left.at(
+                  RoutAlg) << std::endl;
+}

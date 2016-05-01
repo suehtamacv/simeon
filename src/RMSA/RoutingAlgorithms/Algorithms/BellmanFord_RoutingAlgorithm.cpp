@@ -18,6 +18,11 @@ void BellmanFord_RoutingAlgorithm::save(std::string name)
     RoutingAlgorithm::save(name);
 }
 
+void BellmanFord_RoutingAlgorithm::print()
+{
+    RoutingAlgorithm::print();
+}
+
 std::vector<std::vector<std::weak_ptr<Link>>>
 BellmanFord_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 {

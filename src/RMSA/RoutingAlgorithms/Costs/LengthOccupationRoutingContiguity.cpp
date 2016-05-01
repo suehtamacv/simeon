@@ -28,3 +28,8 @@ void LengthOccupationRoutingContiguity::save(std::string SimConfigFileName)
 {
     RoutingCost::save(SimConfigFileName);
 }
+
+void LengthOccupationRoutingContiguity::print()
+{
+    RoutingCost::print();
+}

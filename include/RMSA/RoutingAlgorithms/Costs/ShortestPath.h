@@ -22,6 +22,7 @@ public:
         RoutingCost::load();
     }
     void save(std::string);
+    void print();
 };
 }
 }

@@ -52,6 +52,7 @@ public:
             bool runLoad = true);
     virtual void load() = 0;
     virtual void save(std::string) = 0;
+    virtual void print() = 0;
 
     virtual std::vector<std::vector<std::weak_ptr<Link>>>
     route(std::shared_ptr<Call> C) = 0;

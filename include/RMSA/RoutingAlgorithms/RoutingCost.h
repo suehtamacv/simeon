@@ -37,6 +37,7 @@ public:
 
     virtual void load() = 0;
     virtual void save(std::string) = 0;
+    virtual void print() = 0;
 
     typedef boost::bimap<RoutingCosts, std::string> RoutAlgNameBimap;
     static RoutAlgNameBimap RoutingCostsNames;

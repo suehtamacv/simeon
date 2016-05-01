@@ -536,7 +536,7 @@ void Simulation_PSROptimization::print()
               std::endl;
     std::cout << "-> Routing Algorithm = " <<
               ROUT::RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
-              << std::endl;
+              << std::endl;   
     std::cout << "-> Wavelength Assignment Algorithm = " <<
               SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)

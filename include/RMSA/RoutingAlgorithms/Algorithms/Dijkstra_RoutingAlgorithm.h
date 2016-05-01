@@ -17,6 +17,7 @@ public:
 
     void load() {}
     void save(std::string name);
+    void print();
 };
 }
 }
