@@ -72,6 +72,8 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
 
         for (auto &route : possibleRoutes)
             {
+            Segments.clear();
+            Slots.clear();
             C->Status = Call::Not_Evaluated;
 
             int requiredSlots = scheme.get_NumSlots(C->Bitrate);
