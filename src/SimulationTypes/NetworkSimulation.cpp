@@ -56,15 +56,12 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         NumBlockedCalls++;
         }
     else
-        {
-
+        {        
         unsigned int auxCont = 0;
         for (auto &link : route->Slots)
-            {
-            // COMENT. AUX.: Erro aqui.
-            //SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCont);
-            //(((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);
-            //(route->Links.at(auxCont).lock())->linkSpecDens->updateLink(thisSpecDensity, link.second);
+            {            
+            SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCont);
+            (((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);
             for (auto &slot : link.second)
                 {
                 slot.lock()->useSlot();

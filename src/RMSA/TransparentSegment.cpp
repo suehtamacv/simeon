@@ -28,6 +28,7 @@ TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
     NumRegUsed = segment.NumRegUsed;
     Nodes = segment.Nodes;
     Links = segment.Links;
+    opticalPathSpecDensity = segment.opticalPathSpecDensity;
 }
 
 Signal TransparentSegment::bypass(Signal S)
