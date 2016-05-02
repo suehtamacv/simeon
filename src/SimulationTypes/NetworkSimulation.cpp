@@ -57,11 +57,13 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         }
     else
         {        
-        unsigned int auxCont = 0;
+        unsigned int auxCont = 0;        
         for (auto &link : route->Slots)
-            {            
+            {
+            /*
             SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCont);
             (((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);
+            */
             for (auto &slot : link.second)
                 {
                 slot.lock()->useSlot();

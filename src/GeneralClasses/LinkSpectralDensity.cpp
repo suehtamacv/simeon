@@ -29,9 +29,10 @@ Power LinkSpectralDensity::get_TransmitedPower(double frequencyRange)
 }
 
 void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,std::vector<std::weak_ptr<Slot>> Slots)
-{   
-    unsigned int firstSlot = Slots.begin()->lock()->numSlot;
-    unsigned int lastSlot = Slots.end()->lock()->numSlot;
+{
+/*
+    unsigned int firstSlot = Slots.front().lock()->numSlot;
+    unsigned int lastSlot = Slots.back().lock()->numSlot;
 
     unsigned int k = 0;
     for(unsigned int i = firstSlot - 1; i < lastSlot; i++) // Talvez i = firstSlot, a testar isso
@@ -42,4 +43,5 @@ void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,std::vector
             k++;
         }
     }
+*/
 }
