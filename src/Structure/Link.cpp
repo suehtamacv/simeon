@@ -28,7 +28,7 @@ Link::Link(std::weak_ptr<Node> Origin,
     create_Slots();
     create_Devices();
 
-    linkSpecDens = std::make_shared<LinkSpectralDensity>(Slots); // COMENT. AUX.: NEW LINE
+    linkSpecDens = std::make_shared<LinkSpectralDensity>(Slots); // COMENT. AUX.: NEW LINE    
 }
 
 Link::Link(const Link &link) // COMENT. AUX.: linkSpecDens aqui?

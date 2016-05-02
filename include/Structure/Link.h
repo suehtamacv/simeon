@@ -148,7 +148,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream &out, const Link &link);
 
-    std::shared_ptr<LinkSpectralDensity> linkSpecDens; // COMENT. AUX.: NEW LINE
+    std::shared_ptr<LinkSpectralDensity> linkSpecDens;
 
 private:
     void create_Slots();

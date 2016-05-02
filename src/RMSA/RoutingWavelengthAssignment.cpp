@@ -70,7 +70,6 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                     C->Status = Call::Blocked;
                     return nullptr;
                     }
-
                 continue;
                 }
 
@@ -83,8 +82,21 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
                      S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
+                {                
+                Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+
+                // Teste
+                unsigned int auxCount = 0;
+                for(auto& link : Slots)
                 {
-                Slots.insert(SegmentSlots.begin(), SegmentSlots.end());                
+                    //(link.first).lock()->tempSpecDensity = Segment.opticalPathSpecDensity.at(auxCount);
+                    auxCount++;
+                }
+
+                if(Slots.begin()->second.size() * 25 != Segment.opticalPathSpecDensity.begin()->specDensity.n_cols)
+                    std::cout << std::endl << "FLAG Rout." << std::endl;
+                // Teste
+
                 break;
                 }
             else if (scheme == Schemes.back())

@@ -40,11 +40,11 @@ public:
     /**
      * @brief firstPos is the first position of this slot along the frequency vector in LinkSpectralDensity.
      */
-    unsigned int firstPos;
+    unsigned int firstPos; // Considerar remoção
     /**
      * @brief lastPos is the last position of this slot along the frequency vector in LinkSpectralDensity.
      */
-    unsigned int lastPos;
+    unsigned int lastPos; // Considerar remoção
     /**
      * @brief frequencyValues is a vector of the frequency values that this slot represents.
      */
