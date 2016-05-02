@@ -19,6 +19,7 @@ public:
      */
     SpectralDensity(double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec = false);
 
+    SpectralDensity(const SpectralDensity &spec);
     /**
      * @brief SBW_3dB is the bandwidth of a gaussian function of order 1 to 3 dB,
      * used on transmitedsignal spectral density calculations.
