@@ -8,8 +8,7 @@ using namespace RMSA;
 
 TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
                                        ModulationScheme ModScheme, unsigned int NumRegUsed) :
-    Links(Links), ModScheme(ModScheme), NumRegUsed(NumRegUsed), transmitedPower(0,
-            Power::Watt)
+    Links(Links), ModScheme(ModScheme), NumRegUsed(NumRegUsed)
 {
 
     Nodes.push_back(Links.front().lock()->Origin);
@@ -22,8 +21,7 @@ TransparentSegment::TransparentSegment(std::vector<std::weak_ptr<Link>> Links,
 }
 
 TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
-    ModScheme(segment.ModScheme), transmitedPower(0,
-                                                    Power::Watt)
+    ModScheme(segment.ModScheme)
 {
     NumRegUsed = segment.NumRegUsed;
     Nodes = segment.Nodes;
@@ -37,8 +35,6 @@ Signal TransparentSegment::bypass(Signal S)
 
     if(considerFilterImperfection)
         opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
-
-    //transmitedPower = Links.front().lock()->linkSpecDens->get_TransmitedPower(S.frequencyRange); // COMENT. AUX.: Remover depois de tudo.
 
     for (auto &it : Links)
         {

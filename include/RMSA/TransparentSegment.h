@@ -85,10 +85,6 @@ public:
      * Call C on this segment.
      */
     int get_Contiguity(std::shared_ptr<Call> C);
-    /**
-     * @brief TransmissionPower is the power of the transmited singal.
-     */
-    Power transmitedPower;
 
     std::vector<SpectralDensity> opticalPathSpecDensity;
 };

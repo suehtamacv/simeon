@@ -97,6 +97,7 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
         {
         Neighbours.push_back(N);
         N.lock()->isNeighbourOf.push_back(Link->Origin);
+        N.lock()->incomingLinks.push_back(Link); // New line for the crosstalk, still to check if it works.
         Links.push_back(Link);
         }
 }

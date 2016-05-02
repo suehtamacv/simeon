@@ -60,7 +60,6 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                 return nullptr;
                 }
 
-            //int requiredSlots = scheme.get_NumSlots(C->Bitrate); // COMENT. AUX.: Remover depois de tudo.
             TransparentSegment Segment(Links, scheme, 0);
 
             auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
@@ -78,7 +77,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             Signal S(SegmentSlots);
             S = Segment.bypass(S);
 
-            Segments.push_back(Segment); // COMENT. AUX.: Trouxe de cima.
+            Segments.push_back(Segment); // COMENT. AUX.: Trouxe de cima do if acima.
 
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&

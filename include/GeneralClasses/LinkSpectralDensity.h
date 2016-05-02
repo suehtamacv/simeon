@@ -15,8 +15,7 @@ public:
 
     std::vector<std::shared_ptr<Slot>> LinkSlots;
 
-    Power get_SpectralPower(); // TO DO
-    Power get_TransmitedPower(double); // Do i need this?
+    Power get_SpectralPower();
 
     void updateLink(SpectralDensity, std::vector<std::weak_ptr<Slot>>);
 

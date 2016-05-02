@@ -84,12 +84,13 @@ public:
     std::map<std::weak_ptr<Link>,
         std::vector<std::weak_ptr<Slot>>,
         std::owner_less<std::weak_ptr<Link>>> occupiedSlots;
-
     /**
      * @brief signalSpecDensity is the signal's spectral density.
      */
     std::shared_ptr<SpectralDensity> signalSpecDensity;
+
 private:
+
     Power SignalPower;
     Power NoisePower;
     /**
