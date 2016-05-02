@@ -34,9 +34,9 @@ TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
 Signal TransparentSegment::bypass(Signal S)
 {
     S = Links.front().lock()->Origin.lock()->add(S);
-    opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
+    //opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
 
-    //transmitedPower = Links.front().lock()->linkSpecDens->get_TransmitedPower(S.frequencyRange); // COMENT. AUX.: NEW LINE
+    //transmitedPower = Links.front().lock()->linkSpecDens->get_TransmitedPower(S.frequencyRange); // COMENT. AUX.: Remover depois de tudo.
 
     for (auto &it : Links)
         {
@@ -48,7 +48,7 @@ Signal TransparentSegment::bypass(Signal S)
         else
             {
             S = it.lock()->Destination.lock()->bypass(S);
-            opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
+            //opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
             }
         }
 
