@@ -27,7 +27,7 @@ void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,std::vector
     {
         for(unsigned int j = 0; j < Slot::numFrequencySamplesPerSlot; j++)
         {
-            //Erro no acesso a thisSpecDensity
+            //Erro no acesso a thisSpecDensity, em especial há uma divergência no tamanho dos slots
             //S.at(i)->specDensity(j) = thisSpecDensity.specDensity(k);
             k++;
         }        

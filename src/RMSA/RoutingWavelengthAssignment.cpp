@@ -86,13 +86,6 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
 
                 // Teste
-                unsigned int auxCount = 0;
-                for(auto& link : Slots)
-                {
-                    //(link.first).lock()->tempSpecDensity = Segment.opticalPathSpecDensity.at(auxCount);
-                    auxCount++;
-                }
-
                 if(Slots.begin()->second.size() * 25 != Segment.opticalPathSpecDensity.begin()->specDensity.n_cols)
                     std::cout << std::endl << "FLAG Rout." << std::endl;
                 // Teste

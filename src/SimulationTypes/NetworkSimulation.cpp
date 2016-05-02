@@ -63,8 +63,8 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 
             if(considerFilterImperfection) // Erro aqui
             {
-                //SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCount);
-                //(((link.first).lock())->linkSpecDens)->updateLink((link.first).lock()->tempSpecDensity, link.second);
+                SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCount);
+                (((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);
 
                 // Teste
                 if(thisSpecDensity.specDensity.n_cols != link.second.size() * 25)
