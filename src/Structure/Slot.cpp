@@ -5,17 +5,9 @@
 #include <Structure/Link.h>
 #include <GeneralClasses/PhysicalConstants.h>
 
-Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true),
-    firstPos((unsigned int) numFrequencySamplesPerSlot * (numSlot - 1)),
-    lastPos((unsigned int) numFrequencySamplesPerSlot * numSlot - 1)
+Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 {
     double frequencyRange = Link::NumSlots * BSlot / 2;
-    double freqStep = PhysicalConstants::freq - frequencyRange;
-    for(unsigned int i = 0; i < (unsigned int) numFrequencySamplesPerSlot; i++)
-        {
-        frequencyValues.push_back(freqStep);
-        freqStep += frequencyRange * 2 / LinkSpectralDensity::numFrequencySamples;
-        }
     S = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                                           frequencyRange, PhysicalConstants::freq + frequencyRange,
                                           (int) numFrequencySamplesPerSlot, true);

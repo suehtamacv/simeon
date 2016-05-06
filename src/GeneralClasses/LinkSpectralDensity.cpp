@@ -30,7 +30,8 @@ void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,std::vector
         for(unsigned int j = 0; j < Slot::numFrequencySamplesPerSlot; j++)
         {            
             S.at(i)->specDensity(j) = thisSpecDensity.specDensity(k);
-            k++;
-        }                
+            k++;                
+        }
+        LinkSlots.at(i)->S = S.at(i);
     }
 }

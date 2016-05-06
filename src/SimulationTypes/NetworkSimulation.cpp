@@ -65,11 +65,6 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
             {
                 SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCount);
                 (((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);
-
-                // Teste
-                if(thisSpecDensity.specDensity.n_cols != link.second.size() * 25)
-                    std::cout << std::endl << "FLAG Net. / Slots: " << link.second.size() * 25 << " / Spec: " << thisSpecDensity.specDensity.n_cols << std::endl;
-                // Teste
             }
 
             for (auto &slot : link.second)
