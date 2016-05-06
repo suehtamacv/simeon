@@ -3,6 +3,8 @@
 #include <Structure/Node.h>
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
+#include <Devices/Amplifiers/BoosterAmplifier.h>
+#include <Devices/SSS.h>
 
 using namespace RMSA;
 
@@ -34,11 +36,13 @@ Signal TransparentSegment::bypass(Signal S)
     S = Links.front().lock()->Origin.lock()->add(S);
 
     if(considerFilterImperfection)
-        opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
+        {
+        opticalPathSpecDensity.push_back(*(S.signalSpecDensity));       
+        }
 
     for (auto &it : Links)
         {
-        S = it.lock()->bypass(S);        
+        S = it.lock()->bypass(S);
         if (it.lock() == Links.back().lock())
             {
             S = it.lock()->Destination.lock()->drop(S);
@@ -48,7 +52,9 @@ Signal TransparentSegment::bypass(Signal S)
             S = it.lock()->Destination.lock()->bypass(S);
 
             if(considerFilterImperfection)
+                {
                 opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
+                }
             }
         }
 

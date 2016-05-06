@@ -48,7 +48,7 @@ public:
     /**
      * @brief frequencyValues is a vector of the frequency values that this slot represents.
      */
-    std::vector<double> frequencyValues;
+    std::vector<double> frequencyValues; // Considerar remoção
     /**
      * @brief freeSlot frees this slot, if it isn't free.
      */

@@ -15,8 +15,6 @@ public:
 
     std::vector<std::shared_ptr<Slot>> LinkSlots;
 
-    Power get_SpectralPower();
-
     void updateLink(SpectralDensity, std::vector<std::weak_ptr<Slot>>);
 
     std::vector<std::shared_ptr<SpectralDensity>> S;    

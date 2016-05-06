@@ -39,7 +39,6 @@ RoutingWavelengthAssignment::RoutingWavelengthAssignment(
 std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
     std::shared_ptr<Call> C)
 {
-
     std::vector<std::weak_ptr<Link>> Links;
     std::vector<TransparentSegment> Segments;
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
@@ -76,14 +75,14 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
             Signal S(SegmentSlots);
             S = Segment.bypass(S);
 
-            Segments.push_back(Segment); // COMENT. AUX.: Trouxe de cima do if acima.
-
             if ((!considerAseNoise ||
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
                      S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                 {                
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+
+                Segments.push_back(Segment);
 
                 // Teste
                 if(Slots.begin()->second.size() * 25 != Segment.opticalPathSpecDensity.begin()->specDensity.n_cols)

@@ -61,7 +61,7 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         for (auto &link : route->Slots)
             {
 
-            if(considerFilterImperfection) // Erro aqui
+            if(considerFilterImperfection)
             {
                 SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCount);
                 (((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);

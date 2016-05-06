@@ -36,18 +36,6 @@ void Slot::useSlot()
 {
     BOOST_ASSERT_MSG(isFree, "Only free slots can be used.");
     isFree = false;
-
-
-
-    /*
-    for(unsigned int i = 0; i <= (unsigned int) numFrequencySamplesPerSlot - 1; i++)
-        {
-        double freqVal = frequencyValues.at(i);
-        S->specDensity(i) = std::exp2l( (-2) * pow( 2 * (freqVal -
-                                        PhysicalConstants::freq) / SpectralDensity::SBW_3dB,
-                                        2 * SpectralDensity::TxFilterOrder));
-        }
-    */
 }
 
 Slot::Slot(const Slot &slot)
