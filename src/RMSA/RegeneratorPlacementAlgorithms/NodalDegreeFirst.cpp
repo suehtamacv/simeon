@@ -82,10 +82,9 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X)
                 }
             }
 
-        std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
-
         auto ChosenNode = MaximalNodes.begin();
-        std::advance(ChosenNode, dist(random_generator));
+        /*std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
+	  std::advance(ChosenNode, dist(random_generator)); //removing NDF randomness */
         (*ChosenNode)->set_NumRegenerators(X);
         (*ChosenNode)->set_NodeType(Node::TranslucentNode);
 
