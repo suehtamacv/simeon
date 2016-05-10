@@ -358,6 +358,8 @@ void Simulation_TransparencyAnalysis::print()
     std::cout << "-> Maximum Average Span Length = " << maxAvgLinkSpan << std::endl;
     std::cout << "-> Minimum OSNR = " << minAvgLinkSpan << std::endl;
     std::cout << "-> Maximum OSNR = " << maxAvgLinkSpan << std::endl;
+
+    T->print();
 }
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()

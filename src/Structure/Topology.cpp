@@ -308,3 +308,17 @@ void Topology::set_PowerRatioThreshold(double PRThreshold)
 {
     PowerRatioThreshold = PRThreshold;
 }
+
+void Topology::print()
+{
+    std::cout << "-> Topology = " << std::endl;
+
+    for (auto &it : Nodes)
+        {
+        std::cout << "\t (" << it->ID
+                     << ")\t" << Node::NodeArchitecturesNames.left.at(it->get_NodeArch())
+                     << "\t" << it->get_NumRegenerators() << " Regenerators" << std::endl;
+        }
+
+    std::cout << std::endl;
+}

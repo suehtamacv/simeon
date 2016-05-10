@@ -152,6 +152,8 @@ public:
      */
     void set_PowerRatioThreshold(double PRThreshold);
 
+    void print();
+
 private:
     double LongestLink;
 };

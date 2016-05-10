@@ -292,6 +292,8 @@ void Simulation_StatisticalTrend::print()
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << NetworkLoad << std::endl;
     std::cout << "-> Number of Repetitions = " << NumRepetitions << std::endl;
+
+    T->print();
 }
 
 void Simulation_StatisticalTrend::save(std::string SimConfigFileName)

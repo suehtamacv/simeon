@@ -485,6 +485,8 @@ void Simulation_PowerRatioThreshold::print()
               << std::endl;
     std::cout << "-> Power Ratio Threshold Step (%) = " << PowerRatioThresholdStep
               << std::endl;
+
+    T->print();
 }
 
 void Simulation_PowerRatioThreshold::create_Simulations()

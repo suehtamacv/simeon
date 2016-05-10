@@ -420,6 +420,8 @@ void Simulation_RegeneratorNumber::print()
     std::cout << "-> Max. Number of Reg. per Node = " << maxRegNumber << std::endl;
     std::cout << "-> Number of Translucent Nodes = " << numTranslucentNodes
               << std::endl;
+
+    T->print();
 }
 
 void Simulation_RegeneratorNumber::createSimulations()

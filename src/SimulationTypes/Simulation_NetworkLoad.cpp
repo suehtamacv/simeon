@@ -119,6 +119,8 @@ void Simulation_NetworkLoad::print()
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Minimum Network Load = " << NetworkLoadMin << std::endl;
     std::cout << "-> Maximum Network Load = " << NetworkLoadMax << std::endl;
+
+    T->print();
 }
 
 void Simulation_NetworkLoad::load()

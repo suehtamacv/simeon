@@ -565,6 +565,8 @@ void Simulation_PSROptimization::print()
               << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
+
+    T->print();
 }
 
 void Simulation_PSROptimization::run()
