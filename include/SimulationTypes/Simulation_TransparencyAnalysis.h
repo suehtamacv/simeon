@@ -45,6 +45,7 @@ private:
 
     double minOSNR, maxOSNR, stepOSNR;
     double minAvgLinkSpan, maxAvgLinkSpan, stepAvgLinkSpan;
+    std::string FileName;
 
     std::shared_ptr<Node> Orig_Origin, Orig_Destination;
     void find_OriginDestination();
