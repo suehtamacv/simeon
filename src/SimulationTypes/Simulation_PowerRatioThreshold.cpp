@@ -42,37 +42,36 @@ void Simulation_PowerRatioThreshold::help()
 
 void Simulation_PowerRatioThreshold::run()
 {
-    if(considerFilterImperfection)
+
+    if (!hasLoaded)
         {
-        if (!hasLoaded)
+        load();
+        }
+
+    std::cout << std::endl << "* * RESULTS * *" << std::endl;
+    std::cout << "POWER RATIO THRESHOLD\tCALL BLOCKING PROBABILITY" << std::endl;
+
+    std::ofstream OutFile(FileName.c_str());
+
+    extern bool parallelism_enabled;
+    #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
+
+    for (unsigned i = 0; i < simulations.size(); i++)
+        {
+        if (!simulations[i]->hasSimulated)
             {
-            load();
+            simulations[i]->run();
             }
 
-        std::cout << std::endl << "* * RESULTS * *" << std::endl;
-        std::cout << "POWER RATIO THRESHOLD\tCALL BLOCKING PROBABILITY" << std::endl;
-
-        std::ofstream OutFile(FileName.c_str());
-
-        extern bool parallelism_enabled;
-        #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
-
-        for (unsigned i = 0; i < simulations.size(); i++)
+        #pragma omp ordered
             {
-            if (!simulations[i]->hasSimulated)
-                {
-                simulations[i]->run();
-                }
-
-            #pragma omp ordered
-                {
-                std::cout << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
-                          << simulations[i]->get_CallBlockingProbability() << std::endl;
-                OutFile << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
-                        << simulations[i]->get_CallBlockingProbability() << std::endl;
-                }
+            std::cout << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
+                      << simulations[i]->get_CallBlockingProbability() << std::endl;
+            OutFile << simulations[i]->RMSA->T->get_PowerRatioThreshold() << "\t\t\t"
+                    << simulations[i]->get_CallBlockingProbability() << std::endl;
             }
         }
+
     // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
     save(ConfigFileName);
@@ -81,9 +80,6 @@ void Simulation_PowerRatioThreshold::run()
 void Simulation_PowerRatioThreshold::load()
 {
     SimulationType::load();
-
-    BOOST_ASSERT_MSG(considerFilterImperfection,
-                     "Filter Imperfection Impairment not selected.");
 
     std::cout << std::endl << "-> Choose a network type." << std::endl;
 
