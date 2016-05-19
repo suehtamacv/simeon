@@ -28,34 +28,31 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X)
         X = NX_X;
         }
 
-    std::vector<std::shared_ptr<Node>> PossibleNodes;
+    std::map<int, std::shared_ptr<Node>> Nodes;
+    std::vector<int> PossibleNodes;
 
     for (auto &node : T->Nodes)
         {
         node->set_NumRegenerators(0);
         node->set_NodeType(Node::TransparentNode);
-        PossibleNodes.push_back(node);
+        PossibleNodes.push_back(node->ID);
+        Nodes.insert({node->ID, node});
         }
 
     for (unsigned iter = 0; iter < N; iter++)
         {
-        std::map<std::shared_ptr<Node>, int> NodeDegree;
+        std::map<int, int> NodeDegree;
 
-        for (auto &node : PossibleNodes)
+        for (auto node : PossibleNodes)
             {
-            NodeDegree.emplace(node, 0);
+            NodeDegree.insert({node, 0});
             }
 
         for (auto &orig : PossibleNodes)
             {
             for (auto &dest : PossibleNodes)
                 {
-                if (orig == dest)
-                    {
-                    continue;
-                    }
-
-                if (orig->hasAsNeighbour(dest))
+                if (Nodes[orig]->hasAsNeighbour(Nodes[dest]))
                     {
                     NodeDegree[orig]++;
                     }
@@ -72,30 +69,27 @@ void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X)
                 }
             }
 
-        std::vector<std::shared_ptr<Node>> MaximalNodes;
+        auto chosenNode = Nodes[PossibleNodes.front()];
 
         for (auto &node : NodeDegree)
             {
             if (MaxDegree == node.second)
                 {
-                MaximalNodes.push_back(node.first);
+                chosenNode = Nodes[node.first];
+                break;
                 }
             }
 
-        auto ChosenNode = MaximalNodes.begin();
-        /*std::uniform_int_distribution<int> dist(0, MaximalNodes.size() - 1);
-	  std::advance(ChosenNode, dist(random_generator)); //removing NDF randomness */
-        (*ChosenNode)->set_NumRegenerators(X);
-        (*ChosenNode)->set_NodeType(Node::TranslucentNode);
+        chosenNode->set_NumRegenerators(X);
+        chosenNode->set_NodeType(Node::TranslucentNode);
 
         for (auto node = PossibleNodes.begin(); node != PossibleNodes.end(); ++node)
             {
-            if (*node == *ChosenNode)
+            if (*node == chosenNode->ID)
                 {
                 PossibleNodes.erase(node);
                 break;
                 }
             }
-
         }
 }

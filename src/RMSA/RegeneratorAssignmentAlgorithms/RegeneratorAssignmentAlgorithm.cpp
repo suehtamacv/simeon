@@ -212,6 +212,11 @@ RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
             RA_Alg = std::shared_ptr<RegeneratorAssignmentAlgorithm>
                      (new FirstNarrowestSpectrum(T, ModulationScheme::DefaultSchemes));
             break;
+
+        case SCRA:
+            RA_Alg = std::shared_ptr<RegeneratorAssignmentAlgorithm>
+                     (new ShortestCostRegeneratorAssignment(T, ModulationScheme::DefaultSchemes));
+            break;
         }
 
     RA_Alg->load();
