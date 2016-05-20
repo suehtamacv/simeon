@@ -1,0 +1,8 @@
+before_script:
+  - apt-get update -y
+  - apt-get -y --fix-missing install libboost-all-dev gcc g++ libarmadillo-dev qt5-qmake qt5-default
+
+build:
+  script:
+    - qmake adamant-broccoli.pro
+    - make install
