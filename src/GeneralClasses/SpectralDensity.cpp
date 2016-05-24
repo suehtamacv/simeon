@@ -1,6 +1,7 @@
 #include "GeneralClasses/SpectralDensity.h"
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
+#include <boost/assert.hpp>
 #include <Structure/Slot.h>
 
 using namespace TF;
@@ -16,11 +17,11 @@ SpectralDensity::SpectralDensity
     densityScaling(1), freqMin(freqMin), freqMax(freqMax)
 {
     if(cleanSpec)
-    {
+        {
         specDensity.zeros(numSamples);
-    }
+        }
     else
-    {
+        {
         std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
 
         if(specDensityMap.count(freqValues) == 0)
@@ -34,7 +35,7 @@ SpectralDensity::SpectralDensity
             specDensityMap.emplace(freqValues, thisSpecDensity);
             }
         specDensity = specDensityMap[freqValues];
-    }
+        }
 }
 
 SpectralDensity::SpectralDensity(const SpectralDensity &spec)
@@ -44,7 +45,7 @@ SpectralDensity::SpectralDensity(const SpectralDensity &spec)
     densityScaling = spec.densityScaling;
     freqMin = spec.freqMin;
     freqMax = spec.freqMax;
-    specDensity = spec.specDensity;
+    specDensity = arma::rowvec(spec.specDensity);
     specDensityMap = spec.specDensityMap;
 }
 
@@ -116,4 +117,21 @@ void SpectralDensity::define_SignalsFilterOrder()
             }
         }
     while (1);
+}
+
+SpectralDensity& SpectralDensity::operator +=(const SpectralDensity &PSD)
+{
+    BOOST_ASSERT_MSG((freqMin == PSD.freqMin) && (freqMax == PSD.freqMax),
+                     "Error summing two spectral densities");
+    specDensity = densityScaling * specDensity +
+                  PSD.densityScaling * PSD.specDensity;
+    densityScaling = 1;
+    return *this;
+}
+
+SpectralDensity SpectralDensity::operator *(TF::TransferFunction &H) const
+{
+    SpectralDensity spec(*this);
+    spec *= H;
+    return spec;
 }

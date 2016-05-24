@@ -5,6 +5,8 @@
 #include <map>
 
 class Node;
+class Link;
+class SpectralDensity;
 
 namespace Devices
 {
@@ -41,13 +43,24 @@ public:
      */
     unsigned int filterOrder;
 
+    std::shared_ptr<SpectralDensity> get_InterferingSignal(
+        std::weak_ptr<Link> incomingLink,
+        unsigned initialSlot,
+        unsigned finalSlot);
+
 private:
     Power NoisePower;
     Node *parent;
     /**
-     * @brief transFunctionsCache is a map of the transfer functions of this SSS device, given a certain number of slots.
+     * @brief bypassFunctionsCache is a map of the transfer functions of this
+     * SSS device, given a certain number of slots.
      */
-    std::map<int, TF::TransferFunction> transFunctionsCache;
+    std::map<int, TF::TransferFunction> bypassFunctionsCache;
+    /**
+     * @brief blockingFunctionsCache is a map of the blocking transfer functions
+     *  of this SSS device, given a certain number of slots.
+     */
+    std::map<int, TF::TransferFunction> blockingFunctionsCache;
     /**
      * @brief deviceTF  is the device's transfer function.
      */

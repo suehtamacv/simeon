@@ -37,7 +37,7 @@ Signal TransparentSegment::bypass(Signal S)
 
     if(considerFilterImperfection)
         {
-        opticalPathSpecDensity.push_back(*(S.signalSpecDensity));       
+        opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
         }
 
     for (auto &it : Links)

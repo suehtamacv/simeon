@@ -1,6 +1,9 @@
 #include <Devices/SSS.h>
 #include <Structure/Node.h>
+#include <Structure/Link.h>
 #include <Structure/Slot.h>
+#include <GeneralClasses/SpectralDensity.h>
+#include <GeneralClasses/LinkSpectralDensity.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
 #include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
@@ -69,21 +72,54 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
 {
     if (considerFilterImperfection)
         {
-        if(transFunctionsCache.count(numSlots) == 0)
+        if(bypassFunctionsCache.count(numSlots) == 0)
             {
             double freqVar = numSlots * Slot::BSlot / 2;
-            transFunctionsCache.emplace(numSlots,
-                                        GaussianTransferFunction(
-                                            PhysicalConstants::freq - freqVar,
-                                            PhysicalConstants::freq + freqVar,
-                                            Slot::numFrequencySamplesPerSlot * numSlots,
-                                            filterOrder,
-                                            std::pow(get_Gain().in_Linear(), 2)));
+            bypassFunctionsCache.emplace(numSlots,
+                                         GaussianTransferFunction(
+                                             PhysicalConstants::freq - freqVar,
+                                             PhysicalConstants::freq + freqVar,
+                                             Slot::numFrequencySamplesPerSlot * numSlots,
+                                             filterOrder,
+                                             std::pow(get_Gain().in_Linear(), 2)));
+            blockingFunctionsCache.emplace(numSlots,
+                                           GaussianTransferFunction(
+                                               PhysicalConstants::freq - freqVar,
+                                               PhysicalConstants::freq + freqVar,
+                                               Slot::numFrequencySamplesPerSlot * numSlots,
+                                               filterOrder,
+                                               std::pow(get_Gain().in_Linear(), 2)));
+            blockingFunctionsCache.at(numSlots).frequencySamples =
+                1.0 - blockingFunctionsCache.at(numSlots).frequencySamples;
             }
-        return transFunctionsCache.at(numSlots);
+        return bypassFunctionsCache.at(numSlots);
         }
     else
         {
         return *deviceTF;
         }
+}
+
+std::shared_ptr<SpectralDensity> SSS::get_InterferingSignal(
+    std::weak_ptr<Link> incomingLink,
+    unsigned initialSlot,
+    unsigned finalSlot)
+{
+    int numSlots = finalSlot - initialSlot + 1;
+    get_TransferFunction(numSlots);
+    double frequencyRange = numSlots * Slot::BSlot / 2;
+    auto X = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
+             frequencyRange, PhysicalConstants::freq + frequencyRange,
+             Slot::numFrequencySamplesPerSlot * numSlots, true);
+
+    for (std::shared_ptr<Link> &link : parent->incomingLinks)
+        {
+        if (incomingLink.lock() != link)
+            {
+            X->operator+=(*(link->linkSpecDens->slice(initialSlot, finalSlot))
+                          * blockingFunctionsCache.at(numSlots));
+            }
+        }
+
+    return X;
 }

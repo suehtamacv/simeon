@@ -80,7 +80,7 @@ bool Node::operator <(const Node &N) const
     return (ID < N.ID);
 }
 
-void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
+void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> link)
 {
     bool LinkExists = false;
 
@@ -96,9 +96,9 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
     if (!LinkExists)
         {
         Neighbours.push_back(N);
-        N.lock()->isNeighbourOf.push_back(Link->Origin);
-        N.lock()->incomingLinks.push_back(Link); // New line for the crosstalk, still to check if it works.
-        Links.push_back(Link);
+        N.lock()->isNeighbourOf.push_back(link->Origin);
+        N.lock()->incomingLinks.push_back(link);
+        Links.push_back(link);
         }
 }
 

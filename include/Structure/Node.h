@@ -93,7 +93,9 @@ public:
      * node.
      */
     std::vector<std::shared_ptr<Link>> Links;
-
+    /**
+     * @brief incomingLinks is a vector containing the links arriving at this node.
+     */
     std::vector<std::shared_ptr<Link>> incomingLinks;
     /**
      * @brief Devices is a vector containing the optical devices that comprise
