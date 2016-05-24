@@ -16,8 +16,8 @@ public:
     void updateLink(SpectralDensity, std::vector<std::weak_ptr<Slot>>);
     std::vector<std::shared_ptr<SpectralDensity>> S;
     static unsigned long numFrequencySamples;
-    std::shared_ptr<SpectralDensity> slice(unsigned initialSlot,
-                                           unsigned finalSlot);
+    std::shared_ptr<SpectralDensity> slice
+    (std::vector<std::weak_ptr<Slot>> usedSlots);
 };
 
 #endif // LINKSPECTRALDENSITY_H

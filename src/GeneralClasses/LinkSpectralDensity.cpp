@@ -38,12 +38,9 @@ void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,
 }
 
 std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
-    unsigned initialSlot,
-    unsigned finalSlot)
+    std::vector<std::weak_ptr<Slot>> usedSlots)
 {
-    BOOST_ASSERT_MSG(finalSlot < S.size() - 1, "Invalid slot requested.");
-
-    int numSlots = finalSlot - initialSlot + 1;
+    int numSlots = usedSlots.size();
     double frequencyRange = numSlots * Slot::BSlot / 2;
     std::shared_ptr<SpectralDensity> PSD = std::make_shared<SpectralDensity>
                                            (PhysicalConstants::freq - frequencyRange,
@@ -54,7 +51,7 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
         {
         PSD->specDensity.cols(s * Slot::numFrequencySamplesPerSlot,
                               (s + 1) * Slot::numFrequencySamplesPerSlot - 1) =
-                                  S.at(initialSlot + s)->specDensity;
+                                  S.at(usedSlots.at(s).lock()->numSlot)->specDensity;
         }
 
     return PSD;

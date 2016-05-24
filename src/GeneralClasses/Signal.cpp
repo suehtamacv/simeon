@@ -20,11 +20,15 @@ Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                             frequencyRange, PhysicalConstants::freq + frequencyRange,
                             (int) Slot::numFrequencySamplesPerSlot * numSlots);
+        X = std::make_shared<SpectralDensity>(PhysicalConstants::freq - frequencyRange,
+                                              PhysicalConstants::freq + frequencyRange,
+                                              (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
         }
 }
 
 Signal::Signal(std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
-               std::owner_less<std::weak_ptr<Link>>>  occupiedSlots) : occupiedSlots(occupiedSlots),
+               std::owner_less<std::weak_ptr<Link>>>  occupiedSlots) : occupiedSlots(
+                       occupiedSlots),
     SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
@@ -35,6 +39,9 @@ Signal::Signal(std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                             frequencyRange, PhysicalConstants::freq + frequencyRange,
                             (int) Slot::numFrequencySamplesPerSlot * numSlots);
+        X = std::make_shared<SpectralDensity>(PhysicalConstants::freq - frequencyRange,
+                                              PhysicalConstants::freq + frequencyRange,
+                                              (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
         }
 }
 
@@ -57,6 +64,12 @@ Signal &Signal::operator *=(TransferFunction &TF)
         {
         signalSpecDensity->operator *=(TF);
         }
+    return *this;
+}
+
+Signal &Signal::operator +=(SpectralDensity &PSD)
+{
+    X->operator +=(PSD);
     return *this;
 }
 

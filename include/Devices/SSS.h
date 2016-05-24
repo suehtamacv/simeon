@@ -42,15 +42,6 @@ public:
      * @brief filterOrder is the order of the optical filter in this device.
      */
     unsigned int filterOrder;
-
-    std::shared_ptr<SpectralDensity> get_InterferingSignal(
-        std::weak_ptr<Link> incomingLink,
-        unsigned initialSlot,
-        unsigned finalSlot);
-
-private:
-    Power NoisePower;
-    Node *parent;
     /**
      * @brief bypassFunctionsCache is a map of the transfer functions of this
      * SSS device, given a certain number of slots.
@@ -61,6 +52,10 @@ private:
      *  of this SSS device, given a certain number of slots.
      */
     std::map<int, TF::TransferFunction> blockingFunctionsCache;
+
+private:
+    Power NoisePower;
+    Node *parent;
     /**
      * @brief deviceTF  is the device's transfer function.
      */

@@ -80,6 +80,7 @@ public:
     int numLineAmplifiers;
 
     bool operator==(const Link &) const;
+    bool operator!=(const Link &) const;
     bool operator<(const Link &) const;
 
     /**

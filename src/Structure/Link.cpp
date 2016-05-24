@@ -92,6 +92,15 @@ void Link::create_Devices()
 
 Signal &Link::bypass(Signal &S)
 {
+    for (auto &link : Origin.lock()->Links)
+        {
+        if (*link == *this)
+            {
+            S.incomingLink = link;
+            break;
+            }
+        }
+
     for (auto &it : Devices)
         {
         S *= it->get_Gain();
@@ -110,6 +119,11 @@ bool Link::operator ==(const Link &L) const
     return ((Origin.lock() == L.Origin.lock()) &&
             (Destination.lock() == L.Destination.lock()) &&
             (Length == L.Length));
+}
+
+bool Link::operator !=(const Link &L) const
+{
+    return !(this->operator ==(L));
 }
 
 bool Link::operator <(const Link &L) const

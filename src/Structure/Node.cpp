@@ -8,6 +8,7 @@
 #include <Devices/Regenerator.h>
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
+#include <GeneralClasses/PhysicalConstants.h>
 
 using namespace Devices;
 
@@ -58,9 +59,15 @@ Node::Node(const Node &node) : ID(node.ID)
         insert_Link(newlink->Destination, newlink);
         }
 
+    bool foundSSS = false;
     for (auto &device : node.Devices)
         {
         Devices.push_back(device->clone());
+        if (!foundSSS && device->DevType == Device::SSSDevice)
+            {
+            foundSSS = true;
+            entranceSSS = dynamic_cast<SSS*>(Devices.back().get());
+            }
         }
 
     for (unsigned i = 0; i < node.Regenerators.size(); i++)
@@ -143,6 +150,7 @@ void Node::create_Devices()
 
         case SwitchingSelect:
             Devices.push_back(std::shared_ptr<Device>(new SSS(this)));
+            entranceSSS = dynamic_cast<SSS*>(Devices.back().get());
             break;
         }
 
@@ -164,7 +172,7 @@ Signal &Node::bypass(Signal &S)
             S *= it->get_TransferFunction(S.numSlots);
             }
         }
-
+    S += *evalCrosstalk(S);
     return S;
 }
 
@@ -182,7 +190,7 @@ Signal &Node::drop(Signal &S)
             break;
             }
         }
-
+    S += *evalCrosstalk(S);
     return S;
 }
 
@@ -308,6 +316,27 @@ double Node::get_OpEx()
         }
 
     return OpEx;
+}
+
+std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
+{
+    entranceSSS->get_TransferFunction(S.numSlots);
+    double frequencyRange = S.numSlots * Slot::BSlot / 2;
+    auto X = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
+             frequencyRange, PhysicalConstants::freq + frequencyRange,
+             Slot::numFrequencySamplesPerSlot * S.numSlots, true);
+
+    for (std::shared_ptr<Link> &link : incomingLinks)
+        {
+        if (*(S.incomingLink.lock()) != *(link.get()))
+            {
+            X->operator+=(*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
+                          * entranceSSS->blockingFunctionsCache.at(S.numSlots));
+            }
+        }
+
+    return X;
+
 }
 
 std::ostream& operator <<(std::ostream &out, const Node& node)

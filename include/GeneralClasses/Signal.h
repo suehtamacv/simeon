@@ -53,6 +53,11 @@ public:
      */
     Signal &operator *=(TF::TransferFunction &);
     /**
+     * @brief operator += adds a crosstalk PSD to this signal's crosstalk.
+     * @return a signal after adding the crosstalk.
+     */
+    Signal &operator +=(SpectralDensity &);
+    /**
      * @brief get_OSNR returns the Signal-To-Noise Ratio of the Signal.
      * @return the Signal-To-Noise Ratio of the Signal.
      */
@@ -88,6 +93,10 @@ public:
      * @brief signalSpecDensity is the signal's spectral density.
      */
     std::shared_ptr<SpectralDensity> signalSpecDensity;
+    /**
+     * @brief incomingLink is the last link that this signal crossed
+     */
+    std::weak_ptr<Link> incomingLink;
 
 private:
 

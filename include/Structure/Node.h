@@ -11,6 +11,7 @@ class Link;
 namespace Devices
 {
 class Device;
+class SSS;
 }
 
 /**
@@ -226,6 +227,10 @@ private:
     unsigned long long TotalNumRequestedRegenerators;
     unsigned int MaxSimultUsedRegenerators;
     static NodeArchitecture Default_Arch;
+
+    Devices::SSS *entranceSSS;
+
+    std::shared_ptr<SpectralDensity> evalCrosstalk(Signal &S);
 };
 
 #endif // NODE_H
