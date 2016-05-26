@@ -330,13 +330,12 @@ std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
         {
         if (*(S.incomingLink.lock()) != *(link.get()))
             {
-            X->operator+=(*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
-                          * entranceSSS->blockingFunctionsCache.at(S.numSlots));
+            (*X) += (*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
+                     * entranceSSS->blockingFunctionsCache.at(S.numSlots));
             }
         }
 
     return X;
-
 }
 
 std::ostream& operator <<(std::ostream &out, const Node& node)

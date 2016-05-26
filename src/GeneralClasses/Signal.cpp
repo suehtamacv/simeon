@@ -62,14 +62,14 @@ Signal &Signal::operator *=(TransferFunction &TF)
 {
     if (considerFilterImperfection)
         {
-        signalSpecDensity->operator *=(TF);
+        (*signalSpecDensity) *= (TF);
         }
     return *this;
 }
 
 Signal &Signal::operator +=(SpectralDensity &PSD)
 {
-    X->operator +=(PSD);
+    (*X) += (PSD);
     return *this;
 }
 

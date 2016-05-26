@@ -88,7 +88,7 @@ TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
                                                PhysicalConstants::freq + freqVar,
                                                Slot::numFrequencySamplesPerSlot * numSlots,
                                                filterOrder,
-                                               std::pow(get_Gain().in_Linear(), 2)));
+                                               std::pow(get_Gain().in_Linear(), 2))); //TODO: Revisar isso aqui
             blockingFunctionsCache.at(numSlots).frequencySamples =
                 1.0 - blockingFunctionsCache.at(numSlots).frequencySamples;
             }
