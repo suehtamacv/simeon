@@ -88,7 +88,7 @@ unsigned int TransparentSegment::get_MaxContigSlots()
     return MaxSlots;
 }
 
-int TransparentSegment::get_Contiguity(std::shared_ptr<Call> C)
+int TransparentSegment::get_Contiguity(std::shared_ptr<Call> C) const
 {
     int NumRequiredSlots = ModScheme.get_NumSlots(C->Bitrate);
     int Contiguity = 0;
@@ -121,4 +121,28 @@ int TransparentSegment::get_Contiguity(std::shared_ptr<Call> C)
         }
 
     return Contiguity;
+}
+
+int TransparentSegment::get_Availability() const
+{
+    auto Slots = std::vector<bool>(Link::NumSlots, true);
+    for (auto &link : Links)
+        {
+        for (unsigned i = 0; i < Slots.size(); ++i)
+            {
+            Slots[i] = Slots[i] && link.lock()->isSlotFree(i);
+            }
+        }
+
+    int FreeSlots = 0;
+
+    for (auto slot : Slots)
+        {
+        if (slot)
+            {
+            FreeSlots++;
+            }
+        }
+
+    return FreeSlots;
 }

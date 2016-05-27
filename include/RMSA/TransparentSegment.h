@@ -83,7 +83,13 @@ public:
      * @return in how many ways it is possible to allocate the required slots by
      * Call C on this segment.
      */
-    int get_Contiguity(std::shared_ptr<Call> C);
+    int get_Contiguity(std::shared_ptr<Call> C) const;
+    /**
+     * @brief get_Availability returns the availability of this segment, i.e. the
+     * number of simultaneously available slots.
+     * @return the availability of this segment.
+     */
+    int get_Availability() const;
 };
 }
 

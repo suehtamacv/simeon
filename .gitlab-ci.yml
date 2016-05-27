@@ -1,6 +1,6 @@
 before_script:
   - apt-get update -y
-  - apt-get -y install libboost-all-dev gcc g++ libarmadillo-dev qt5-qmake qt5-default
+  - apt-get -y --fix-missing install libboost-all-dev gcc g++ libarmadillo-dev qt5-qmake qt5-default
 
 build:
   script:
