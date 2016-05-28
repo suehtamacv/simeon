@@ -1,4 +1,4 @@
-#include "include/RMSA/SpectrumAssignmentAlgorithms/FirstFitEvolutionary.h"
+#include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h"
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
 #include <Structure/Link.h>
@@ -6,6 +6,7 @@
 #include <algorithm>
 
 using namespace RMSA::SA;
+using namespace RMSA::SA::FFE;
 
 bool FirstFitEvolutionary::hasLoaded = false;
 bool FirstFitEvolutionary::hasCreatedDefaultList = false;

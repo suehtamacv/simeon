@@ -1,11 +1,13 @@
 #ifndef FIRSTFITEVOLUTIONARY_H
 #define FIRSTFITEVOLUTIONARY_H
 
-#include "SpectrumAssignmentAlgorithm.h"
+#include "../SpectrumAssignmentAlgorithm.h"
 
 namespace RMSA
 {
 namespace SA
+{
+namespace FFE
 {
 class FirstFitEvolutionary : public SpectrumAssignmentAlgorithm
 {
@@ -26,6 +28,7 @@ private:
 
     std::vector<int> slotsList;
 };
+}
 }
 }
 

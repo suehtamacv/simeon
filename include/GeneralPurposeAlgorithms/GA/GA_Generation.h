@@ -49,11 +49,14 @@ public:
      * @return a fit Individual.
      */
     std::shared_ptr<GA_Individual> binaryTournament();
+    /**
+     * @brief people is a set containing the individuals of this generation.
+     */
+    std::set<std::shared_ptr<GA_Individual>> people;
 
 protected:
     bool isEvaluated;
 
-    std::set<std::shared_ptr<GA_Individual>> people;
     void breed(unsigned int a, unsigned int b, GA_Generation &dest);
 };
 }

@@ -27,7 +27,7 @@ GA_Individual& GA_Individual::mutate()
     for (unsigned gene = 0; gene < GA::mutationPoints; ++gene)
         {
         int g = dist(random_generator);
-        Gene[g] = createGene(g);
+        std::swap(Gene[g], Gene[createGene(g)]);
         isEvaluated = false;
         }
 

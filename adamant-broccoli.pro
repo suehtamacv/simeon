@@ -98,7 +98,7 @@ SOURCES += src/main.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/BestFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/ExactFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FirstFit.cpp \
-    src/RMSA/SpectrumAssignmentAlgorithms/FirstFitEvolutionary.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/LeastUsed.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/MostUsedSA.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/RandomFit.cpp \
@@ -113,7 +113,10 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
-    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp
+    src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -223,7 +226,7 @@ HEADERS += \
     include/RMSA/SpectrumAssignmentAlgorithms/BestFit.h \
     include/RMSA/SpectrumAssignmentAlgorithms/ExactFit.h \
     include/RMSA/SpectrumAssignmentAlgorithms/FirstFit.h \
-    include/RMSA/SpectrumAssignmentAlgorithms/FirstFitEvolutionary.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h \
     include/RMSA/SpectrumAssignmentAlgorithms/LeastUsed.h \
     include/RMSA/SpectrumAssignmentAlgorithms/MostUsedSA.h \
     include/RMSA/SpectrumAssignmentAlgorithms/RandomFit.h \
@@ -239,7 +242,10 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
