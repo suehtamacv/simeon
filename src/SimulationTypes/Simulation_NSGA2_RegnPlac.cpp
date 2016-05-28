@@ -1,4 +1,4 @@
-#include <SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.h>
+#include <SimulationTypes/Simulation_NSGA2_RegnPlac.h>
 #include <GeneralClasses/RandomGenerator.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <GeneralClasses/TransmissionBitrate.h>
@@ -6,17 +6,18 @@
 #include <Structure/Link.h>
 #include <Calls/CallGenerator.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameters.h>
+#include <include/GeneralPurposeAlgorithms/NSGA-2.h>
 #include <algorithm>
 #include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
-#include <SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h>
 
-using namespace RMSA;
 using namespace Simulations;
-using namespace ROUT;
-using namespace SA;
-using namespace RA;
+using namespace RMSA::RA;
+using namespace RMSA::ROUT;
+using namespace RMSA::SA;
 using namespace NSGA_II;
 
 unsigned int Simulation_NSGA2_RegnPlac::RegnMax;
@@ -78,7 +79,7 @@ Simulation_NSGA2_RegnPlac::Individual::clone()
 void Simulation_NSGA2_RegnPlac::Individual::setGene(
     std::vector<int> gene)
 {
-    using namespace NSGA2_Parameters;
+    using namespace RMSA::RP::MORP;
     Gene = gene;
     Parameters.clear();
     Parameters.push_back(std::shared_ptr<NSGA2_Parameter>(
