@@ -25,6 +25,7 @@ public:
     X(BF, "Best Fit", "BF", BestFit) \
     X(EF, "Exact Fit", "EF", ExactFit) \
     X(FF, "First Fit", "FF", FirstFit) \
+    X(FFE, "First Fit Evolutionary", "FFE", FirstFitEvolutionary) \
     X(LU, "Least Used", "LF", LeastUsed) \
     X(MU, "Most Used", "MU", MostUsed) \
     X(RF, "Random Fit", "RF", RandomFit)

@@ -111,7 +111,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
     src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp \
     src/SimulationTypes/Simulation_PowerRatioThreshold.cpp \
-    src/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.cpp
+    src/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FirstFitEvolutionary.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -235,7 +236,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
     include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h \
     include/SimulationTypes/Simulation_PowerRatioThreshold.h \
-    include/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.h
+    include/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FirstFitEvolutionary.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo
 
