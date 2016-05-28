@@ -9,10 +9,13 @@ namespace SA
 {
 namespace FFE
 {
+class FFE_GA;
+
 class FFE_Generation : public GeneticAlgorithm::GA_Generation
 {
 public:
-    FFE_Generation();
+    FFE_Generation(FFE_GA *GA);
+    FFE_GA *GA;
 };
 }
 }

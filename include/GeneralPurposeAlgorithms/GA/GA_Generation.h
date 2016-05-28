@@ -2,7 +2,6 @@
 #define GA_GENERATION_H
 
 #include "GA.h"
-#include <set>
 
 namespace GeneticAlgorithm
 {
@@ -52,7 +51,7 @@ public:
     /**
      * @brief people is a set containing the individuals of this generation.
      */
-    std::set<std::shared_ptr<GA_Individual>> people;
+    std::vector<std::shared_ptr<GA_Individual>> people;
 
 protected:
     bool isEvaluated;

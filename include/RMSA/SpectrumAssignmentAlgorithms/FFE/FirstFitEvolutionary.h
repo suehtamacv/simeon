@@ -21,6 +21,8 @@ public:
         std::owner_less<std::weak_ptr<Link>>>
         assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg);
 
+    void setSlotsList(std::vector<int> newSlotsList);
+
 private:
     static bool hasLoaded;
     static bool hasCreatedDefaultList;

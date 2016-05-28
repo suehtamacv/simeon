@@ -3,6 +3,7 @@
 #include "include/GeneralClasses/RandomGenerator.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace GeneticAlgorithm;
 
@@ -25,6 +26,7 @@ void GA_Generation::eval()
         std::advance(person, i);
         (*person)->eval();
         }
+    std::sort(people.begin(), people.end());
 
     isEvaluated = true;
 }
@@ -32,7 +34,7 @@ void GA_Generation::eval()
 void GA_Generation::operator +=(std::shared_ptr<GA_Individual> i)
 {
     isEvaluated = false;
-    people.emplace(i->clone());
+    people.push_back(i->clone());
 }
 
 void GA_Generation::operator +=(std::shared_ptr<GA_Generation> g)

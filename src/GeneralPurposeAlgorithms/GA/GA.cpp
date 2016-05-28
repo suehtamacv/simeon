@@ -37,7 +37,7 @@ void GA::natural_selection(GA_Generation &gen, GA_Generation &dest)
         {
         auto indiv = gen.people.begin();
         std::advance(indiv, i);
-        dest.people.emplace((*indiv)->clone());
+        dest.people.push_back((*indiv)->clone());
         }
 
     while (dest.people.size() < numIndiv)
@@ -48,7 +48,7 @@ void GA::natural_selection(GA_Generation &gen, GA_Generation &dest)
         auto individual = dest.people.begin();
         std::advance(individual, dist(random_generator));
 
-        dest.people.emplace((*individual)->clone());
+        dest.people.push_back((*individual)->clone());
         }
 }
 

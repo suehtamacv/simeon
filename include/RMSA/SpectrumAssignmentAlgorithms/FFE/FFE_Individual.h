@@ -9,15 +9,21 @@ namespace SA
 {
 namespace FFE
 {
+
+class FFE_Generation;
+
 class FFE_Individual : public GeneticAlgorithm::GA_Individual
 {
 public:
-    FFE_Individual();
+    FFE_Individual(FFE_Generation *G);
 
     void createIndividual();
     int createGene(unsigned int g);
     std::shared_ptr<GA_Individual> clone();
     void eval();
+
+private:
+    FFE_Generation *G;
 };
 }
 }

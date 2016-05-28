@@ -69,6 +69,9 @@ void Simulation_FFE_Optimization::load()
         //Routing Algorithm
         Routing_Algorithm = ROUT::RoutingAlgorithm::define_RoutingAlgorithm();
 
+        //Routing Cost
+        Routing_Cost = ROUT::RoutingCost::define_RoutingCost();
+
         if (Type == TranslucentNetwork)
             {
             //Regenerator Placement Algorithm
@@ -187,4 +190,27 @@ void Simulation_FFE_Optimization::load_file(std::string)
 void Simulation_FFE_Optimization::print()
 {
 
+}
+
+void Simulation_FFE_Optimization::place_Regenerators
+(std::shared_ptr<Topology> T)
+{
+    std::shared_ptr<ROUT::RoutingAlgorithm> R_Alg =
+        ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
+            Routing_Algorithm, Routing_Cost, T);
+    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
+            SA::SpectrumAssignmentAlgorithm::FFE, T);
+    std::shared_ptr<RA::RegeneratorAssignmentAlgorithm> RA_Alg =
+        RA::RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
+            RegAssignment_Algorithm, T);
+    std::shared_ptr<RoutingWavelengthAssignment> RMSA =
+        std::make_shared<RoutingWavelengthAssignment>
+        (R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T);
+
+    std::shared_ptr<RP::RegeneratorPlacementAlgorithm> RP_Alg =
+        RP::RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
+            RegPlacement_Algorithm, T, RMSA, OptimizationLoad, NumCalls);
+
+    RP_Alg->placeRegenerators();
 }
