@@ -66,8 +66,6 @@ private:
     static constexpr double VMin = -1;
     static constexpr double VMax = 1;
 
-    void create_Simulation();
-
     void runPSR();
 
     struct Compare

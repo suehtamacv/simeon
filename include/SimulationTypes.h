@@ -8,6 +8,7 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
 #include <SimulationTypes/Simulation_RegeneratorNumber.h>
 #include <SimulationTypes/Simulation_PowerRatioThreshold.h>
+#include <SimulationTypes/Simulation_FFE_Optimization.h>
 
 #endif // SIMULATIONTYPES_H
 

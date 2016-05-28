@@ -21,13 +21,14 @@ public:
     X(TranslucentNetwork, "Translucent Network", "Translucent") //X Macros
 
 #define SIMULATION_TYPE \
+    X(ffeoptimization, "Evolutionary First Fit Optimization", "ffeoptimization", Simulation_FFE_Optimization) \
     X(transparency, "Transparency Analysis", "transparency", Simulation_TransparencyAnalysis) \
     X(morp3o, "MORP-3O Regenerator Placement", "morp3o", Simulation_NSGA2_RegnPlac) \
     X(networkload, "Network Load Variation", "networkload", Simulation_NetworkLoad) \
     X(psroptimization, "Power Series Routing PSO Optimization", "psroptimization", Simulation_PSROptimization) \
     X(regnum, "Number of Regenerators", "regnum", Simulation_RegeneratorNumber) \
-    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend) \
-    X(pratiothreshold, "Power Ratio Threshold Variation", "pratiothreshold", Simulation_PowerRatioThreshold)
+    X(pratiothreshold, "Power Ratio Threshold Variation", "pratiothreshold", Simulation_PowerRatioThreshold) \
+    X(statisticaltrend, "Statistical Trend Analysis", "statisticaltrend", Simulation_StatisticalTrend)
 
 #define PHYSICAL_IMPAIRMENTS \
     X(asenoise, "ASE Noise", "asenoise") \
