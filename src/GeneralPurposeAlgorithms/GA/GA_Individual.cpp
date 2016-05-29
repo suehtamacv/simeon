@@ -56,14 +56,11 @@ std::string GA_Individual::print(bool pretty)
         {
         std::string indiv = "";
 
-        indiv += std::to_string(parameter);
-        indiv += " (";
         for (auto &g : Gene)
             {
             indiv += std::to_string(g);
             indiv += " ";
             }
-        indiv += ")";
 
         return indiv;
         }

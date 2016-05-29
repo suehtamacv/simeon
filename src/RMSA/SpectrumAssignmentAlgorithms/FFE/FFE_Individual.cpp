@@ -75,5 +75,6 @@ std::shared_ptr<GA_Individual> FFE_Individual::clone()
         std::make_shared<FFE_Individual>(G);
     individual->Gene = Gene;
     individual->parameter = parameter;
+    individual->isEvaluated = isEvaluated;
     return individual;
 }

@@ -30,7 +30,7 @@ void Simulation_FFE_Optimization::run()
         load();
         }
 
-    auto FFE_GA_Optimization = std::make_shared<SA::FFE::FFE_GA>(*this);
+    FFE_GA_Optimization = std::make_shared<SA::FFE::FFE_GA>(*this);
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
     std::cout << "BEST PARTICLE OF I-TH EPOCH" << std::endl;
@@ -41,8 +41,7 @@ void Simulation_FFE_Optimization::run()
 
         std::cout << std::endl << "EPOCH " << g << std::endl;
         FFE_GA_Optimization->evolution.at(g - 1)->print("NO_FILE_GIVEN");
-        FFE_GA_Optimization->evolution.at(g - 1)->print
-        (CoefficientsFilename + "_G" + std::to_string(g));
+        printCoefficients(CoefficientsFilename);
         }
 
     // Saving Sim. Configurations
@@ -405,4 +404,22 @@ void Simulation_FFE_Optimization::place_Regenerators
             RegPlacement_Algorithm, T, RMSA, OptimizationLoad, NumCalls);
 
     RP_Alg->placeRegenerators();
+}
+
+void Simulation_FFE_Optimization::printCoefficients(std::string filename)
+{
+    std::ofstream coefs(filename);
+
+    auto bestIndiv = FFE_GA_Optimization->evolution.back()->getBestIndividual();
+
+    coefs << "   [FFE]" << std::endl << std::endl;
+    coefs << "value = " << bestIndiv->getParameter() << std::endl;
+    coefs << "slotsorder = ";
+    for (auto &gene : bestIndiv->getGenes())
+        {
+        coefs << gene << " ";
+        }
+    coefs << std::endl;
+
+    coefs.close();
 }

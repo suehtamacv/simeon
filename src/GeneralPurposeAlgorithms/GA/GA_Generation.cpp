@@ -84,12 +84,30 @@ void GA_Generation::print(std::string filename)
 {
     if (filename == "NO_FILE_GIVEN")
         {
-        (*(people.begin()))->print();
+        getBestIndividual()->print();
         }
     else
         {
         std::ofstream OutFile(filename.c_str());
-        OutFile << (*(people.begin()))->print(false) << std::endl;
+        OutFile << getBestIndividual()->print(false) << std::endl;
         OutFile.close();
         }
+}
+
+std::shared_ptr<GA_Individual> GA_Generation::getBestIndividual() const
+{
+    std::shared_ptr<GA_Individual> best = people.front();
+    for (auto &indiv : people)
+        {
+        if (indiv->getParameter() == -1)
+            {
+            indiv->eval();
+            }
+
+        if (indiv->getParameter() < best->getParameter())
+            {
+            best = indiv;
+            }
+        }
+    return best;
 }

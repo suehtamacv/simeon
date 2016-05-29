@@ -52,6 +52,11 @@ public:
      * @brief people is a set containing the individuals of this generation.
      */
     std::vector<std::shared_ptr<GA_Individual>> people;
+    /**
+     * @brief getBestIndividual returns the best individual of this generation.
+     * @return the best individual of this generation.
+     */
+    std::shared_ptr<GA_Individual> getBestIndividual() const;
 
 protected:
     bool isEvaluated;

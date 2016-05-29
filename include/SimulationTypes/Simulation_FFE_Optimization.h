@@ -4,6 +4,17 @@
 #include "SimulationType.h"
 #include "RMSA.h"
 
+namespace RMSA
+{
+namespace SA
+{
+namespace FFE
+{
+class FFE_GA;
+}
+}
+}
+
 namespace Simulations
 {
 class Simulation_FFE_Optimization : public SimulationType
@@ -33,6 +44,10 @@ public:
     RegAssignment_Algorithm;
 
     void place_Regenerators(std::shared_ptr<Topology> T);
+
+private:
+    std::shared_ptr<RMSA::SA::FFE::FFE_GA> FFE_GA_Optimization;
+    void printCoefficients(std::string);
 };
 }
 

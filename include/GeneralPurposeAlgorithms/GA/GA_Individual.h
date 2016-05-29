@@ -71,12 +71,16 @@ public:
      * @return the genes of this individual.
      */
     std::vector<int> getGenes() const;
-
     /**
      * @brief isEvaluated is true, if this Individual's Parameters have already
      * been evaluated.
      */
     bool isEvaluated;
+
+    double getParameter() const
+    {
+        return parameter;
+    }
 
 protected:
     double parameter;

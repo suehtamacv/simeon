@@ -14,7 +14,7 @@ class FirstFitEvolutionary : public SpectrumAssignmentAlgorithm
 public:
     FirstFitEvolutionary(std::shared_ptr<Topology> T);
 
-    void load() {}
+    void load();
     void save(std::string);
     std::map<std::weak_ptr<Link>,
         std::vector<std::weak_ptr<Slot>>,
@@ -22,11 +22,14 @@ public:
         assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg);
 
     void setSlotsList(std::vector<int> newSlotsList);
+    static void setDefaultSlotsList(std::vector<int> newSlotsList);
 
 private:
     static bool hasLoaded;
-    static bool hasCreatedDefaultList;
+    bool hasSetSlots;
     static std::vector<int> defaultSlotsList;
+
+    static bool initDefaultList(std::string);
 
     std::vector<int> slotsList;
 };
