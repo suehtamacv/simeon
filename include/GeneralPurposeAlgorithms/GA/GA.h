@@ -73,9 +73,11 @@ protected:
      * @param gen is the origin Generation.
      * @param dest is the destination Generation.
      */
-    void natural_selection(GA_Generation &gen, GA_Generation &dest);
+    void natural_selection(std::shared_ptr<GA_Generation> gen,
+                           std::shared_ptr<GA_Generation> dest);
 
-    std::shared_ptr<GA_Generation> newGeneration(GA_Generation &prnt);
+    std::shared_ptr<GA_Generation> newGeneration
+    (std::shared_ptr<GA_Generation> prnt);
 
     unsigned int generation;
 };

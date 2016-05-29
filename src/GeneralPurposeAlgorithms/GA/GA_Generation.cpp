@@ -14,7 +14,7 @@ GA_Generation::GA_Generation()
 
 void GA_Generation::eval()
 {
-    if (!isEvaluated)
+    if (isEvaluated)
         {
         return;
         }
@@ -45,7 +45,8 @@ void GA_Generation::operator +=(std::shared_ptr<GA_Generation> g)
         }
 }
 
-void GA_Generation::breed(unsigned int a, unsigned int b, GA_Generation &dest)
+void GA_Generation::breed(unsigned int a, unsigned int b,
+                          std::shared_ptr<GA_Generation> dest)
 {
     if (a == b)
         {
@@ -72,8 +73,8 @@ void GA_Generation::breed(unsigned int a, unsigned int b, GA_Generation &dest)
     auto newIndivA = (*iterator_a)->clone(), newIndivB = (*iterator_b)->clone();
     newIndivA->setGene(GeneA);
     newIndivB->setGene(GeneB);
-    dest += newIndivA;
-    dest += newIndivB;
+    (*dest) += newIndivA;
+    (*dest) += newIndivB;
 
     people.erase(iterator_a);
     people.erase(iterator_b);

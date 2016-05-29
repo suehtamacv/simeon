@@ -56,7 +56,7 @@ public:
 protected:
     bool isEvaluated;
 
-    void breed(unsigned int a, unsigned int b, GA_Generation &dest);
+    void breed(unsigned int a, unsigned int b, std::shared_ptr<GA_Generation> dest);
 };
 }
 

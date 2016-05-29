@@ -48,7 +48,6 @@ void Simulation_FFE_Optimization::run()
     // Saving Sim. Configurations
     std::string ConfigFileName = "SimConfigFile.ini"; // Name of the file
     save(ConfigFileName);
-
 }
 
 void Simulation_FFE_Optimization::load()
