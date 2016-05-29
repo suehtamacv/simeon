@@ -21,7 +21,6 @@ public:
     bool hasLoaded;
     double NumCalls;
     double OptimizationLoad;
-    double PowerRatioThresholdMin, PowerRatioThresholdMax, PowerRatioThresholdStep;
 
     std::string CoefficientsFilename;
     std::string LogFilename;
@@ -33,7 +32,6 @@ public:
     RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
-    void create_Simulations();
     void place_Regenerators(std::shared_ptr<Topology> T);
 };
 }

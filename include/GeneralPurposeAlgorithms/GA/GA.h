@@ -61,6 +61,10 @@ public:
      * binaryTournamentParameter other Individuals.
      */
     static constexpr unsigned int binaryTournamentParameter = 2;
+    /**
+     * @brief evolution is a vector containing the evolutions of this GA algorithm.
+     */
+    std::vector<std::shared_ptr<GA_Generation>> evolution;
 
 protected:
     /**
@@ -70,7 +74,6 @@ protected:
      * @param dest is the destination Generation.
      */
     void natural_selection(GA_Generation &gen, GA_Generation &dest);
-    std::vector<std::shared_ptr<GA_Generation>> evolution;
 
     std::shared_ptr<GA_Generation> newGeneration(GA_Generation &prnt);
 
