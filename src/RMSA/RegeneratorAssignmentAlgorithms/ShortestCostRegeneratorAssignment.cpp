@@ -105,7 +105,7 @@ double ShortestCostRegeneratorAssignment::get_Cost(const TransparentSegment
 {
     double cost = 0;
 
-    cost += -0.10; //DC Level
+    cost += dcLevel; //DC Level
 
         {
         //Normalized number of required slots
@@ -126,4 +126,10 @@ double ShortestCostRegeneratorAssignment::get_Cost(const TransparentSegment
         }
 
     return cost;
+}
+
+void ShortestCostRegeneratorAssignment::load()
+{
+    std::cout << "enter the dc level" << std::endl;
+    std::cin >> dcLevel;
 }
