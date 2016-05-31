@@ -30,6 +30,7 @@ void Simulation_FFE_Optimization::run()
         load();
         }
 
+    std::ofstream logFile(LogFilename);
     FFE_GA_Optimization = std::make_shared<SA::FFE::FFE_GA>(*this);
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
@@ -41,6 +42,9 @@ void Simulation_FFE_Optimization::run()
 
         std::cout << std::endl << "EPOCH " << g << std::endl;
         FFE_GA_Optimization->evolution.at(g - 1)->print("NO_FILE_GIVEN");
+        logFile << g << "\t"
+                << FFE_GA_Optimization->evolution.back()->getBestIndividual()->getParameter()
+                << std::endl;
         printCoefficients(CoefficientsFilename);
         }
 
