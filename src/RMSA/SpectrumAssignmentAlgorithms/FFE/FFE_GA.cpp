@@ -21,5 +21,10 @@ void FFE_GA::createInitialGeneration()
         initialEvol->people.push_back(std::make_shared<FFE_Individual>(initialEvol.get()));
         }
 
+    //Sets a individual with FF Genes.
+    auto FirstFit_Gene = std::vector<int>(Link::NumSlots);
+    std::iota(FirstFit_Gene.begin(), FirstFit_Gene.end(), 0);
+    initialEvol->people[0]->setGene(FirstFit_Gene);
+
     evolution.push_back(initialEvol);
 }
