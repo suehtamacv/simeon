@@ -2,6 +2,7 @@
 #include "include/GeneralPurposeAlgorithms/GA/GA_Individual.h"
 #include "include/GeneralPurposeAlgorithms/GA/GA_Generation.h"
 #include "include/GeneralClasses/RandomGenerator.h"
+#include <algorithm>
 
 using namespace GeneticAlgorithm;
 
@@ -34,6 +35,7 @@ void GA::natural_selection(std::shared_ptr<GA_Generation> gen,
 {
     dest->people.clear();
 
+    std::sort(gen->people.begin(), gen->people.end());
     for (unsigned int i = 0; i < GA::alphaIndiv; ++i)
         {
         auto indiv = gen->people.begin();
