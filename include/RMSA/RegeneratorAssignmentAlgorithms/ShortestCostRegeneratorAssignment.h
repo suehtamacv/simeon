@@ -21,7 +21,9 @@ private:
     double get_Cost(const TransparentSegment &segment,
                     std::vector<std::weak_ptr<Node>>,
                     std::shared_ptr<Call> C);
-    double dcLevel;
+
+    static bool hasLoaded;
+    static double dcLevel;
 };
 }
 }
