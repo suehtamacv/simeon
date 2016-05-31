@@ -67,6 +67,8 @@ void FFE_Individual::eval()
 
     parameter = Simulations::NetworkSimulation(Generator, RMSA, G->GA->Sim.NumCalls)
                 .get_CallBlockingProbability();
+
+    isEvaluated = true;
 }
 
 std::shared_ptr<GA_Individual> FFE_Individual::clone()
