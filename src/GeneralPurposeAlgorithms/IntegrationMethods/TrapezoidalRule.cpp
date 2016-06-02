@@ -2,13 +2,12 @@
 
 using namespace NumericMethods;
 
-TrapezoidalRule::TrapezoidalRule(arma::mat &YPoints, double XRange)
-    : IntegrationMethod(YPoints, XRange)
+TrapezoidalRule::TrapezoidalRule()
 {
 
 }
 
-double TrapezoidalRule::calculate()
+double TrapezoidalRule::calculate(arma::mat const &YPoints, const double XRange)
 {
     double Result, Sum = 0, h;
     h = XRange / (YPoints.size() - 1);

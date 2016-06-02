@@ -1,7 +1,7 @@
 #include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
 #include <GeneralClasses/PhysicalConstants.h>
-#include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
+#include <GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h>
 #include <GeneralClasses/LinkSpectralDensity.h>
 
 using namespace TF;
@@ -20,9 +20,10 @@ Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                             frequencyRange, PhysicalConstants::freq + frequencyRange,
                             (int) Slot::numFrequencySamplesPerSlot * numSlots);
-        X = std::make_shared<SpectralDensity>(PhysicalConstants::freq - frequencyRange,
-                                              PhysicalConstants::freq + frequencyRange,
-                                              (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
+        crosstalkSpecDensity = std::make_shared<SpectralDensity>
+                               (PhysicalConstants::freq - frequencyRange,
+                                PhysicalConstants::freq + frequencyRange,
+                                (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
         }
 }
 
@@ -39,9 +40,10 @@ Signal::Signal(std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
         signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
                             frequencyRange, PhysicalConstants::freq + frequencyRange,
                             (int) Slot::numFrequencySamplesPerSlot * numSlots);
-        X = std::make_shared<SpectralDensity>(PhysicalConstants::freq - frequencyRange,
-                                              PhysicalConstants::freq + frequencyRange,
-                                              (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
+        crosstalkSpecDensity = std::make_shared<SpectralDensity>
+                               (PhysicalConstants::freq - frequencyRange,
+                                PhysicalConstants::freq + frequencyRange,
+                                (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
         }
 }
 
@@ -69,7 +71,7 @@ Signal &Signal::operator *=(TransferFunction &TF)
 
 Signal &Signal::operator +=(SpectralDensity &PSD)
 {
-    (*X) += (PSD);
+    (*crosstalkSpecDensity) += (PSD);
     return *this;
 }
 
@@ -86,7 +88,7 @@ Power Signal::get_NoisePower()
 Power Signal::get_SpectralPower()
 {
     return Power(
-               TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange * 2).calculate()
+               SimpsonsRule().calculate(signalSpecDensity->specDensity, frequencyRange * 2)
                * signalSpecDensity->densityScaling, Power::Watt);
 }
 
@@ -99,8 +101,20 @@ double Signal::get_SignalPowerRatio()
                                  Slot::numFrequencySamplesPerSlot * numSlots);
 
         originalSpecDensityCache.emplace(numSlots, Power(
-                                             TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
+                                             SimpsonsRule().calculate(originSD.specDensity, frequencyRange * 2)
                                              * originSD.densityScaling, Power::Watt));
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
+}
+
+Gain Signal::get_WeightedCrosstalk()
+{
+    arma::rowvec S = signalSpecDensity->specDensity;
+    arma::rowvec X = crosstalkSpecDensity->specDensity;
+
+    double P = SimpsonsRule().calculate(S, frequencyRange * 2);
+    double k = P / SimpsonsRule().calculate(S % S, frequencyRange * 2);
+
+    return
+        Gain(SimpsonsRule().calculate(k * S % X, frequencyRange * 2) / k, Gain::Linear);
 }

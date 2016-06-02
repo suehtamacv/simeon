@@ -12,7 +12,7 @@ Gain::Gain(double value, InitType Type) : value_Linear(0),
         }
     else if (Type == InitType::Linear)
         {
-        BOOST_ASSERT_MSG(value > 0, "There's no dB value for something negative.");
+        BOOST_ASSERT_MSG(value >= 0, "There's no dB value for something negative.");
         value_dB = 10 * log10(value);
         }
 

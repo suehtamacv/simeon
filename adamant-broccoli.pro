@@ -3,8 +3,8 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle qt
 
-QMAKE_CXXFLAGS += -std=c++11 -fopenmp
-QMAKE_LFLAGS += -std=c++11 -fopenmp
+QMAKE_CXXFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
+QMAKE_LFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -226,7 +226,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PowerRatioThreshold.h \
     include/GeneralClasses/LinkSpectralDensity.h
 
-LIBS += -lboost_system -lboost_program_options -larmadillo
+LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*

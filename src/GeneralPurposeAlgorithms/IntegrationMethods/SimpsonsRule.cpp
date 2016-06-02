@@ -2,13 +2,12 @@
 
 using namespace NumericMethods;
 
-SimpsonsRule::SimpsonsRule(arma::mat &YPoints, double XRange)
-    : IntegrationMethod(YPoints, XRange)
+SimpsonsRule::SimpsonsRule()
 {
 
 }
 
-double SimpsonsRule::calculate()
+double SimpsonsRule::calculate(const arma::mat &YPoints, const double XRange)
 {
     double Result, h, Sum = 0;
     h = XRange / (YPoints.size() - 1);

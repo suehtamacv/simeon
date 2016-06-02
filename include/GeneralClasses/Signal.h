@@ -73,6 +73,11 @@ public:
      */
     Power get_SpectralPower();
     /**
+     * @brief get_WeightedCrosstalk returns the weighted crosstalk interfering with this signal.
+     * @return the weighted crosstalk interfering with this signal.
+     */
+    Gain get_WeightedCrosstalk();
+    /**
      * @brief get_SignalPowerRatio returns the ratio of this signal's original and final spectral density power.
      * @return the ratio of this signal's original and final spectral density power.
      */
@@ -107,9 +112,9 @@ private:
      */
     std::map<int, Power> originalSpecDensityCache ;
     /**
-     * @brief X is this signal's crosstalk interference.
+     * @brief crosstalkSpecDensity is this signal's crosstalk interference.
      */
-    std::shared_ptr<SpectralDensity> X;
+    std::shared_ptr<SpectralDensity> crosstalkSpecDensity;
 };
 
 #endif // SIGNAL_H
