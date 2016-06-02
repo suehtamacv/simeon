@@ -237,7 +237,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PowerRatioThreshold.h \
     include/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.h
 
-LIBS += -lboost_system -lboost_program_options -larmadillo
+LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*
