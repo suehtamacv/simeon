@@ -16,6 +16,8 @@ class FFE_Generation : public GeneticAlgorithm::GA_Generation
 public:
     FFE_Generation(FFE_GA *GA);
     FFE_GA *GA;
+
+    void breed(unsigned int a, unsigned int b, std::shared_ptr<GA_Generation> dest);
 };
 }
 }

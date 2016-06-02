@@ -6,6 +6,8 @@
 
 using namespace RMSA::SA;
 
+std::set<unsigned> SpectrumAssignmentAlgorithm::possibleRequiredSlots;
+
 SpectrumAssignmentAlgorithm::SpecAssignAlgNameBimap
 SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames =
     boost::assign::list_of<SpectrumAssignmentAlgorithm::SpecAssignAlgNameBimap::relation>
@@ -27,7 +29,13 @@ SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithm(
     SpectrumAssignmentAlgorithms WavAssAlgType) :
     SpecAssAlgType(WavAssAlgType), T(T)
 {
-
+    for (auto &scheme : ModulationScheme::DefaultSchemes)
+        {
+        for (auto &br : TransmissionBitrate::DefaultBitrates)
+            {
+            possibleRequiredSlots.emplace(scheme.get_NumSlots(br));
+            }
+        }
 }
 
 SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
@@ -95,4 +103,9 @@ void SpectrumAssignmentAlgorithm::save(std::string SimConfigFileName)
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
                   SpectrumAssignmentAlgorithmNicknames.left.at(SpecAssAlgType)
                   << std::endl;
+}
+
+unsigned SpectrumAssignmentAlgorithm::get_numPossibleRequiredSlots() const
+{
+    return possibleRequiredSlots.size();
 }

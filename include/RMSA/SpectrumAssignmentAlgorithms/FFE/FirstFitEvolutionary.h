@@ -21,17 +21,17 @@ public:
         std::owner_less<std::weak_ptr<Link>>>
         assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg);
 
-    void setSlotsList(std::vector<int> newSlotsList);
-    static void setDefaultSlotsList(std::vector<int> newSlotsList);
+    void setSlotsList(std::map<int, std::vector<int> > newSlotsList);
+    static void setDefaultSlotsList(std::map<int, std::vector<int> > newSlotsList);
 
 private:
     static bool hasLoaded;
     bool hasSetSlots;
-    static std::vector<int> defaultSlotsList;
+    static std::map<int, std::vector<int>> defaultSlotsList;
 
     static bool initDefaultList(std::string);
 
-    std::vector<int> slotsList;
+    std::map<int, std::vector<int>> slotsList;
 };
 }
 }

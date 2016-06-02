@@ -81,8 +81,15 @@ public:
      * @brief save saves the loaded parameters on a file.
      */
     virtual void save(std::string) = 0;
+    /**
+     * @brief get_numPossibleRequiredSlots returns the number of possible
+     * required slots
+     */
+    unsigned get_numPossibleRequiredSlots() const;
 
     std::shared_ptr<Topology> T;
+
+    static std::set<unsigned> possibleRequiredSlots;
 };
 }
 }

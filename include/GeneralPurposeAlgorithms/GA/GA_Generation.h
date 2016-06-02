@@ -41,13 +41,6 @@ public:
      * @param g is the Generation to be added.
      */
     void operator += (std::shared_ptr<GA_Generation> g);
-
-    /**
-     * @brief binaryTournament does binaryTournament in the remaining Individuals
-     * and returns a fit Individual.
-     * @return a fit Individual.
-     */
-    std::shared_ptr<GA_Individual> binaryTournament();
     /**
      * @brief people is a set containing the individuals of this generation.
      */
@@ -61,7 +54,7 @@ public:
 protected:
     bool isEvaluated;
 
-    void breed(unsigned int a, unsigned int b, std::shared_ptr<GA_Generation> dest);
+    virtual void breed(unsigned int a, unsigned int b, std::shared_ptr<GA_Generation> dest);
 };
 }
 

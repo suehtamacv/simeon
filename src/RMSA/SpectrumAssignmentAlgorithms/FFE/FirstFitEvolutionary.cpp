@@ -10,7 +10,7 @@ using namespace RMSA::SA;
 using namespace RMSA::SA::FFE;
 
 bool FirstFitEvolutionary::hasLoaded = false;
-std::vector<int> FirstFitEvolutionary::defaultSlotsList(Link::NumSlots);
+std::map<int, std::vector<int>> FirstFitEvolutionary::defaultSlotsList;
 
 FirstFitEvolutionary::FirstFitEvolutionary(std::shared_ptr<Topology> T) :
     SpectrumAssignmentAlgorithm(T, FFE), hasSetSlots(false)
@@ -65,7 +65,7 @@ std::map<std::weak_ptr<Link>,
             }
         }
 
-    for (auto si : slotsList)
+    for (auto si : slotsList[RequiredSlots])
         {
         if (si + RequiredSlots - 1 >= Link::NumSlots)
             {
@@ -93,7 +93,7 @@ std::map<std::weak_ptr<Link>,
     return Slots;
 }
 
-void FirstFitEvolutionary::setSlotsList(std::vector<int> newSlotsList)
+void FirstFitEvolutionary::setSlotsList(std::map<int, std::vector<int>> newSlotsList)
 {
     BOOST_ASSERT_MSG(slotsList.empty() ||
                      (newSlotsList.size() == slotsList.size()),
@@ -102,7 +102,7 @@ void FirstFitEvolutionary::setSlotsList(std::vector<int> newSlotsList)
     hasSetSlots = true;
 }
 
-void FirstFitEvolutionary::setDefaultSlotsList(std::vector<int> newSlotsList)
+void FirstFitEvolutionary::setDefaultSlotsList(std::map<int, std::vector<int>> newSlotsList)
 {
     defaultSlotsList = newSlotsList;
     hasLoaded = true;
