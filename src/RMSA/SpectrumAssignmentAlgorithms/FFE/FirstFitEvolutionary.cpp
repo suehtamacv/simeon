@@ -93,7 +93,7 @@ std::map<std::weak_ptr<Link>,
     return Slots;
 }
 
-void FirstFitEvolutionary::setSlotsList(std::map<int, std::vector<int>> newSlotsList)
+void FirstFitEvolutionary::setSlotsList(std::map<int, std::vector<int> > newSlotsList)
 {
     BOOST_ASSERT_MSG(slotsList.empty() ||
                      (newSlotsList.size() == slotsList.size()),
@@ -102,7 +102,8 @@ void FirstFitEvolutionary::setSlotsList(std::map<int, std::vector<int>> newSlots
     hasSetSlots = true;
 }
 
-void FirstFitEvolutionary::setDefaultSlotsList(std::map<int, std::vector<int>> newSlotsList)
+void FirstFitEvolutionary::setDefaultSlotsList(std::map<int, std::vector<int>>
+        newSlotsList)
 {
     defaultSlotsList = newSlotsList;
     hasLoaded = true;
@@ -174,9 +175,14 @@ bool FirstFitEvolutionary::initDefaultList(std::string Filename)
             VariablesMap.find("FFE.slotsorder")->second.as<std::string>());
         int currentslot;
 
-        while (FFEList >> currentslot)
+        for (auto &nSlot : possibleRequiredSlots)
             {
-            defaultSlotsList.push_back(currentslot);
+            defaultSlotsList[nSlot] = std::vector<int>();
+            for (int s = 0; s < Link::NumSlots; ++s)
+                {
+                FFEList >> currentslot;
+                defaultSlotsList[nSlot].push_back(currentslot);
+                }
             }
         }
 

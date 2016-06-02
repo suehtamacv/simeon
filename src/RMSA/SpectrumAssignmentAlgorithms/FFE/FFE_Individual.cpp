@@ -21,9 +21,12 @@ FFE_Individual::FFE_Individual(FFE_Generation *G) : GA_Individual(), G(G)
 
 void FFE_Individual::createIndividual()
 {
-    Gene = std::vector<int>(Link::NumSlots);
-    std::iota(Gene.begin(), Gene.end(), 0);
-    std::random_shuffle(Gene.begin(), Gene.end());
+    for (auto &nS : SpectrumAssignmentAlgorithm::possibleRequiredSlots)
+        {
+        Gene[nS] = std::vector<int>(Link::NumSlots);
+        std::iota(Gene[nS].begin(), Gene[nS].end(), 0);
+        std::random_shuffle(Gene[nS].begin(), Gene[nS].end());
+        }
 }
 
 int FFE_Individual::createGene(unsigned int g)

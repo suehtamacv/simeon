@@ -3,6 +3,7 @@
 #include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.h"
 #include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.h"
 #include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h"
+#include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h"
 #include <boost/program_options.hpp>
 
 using namespace Simulations;
@@ -12,6 +13,11 @@ Simulation_FFE_Optimization::Simulation_FFE_Optimization() :
     SimulationType(ffeoptimization)
 {
     hasLoaded = false;
+
+    {
+        //Initializing FFE Algorithm
+        auto FFE = std::make_shared<SA::FFE::FirstFitEvolutionary>(T);
+    }
 }
 
 void Simulation_FFE_Optimization::help()
@@ -421,7 +427,10 @@ void Simulation_FFE_Optimization::printCoefficients(std::string filename)
     coefs << "slotsorder = ";
     for (auto &gene : bestIndiv->getGenes())
         {
-        coefs << gene << " ";
+        for (auto &s : gene.second)
+            {
+            coefs << s << " ";
+            }
         }
     coefs << std::endl;
 

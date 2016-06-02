@@ -30,8 +30,8 @@ void FFE_Generation::breed(unsigned int a, unsigned int b,
         RMSA::SA::SpectrumAssignmentAlgorithm::possibleRequiredSlots.size();
 
     std::uniform_int_distribution<int> dist(1, numReqSlots - 1);
-    std::vector<int> GeneA = (*iterator_a)->getGenes(),
-                     GeneB = (*iterator_b)->getGenes();
+    std::map<unsigned, std::vector<int>> GeneA = (*iterator_a)->getGenes(),
+                                         GeneB = (*iterator_b)->getGenes();
     int crossOverPoint = Link::NumSlots * dist(random_generator);
 
     for (unsigned int i = crossOverPoint; i < GeneA.size(); ++i)

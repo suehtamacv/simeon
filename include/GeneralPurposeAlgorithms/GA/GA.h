@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
 //! Contains the simple genetic algorithm
 namespace GeneticAlgorithm

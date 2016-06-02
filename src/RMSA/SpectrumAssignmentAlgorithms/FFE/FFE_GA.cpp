@@ -22,8 +22,11 @@ void FFE_GA::createInitialGeneration()
         }
 
     //Sets a individual with FF Genes.
-    auto FirstFit_Gene = std::vector<int>(Link::NumSlots);
-    std::iota(FirstFit_Gene.begin(), FirstFit_Gene.end(), 0);
+    std::map<int, std::vector<int>> FirstFit_Gene;
+    for (auto &nS : SpectrumAssignmentAlgorithm::possibleRequiredSlots) {
+        FirstFit_Gene[nS] = std::vector<int>(Link::NumSlots);
+        std::iota(FirstFit_Gene[nS].begin(), FirstFit_Gene[nS].end(), 0);
+    }
     initialEvol->people[0]->setGene(FirstFit_Gene);
 
     evolution.push_back(initialEvol);

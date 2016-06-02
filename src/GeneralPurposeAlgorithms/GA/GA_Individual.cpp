@@ -34,13 +34,13 @@ GA_Individual& GA_Individual::mutate()
     return *this;
 }
 
-void GA_Individual::setGene(std::vector<int> newGene)
+void GA_Individual::setGene(std::map<int, std::vector<int>> newGene)
 {
     Gene = newGene;
     isEvaluated = false;
 }
 
-std::vector<int> GA_Individual::getGenes() const
+std::map<int, std::vector<int>> GA_Individual::getGenes() const
 {
     return Gene;
 }
@@ -58,11 +58,13 @@ std::string GA_Individual::print(bool pretty)
 
         for (auto &g : Gene)
             {
-            indiv += std::to_string(g);
-            indiv += " ";
+            for (auto &gSlot : g.second)
+                {
+                indiv += std::to_string(gSlot);
+                indiv += " ";
+                }
             }
 
         return indiv;
         }
 }
-
