@@ -21,6 +21,7 @@ public:
     int createGene(unsigned int g);
     std::shared_ptr<GA_Individual> clone();
     void eval();
+    GA_Individual& mutate();
 
 private:
     FFE_Generation *G;

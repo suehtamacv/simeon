@@ -12,7 +12,7 @@ GA_Individual::GA_Individual()
 
 bool GA_Individual::operator ==(const GA_Individual &other) const
 {
-    return (Gene == other.Gene);
+    return (parameter == other.parameter);
 }
 
 bool GA_Individual::operator <(const GA_Individual &other) const
@@ -22,15 +22,7 @@ bool GA_Individual::operator <(const GA_Individual &other) const
 
 GA_Individual& GA_Individual::mutate()
 {
-    std::uniform_int_distribution<int> dist(0, Gene.size() - 1);
-
-    for (unsigned gene = 0; gene < GA::mutationPoints; ++gene)
-        {
-        int g = dist(random_generator);
-        std::swap(Gene[g], Gene[createGene(g)]);
-        isEvaluated = false;
-        }
-
+    isEvaluated = false;
     return *this;
 }
 

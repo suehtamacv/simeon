@@ -60,7 +60,7 @@ public:
      * @brief mutate mutates this Individual.
      * @return a reference to this Individual, mutated.
      */
-    GA_Individual &mutate();
+    virtual GA_Individual &mutate() = 0;
     /**
      * @brief setGene sets the genes of this individual.
      * @param newGene are the new genes.

@@ -24,7 +24,7 @@ void GA::run_Generation()
     (*currentgeneration) += (newGeneration(currentgeneration));
     currentgeneration->eval();
 
-    std::shared_ptr<GA_Generation> newGen(new GA_Generation());
+    std::shared_ptr<GA_Generation> newGen = createEmptyGeneration();
     natural_selection(currentgeneration, newGen);
     evolution.push_back(newGen);
     ++generation;
@@ -34,8 +34,13 @@ void GA::natural_selection(std::shared_ptr<GA_Generation> gen,
                            std::shared_ptr<GA_Generation> dest)
 {
     dest->people.clear();
+    std::sort(gen->people.begin(), gen->people.end(),
+              [](const std::shared_ptr<GA_Individual> &l,
+                 const std::shared_ptr<GA_Individual> &r)
+        {
+        return *l < *r;
+        });
 
-    std::sort(gen->people.begin(), gen->people.end());
     for (unsigned int i = 0; i < GA::alphaIndiv; ++i)
         {
         auto indiv = gen->people.begin();
@@ -58,8 +63,8 @@ void GA::natural_selection(std::shared_ptr<GA_Generation> gen,
 std::shared_ptr<GA_Generation> GA::newGeneration
 (std::shared_ptr<GA_Generation> prnt)
 {
-    std::shared_ptr<GA_Generation> gen_r(new GA_Generation());
-    std::shared_ptr<GA_Generation> gen_q(new GA_Generation());
+    std::shared_ptr<GA_Generation> gen_r = createEmptyGeneration();
+    std::shared_ptr<GA_Generation> gen_q = createEmptyGeneration();
 
     natural_selection(prnt, gen_r);
 

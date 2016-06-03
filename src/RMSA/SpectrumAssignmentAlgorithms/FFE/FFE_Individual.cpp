@@ -31,12 +31,12 @@ void FFE_Individual::createIndividual()
 
 int FFE_Individual::createGene(unsigned int g)
 {
-    std::uniform_int_distribution<unsigned int> Dist(0, Link::NumSlots - 1);
+    std::uniform_int_distribution<unsigned int> dist(0, Link::NumSlots - 1);
     unsigned int newGene;
 
     do
         {
-        newGene = Dist(random_generator);
+        newGene = dist(random_generator);
         }
     while (g == newGene);
 
@@ -82,4 +82,22 @@ std::shared_ptr<GA_Individual> FFE_Individual::clone()
     individual->parameter = parameter;
     individual->isEvaluated = isEvaluated;
     return individual;
+}
+
+GA_Individual& FFE_Individual::mutate()
+{
+    GA_Individual::mutate();
+
+    for (auto &list : Gene)
+        {
+        std::uniform_int_distribution<int> dist(0, list.second.size() - 1);
+        for (unsigned gene = 0; gene < GA::mutationPoints; ++gene)
+            {
+            int g = dist(random_generator);
+            std::swap(list.second[g], list.second[createGene(g)]);
+            isEvaluated = false;
+            }
+        }
+
+    return *this;
 }

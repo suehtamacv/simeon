@@ -25,7 +25,12 @@ void GA_Generation::eval()
         std::advance(person, i);
         (*person)->eval();
         }
-    std::sort(people.begin(), people.end());
+    std::sort(people.begin(), people.end(),
+              [](const std::shared_ptr<GA_Individual> &l,
+                 const std::shared_ptr<GA_Individual> &r)
+        {
+        return *l < *r;
+        });
 
     isEvaluated = true;
 }

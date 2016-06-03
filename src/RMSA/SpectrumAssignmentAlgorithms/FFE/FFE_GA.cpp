@@ -18,16 +18,23 @@ void FFE_GA::createInitialGeneration()
 
     for (unsigned i = 0; i < numIndiv; ++i)
         {
-        initialEvol->people.push_back(std::make_shared<FFE_Individual>(initialEvol.get()));
+        initialEvol->people.push_back(std::make_shared<FFE_Individual>
+                                      (initialEvol.get()));
         }
 
     //Sets a individual with FF Genes.
     std::map<int, std::vector<int>> FirstFit_Gene;
-    for (auto &nS : SpectrumAssignmentAlgorithm::possibleRequiredSlots) {
+    for (auto &nS : SpectrumAssignmentAlgorithm::possibleRequiredSlots)
+        {
         FirstFit_Gene[nS] = std::vector<int>(Link::NumSlots);
         std::iota(FirstFit_Gene[nS].begin(), FirstFit_Gene[nS].end(), 0);
-    }
+        }
     initialEvol->people[0]->setGene(FirstFit_Gene);
 
     evolution.push_back(initialEvol);
+}
+
+std::shared_ptr<GA_Generation> FFE_GA::createEmptyGeneration()
+{
+    return std::make_shared<FFE_Generation>(this);
 }

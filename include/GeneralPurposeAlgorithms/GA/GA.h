@@ -66,6 +66,11 @@ public:
      * @brief evolution is a vector containing the evolutions of this GA algorithm.
      */
     std::vector<std::shared_ptr<GA_Generation>> evolution;
+    /**
+     * @brief createEmptyGeneration creates a new empty generation.
+     * @return a new empty generation.
+     */
+    virtual std::shared_ptr<GA_Generation> createEmptyGeneration() = 0;
 
 protected:
     /**

@@ -28,6 +28,7 @@ class FFE_GA : public GeneticAlgorithm::GA
 public:
     FFE_GA(Simulations::Simulation_FFE_Optimization &Sim);
     void createInitialGeneration();
+    std::shared_ptr<GeneticAlgorithm::GA_Generation> createEmptyGeneration();
 
 private:
     Simulations::Simulation_FFE_Optimization &Sim;

@@ -26,17 +26,16 @@ void FFE_Generation::breed(unsigned int a, unsigned int b,
     std::advance(iterator_a, a);
     std::advance(iterator_b, b);
 
-    int numReqSlots =
-        RMSA::SA::SpectrumAssignmentAlgorithm::possibleRequiredSlots.size();
-
-    std::uniform_int_distribution<int> dist(1, numReqSlots - 1);
-    std::map<unsigned, std::vector<int>> GeneA = (*iterator_a)->getGenes(),
-                                         GeneB = (*iterator_b)->getGenes();
-    int crossOverPoint = Link::NumSlots * dist(random_generator);
+    std::map<int, std::vector<int>> GeneA = (*iterator_a)->getGenes(),
+                                    GeneB = (*iterator_b)->getGenes();
+    std::uniform_int_distribution<int> dist(1, GeneA.size() - 1);
+    int crossOverPoint = dist(random_generator);
 
     for (unsigned int i = crossOverPoint; i < GeneA.size(); ++i)
         {
-        std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
+        auto nSlot = SpectrumAssignmentAlgorithm::possibleRequiredSlots.begin();
+        std::advance(nSlot, i);
+        std::swap(GeneA[*nSlot], GeneB[*nSlot]); //swaps genes of the individuals
         }
 
     auto newIndivA = (*iterator_a)->clone(), newIndivB = (*iterator_b)->clone();
