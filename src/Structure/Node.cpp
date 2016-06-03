@@ -169,7 +169,8 @@ Signal &Node::bypass(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction(S.numSlots);
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                          S.freqMax - S.freqMin); //bandwidth
             }
         }
     S += *evalCrosstalk(S);
@@ -182,7 +183,8 @@ Signal &Node::drop(Signal &S)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
-        S *= it->get_TransferFunction(S.numSlots);
+        S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                      S.freqMax - S.freqMin); //bandwidth
 
         if ((it->DevType == Device::SplitterDevice) ||
                 (it->DevType == Device::SSSDevice))
@@ -210,7 +212,8 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
-        S *= (*it)->get_TransferFunction(S.numSlots);
+        S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
+                                         S.freqMax - S.freqMin);
         }
 
     return S;
@@ -320,10 +323,9 @@ double Node::get_OpEx()
 
 std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
 {
-    entranceSSS->get_TransferFunction(S.numSlots);
-    double frequencyRange = S.numSlots * Slot::BSlot / 2;
-    auto X = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-             frequencyRange, PhysicalConstants::freq + frequencyRange,
+    entranceSSS->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
+                                      S.freqMax - S.freqMin);
+    auto X = std::make_shared<SpectralDensity>(S.freqMin, S.freqMax,
              Slot::numFrequencySamplesPerSlot * S.numSlots, true);
 
     for (std::shared_ptr<Link> &link : incomingLinks)
@@ -331,7 +333,9 @@ std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
         if (*(S.incomingLink.lock()) != *(link.get()))
             {
             (*X) += (*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
-                     * entranceSSS->blockingFunctionsCache.at(S.numSlots));
+                     * entranceSSS->get_BlockTransferFunction((S.freqMin + S.freqMax) /
+                             2.0, //central frequency
+                             S.freqMax - S.freqMin)); //bandwidth
             }
         }
 

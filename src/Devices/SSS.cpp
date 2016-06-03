@@ -68,31 +68,50 @@ double SSS::get_OpEx()
     return 0.2;
 }
 
-TransferFunction& SSS::get_TransferFunction(unsigned int numSlots)
+TransferFunction& SSS::get_TransferFunction(double centerFreq,
+        double bandwidth)
 {
     if (considerFilterImperfection)
         {
-        if(bypassFunctionsCache.count(numSlots) == 0)
+        auto freq = std::make_pair(centerFreq, bandwidth);
+        int numSlots = std::round(bandwidth / Slot::BSlot);
+
+        if (!bypassFunctionsCache.count(freq))
             {
-            double freqVar = numSlots * Slot::BSlot / 2;
-            bypassFunctionsCache.emplace(numSlots,
-                                         GaussianTransferFunction(
-                                             PhysicalConstants::freq - freqVar,
-                                             PhysicalConstants::freq + freqVar,
+            bypassFunctionsCache[freq] = GaussianTransferFunction(
+                                             centerFreq - bandwidth / 2.0,
+                                             centerFreq + bandwidth / 2.0,
                                              Slot::numFrequencySamplesPerSlot * numSlots,
-                                             filterOrder,
-                                             std::pow(get_Gain().in_Linear(), 2)));
-            blockingFunctionsCache.emplace(numSlots,
-                                           GaussianTransferFunction(
-                                               PhysicalConstants::freq - freqVar,
-                                               PhysicalConstants::freq + freqVar,
-                                               Slot::numFrequencySamplesPerSlot * numSlots,
-                                               filterOrder,
-                                               std::pow(get_Gain().in_Linear(), 2))); //TODO: Revisar isso aqui
-            blockingFunctionsCache.at(numSlots).frequencySamples =
-                1.0 - blockingFunctionsCache.at(numSlots).frequencySamples;
+                                             filterOrder, std::pow(get_Gain().in_Linear(), 2));
             }
-        return bypassFunctionsCache.at(numSlots);
+        return bypassFunctionsCache.at(freq);
+        }
+    else
+        {
+        return *deviceTF;
+        }
+}
+
+TransferFunction& SSS::get_BlockTransferFunction(double centerFreq,
+        double bandwidth)
+{
+    if (considerFilterImperfection)
+        {
+        auto freq = std::make_pair(centerFreq, bandwidth);
+        int numSlots = std::round(bandwidth / Slot::BSlot);
+
+        if (!blockingFunctionsCache.count(freq))
+            {
+            blockingFunctionsCache[freq] = GaussianTransferFunction(
+                                               centerFreq - bandwidth / 2.0,
+                                               centerFreq + bandwidth / 2.0,
+                                               Slot::numFrequencySamplesPerSlot * numSlots,
+                                               filterOrder, std::pow(get_Gain().in_Linear(), 2));
+            //Stopband filter
+            blockingFunctionsCache[freq].frequencySamples
+                = 1.0 - blockingFunctionsCache[freq].frequencySamples;
+            }
+        return blockingFunctionsCache.at(freq);
         }
     else
         {

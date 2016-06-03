@@ -86,9 +86,13 @@ public:
      */
     unsigned int numSlots;
     /**
-     * @brief frequencyRange is half of the signal's bandwith.
+     * @brief freqMin is the minimum frequency occupied by this Signal.
      */
-    double frequencyRange;
+    double freqMin;
+    /**
+     * @brief freqMax is the maximum frequency occupied by this Signal.
+     */
+    double freqMax;
 
     std::map<std::weak_ptr<Link>,
         std::vector<std::weak_ptr<Slot>>,

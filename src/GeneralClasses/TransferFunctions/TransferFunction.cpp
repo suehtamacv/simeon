@@ -5,7 +5,7 @@ using namespace TF;
 TransferFunction::TransferFunction
 (double freqMin, double freqMax, unsigned long int numSamples, double scale) :
     frequencySamples(arma::linspace(freqMin, freqMax, numSamples).t()),
-    scale(scale), freqMin(freqMin), freqMax(freqMax), numSamples(numSamples)
+    scale(scale), freqMin(freqMin), freqMax(freqMax)
 {
     isImpulseTransferFunction = false;
 }

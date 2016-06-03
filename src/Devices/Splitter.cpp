@@ -51,7 +51,7 @@ double Splitter::get_OpEx()
     return 0.2;
 }
 
-TransferFunction& Splitter::get_TransferFunction(unsigned int)
+TransferFunction& Splitter::get_TransferFunction(double, double)
 {
     return *deviceTF.get();
 }

@@ -107,7 +107,8 @@ Signal &Link::bypass(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction(S.numSlots);
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                          S.freqMax - S.freqMin); //bandwidth
             }
         }
 

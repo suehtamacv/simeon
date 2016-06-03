@@ -14,17 +14,22 @@ Signal::Signal(mapSlots occupiedSlots) : occupiedSlots(occupiedSlots),
     SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
+    std::sort(occupiedSlots.begin()->second.begin(),
+              occupiedSlots.begin()->second.end(),
+              [](const std::weak_ptr<Slot> &l, const std::weak_ptr<Slot> &r)
+        {
+        return l.lock()->numSlot < r.lock()->numSlot;
+        });
+
     numSlots = occupiedSlots.begin()->second.size();
+    freqMin = occupiedSlots.begin()->second.front().lock()->S->freqMin;
+    freqMax = occupiedSlots.begin()->second.back().lock()->S->freqMin;
     if(considerFilterImperfection)
         {
-        frequencyRange = numSlots * Slot::BSlot / 2;
-        signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                            frequencyRange, PhysicalConstants::freq + frequencyRange,
+        signalSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
                             (int) Slot::numFrequencySamplesPerSlot * numSlots);
-        crosstalkSpecDensity = std::make_shared<SpectralDensity>
-                               (PhysicalConstants::freq - frequencyRange,
-                                PhysicalConstants::freq + frequencyRange,
-                                (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
+        crosstalkSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
+                               (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
         }
 }
 
@@ -69,7 +74,7 @@ Power Signal::get_NoisePower()
 Power Signal::get_SpectralPower()
 {
     return Power(
-               SimpsonsRule().calculate(signalSpecDensity->specDensity, frequencyRange * 2)
+               SimpsonsRule().calculate(signalSpecDensity->specDensity, freqMax - freqMin)
                * signalSpecDensity->densityScaling, Power::Watt);
 }
 
@@ -77,12 +82,11 @@ double Signal::get_SignalPowerRatio()
 {
     if (!originalSpecDensityCache.count(numSlots))
         {
-        SpectralDensity originSD(PhysicalConstants::freq - frequencyRange,
-                                 PhysicalConstants::freq + frequencyRange,
+        SpectralDensity originSD(freqMin, freqMax,
                                  Slot::numFrequencySamplesPerSlot * numSlots);
 
         originalSpecDensityCache.emplace(numSlots, Power(
-                                             SimpsonsRule().calculate(originSD.specDensity, frequencyRange * 2)
+                                             SimpsonsRule().calculate(originSD.specDensity, freqMax - freqMin)
                                              * originSD.densityScaling, Power::Watt));
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
@@ -93,9 +97,9 @@ Gain Signal::get_WeightedCrosstalk()
     arma::rowvec S = signalSpecDensity->specDensity;
     arma::rowvec X = crosstalkSpecDensity->specDensity;
 
-    double P = SimpsonsRule().calculate(S, frequencyRange * 2);
-    double k = P / SimpsonsRule().calculate(S % S, frequencyRange * 2);
+    double P = SimpsonsRule().calculate(S, freqMax - freqMin);
+    double k = P / SimpsonsRule().calculate(S % S, freqMax - freqMin);
 
     return
-        Gain(SimpsonsRule().calculate(k * S % X, frequencyRange * 2) / k, Gain::Linear);
+        Gain(SimpsonsRule().calculate(k * S % X, freqMax - freqMin) / k, Gain::Linear);
 }
