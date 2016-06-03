@@ -1,15 +1,15 @@
 #include <boost/assert.hpp>
 #include <Structure/Slot.h>
-
-#include <GeneralClasses/LinkSpectralDensity.h>
 #include <Structure/Link.h>
+#include <GeneralClasses/LinkSpectralDensity.h>
 #include <GeneralClasses/PhysicalConstants.h>
 
 Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 {
-    double frequencyRange = Link::NumSlots * BSlot / 2;
-    S = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                                          frequencyRange, PhysicalConstants::freq + frequencyRange,
+    double centerFreq = PhysicalConstants::freq +
+                        BSlot * (numSlot - (Link::NumSlots / 2));
+    S = std::make_shared<SpectralDensity>(centerFreq - BSlot / 2.0,
+                                          centerFreq + BSlot / 2.0,
                                           (int) numFrequencySamplesPerSlot, true);
 }
 
@@ -17,11 +17,7 @@ void Slot::freeSlot()
 {
     BOOST_ASSERT_MSG(!isFree, "Only occupied slots can be freed.");
     isFree = true;
-
-    for(unsigned int i = 0; i <= (unsigned int) numFrequencySamplesPerSlot - 1; i++)
-        {
-        S->specDensity(i) = 0;
-        }
+    S->specDensity.zeros();
 }
 
 void Slot::useSlot()

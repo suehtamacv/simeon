@@ -76,7 +76,6 @@ SOURCES += src/main.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
-    src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.cpp \
     src/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.cpp \
@@ -192,7 +191,6 @@ HEADERS += \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
-    include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Occupability.h \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h \
     include/RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Slots.h \

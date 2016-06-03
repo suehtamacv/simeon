@@ -16,11 +16,11 @@ public:
      * @param freqMin is the beginning of the signal's bandwidth.
      * @param freqMax is the end of the signal's bandwidth.
      * @param numSamples is the number of frequency samples along the bandwidth.
-     * @param filterOrder is the order of this Gaussian function.
+     * @param order is the order of this Gaussian function.
      * @param scale is the result of the gains and losses over this transfer function.
      */
     GaussianTransferFunction(double freqMin, double freqMax,
-                             unsigned long int numSamples, unsigned int filterOrder, double scale);
+                             unsigned long int numSamples, unsigned int order, double scale);
 
     /**
      * @brief BW_3dB is the bandwidth of optical filter at 3 dB.

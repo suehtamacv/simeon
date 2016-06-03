@@ -11,6 +11,9 @@
 extern bool considerAseNoise;
 extern bool considerFilterImperfection;
 
+typedef std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
+        mapSlots;
+
 /**
  * @brief The Signal class represents a signal that propagates through the
  * network.
@@ -31,11 +34,7 @@ public:
      * @brief Signal is the standard constructor of a Signal. Creates a signal
      * with power InputPower and OSNR InputOSNR.
      */
-    Signal(unsigned int numSlots = 1);
-
-    Signal(std::map<std::weak_ptr<Link>,
-           std::vector<std::weak_ptr<Slot>>,
-           std::owner_less<std::weak_ptr<Link>>>);
+    Signal(mapSlots);
     /**
      * @brief operator *= multiplies the Signal by a gain, effectively rescaling
      * both the signal and the noise.

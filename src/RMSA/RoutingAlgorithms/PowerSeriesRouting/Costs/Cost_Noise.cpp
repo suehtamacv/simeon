@@ -1,4 +1,5 @@
 #include <RMSA/RoutingAlgorithms/PowerSeriesRouting/Costs/Cost_Noise.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
 #include <Structure.h>
 #include <Calls/Call.h>
 
@@ -21,22 +22,35 @@ arma::rowvec PSR::cNoise::getCost(std::weak_ptr<Link> link,
 
 void PSR::cNoise::createCache()
 {
+    auto WAAlg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
+            SA::SpectrumAssignmentAlgorithm::FF, T);
+
     for (auto link : T->Links)
         {
+        std::vector<std::weak_ptr<Link>> Links = {link.second};
 
         auto Origin = link.second->Origin.lock()->ID;
         auto Destination = link.second->Destination.lock()->ID;
-
-        Signal S;
-        S = link.second->Origin.lock()->add(S);
-        S = link.second->bypass(S);
-        S = link.second->Destination.lock()->drop(S);
-        double NoisePower = S.get_NoisePower().in_Watts();
 
         for (auto &bitrate : TransmissionBitrate::DefaultBitrates)
             {
             for (auto &scheme : ModulationScheme::DefaultSchemes)
                 {
+                auto DummyCall = std::make_shared<Call>(link.second->Origin,
+                                                        link.second->Destination,
+                                                        bitrate);
+                DummyCall->Scheme = scheme;
+                TransparentSegment segment(Links, scheme, 0);
+                auto usedSlots = WAAlg->assignSlots(DummyCall, segment);
+
+                //Creates the signal
+                Signal S(usedSlots);
+                S = link.second->Origin.lock()->add(S);
+                S = link.second->bypass(S);
+                S = link.second->Destination.lock()->drop(S);
+                double NoisePower = S.get_NoisePower().in_Watts();
+
                 CallProperties Prop(Origin, Destination, bitrate, scheme);
                 double ThresholdNoise = Signal::InputPower.in_Watts() /
                                         scheme.get_ThresholdOSNR(bitrate).in_Linear();

@@ -9,6 +9,9 @@ class Call;
 class Slot;
 class Topology;
 
+typedef std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>, std::owner_less<std::weak_ptr<Link>>>
+        mapSlots;
+
 namespace RMSA
 {
 //! Contains the spectrum assignment algorithms.
@@ -54,10 +57,7 @@ public:
      * @return a map that associates, to each pointer to a Link, a vector containing
      * the slots used by this Call on the link.
      */
-    virtual std::map<std::weak_ptr<Link>,
-            std::vector<std::weak_ptr<Slot>>,
-            std::owner_less<std::weak_ptr<Link>>>
-            assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) = 0;
+    virtual mapSlots assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg) = 0;
     /**
      * @brief define_SpectrumAssignmentAlgorithm asks the user to define a spectrum
      * assignment algorithm.

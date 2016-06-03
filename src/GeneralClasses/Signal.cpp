@@ -10,26 +10,7 @@ using namespace NumericMethods;
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
 
-Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
-    SignalPower(InputPower),
-    NoisePower(InputPower * -InputOSNR)
-{
-    if(considerFilterImperfection)
-        {
-        frequencyRange = numSlots * Slot::BSlot / 2;
-        signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                            frequencyRange, PhysicalConstants::freq + frequencyRange,
-                            (int) Slot::numFrequencySamplesPerSlot * numSlots);
-        crosstalkSpecDensity = std::make_shared<SpectralDensity>
-                               (PhysicalConstants::freq - frequencyRange,
-                                PhysicalConstants::freq + frequencyRange,
-                                (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
-        }
-}
-
-Signal::Signal(std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
-               std::owner_less<std::weak_ptr<Link>>>  occupiedSlots) : occupiedSlots(
-                       occupiedSlots),
+Signal::Signal(mapSlots occupiedSlots) : occupiedSlots(occupiedSlots),
     SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {

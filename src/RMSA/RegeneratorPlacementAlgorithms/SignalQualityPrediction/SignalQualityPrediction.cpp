@@ -148,6 +148,9 @@ void SignalQualityPrediction::evaluateLNMax()
 {
     LNMax.clear();
     std::shared_ptr<ROUT::RoutingAlgorithm> R_Alg;
+    auto WA_Alg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
+            SA::SpectrumAssignmentAlgorithm::FF, T);
 
     switch (Type)
         {
@@ -180,8 +183,11 @@ void SignalQualityPrediction::evaluateLNMax()
                     auto DummyCall = std::make_shared<Call>(orig, dest, bitrate);
                     DummyCall->Scheme = scheme;
 
-                    auto links = R_Alg->route(DummyCall);
-                    Signal S;
+                    std::vector<std::weak_ptr<Link>> links = R_Alg->route(DummyCall);
+                    TransparentSegment segment(links, scheme, 0);
+                    auto usedSlots = WA_Alg->assignSlots(DummyCall, segment);
+
+                    Signal S(usedSlots);
 
                     unsigned long LNRoute = 0;
 
