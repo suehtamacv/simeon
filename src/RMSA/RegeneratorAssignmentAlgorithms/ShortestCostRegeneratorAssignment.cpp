@@ -6,6 +6,9 @@
 
 using namespace RMSA::RA;
 
+double ShortestCostRegeneratorAssignment::dcLevel = 0.0;
+bool ShortestCostRegeneratorAssignment::hasLoaded = false;
+
 ShortestCostRegeneratorAssignment::ShortestCostRegeneratorAssignment(
     std::shared_ptr<Topology> T,
     std::set<ModulationScheme> Schemes) :
@@ -105,7 +108,7 @@ double ShortestCostRegeneratorAssignment::get_Cost(const TransparentSegment
 {
     double cost = 0;
 
-    cost += -0.10; //DC Level
+    cost += dcLevel; //DC Level
 
         {
         //Normalized number of required slots
@@ -126,4 +129,35 @@ double ShortestCostRegeneratorAssignment::get_Cost(const TransparentSegment
         }
 
     return cost;
+}
+
+void ShortestCostRegeneratorAssignment::load()
+{
+    if (hasLoaded)
+        {
+        return;
+        }
+
+    std::cout << std::endl << "-> Enter the DC Level to SCRA." << std::endl;
+
+    do
+        {
+        std::cin >> dcLevel;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid DC Level." << std::endl;
+            std::cout << std::endl << "-> Enter the DC Level to SCRA." << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
+    hasLoaded = true;
 }
