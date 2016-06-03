@@ -60,27 +60,31 @@ public:
      * @brief mutate mutates this Individual.
      * @return a reference to this Individual, mutated.
      */
-    GA_Individual &mutate();
+    virtual GA_Individual &mutate() = 0;
     /**
      * @brief setGene sets the genes of this individual.
      * @param newGene are the new genes.
      */
-    void setGene(std::vector<int> newGene);
+    void setGene(std::map<int, std::vector<int>> newGene);
     /**
      * @brief getGenes returns the genes of this individual.
      * @return the genes of this individual.
      */
-    std::vector<int> getGenes() const;
-
+    std::map<int, std::vector<int>> getGenes() const;
     /**
      * @brief isEvaluated is true, if this Individual's Parameters have already
      * been evaluated.
      */
     bool isEvaluated;
 
+    double getParameter() const
+    {
+        return parameter;
+    }
+
 protected:
     double parameter;
-    std::vector<int> Gene;
+    std::map<int, std::vector<int>> Gene;
 };
 }
 

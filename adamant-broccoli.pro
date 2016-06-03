@@ -49,10 +49,15 @@ SOURCES += src/main.cpp \
     src/RMSA/RegeneratorAssignmentAlgorithms/FirstLongestReach.cpp \
     src/RMSA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.cpp \
     src/RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.cpp \
+    src/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/DistanceAdaptative.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/MostUsed.cpp \
+    src/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_CapEx.cpp \
+    src/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_OpEx.cpp \
+    src/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_BlockingProbability.cpp \
+    src/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_NumberOfRegenerators.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.cpp \
     src/RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.cpp \
@@ -93,6 +98,7 @@ SOURCES += src/main.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/BestFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/ExactFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FirstFit.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/LeastUsed.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/MostUsedSA.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/RandomFit.cpp \
@@ -100,18 +106,17 @@ SOURCES += src/main.cpp \
     src/RMSA/TransparentSegment.cpp \
     src/SimulationTypes/NetworkSimulation.cpp \
     src/SimulationTypes/SimulationType.cpp \
+    src/SimulationTypes/Simulation_FFE_Optimization.cpp \
     src/SimulationTypes/Simulation_NetworkLoad.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.cpp \
+    src/SimulationTypes/Simulation_NSGA2_RegnPlac.cpp \
+    src/SimulationTypes/Simulation_PowerRatioThreshold.cpp \
     src/SimulationTypes/Simulation_PSROptimization.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.cpp \
-    src/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.cpp \
-    src/SimulationTypes/Simulation_PowerRatioThreshold.cpp \
-    src/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.cpp
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -165,11 +170,17 @@ HEADERS += \
     include/RMSA/RegeneratorAssignmentAlgorithms/FirstLongestReach.h \
     include/RMSA/RegeneratorAssignmentAlgorithms/FirstNarrowestSpectrum.h \
     include/RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h \
+    include/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.h \
     include/RMSA/RegeneratorPlacementAlgorithms.h \
     include/RMSA/RegeneratorPlacementAlgorithms/DistanceAdaptative.h \
     include/RMSA/RegeneratorPlacementAlgorithms/Empty_RegeneratorPlacementAlgorithm.h \
     include/RMSA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h \
     include/RMSA/RegeneratorPlacementAlgorithms/MostUsed.h \
+    include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_CapEx.h \
+    include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_OpEx.h \
+    include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_BlockingProbability.h \
+    include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameters.h \
+    include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_NumberOfRegenerators.h \
     include/RMSA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h \
     include/RMSA/RegeneratorPlacementAlgorithms/NX_MostSimultaneouslyUsed.h \
     include/RMSA/RegeneratorPlacementAlgorithms/NX_RegeneratorPlacement.h \
@@ -215,6 +226,7 @@ HEADERS += \
     include/RMSA/SpectrumAssignmentAlgorithms/BestFit.h \
     include/RMSA/SpectrumAssignmentAlgorithms/ExactFit.h \
     include/RMSA/SpectrumAssignmentAlgorithms/FirstFit.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h \
     include/RMSA/SpectrumAssignmentAlgorithms/LeastUsed.h \
     include/RMSA/SpectrumAssignmentAlgorithms/MostUsedSA.h \
     include/RMSA/SpectrumAssignmentAlgorithms/RandomFit.h \
@@ -223,19 +235,17 @@ HEADERS += \
     include/SimulationTypes.h \
     include/SimulationTypes/NetworkSimulation.h \
     include/SimulationTypes/SimulationType.h \
+    include/SimulationTypes/Simulation_FFE_Optimization.h \
     include/SimulationTypes/Simulation_NetworkLoad.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/Simulation_NSGA2_RegnPlac.h \
+    include/SimulationTypes/Simulation_NSGA2_RegnPlac.h \
+    include/SimulationTypes/Simulation_PowerRatioThreshold.h \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_CapEx.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_OpEx.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameters.h \
-    include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h \
-    include/SimulationTypes/Simulation_PowerRatioThreshold.h \
-    include/RMSA/RegeneratorAssignmentAlgorithms/ShortestCostRegeneratorAssignment.h
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas
 

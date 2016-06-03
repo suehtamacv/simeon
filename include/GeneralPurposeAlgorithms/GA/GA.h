@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
 //! Contains the simple genetic algorithm
 namespace GeneticAlgorithm
@@ -61,6 +62,15 @@ public:
      * binaryTournamentParameter other Individuals.
      */
     static constexpr unsigned int binaryTournamentParameter = 2;
+    /**
+     * @brief evolution is a vector containing the evolutions of this GA algorithm.
+     */
+    std::vector<std::shared_ptr<GA_Generation>> evolution;
+    /**
+     * @brief createEmptyGeneration creates a new empty generation.
+     * @return a new empty generation.
+     */
+    virtual std::shared_ptr<GA_Generation> createEmptyGeneration() = 0;
 
 protected:
     /**
@@ -69,10 +79,11 @@ protected:
      * @param gen is the origin Generation.
      * @param dest is the destination Generation.
      */
-    void natural_selection(GA_Generation &gen, GA_Generation &dest);
-    std::vector<std::shared_ptr<GA_Generation>> evolution;
+    void natural_selection(std::shared_ptr<GA_Generation> gen,
+                           std::shared_ptr<GA_Generation> dest);
 
-    std::shared_ptr<GA_Generation> newGeneration(GA_Generation &prnt);
+    std::shared_ptr<GA_Generation> newGeneration
+    (std::shared_ptr<GA_Generation> prnt);
 
     unsigned int generation;
 };

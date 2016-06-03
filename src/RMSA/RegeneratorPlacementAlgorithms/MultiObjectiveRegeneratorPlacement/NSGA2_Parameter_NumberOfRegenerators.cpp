@@ -1,9 +1,10 @@
-#include "include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_NumberOfRegenerators.h"
+#include "include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_NumberOfRegenerators.h"
+#include "include/SimulationTypes/Simulation_NSGA2_RegnPlac.h"
 
-using namespace Simulations::NSGA2_Parameters;
+using namespace RMSA::RP::MORP;
 
 NSGA2_Parameter_NumberOfRegenerators::NSGA2_Parameter_NumberOfRegenerators
-(std::vector<int> gene, Simulation_NSGA2_RegnPlac &) :
+(std::vector<int> gene, Simulations::Simulation_NSGA2_RegnPlac &) :
     NSGA2_Parameter(gene)
 {
 

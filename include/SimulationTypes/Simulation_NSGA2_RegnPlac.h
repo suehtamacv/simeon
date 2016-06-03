@@ -1,7 +1,7 @@
 #ifndef SIMULATION_NSGA2_REGENERATORPLACEMENT_H
 #define SIMULATION_NSGA2_REGENERATORPLACEMENT_H
 
-#include "../SimulationType.h"
+#include "SimulationType.h"
 #include <GeneralPurposeAlgorithms/NSGA-2.h>
 #include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
 #include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
@@ -9,7 +9,6 @@
 
 namespace Simulations
 {
-
 /**
  * @brief The Simulation_NSGA2_RegnPlac class runs MORP regenerator placement
  * algorithm. This simulation uses the NSGA-2 genetic algorithm to find a

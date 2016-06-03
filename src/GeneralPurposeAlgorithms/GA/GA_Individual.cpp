@@ -12,7 +12,7 @@ GA_Individual::GA_Individual()
 
 bool GA_Individual::operator ==(const GA_Individual &other) const
 {
-    return (Gene == other.Gene);
+    return (parameter == other.parameter);
 }
 
 bool GA_Individual::operator <(const GA_Individual &other) const
@@ -22,25 +22,17 @@ bool GA_Individual::operator <(const GA_Individual &other) const
 
 GA_Individual& GA_Individual::mutate()
 {
-    std::uniform_int_distribution<int> dist(0, Gene.size() - 1);
-
-    for (unsigned gene = 0; gene < GA::mutationPoints; ++gene)
-        {
-        int g = dist(random_generator);
-        Gene[g] = createGene(g);
-        isEvaluated = false;
-        }
-
+    isEvaluated = false;
     return *this;
 }
 
-void GA_Individual::setGene(std::vector<int> newGene)
+void GA_Individual::setGene(std::map<int, std::vector<int>> newGene)
 {
     Gene = newGene;
     isEvaluated = false;
 }
 
-std::vector<int> GA_Individual::getGenes() const
+std::map<int, std::vector<int>> GA_Individual::getGenes() const
 {
     return Gene;
 }
@@ -56,16 +48,15 @@ std::string GA_Individual::print(bool pretty)
         {
         std::string indiv = "";
 
-        indiv += std::to_string(parameter);
-        indiv += " (";
         for (auto &g : Gene)
             {
-            indiv += std::to_string(g);
-            indiv += " ";
+            for (auto &gSlot : g.second)
+                {
+                indiv += std::to_string(gSlot);
+                indiv += " ";
+                }
             }
-        indiv += ")";
 
         return indiv;
         }
 }
-

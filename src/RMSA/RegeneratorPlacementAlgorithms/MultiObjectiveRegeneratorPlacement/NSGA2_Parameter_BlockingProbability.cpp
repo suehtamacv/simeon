@@ -1,16 +1,16 @@
-#include "include/SimulationTypes/Simulation_NSGA2_RegnPlac/NSGA2_Parameter_BlockingProbability.h"
+#include "include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_BlockingProbability.h"
 #include "include/Calls/CallGenerator.h"
 #include "include/RMSA/RoutingWavelengthAssignment.h"
 #include "include/SimulationTypes/NetworkSimulation.h"
+#include "include/SimulationTypes/Simulation_NSGA2_RegnPlac.h"
 
-using namespace Simulations::NSGA2_Parameters;
-using namespace RMSA;
-using namespace ROUT;
-using namespace SA;
-using namespace RA;
+using namespace RMSA::ROUT;
+using namespace RMSA::SA;
+using namespace RMSA::RP::MORP;
+using namespace RMSA::RA;
 
 NSGA2_Parameter_BlockingProbability::NSGA2_Parameter_BlockingProbability(
-    std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim) :
+    std::vector<int> gene, Simulations::Simulation_NSGA2_RegnPlac &Sim) :
     NSGA2_Parameter(gene), Sim(Sim)
 {
 
@@ -53,7 +53,7 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
             new RoutingWavelengthAssignment(
                 R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
 
-        value = NetworkSimulation(Generator, RMSA, Sim.NumCalls)
+        value = Simulations::NetworkSimulation(Generator, RMSA, Sim.NumCalls)
                 .get_CallBlockingProbability();
         isEvaluated = true;
         }

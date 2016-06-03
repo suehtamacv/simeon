@@ -2,7 +2,6 @@
 #define GA_GENERATION_H
 
 #include "GA.h"
-#include <set>
 
 namespace GeneticAlgorithm
 {
@@ -42,19 +41,20 @@ public:
      * @param g is the Generation to be added.
      */
     void operator += (std::shared_ptr<GA_Generation> g);
-
     /**
-     * @brief binaryTournament does binaryTournament in the remaining Individuals
-     * and returns a fit Individual.
-     * @return a fit Individual.
+     * @brief people is a set containing the individuals of this generation.
      */
-    std::shared_ptr<GA_Individual> binaryTournament();
+    std::vector<std::shared_ptr<GA_Individual>> people;
+    /**
+     * @brief getBestIndividual returns the best individual of this generation.
+     * @return the best individual of this generation.
+     */
+    std::shared_ptr<GA_Individual> getBestIndividual() const;
 
 protected:
     bool isEvaluated;
 
-    std::set<std::shared_ptr<GA_Individual>> people;
-    void breed(unsigned int a, unsigned int b, GA_Generation &dest);
+    virtual void breed(unsigned int a, unsigned int b, std::shared_ptr<GA_Generation> dest) = 0;
 };
 }
 

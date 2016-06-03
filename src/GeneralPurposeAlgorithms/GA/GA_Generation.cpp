@@ -1,8 +1,8 @@
 #include "include/GeneralPurposeAlgorithms/GA/GA_Generation.h"
 #include "include/GeneralPurposeAlgorithms/GA/GA_Individual.h"
-#include "include/GeneralClasses/RandomGenerator.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace GeneticAlgorithm;
 
@@ -13,7 +13,7 @@ GA_Generation::GA_Generation()
 
 void GA_Generation::eval()
 {
-    if (!isEvaluated)
+    if (isEvaluated)
         {
         return;
         }
@@ -25,6 +25,12 @@ void GA_Generation::eval()
         std::advance(person, i);
         (*person)->eval();
         }
+    std::sort(people.begin(), people.end(),
+              [](const std::shared_ptr<GA_Individual> &l,
+                 const std::shared_ptr<GA_Individual> &r)
+        {
+        return *l < *r;
+        });
 
     isEvaluated = true;
 }
@@ -32,7 +38,7 @@ void GA_Generation::eval()
 void GA_Generation::operator +=(std::shared_ptr<GA_Individual> i)
 {
     isEvaluated = false;
-    people.emplace(i->clone());
+    people.push_back(i->clone());
 }
 
 void GA_Generation::operator +=(std::shared_ptr<GA_Generation> g)
@@ -43,50 +49,34 @@ void GA_Generation::operator +=(std::shared_ptr<GA_Generation> g)
         }
 }
 
-void GA_Generation::breed(unsigned int a, unsigned int b, GA_Generation &dest)
-{
-    if (a == b)
-        {
-        return;
-        }
-
-    auto iterator_a = people.begin();
-    auto iterator_b = people.begin();
-    std::advance(iterator_a, a);
-    std::advance(iterator_b, b);
-
-    std::uniform_real_distribution<double> dist(0, 1);
-    std::vector<int> GeneA = (*iterator_a)->getGenes(),
-                     GeneB = (*iterator_b)->getGenes();
-
-    for (unsigned int i = 0; i < GeneA.size(); ++i)
-        {
-        if (dist(random_generator) < 0.5)
-            {
-            std::swap(GeneA[i], GeneB[i]); //swaps genes of the individuals
-            }
-        }
-
-    auto newIndivA = (*iterator_a)->clone(), newIndivB = (*iterator_b)->clone();
-    newIndivA->setGene(GeneA);
-    newIndivB->setGene(GeneB);
-    dest += newIndivA;
-    dest += newIndivB;
-
-    people.erase(iterator_a);
-    people.erase(iterator_b);
-}
-
 void GA_Generation::print(std::string filename)
 {
     if (filename == "NO_FILE_GIVEN")
         {
-        (*(people.begin()))->print();
+        getBestIndividual()->print();
         }
     else
         {
         std::ofstream OutFile(filename.c_str());
-        OutFile << (*(people.begin()))->print(false) << std::endl;
+        OutFile << getBestIndividual()->print(false) << std::endl;
         OutFile.close();
         }
+}
+
+std::shared_ptr<GA_Individual> GA_Generation::getBestIndividual() const
+{
+    std::shared_ptr<GA_Individual> best = people.front();
+    for (auto &indiv : people)
+        {
+        if (indiv->getParameter() == -1)
+            {
+            indiv->eval();
+            }
+
+        if (indiv->getParameter() < best->getParameter())
+            {
+            best = indiv;
+            }
+        }
+    return best;
 }

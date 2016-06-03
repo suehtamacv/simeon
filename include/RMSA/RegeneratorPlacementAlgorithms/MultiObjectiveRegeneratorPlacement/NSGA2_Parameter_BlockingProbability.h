@@ -1,11 +1,18 @@
 #ifndef NSGA2_PARAMETER_BLOCKINGPROBABILITY_H
 #define NSGA2_PARAMETER_BLOCKINGPROBABILITY_H
 
-#include "Simulation_NSGA2_RegnPlac.h"
+#include "include/GeneralPurposeAlgorithms/NSGA-2.h"
 
 namespace Simulations
 {
-namespace NSGA2_Parameters
+class Simulation_NSGA2_RegnPlac;
+}
+
+namespace RMSA
+{
+namespace RP
+{
+namespace MORP
 {
 /**
  * @brief The NSGA2_Parameter_BlockingProbability class is a parameter to the
@@ -13,11 +20,9 @@ namespace NSGA2_Parameters
  */
 class NSGA2_Parameter_BlockingProbability : public NSGA_II::NSGA2_Parameter
 {
-    friend class Simulation_NSGA2_RegnPlac;
-
 public:
     NSGA2_Parameter_BlockingProbability
-    (std::vector<int> gene, Simulation_NSGA2_RegnPlac &Sim);
+    (std::vector<int> gene, Simulations::Simulation_NSGA2_RegnPlac &Sim);
     double evaluate();
     std::string get_ParamName()
     {
@@ -25,8 +30,9 @@ public:
     }
 
 private:
-    Simulation_NSGA2_RegnPlac &Sim;
+    Simulations::Simulation_NSGA2_RegnPlac &Sim;
 };
+}
 }
 }
 
