@@ -116,7 +116,8 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
-    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp \
+    tests/GeneralClasses/GainTest.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -259,7 +260,7 @@ OTHER_FILES += README.md \
                .travis.yml
 
 CONFIG(debug, debug|release) {
-DEFINES += IS_DEBUG
+DEFINES += RUN_TESTS
 }
 
 INCLUDEPATH += include/

@@ -1,6 +1,8 @@
 #ifndef GAIN_H
 #define GAIN_H
 
+#include <ostream>
+
 /**
  * @brief The Gain class provides a interface to gain variables that are measured in dB units or in linear units.
  */
@@ -46,6 +48,7 @@ public:
     bool operator>(const Gain &) const;
     bool operator<(const Gain &) const;
     bool operator==(const Gain &) const;
+    bool operator!=(const Gain &) const;
     bool operator>=(const Gain &) const;
     bool operator<=(const Gain &) const;
 
@@ -59,6 +62,8 @@ public:
      * @return the value of this object in linear units.
      */
     double in_Linear();
+
+    friend std::ostream& operator<<(std::ostream &out, const Gain &G);
 
 private:
     double value_dB;

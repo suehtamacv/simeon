@@ -11,8 +11,8 @@ bool considerFilterImperfection = false;
 
 int main(int argc, char *argv[])
 {
+#ifdef RUN_TESTS
     ::testing::InitGoogleTest(&argc, argv);
-#ifdef IS_DEBUG
     return RUN_ALL_TESTS();
 #endif
 

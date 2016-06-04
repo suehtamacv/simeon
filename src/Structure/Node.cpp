@@ -323,6 +323,5 @@ void Node::set_NodeInactive()
 
 std::ostream& operator <<(std::ostream &out, const Node& node)
 {
-    out << "Node: " << node.ID;
-    return out;
+    return out << "Node: " << node.ID;
 }

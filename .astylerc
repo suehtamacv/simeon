@@ -5,6 +5,5 @@
 
 --add-brackets
 
---max-code-length=80
 --break-after-logical
 --pad-oper

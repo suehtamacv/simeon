@@ -1,6 +1,7 @@
 #include <GeneralClasses/Gain.h>
 #include <cmath>
 #include <gtest/gtest.h>
+#include <ostream>
 
 Gain::Gain(double value, InitType Type) : value_Linear(0),
     calculatedLinear(false)
@@ -77,6 +78,11 @@ bool Gain::operator ==(const Gain &G) const
     return (value_dB == G.in_dB());
 }
 
+bool Gain::operator !=(const Gain &G) const
+{
+    return !(operator ==(G));
+}
+
 bool Gain::operator >=(const Gain &G) const
 {
     return ((operator >(G)) || (operator ==(G)));
@@ -85,4 +91,9 @@ bool Gain::operator >=(const Gain &G) const
 bool Gain::operator <=(const Gain &G) const
 {
     return ((operator <(G)) || (operator ==(G)));
+}
+
+std::ostream& operator<<(std::ostream& os, const Gain &G)
+{
+    return os << G.in_dB() << "dB";
 }

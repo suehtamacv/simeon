@@ -256,7 +256,6 @@ void Link::set_LinkInactive()
 
 std::ostream& operator <<(std::ostream &out, const Link &link)
 {
-    out << "Link: (" << *(link.Origin.lock()) << " -> " << *
+    return out << "Link: (" << *(link.Origin.lock()) << " -> " << *
         (link.Destination.lock()) << "), length = " << link.Length << "km";
-    return out;
 }
