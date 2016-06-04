@@ -44,14 +44,29 @@ bool ModulationScheme::operator <(const ModulationScheme &scheme) const
     return (M < scheme.M);
 }
 
+bool ModulationScheme::operator <=(const ModulationScheme &scheme) const
+{
+    return (operator ==(scheme)) || (operator <(scheme));
+}
+
 bool ModulationScheme::operator >(const ModulationScheme &scheme) const
 {
     return (M > scheme.M);
 }
 
+bool ModulationScheme::operator >=(const ModulationScheme &scheme) const
+{
+    return (operator ==(scheme)) || (operator >(scheme));
+}
+
 bool ModulationScheme::operator ==(const ModulationScheme &scheme) const
 {
     return (M == scheme.M);
+}
+
+bool ModulationScheme::operator !=(const ModulationScheme &scheme) const
+{
+    return !operator ==(scheme);
 }
 
 Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate) const
@@ -69,6 +84,5 @@ unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate) const
 
 std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme)
 {
-    out << "Scheme: " << scheme.M << "QAM";
-    return out;
+    return out << scheme.M << "-QAM";
 }

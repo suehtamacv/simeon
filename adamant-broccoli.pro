@@ -118,7 +118,9 @@ SOURCES += src/main.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp \
     tests/GeneralClasses/GainTest.cpp \
-    tests/GeneralClasses/PowerTest.cpp
+    tests/GeneralClasses/PowerTest.cpp \
+    tests/GeneralClasses/TransmissionBitrateTest.cpp \
+    tests/GeneralClasses/ModulationSchemeTest.cpp
 
 HEADERS += \
     include/Calls.h \

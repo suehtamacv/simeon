@@ -23,18 +23,37 @@ double TransmissionBitrate::get_Bitrate() const
     return Bitrate;
 }
 
-bool TransmissionBitrate::operator <(const TransmissionBitrate &other) const
+bool TransmissionBitrate::operator ==(const TransmissionBitrate &br) const
 {
-    return Bitrate < other.get_Bitrate();
+    return Bitrate == br.get_Bitrate();
 }
 
-bool TransmissionBitrate::operator ==(const TransmissionBitrate &other) const
+bool TransmissionBitrate::operator !=(const TransmissionBitrate &br) const
 {
-    return Bitrate == other.get_Bitrate();
+    return !(operator ==(br));
+}
+
+bool TransmissionBitrate::operator <(const TransmissionBitrate &br) const
+{
+    return (Bitrate < br.get_Bitrate());
+}
+
+bool TransmissionBitrate::operator <=(const TransmissionBitrate &br) const
+{
+    return ((operator ==(br)) || (operator <(br)));
+}
+
+bool TransmissionBitrate::operator >(const TransmissionBitrate &br) const
+{
+    return (Bitrate > br.get_Bitrate());
+}
+
+bool TransmissionBitrate::operator >=(const TransmissionBitrate &br) const
+{
+    return ((operator ==(br)) || (operator >(br)));
 }
 
 std::ostream& operator <<(std::ostream &out, const TransmissionBitrate &br)
 {
-    out << "BitRate: " << (br.Bitrate / 1E9) << "Gbps";
-    return out;
+    return out << (br.Bitrate / 1E9) << "Gbps";
 }

@@ -52,9 +52,12 @@ public:
      */
     ModulationScheme &operator=(const ModulationScheme &scheme);
 
-    bool operator<(const ModulationScheme &scheme) const;
-    bool operator>(const ModulationScheme &scheme) const;
     bool operator==(const ModulationScheme &scheme) const;
+    bool operator!=(const ModulationScheme &scheme) const;
+    bool operator<(const ModulationScheme &scheme) const;
+    bool operator<=(const ModulationScheme &scheme) const;
+    bool operator>(const ModulationScheme &scheme) const;
+    bool operator>=(const ModulationScheme &scheme) const;
 
     /**
      * @brief get_ThresholdOSNR calculates the minimum OSNR acceptable to

@@ -9,7 +9,6 @@ TEST(PowerTest, Constructors)
     EXPECT_EQ(P1, P2) << "Copy constructor not working as expected.";
 }
 
-
 TEST(PowerTest, Conversions)
 {
     Power P1(0);
