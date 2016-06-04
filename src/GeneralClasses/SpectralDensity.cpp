@@ -16,21 +16,22 @@ SpectralDensity::SpectralDensity
 (double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec) :
     densityScaling(1), freqMin(freqMin), freqMax(freqMax)
 {
-    if(cleanSpec)
+    if (cleanSpec)
         {
         specDensity.zeros(numSamples);
         }
     else
         {
+        double centerFreq = (freqMax + freqMin) / 2.0;
         std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
 
-        if(specDensityMap.count(freqValues) == 0)
+        if (specDensityMap.count(freqValues) == 0)
             {
             arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
             for (auto& val : thisSpecDensity)
                 {
-                val = std::exp2l( (-2) * pow( 2 * (val - PhysicalConstants::freq) / SBW_3dB,
-                                              2 * TxFilterOrder));
+                val = std::exp2l( (-2) *
+                                  pow(2 * (val - centerFreq) / SBW_3dB, 2 * TxFilterOrder));
                 }
             specDensityMap.emplace(freqValues, thisSpecDensity);
             }

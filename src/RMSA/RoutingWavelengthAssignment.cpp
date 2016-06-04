@@ -79,7 +79,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
                     S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
                     (!considerFilterImperfection ||
                      S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
-                {                
+                {
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 Segments.push_back(Segment);
                 break;
@@ -93,7 +93,7 @@ std::shared_ptr<Route> RoutingWavelengthAssignment::routeCall(
         }
     else
         {
-        Links = R_Alg->route(C);        
+        Links = R_Alg->route(C);
 
         RA_Alg->thisRMSA = this;
 

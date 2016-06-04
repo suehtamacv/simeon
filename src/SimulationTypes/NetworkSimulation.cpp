@@ -56,7 +56,7 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         NumBlockedCalls++;
         }
     else
-        {        
+        {
         unsigned int auxCount = 0;
         for (auto &link : route->Slots)
             {
