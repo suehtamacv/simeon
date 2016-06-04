@@ -13,7 +13,10 @@ int main(int argc, char *argv[])
 {
 #ifdef RUN_TESTS
     ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    if (RUN_ALL_TESTS())
+        {
+        return -1;
+        }
 #endif
 
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"

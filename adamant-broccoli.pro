@@ -120,7 +120,8 @@ SOURCES += src/main.cpp \
     tests/GeneralClasses/GainTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
-    tests/GeneralClasses/ModulationSchemeTest.cpp
+    tests/GeneralClasses/ModulationSchemeTest.cpp \
+    tests/Structure/SlotTest.cpp
 
 HEADERS += \
     include/Calls.h \

@@ -24,8 +24,10 @@ public:
      * @brief Slot is the copy constructor of a slot.
      */
     Slot(const Slot &slot);
-
-    Slot &operator= (const Slot &slot);
+    /**
+     * @brief operator = is the assignment operator.
+     */
+    Slot& operator= (const Slot &slot);
 
     /**
      * @brief numSlot identifies the slot in the link.
@@ -35,7 +37,6 @@ public:
      * @brief isFree is true, iff the slot is free.
      */
     bool isFree;
-
     /**
      * @brief freeSlot frees this slot, if it isn't free.
      */
