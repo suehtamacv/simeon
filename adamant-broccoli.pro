@@ -121,7 +121,8 @@ SOURCES += src/main.cpp \
     tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
-    tests/Structure/SlotTest.cpp
+    tests/Structure/SlotTest.cpp \
+    tests/Calls/EventTest.cpp
 
 HEADERS += \
     include/Calls.h \

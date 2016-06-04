@@ -42,6 +42,11 @@ public:
      * @return true iff this event ocurrs after the Event passed as argument.
      */
     bool operator>(const Event &) const;
+    /**
+     * @brief operator < is used to compare the ocurral instants of two events.
+     * @return true iff this event ocurrs before the Event passed as argument.
+     */
+    bool operator<(const Event &) const;
 
     /**
      * @brief t is the ocurring time of the event.
