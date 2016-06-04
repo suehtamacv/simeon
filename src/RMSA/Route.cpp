@@ -1,5 +1,6 @@
 #include <algorithm>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <RMSA/Route.h>
 #include <Structure/Slot.h>
 #include <Structure/Node.h>
@@ -18,9 +19,9 @@ Route::Route(std::vector<TransparentSegment> Segments,
     for (auto &segment : Segments)
         {
         Nodes.insert(Nodes.end(), segment.Nodes.begin(), segment.Nodes.end() - 1);
-        BOOST_ASSERT_MSG((!segment.NumRegUsed) ||
-                         (segment.Nodes.back().lock()->get_NodeType() != Node::TransparentNode),
-                         "Trying to regenerate in transparent node.");
+        EXPECT_TRUE((!segment.NumRegUsed) ||
+                    (segment.Nodes.back().lock()->get_NodeType() != Node::TransparentNode)) <<
+                            "Trying to regenerate in transparent node.";
         Regenerators.emplace(segment.Nodes.back(), segment.NumRegUsed);
 
         Links.insert(Links.end(), segment.Links.begin(), segment.Links.end());
@@ -73,8 +74,8 @@ Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
 
     for (auto node = Nodes.begin(); node != Nodes.end(); ++node)
         {
-        BOOST_ASSERT_MSG((*node).lock() != Nodes.end()->lock(),
-                         "orig node is not in the Route.");
+        EXPECT_NE((*node).lock(), Nodes.end()->lock()) <<
+                "orig node is not in the Route.";
 
         if (orig.lock() == (*node).lock())
             {
@@ -85,8 +86,8 @@ Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
 
     for (auto node = currentNode ; node != Nodes.end(); ++node)
         {
-        BOOST_ASSERT_MSG((*node).lock() != Nodes.end()->lock(),
-                         "dest node is not in the Route.");
+        EXPECT_NE((*node).lock(), Nodes.end()->lock()) <<
+                "dest node is not in the Route.";
 
         if (dest.lock() == (*node).lock())
             {

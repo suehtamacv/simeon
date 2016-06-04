@@ -1,4 +1,5 @@
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
 #include <RMSA/Route.h>
@@ -47,8 +48,8 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
     auto route = RMSA->routeCall(evt->Parent);
     evt->Parent->CallEnding.lock()->route = evt->route = route;
 
-    BOOST_ASSERT_MSG(evt->Parent->Status != Call::Not_Evaluated,
-                     "Call was neither accepted nor blocked.");
+    EXPECT_NE(evt->Parent->Status, Call::Not_Evaluated) <<
+            "Call was neither accepted nor blocked.";
 
     if (evt->Parent->Status == Call::Blocked)
         {

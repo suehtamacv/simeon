@@ -3,6 +3,7 @@
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
+#include <gtest/gtest.h>
 
 using namespace RMSA::ROUT::PSR;
 
@@ -58,6 +59,7 @@ int Cost::get_N()
 
 double Cost::getCost(int N, std::weak_ptr<Link> link, std::shared_ptr<Call> C)
 {
-    BOOST_ASSERT_MSG((N <= NMax) && (N >= NMin), "Invalid N requested");
+    EXPECT_LE(N, NMax) << "Invalid N requested";
+    EXPECT_GE(N, NMin) << "Invalid N requested";
     return getCost(link, C)(N - NMin);
 }

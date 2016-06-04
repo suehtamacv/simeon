@@ -3,6 +3,7 @@
 #include <Calls/Call.h>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
+#include <gtest/gtest.h>
 
 using namespace RMSA::SA;
 
@@ -65,8 +66,8 @@ std::map<std::weak_ptr<Link>,
 
     if (si != -1)
         {
-        BOOST_ASSERT_MSG(sf == si + RequiredSlots - 1,
-                         "Error in Wavelength Assingment");
+        EXPECT_EQ(sf, si + RequiredSlots - 1) <<
+                                              "Error in Wavelength Assingment";
         for (auto &link : Seg.Links)
             {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>

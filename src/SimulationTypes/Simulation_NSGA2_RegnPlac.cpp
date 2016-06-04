@@ -10,7 +10,8 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameters.h>
 #include <include/GeneralPurposeAlgorithms/NSGA-2.h>
 #include <algorithm>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 
@@ -126,7 +127,7 @@ void Simulation_NSGA2_RegnPlac::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl;
     SimConfigFile << "  RoutingAlgorithm = " <<
@@ -168,8 +169,7 @@ void Simulation_NSGA2_RegnPlac::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-
+    EXPECT_TRUE(ConfigFile.is_open()) << "Input file is not open";
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();

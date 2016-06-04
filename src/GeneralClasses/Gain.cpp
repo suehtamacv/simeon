@@ -1,21 +1,19 @@
-#include <boost/assert.hpp>
-#include <cmath>
 #include <GeneralClasses/Gain.h>
+#include <cmath>
+#include <gtest/gtest.h>
 
 Gain::Gain(double value, InitType Type) : value_Linear(0),
     calculatedLinear(false)
 {
-
     if (Type == InitType::dB)
         {
         value_dB = value;
         }
     else if (Type == InitType::Linear)
         {
-        BOOST_ASSERT_MSG(value > 0, "There's no dB value for something negative.");
+        EXPECT_GT(value, 0) << "There's no dB value for something negative.";
         value_dB = 10 * log10(value);
         }
-
 }
 
 Gain Gain::operator -()

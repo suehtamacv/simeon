@@ -247,7 +247,7 @@ HEADERS += \
     include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h \
     include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.h
 
-LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas
+LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas -lgtest
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*
@@ -258,5 +258,8 @@ OTHER_FILES += README.md \
                .astylerc \
                .travis.yml
 
+CONFIG(debug, debug|release) {
+DEFINES += IS_DEBUG
+}
 
 INCLUDEPATH += include/

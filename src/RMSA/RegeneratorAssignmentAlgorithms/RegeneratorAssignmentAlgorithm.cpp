@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
@@ -110,7 +110,7 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
             }
         }
 
-    BOOST_ASSERT_MSG(false, "No Scheme can implement Call in Transparent Segment.");
+    EXPECT_TRUE(false) << "No Scheme can implement Call in Transparent Segment.";
     return *(ModulationSchemes.end());
 }
 
@@ -228,7 +228,7 @@ void RegeneratorAssignmentAlgorithm::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
 
     SimConfigFile << "  RegeneratorAssignmentAlgorithm = " <<
                   RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(

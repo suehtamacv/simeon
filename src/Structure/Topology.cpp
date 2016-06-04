@@ -1,5 +1,6 @@
 #include <Structure/Topology.h>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
@@ -122,8 +123,8 @@ Topology::Topology(std::string TopologyFileName)
 
         std::istringstream LinkParameters(link);
         LinkParameters >> OriginID >> DestinationID >> length;
-        BOOST_ASSERT_MSG(OriginID != DestinationID,
-                         "Link can't have the same Origin and Destination.");
+        EXPECT_NE(OriginID, DestinationID) <<
+                                           "Link can't have the same Origin and Destination.";
 
         int NodesFound = 0;
 
@@ -142,8 +143,7 @@ Topology::Topology(std::string TopologyFileName)
                 }
             }
 
-        BOOST_ASSERT_MSG(NodesFound == 2,
-                         "Link with invalid origin and/or destination.");
+        EXPECT_EQ(NodesFound, 2) << "Link with invalid origin and/or destination.";
 
         add_Link(Origin, Destination, length);
         }
@@ -181,7 +181,7 @@ void Topology::save(std::string TopologyFileName)
     std::ofstream TopologyFile(TopologyFileName,
                                std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(TopologyFile.is_open(), "Output file is not open");
+    EXPECT_TRUE(TopologyFile.is_open()) << "Output file is not open";
 
     TopologyFile << "  [nodes]" << std::endl << std::endl;
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
@@ -316,8 +316,8 @@ void Topology::print()
     for (auto &it : Nodes)
         {
         std::cout << "\t (" << it->ID
-                     << ")\t" << Node::NodeArchitecturesNames.left.at(it->get_NodeArch())
-                     << "\t" << it->get_NumRegenerators() << " Regenerators" << std::endl;
+                  << ")\t" << Node::NodeArchitecturesNames.left.at(it->get_NodeArch())
+                  << "\t" << it->get_NumRegenerators() << " Regenerators" << std::endl;
         }
 
     std::cout << std::endl;

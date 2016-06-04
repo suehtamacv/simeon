@@ -1,7 +1,8 @@
 #include <SimulationTypes/Simulation_RegeneratorNumber.h>
 #include <Structure/Link.h>
 #include <Calls/CallGenerator.h>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <map>
@@ -275,7 +276,7 @@ void Simulation_RegeneratorNumber::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
 
     SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
@@ -320,7 +321,7 @@ void Simulation_RegeneratorNumber::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
+    EXPECT_TRUE(ConfigFile.is_open()) << "Input file is not open";
 
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);

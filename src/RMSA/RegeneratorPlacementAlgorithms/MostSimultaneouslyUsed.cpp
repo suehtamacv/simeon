@@ -1,5 +1,6 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/MostSimultaneouslyUsed.h>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Calls/CallGenerator.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
@@ -24,8 +25,8 @@ MostSimultaneouslyUsed::MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
 
 void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned)
 {
-    BOOST_ASSERT_MSG(RMSA->RA_Alg != nullptr, "Regenerator Placement can only run"
-                     " if a Regenerator Assignment Algorithm has been set.");
+    EXPECT_NE(RMSA->RA_Alg, nullptr) << "Regenerator Placement can only run if "
+                                     "a Regenerator Assignment Algorithm has been set.";
 
     if (NumTotalReg == 0)
         {

@@ -1,5 +1,5 @@
-#include <boost/assert.hpp>
 #include <Structure/Slot.h>
+#include <gtest/gtest.h>
 
 Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 {
@@ -8,13 +8,13 @@ Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 
 void Slot::freeSlot()
 {
-    BOOST_ASSERT_MSG(!isFree, "Only occupied slots can be freed.");
+    EXPECT_FALSE(isFree) << "Only occupied slots can be freed.";
     isFree = true;
 }
 
 void Slot::useSlot()
 {
-    BOOST_ASSERT_MSG(isFree, "Only free slots can be used.");
+    EXPECT_TRUE(isFree) << "Only free slots can be used.";
     isFree = false;
 }
 

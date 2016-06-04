@@ -7,7 +7,8 @@
 #include <RMSA.h>
 #include <Structure/Link.h>
 #include <sstream>
-#include <boost/assert.hpp>
+#include <gtest/gtest.h>
+
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <map>
@@ -353,7 +354,7 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
 
     SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
                       Type) << std::endl;
@@ -364,8 +365,6 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
 
     SimConfigFile.open(SimConfigFileName,
                        std::ofstream::out | std::ofstream::app);
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
-
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
                   SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.left.at(
@@ -427,8 +426,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-
+    EXPECT_TRUE(ConfigFile.is_open()) << "Input file is not open";
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();
@@ -586,8 +584,8 @@ double Simulation_PSROptimization::Fitness::operator()(
     auto TopologyCopy = std::make_shared<Topology>(*T);
 
     //Creates the RMSA Algorithms
-    auto R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm,
-                 ROUT::RoutingCost::matPSR, TopologyCopy, false); //first with Matricial PSR. Changes later.
+    auto R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm
+                 (Routing_Algorithm, ROUT::RoutingCost::matPSR, TopologyCopy, false); //first with Matricial PSR. Changes later.
     auto RCost = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
 
     std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =

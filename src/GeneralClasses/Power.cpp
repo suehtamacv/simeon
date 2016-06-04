@@ -1,6 +1,6 @@
-#include <boost/assert.hpp>
-#include <cmath>
 #include <GeneralClasses/Power.h>
+#include <cmath>
+#include <gtest/gtest.h>
 
 Power::Power(double value, InitType Type)
 {
@@ -10,7 +10,7 @@ Power::Power(double value, InitType Type)
         }
     else if (Type == InitType::Watt)
         {
-        BOOST_ASSERT_MSG(value >= 0, "A power, in Watts, can't be negative.");
+        EXPECT_GE(value , 0) << "A power, in Watts, can't be negative.";
         value_Watts = value;
         }
 }
