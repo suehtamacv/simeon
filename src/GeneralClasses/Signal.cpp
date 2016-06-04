@@ -73,5 +73,5 @@ double Signal::get_SignalPowerRatio()
                                              TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
                                              * originSD.densityScaling, Power::Watt));
         }
-    return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
+    return (get_SpectralPower() / originalSpecDensityCache.at(numSlots)).in_Linear();
 }

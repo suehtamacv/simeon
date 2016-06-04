@@ -1,6 +1,14 @@
 #include <gtest/gtest.h>
 #include "GeneralClasses/Gain.h"
 
+TEST(GainTest, Constructors)
+{
+    Gain G1(123);
+    Gain G2(G1);
+
+    EXPECT_EQ(G1, G2) << "Copy constructor not working as expected.";
+}
+
 TEST(GainTest, Conversions)
 {
     Gain G1(0);
@@ -42,9 +50,9 @@ TEST(GainTest, BasicOperations)
     EXPECT_EQ(G3, -G3) << "A gain of 1 should be equal to a gain of 1/1.";
 
     Gain G4(10);
-    EXPECT_LE(G1, G4) << "A gain of " << G1 << " should be less or equal than a gain of " << G4 << ".";
+    EXPECT_LE(G1, G4) << "A gain of " << G1 << " should be less than or equal to a gain of " << G4 << ".";
     EXPECT_LT(G1, G4) << "A gain of " << G1 << " should be less than a gain of " << G4 << ".";
-    EXPECT_GE(G1, -G4) << "A gain of " << G1 << " should be greater or equal than a gain of " << -G4 << ".";
+    EXPECT_GE(G1, -G4) << "A gain of " << G1 << " should be greater than or equal to a gain of " << -G4 << ".";
     EXPECT_GT(G1, -G4) << "A gain of " << G1 << " should be greater than a gain of " << -G4 << ".";
 
     EXPECT_LT((-G4).in_Linear(), 1) << "A gain of " << -G4 << " should be greater than 1.";
