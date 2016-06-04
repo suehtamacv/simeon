@@ -19,7 +19,7 @@ void GA_Generation::eval()
         }
 
     #pragma omp parallel for ordered schedule(dynamic)
-    for (unsigned i = 0; i < people.size(); i++)
+    for (size_t i = 0; i < people.size(); i++)
         {
         auto person = people.begin();
         std::advance(person, i);

@@ -58,7 +58,7 @@ void MostUsed::placeRegenerators(unsigned N, unsigned X)
         PossibleNodes.push_back(node);
         }
 
-    for (unsigned iter = 0; iter < N; iter++)
+    for (size_t iter = 0; iter < N; iter++)
         {
         long long unsigned MaxUsed = 0;
 

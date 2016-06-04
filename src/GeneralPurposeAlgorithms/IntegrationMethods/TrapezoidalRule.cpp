@@ -12,7 +12,7 @@ double TrapezoidalRule::calculate()
 {
     double Result, Sum = 0, h;
     h = XRange / (YPoints.size() - 1);
-    for(unsigned int Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
+    for(size_t Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
         {
         Sum += YPoints.at(Cont);
         }

@@ -45,7 +45,7 @@ double TensorialPowerSeriesRouting::get_Cost
 void TensorialPowerSeriesRouting::calculate_CoefsMatrix()
 {
     coefs_matrix = arma::ones(1);
-    for (unsigned cost = 0; cost < Costs.size(); ++cost)
+    for (size_t cost = 0; cost < Costs.size(); ++cost)
         {
         auto costCoefs = coefficients.cols(cost * get_N(), (cost + 1) * get_N() - 1);
         coefs_matrix = arma::kron(coefs_matrix, costCoefs);

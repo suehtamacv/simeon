@@ -36,7 +36,7 @@ void Simulation_NSGA2_RegnPlac::Individual::createIndividual()
 {
     std::vector<int> IndivGene;
 
-    for (unsigned int gene = 0; gene < Sim.T->Nodes.size(); gene++)
+    for (size_t gene = 0; gene < Sim.T->Nodes.size(); gene++)
         {
         IndivGene.push_back(createGene(gene));
         }

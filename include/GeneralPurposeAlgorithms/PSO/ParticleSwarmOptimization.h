@@ -96,7 +96,7 @@ ParticleSwarmOptimization<PositionType, Fit, Comp>::ParticleSwarmOptimization(
         }
 
     //Create ring topology
-    for (unsigned particle = 0; particle < Particles.size(); ++particle)
+    for (size_t particle = 0; particle < Particles.size(); ++particle)
         {
         if (particle != 0)
             {
@@ -126,7 +126,7 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::run_generation()
 {
     #pragma omp parallel for ordered schedule(dynamic)
 
-    for (unsigned i = 0; i < Particles.size(); i++)
+    for (size_t i = 0; i < Particles.size(); i++)
         {
         Particles[i]->currentFit = Fit()(Particles[i]);
 
@@ -166,7 +166,7 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::updatePositions()
                            particle->Neighbour[0].lock() : particle->Neighbour[1].lock();
 
         //Calculate velocities
-        for (unsigned i = 0; i < N; i++)
+        for (size_t i = 0; i < N; i++)
             {
             double Eps1 = PSO_UnifDistribution(random_generator);
             double Eps2 = PSO_UnifDistribution(random_generator);
@@ -186,7 +186,7 @@ void ParticleSwarmOptimization<PositionType, Fit, Comp>::updatePositions()
             }
 
         //Calculate positions
-        for (unsigned i = 0; i < N; i++)
+        for (size_t i = 0; i < N; i++)
             {
             particle->X[i] += particle->V[i];
 

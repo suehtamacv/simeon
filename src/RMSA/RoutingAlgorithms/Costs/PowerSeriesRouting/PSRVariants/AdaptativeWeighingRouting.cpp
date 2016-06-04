@@ -30,7 +30,7 @@ double AdaptativeWeighingRouting::get_Cost(
     //Spherical coordinates for a n-sphere that represents the possible values that the AWR can take.
     double Sines = 1;
 
-    for (unsigned n = 0; n < Costs.size(); ++n)
+    for (size_t n = 0; n < Costs.size(); ++n)
         {
         Cost += Costs[n]->getCost(1, link, C) * std::cos(coefficients.at(n)) * Sines;
         Sines *= std::sin(coefficients.at(n));

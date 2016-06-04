@@ -31,7 +31,7 @@ void FFE_Generation::breed(unsigned int a, unsigned int b,
     std::uniform_int_distribution<int> dist(1, GeneA.size() - 1);
     int crossOverPoint = dist(random_generator);
 
-    for (unsigned int i = crossOverPoint; i < GeneA.size(); ++i)
+    for (size_t i = crossOverPoint; i < GeneA.size(); ++i)
         {
         auto nSlot = SpectrumAssignmentAlgorithm::possibleRequiredSlots.begin();
         std::advance(nSlot, i);

@@ -49,7 +49,7 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
     //LNMax is based on Minimum Hops measure
     if (SQP->Type == SignalQualityPrediction::HopsNumber)
         {
-        for (unsigned numNode = 0; numNode <= Links.size(); ++numNode)
+        for (size_t numNode = 0; numNode <= Links.size(); ++numNode)
             {
             if ((numNode % LNMax == 0) ||
                     ((numNode - 1) % LNMax == 0) ||
@@ -65,7 +65,7 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         double sumLength = 0;
         int countLNMaxSection = 1;
 
-        for (unsigned numNode = 0; numNode < Links.size(); ++numNode)
+        for (size_t numNode = 0; numNode < Links.size(); ++numNode)
             {
             sumLength += Links[numNode].lock()->Length;
             if (sumLength >= countLNMaxSection * LNMax)
@@ -77,7 +77,7 @@ void SQP_NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
             }
         }
 
-    for (unsigned numNode = 0; numNode < Links.size(); ++numNode)
+    for (size_t numNode = 0; numNode < Links.size(); ++numNode)
         {
         if (sqp_LNMax[numNode])
             {

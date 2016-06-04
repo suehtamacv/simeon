@@ -16,7 +16,7 @@ double NSGA2_Parameter_CapEx::evaluate()
         {
         Topology T(*Sim.T);
 
-        for (unsigned int i = 0; i < gene.size(); i++)
+        for (size_t i = 0; i < gene.size(); i++)
             {
             if (gene[i] != 0)
                 {

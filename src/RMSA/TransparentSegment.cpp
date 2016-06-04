@@ -97,7 +97,7 @@ int TransparentSegment::get_Contiguity(std::shared_ptr<Call> C) const
     auto Slots = std::vector<bool>(Link::NumSlots, true);
     for (auto &link : Links)
         {
-        for (unsigned i = 0; i < Slots.size(); ++i)
+        for (size_t i = 0; i < Slots.size(); ++i)
             {
             Slots[i] = Slots[i] && link.lock()->isSlotFree(i);
             }
@@ -128,7 +128,7 @@ int TransparentSegment::get_Availability() const
     auto Slots = std::vector<bool>(Link::NumSlots, true);
     for (auto &link : Links)
         {
-        for (unsigned i = 0; i < Slots.size(); ++i)
+        for (size_t i = 0; i < Slots.size(); ++i)
             {
             Slots[i] = Slots[i] && link.lock()->isSlotFree(i);
             }

@@ -77,7 +77,7 @@ Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
         auto currShortestRoute = RouteLinks.back();
         double minRouteCost = std::numeric_limits<double>::max();
 
-        for (unsigned n = 0; n < lastShortRoute.size(); ++n)
+        for (size_t n = 0; n < lastShortRoute.size(); ++n)
             {
             auto spurNode = lastShortRoute[n].lock()->Origin;
             auto rootPath = std::vector<std::weak_ptr<Link>>(lastShortRoute.begin(),

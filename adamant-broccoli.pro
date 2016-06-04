@@ -118,9 +118,9 @@ SOURCES += src/main.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp \
     tests/GeneralClasses/GainTest.cpp \
+    tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
-    tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/Structure/SlotTest.cpp
 
 HEADERS += \
@@ -231,6 +231,9 @@ HEADERS += \
     include/RMSA/SpectrumAssignmentAlgorithms/BestFit.h \
     include/RMSA/SpectrumAssignmentAlgorithms/ExactFit.h \
     include/RMSA/SpectrumAssignmentAlgorithms/FirstFit.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h \
+    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.h \
     include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h \
     include/RMSA/SpectrumAssignmentAlgorithms/LeastUsed.h \
     include/RMSA/SpectrumAssignmentAlgorithms/MostUsedSA.h \
@@ -247,10 +250,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.h \
-    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h \
-    include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas -lgtest
 

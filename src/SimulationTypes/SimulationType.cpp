@@ -118,7 +118,7 @@ void SimulationType::load()
             }
         while(1);
 
-        for(unsigned int i = 0; i < chosenMetrics.size(); i++)
+        for(size_t i = 0; i < chosenMetrics.size(); i++)
             {
             if(chosenMetrics.at(i) == SimulationType::Physical_Impairment::asenoise)
                 {

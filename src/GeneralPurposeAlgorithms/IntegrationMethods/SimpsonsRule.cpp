@@ -13,7 +13,7 @@ double SimpsonsRule::calculate()
     double Result, h, Sum = 0;
     h = XRange / (YPoints.size() - 1);
 
-    for(unsigned int Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
+    for(size_t Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
         {
         if(Cont % 2)
             {

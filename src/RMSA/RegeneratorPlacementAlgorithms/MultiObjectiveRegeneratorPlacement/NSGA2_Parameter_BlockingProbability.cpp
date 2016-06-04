@@ -22,7 +22,7 @@ double NSGA2_Parameter_BlockingProbability::evaluate()
         {
         std::shared_ptr<Topology> T(new Topology(*Sim.T));
 
-        for (unsigned int i = 0; i < gene.size(); i++)
+        for (size_t i = 0; i < gene.size(); i++)
             {
             if (gene[i] != 0)
                 {

@@ -18,7 +18,7 @@ NSGA2_Generation::NSGA2_Generation() : isEvaluated(false)
 void NSGA2_Generation::eval()
 {
     #pragma omp parallel for ordered schedule(dynamic)
-    for (unsigned i = 0; i < people.size(); i++)
+    for (size_t i = 0; i < people.size(); i++)
         {
         people[i]->eval();
         }
@@ -45,7 +45,7 @@ void NSGA2_Generation::evalCrowdingDistances(int ParetoFront)
         individual->crowdingDistance = 0;
         }
 
-    for (unsigned int par = 0; par < numParameters; par++)
+    for (size_t par = 0; par < numParameters; par++)
         {
         struct Param
             {
@@ -208,9 +208,9 @@ void NSGA2_Generation::print(std::string filename, int paretoFront)
     if (filename == "NO_FILE_GIVEN")
         {
         //Prints at most five elements
-        unsigned numElements = (front.size() < 5 ? front.size() : 5);
+        size_t numElements = (front.size() < 5 ? front.size() : 5);
 
-        for (unsigned indiv = 0; indiv < numElements; indiv++)
+        for (size_t indiv = 0; indiv < numElements; indiv++)
             {
             front[indiv]->print();
             }
@@ -259,7 +259,7 @@ void NSGA2_Generation::breed(
 
     if (dist(random_generator) < NSGA2::breedingProb)   //breeds
         {
-        for (unsigned int i = 0; i < GeneA.size(); ++i)
+        for (size_t i = 0; i < GeneA.size(); ++i)
             {
             if (dist(random_generator) < 0.5)
                 {

@@ -55,7 +55,7 @@ void Simulation_NetworkLoad::run()
     extern bool parallelism_enabled;
     #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
 
-    for (unsigned i = 0; i < simulations.size(); i++)
+    for (size_t i = 0; i < simulations.size(); i++)
         {
         if (!simulations[i]->hasSimulated)
             {

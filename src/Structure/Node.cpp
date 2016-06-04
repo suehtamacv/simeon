@@ -66,7 +66,7 @@ Node::Node(const Node &node) : ID(node.ID)
         Devices.push_back(device->clone());
         }
 
-    for (unsigned i = 0; i < node.Regenerators.size(); i++)
+    for (size_t i = 0; i < node.Regenerators.size(); i++)
         {
         Regenerators.push_back(std::shared_ptr<Device>(new Regenerator()));
         }

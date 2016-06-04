@@ -41,7 +41,7 @@ void GA::natural_selection(std::shared_ptr<GA_Generation> gen,
         return *l < *r;
         });
 
-    for (unsigned int i = 0; i < GA::alphaIndiv; ++i)
+    for (size_t i = 0; i < GA::alphaIndiv; ++i)
         {
         auto indiv = gen->people.begin();
         std::advance(indiv, i);

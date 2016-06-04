@@ -703,7 +703,7 @@ void Simulation_PSROptimization::runPSR()
 
     std::ofstream logFile(LogFilename);
 
-    for (unsigned i = 1; i <= G; i++)
+    for (size_t i = 1; i <= G; i++)
         {
         if (!hasRun && (!BestParticle || BestParticle->bestFit != 0.0))
             {

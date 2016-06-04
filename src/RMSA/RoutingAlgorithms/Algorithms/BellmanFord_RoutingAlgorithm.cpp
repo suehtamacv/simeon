@@ -37,11 +37,11 @@ BellmanFord_RoutingAlgorithm::route(std::shared_ptr<Call> C)
     MinDistance[C->Origin.lock()->ID] = 0;
 
     bool hasChanged;
-    for (unsigned int iter = 0; iter < T->Nodes.size(); ++iter)
+    for (size_t iter = 0; iter < T->Nodes.size(); ++iter)
         {
         hasChanged = false;
         ActiveVertices.clear();
-        for (unsigned int node = 0; node < T->Nodes.size(); ++node)
+        for (size_t node = 0; node < T->Nodes.size(); ++node)
             {
             ActiveVertices.insert({MinDistance[node], T->Nodes[node]});
             }

@@ -11,9 +11,9 @@ using namespace RMSA::ROUT::PSR;
 LocalPowerSeriesRouting::LocalPowerSeriesRouting(std::shared_ptr<Topology> T)
     : PowerSeriesRouting(T, localPSR)
 {
-    for (unsigned orig = 1; orig <= T->Nodes.size(); ++orig)
+    for (size_t orig = 1; orig <= T->Nodes.size(); ++orig)
         {
-        for (unsigned dest = 1; dest <= T->Nodes.size(); ++dest)
+        for (size_t dest = 1; dest <= T->Nodes.size(); ++dest)
             {
             if (orig == dest)
                 {
@@ -31,9 +31,9 @@ LocalPowerSeriesRouting::LocalPowerSeriesRouting
 (std::shared_ptr<Topology> T, std::vector<std::shared_ptr<PSR::Cost>> Costs)
     : PowerSeriesRouting(T, Costs, localPSR)
 {
-    for (unsigned orig = 1; orig <= T->Nodes.size(); ++orig)
+    for (size_t orig = 1; orig <= T->Nodes.size(); ++orig)
         {
-        for (unsigned dest = 1; dest <= T->Nodes.size(); ++dest)
+        for (size_t dest = 1; dest <= T->Nodes.size(); ++dest)
             {
             if (orig == dest)
                 {
