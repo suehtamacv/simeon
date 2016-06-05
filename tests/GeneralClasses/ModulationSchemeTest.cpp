@@ -1,3 +1,5 @@
+#ifdef RUN_TESTS
+
 #include "include/GeneralClasses/ModulationScheme.h"
 #include <gtest/gtest.h>
 
@@ -32,3 +34,5 @@ TEST(ModulationSchemeTest, Operations)
     EXPECT_GT(M3, M2) << M3 << " should be greater than to " << M2 << ".";
     EXPECT_GE(M3, M2) << M3 << " should be greater than or equal to " << M2 << ".";
 }
+
+#endif

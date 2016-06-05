@@ -47,6 +47,11 @@ public:
      * @return true iff this event ocurrs before the Event passed as argument.
      */
     bool operator<(const Event &) const;
+    /**
+     * @brief operator == compares two events for equality.
+     * @return true iff the events have the same occural time.
+     */
+    bool operator==(const Event &) const;
 
     /**
      * @brief t is the ocurring time of the event.

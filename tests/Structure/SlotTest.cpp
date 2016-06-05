@@ -1,3 +1,5 @@
+#ifdef RUN_TESTS
+
 #include "Structure/Slot.h"
 #include <gtest/gtest.h>
 
@@ -30,3 +32,5 @@ TEST(SlotTest, Operations)
     EXPECT_TRUE(S1.isFree) << "Slot should be free.";
     EXPECT_TRUE(S2.isFree) << "Slot should be free.";
 }
+
+#endif

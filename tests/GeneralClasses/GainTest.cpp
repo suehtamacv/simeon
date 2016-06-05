@@ -1,3 +1,5 @@
+#ifdef RUN_TESTS
+
 #include <gtest/gtest.h>
 #include "GeneralClasses/Gain.h"
 
@@ -57,3 +59,5 @@ TEST(GainTest, BasicOperations)
 
     EXPECT_LT((-G4).in_Linear(), 1) << "A gain of " << -G4 << " should be greater than 1.";
 }
+
+#endif

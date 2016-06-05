@@ -1,3 +1,5 @@
+#ifdef RUN_TESTS
+
 #include <gtest/gtest.h>
 #include "GeneralClasses/Power.h"
 
@@ -69,3 +71,5 @@ TEST(PowerTest, OperationsWithGains)
     //20dBm + (-10dB) = 10dBm
     EXPECT_EQ(P3 * G4, P2) << "A power of " << P3 << " times a gain of " << G4 << " should be equal to " << P2 << ".";
 }
+
+#endif

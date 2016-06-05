@@ -9,7 +9,7 @@ bool parallelism_enabled = true;
 bool considerAseNoise = false;
 bool considerFilterImperfection = false;
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
 #ifdef RUN_TESTS
     ::testing::InitGoogleTest(&argc, argv);

@@ -1,3 +1,5 @@
+#ifdef RUN_TESTS
+
 #include "Calls/Event.h"
 #include <gtest/gtest.h>
 
@@ -27,3 +29,5 @@ TEST(EventTest, Comparison)
     EXPECT_GT(evt3, evt1) << "Events should be ordered by their occurral times.";
     EXPECT_GT(evt3, evt2) << "Events should be ordered by their occurral times.";
 }
+
+#endif

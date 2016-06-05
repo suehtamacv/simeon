@@ -18,3 +18,8 @@ bool Event::operator <(const Event &E) const
 {
     return (t < E.t);
 }
+
+bool Event::operator ==(const Event &E) const
+{
+    return (t == E.t);
+}

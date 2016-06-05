@@ -1,3 +1,5 @@
+#ifdef RUN_TESTS
+
 #include "include/GeneralClasses/TransmissionBitrate.h"
 #include <gtest/gtest.h>
 
@@ -23,3 +25,5 @@ TEST(TransmissionBitrateTest, Operations)
     EXPECT_GT(BR3, BR1) << "A bitrate of " << BR3 << " should be greater than a bitrate of " << BR1 << ".";
     EXPECT_GE(BR3, BR1) << "A bitrate of " << BR3 << " should be greater than or equal to a bitrate of " << BR1 << ".";
 }
+
+#endif

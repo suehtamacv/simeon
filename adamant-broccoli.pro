@@ -98,6 +98,9 @@ SOURCES += src/main.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/BestFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/ExactFit.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FirstFit.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
+    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/LeastUsed.cpp \
     src/RMSA/SpectrumAssignmentAlgorithms/MostUsedSA.cpp \
@@ -114,15 +117,13 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
-    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Generation.cpp \
-    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.cpp \
-    src/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_GA.cpp \
     tests/GeneralClasses/GainTest.cpp \
     tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
     tests/Structure/SlotTest.cpp \
-    tests/Calls/EventTest.cpp
+    tests/Calls/EventTest.cpp \
+    tests/Calls/CallGeneratorTest.cpp
 
 HEADERS += \
     include/Calls.h \
