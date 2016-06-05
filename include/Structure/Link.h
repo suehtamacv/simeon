@@ -78,9 +78,6 @@ public:
      */
     int numLineAmplifiers;
 
-    bool operator==(const Link &) const;
-    bool operator<(const Link &) const;
-
     /**
      * @brief isSlotFree returns true iff the i-th slot is free.
      * @return true iff the i-th slot is free.

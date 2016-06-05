@@ -111,8 +111,7 @@ Yen_RoutingAlgorithm::route(std::shared_ptr<Call> C)
                     }
                 }
 
-            auto dummyC = std::make_shared<Call>(spurNode, C->Destination, C->Bitrate);
-            dummyC->Scheme = C->Scheme;
+            auto dummyC = std::make_shared<Call>(spurNode, C->Destination, C->Bitrate, C->Scheme);
             auto alternativeRoute = Dijkstra->route(dummyC).front();
 
             if (!alternativeRoute.empty())

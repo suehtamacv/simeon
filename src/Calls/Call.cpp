@@ -12,3 +12,12 @@ Call::Call(std::weak_ptr<Node> Origin,
 {
 
 }
+
+Call::Call(std::weak_ptr<Node> Origin,
+           std::weak_ptr<Node> Destination,
+           TransmissionBitrate Bitrate,
+           ModulationScheme Scheme) :
+    Call(Origin, Destination, Bitrate)
+{
+    this->Scheme = Scheme;
+}

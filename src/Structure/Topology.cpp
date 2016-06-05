@@ -27,7 +27,7 @@ Topology::Topology()
 {
     Nodes.clear();
     Links.clear();
-    LongestLink = -1;
+    AvgSpanLength = LongestLink = -1;
 
     PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 }
@@ -37,6 +37,7 @@ Topology::Topology(const Topology &topology)
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
+    AvgSpanLength = topology.AvgSpanLength;
 
     PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 
@@ -76,7 +77,7 @@ Topology::Topology(std::string TopologyFileName)
 
     Nodes.clear();
     Links.clear();
-    LongestLink = -1;
+    AvgSpanLength = LongestLink = -1;
 
     PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 
@@ -152,13 +153,12 @@ Topology::Topology(std::string TopologyFileName)
 std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
                                        Node::NodeArchitecture Arch, int NumReg)
 {
-
     if (NodeID == -1)
         {
         NodeID = Nodes.size() + 1;
         }
 
-    Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
+    Nodes.push_back(std::make_shared<Node>(NodeID, Type, Arch));
     Nodes.back()->set_NumRegenerators(NumReg);
     return (std::weak_ptr<Node>) Nodes.back();
 }
@@ -166,14 +166,17 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
 std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                        std::weak_ptr<Node> Destination, double Length)
 {
-    Links.emplace(std::make_pair(Origin.lock()->ID, Destination.lock()->ID),
-                  std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
-    Origin.lock()->insert_Link(Destination,
-                               Links.at(std::make_pair(Origin.lock()->ID,
-                                        Destination.lock()->ID)));
+    std::shared_ptr<Link> link = std::make_shared<Link>(Origin, Destination, Length);
+
+    Links.emplace(std::make_pair(Origin.lock()->ID, Destination.lock()->ID), link);
+    Origin.lock()->insert_Link(Destination, link);
     LongestLink = -1;
-    return (std::weak_ptr<Link>) Links.at(std::make_pair(Origin.lock()->ID,
-                                          Destination.lock()->ID));
+    if (AvgSpanLength != -1)
+        {
+        link->set_AvgSpanLength(AvgSpanLength);
+        }
+
+    return link;
 }
 
 void Topology::save(std::string TopologyFileName)

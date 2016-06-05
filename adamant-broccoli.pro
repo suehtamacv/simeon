@@ -124,7 +124,8 @@ SOURCES += src/main.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Calls/EventTest.cpp \
     tests/Calls/CallGeneratorTest.cpp \
-    tests/Calls/CallTest.cpp
+    tests/Calls/CallTest.cpp \
+    tests/Structure/LinkTest.cpp
 
 HEADERS += \
     include/Calls.h \

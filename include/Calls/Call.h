@@ -35,6 +35,17 @@ public:
     Call(std::weak_ptr<Node> Origin,
          std::weak_ptr<Node> Destination,
          TransmissionBitrate Bitrate);
+    /**
+    * @brief Call is the standard constructor for a Call object.
+    * @param Origin is a weak_ptr for the Origin node.
+    * @param Destination is a weak_ptr for the Destination node.
+    * @param Bitrate is a TransmissionBitrate.
+    * @param Scheme is the ModulationScheme.
+    */
+    Call(std::weak_ptr<Node> Origin,
+         std::weak_ptr<Node> Destination,
+         TransmissionBitrate Bitrate,
+         ModulationScheme Scheme);
 
     /**
      * @brief CallRequisition is a pointer to the requisition event.

@@ -104,20 +104,6 @@ Signal &Link::bypass(Signal &S)
     return S;
 }
 
-bool Link::operator ==(const Link &L) const
-{
-    return ((Origin.lock() == L.Origin.lock()) &&
-            (Destination.lock() == L.Destination.lock()) &&
-            (Length == L.Length));
-}
-
-bool Link::operator <(const Link &L) const
-{
-    return ((Origin.lock() < L.Origin.lock()) ||
-            (Destination.lock() < L.Destination.lock()) ||
-            (Length < L.Length));
-}
-
 bool Link::isSlotFree(int slot) const
 {
     EXPECT_LT(slot, NumSlots) << "Invalid slot requested.";
