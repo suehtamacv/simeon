@@ -35,6 +35,13 @@ TEST_F(LinkTest, Constructor)
     EXPECT_EQ(*(link1->Destination.lock()), *(N2.lock())) << "Destination node not being correctly set.";
     EXPECT_EQ(link1->Length, 1000) << "Link length not being correctly set.";
 
+    ASSERT_EQ(link1->Slots.size(), Link::NumSlots) << "Link slots aren't being correctly created.";
+    for (int s = 0; s < Link::NumSlots; ++s)
+        {
+        EXPECT_TRUE(link1->Slots[s]->isFree) << "Link slot should be initialized as free.";
+        EXPECT_TRUE(link1->isSlotFree(s)) << "Link slot should be initialized as free.";
+        }
+
     std::shared_ptr<Link> link2 = T->add_Link(N4, N1, 2000).lock();
     EXPECT_TRUE(link2->is_LinkActive()) << "Link should start as active.";
     EXPECT_EQ(*(link2->Origin.lock()), *(N4.lock())) << "Origin node not being correctly set.";
@@ -48,16 +55,15 @@ TEST_F(LinkTest, Constructor)
     EXPECT_EQ(link3->Length, link2->Length) << "Copy constructor: link length not being correctly set.";
 }
 
-TEST_F(LinkTest, Slots)
+TEST_F(LinkTest, Activation)
 {
     std::shared_ptr<Link> link = T->add_Link(N2, N3, 1000).lock();
 
-    ASSERT_EQ(link->Slots.size(), Link::NumSlots) << "Link slots aren't being correctly created.";
-    for (int s = 0; s < Link::NumSlots; ++s)
-        {
-        EXPECT_TRUE(link->Slots[s]->isFree) << "Link slot should be initialized as free.";
-        EXPECT_TRUE(link->isSlotFree(s)) << "Link slot should be initialized as free.";
-        }
+    EXPECT_TRUE(link->is_LinkActive()) << "Link should start as active.";
+    link->set_LinkInactive();
+    EXPECT_FALSE(link->is_LinkActive()) << "Link is not being deactivated.";
+    link->set_LinkActive();
+    EXPECT_TRUE(link->is_LinkActive()) << "Link is not being reactivated.";
 }
 
 TEST_F(LinkTest, AvailabilityOccupability)

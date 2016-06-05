@@ -3,7 +3,7 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle qt
 
-QMAKE_CXXFLAGS += -std=c++11 -fopenmp
+QMAKE_CXXFLAGS += -std=c++11 -fopenmp -ffast-math
 QMAKE_LFLAGS += -std=c++11 -fopenmp
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
@@ -125,7 +125,8 @@ SOURCES += src/main.cpp \
     tests/Calls/EventTest.cpp \
     tests/Calls/CallGeneratorTest.cpp \
     tests/Calls/CallTest.cpp \
-    tests/Structure/LinkTest.cpp
+    tests/Structure/LinkTest.cpp \
+    tests/Structure/NodeTest.cpp
 
 HEADERS += \
     include/Calls.h \

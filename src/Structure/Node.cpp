@@ -261,25 +261,23 @@ void Node::set_NodeType(NodeType T)
 
 void Node::request_Regenerators(unsigned int NReg)
 {
-    TotalNumRequestedRegenerators += NReg;
-
     EXPECT_TRUE((Type == OpaqueNode) ||
                 (NReg + NumUsedRegenerators <= Regenerators.size())) <<
                         "Request to more regenerators than available.";
 
     NumUsedRegenerators += NReg;
-}
-
-void Node::free_Regenerators(unsigned int NReg)
-{
-    EXPECT_GE(NumUsedRegenerators, NReg) <<
-                                         "Freed more regenerators than available.";
+    TotalNumRequestedRegenerators += NReg;
 
     if (MaxSimultUsedRegenerators < NumUsedRegenerators)
         {
         MaxSimultUsedRegenerators = NumUsedRegenerators;
         }
 
+}
+
+void Node::free_Regenerators(unsigned int NReg)
+{
+    EXPECT_GE(NumUsedRegenerators, NReg) << "Freed more regenerators than available.";
     NumUsedRegenerators -= NReg;
 }
 
