@@ -78,9 +78,29 @@ bool Node::operator ==(const Node &N) const
     return (ID == N.ID);
 }
 
+bool Node::operator !=(const Node &N) const
+{
+    return !operator ==(N);
+}
+
 bool Node::operator <(const Node &N) const
 {
     return (ID < N.ID);
+}
+
+bool Node::operator <=(const Node &N) const
+{
+    return (operator ==(N)) || (operator <(N));
+}
+
+bool Node::operator >(const Node &N) const
+{
+    return (ID > N.ID);
+}
+
+bool Node::operator >=(const Node &N) const
+{
+    return (operator ==(N)) || (operator >(N));
 }
 
 void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)

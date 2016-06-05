@@ -72,7 +72,11 @@ public:
     Node(const Node &node);
 
     bool operator==(const Node &) const;
+    bool operator!=(const Node &) const;
     bool operator<(const Node &) const;
+    bool operator<=(const Node &) const;
+    bool operator>(const Node &) const;
+    bool operator>=(const Node &) const;
 
     /**
      * @brief ID is the unique identifier of this node on the topology.

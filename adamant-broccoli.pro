@@ -123,7 +123,8 @@ SOURCES += src/main.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Calls/EventTest.cpp \
-    tests/Calls/CallGeneratorTest.cpp
+    tests/Calls/CallGeneratorTest.cpp \
+    tests/Calls/CallTest.cpp
 
 HEADERS += \
     include/Calls.h \
