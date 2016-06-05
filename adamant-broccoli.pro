@@ -126,7 +126,8 @@ SOURCES += src/main.cpp \
     tests/Calls/CallGeneratorTest.cpp \
     tests/Calls/CallTest.cpp \
     tests/Structure/LinkTest.cpp \
-    tests/Structure/NodeTest.cpp
+    tests/Structure/NodeTest.cpp \
+    tests/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethodTests.cpp
 
 HEADERS += \
     include/Calls.h \
