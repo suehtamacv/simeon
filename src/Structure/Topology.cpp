@@ -23,23 +23,19 @@ Topology::DefaultTopPathsBimap Topology::DefaultTopologiesPaths =
 #undef DEFAULT_TOPOLOGIES
     ;
 
-Topology::Topology()
+Topology::Topology() : PowerRatioThreshold(0.6, Gain::Linear)
 {
     Nodes.clear();
     Links.clear();
     AvgSpanLength = LongestLink = -1;
-
-    PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 }
 
-Topology::Topology(const Topology &topology)
+Topology::Topology(const Topology &topology) : PowerRatioThreshold(0.6, Gain::Linear)
 {
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
     AvgSpanLength = topology.AvgSpanLength;
-
-    PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 
     for (auto &node : topology.Nodes)
         {
@@ -71,15 +67,13 @@ Topology::Topology(const Topology &topology)
         }
 }
 
-Topology::Topology(std::string TopologyFileName)
+Topology::Topology(std::string TopologyFileName) : PowerRatioThreshold(0.6, Gain::Linear)
 {
     using namespace boost::program_options;
 
     Nodes.clear();
     Links.clear();
     AvgSpanLength = LongestLink = -1;
-
-    PowerRatioThreshold = 0.6;  // Default Power Ratio Threshold.
 
     options_description TopologyDescription("Topology");
     TopologyDescription.add_options()
@@ -302,12 +296,12 @@ void Topology::set_avgSpanLength(double avgSpanLength)
     AvgSpanLength = avgSpanLength;
 }
 
-double Topology::get_PowerRatioThreshold()
+Gain Topology::get_PowerRatioThreshold()
 {
     return PowerRatioThreshold;
 }
 
-void Topology::set_PowerRatioThreshold(double PRThreshold)
+void Topology::set_PowerRatioThreshold(Gain PRThreshold)
 {
     PowerRatioThreshold = PRThreshold;
 }

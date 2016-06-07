@@ -127,7 +127,8 @@ SOURCES += src/main.cpp \
     tests/Calls/CallTest.cpp \
     tests/Structure/LinkTest.cpp \
     tests/Structure/NodeTest.cpp \
-    tests/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethodTests.cpp
+    tests/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRuleTest.cpp \
+    tests/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonRuleTest.cpp
 
 HEADERS += \
     include/Calls.h \

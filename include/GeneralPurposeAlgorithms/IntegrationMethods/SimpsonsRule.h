@@ -14,12 +14,12 @@ public:
     /**
      * @brief SimpsonsRule is a constructor for a SimpsonsRule object.
      */
-    SimpsonsRule(arma::mat &, double);
+    SimpsonsRule();
     /**
      * @brief calculate is used to compute the SimpsonsRule integration method.
      * @return the result of the calculations.
      */
-    double calculate();
+    double calculate(const arma::mat &, double);
 };
 }
 

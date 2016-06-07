@@ -66,7 +66,7 @@ public:
      * @brief get_SignalPowerRatio returns the ratio of this signal's original and final spectral density power.
      * @return the ratio of this signal's original and final spectral density power.
      */
-    double get_SignalPowerRatio();
+    Gain get_SignalPowerRatio();
     /**
      * @brief numFrequencySamples number of samples along the signal's bandwidth.
      */

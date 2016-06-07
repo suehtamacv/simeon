@@ -14,12 +14,12 @@ public:
     /**
      * @brief TrapezoidalRule is a constructor for a TrapezoidalRule object.
      */
-    TrapezoidalRule(arma::mat &, double);
+    TrapezoidalRule();
     /**
      * @brief calculate is used to compute the SimpsonsRule integration method.
      * @return the result of the calculations.
      */
-    double calculate();
+    double calculate(const arma::mat &, double);
 };
 }
 

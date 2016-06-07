@@ -1,15 +1,16 @@
 #include "include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h"
+#include <gtest/gtest.h>
 
 using namespace NumericMethods;
 
-TrapezoidalRule::TrapezoidalRule(arma::mat &YPoints, double XRange)
-    : IntegrationMethod(YPoints, XRange)
+TrapezoidalRule::TrapezoidalRule()
 {
 
 }
 
-double TrapezoidalRule::calculate()
+double TrapezoidalRule::calculate(const arma::mat &YPoints, double XRange)
 {
+    EXPECT_FALSE(YPoints.empty());
     double Result, Sum = 0, h;
     h = XRange / (YPoints.size() - 1);
     for(size_t Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
