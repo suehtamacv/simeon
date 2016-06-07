@@ -31,7 +31,7 @@ double Amplifier::get_OpEx()
     return 0.1;
 }
 
-TransferFunction &Amplifier::get_TransferFunction(unsigned int)
+TransferFunction &Amplifier::get_TransferFunction(double, double)
 {
     return *deviceTF.get();
 }

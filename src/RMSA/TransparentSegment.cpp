@@ -26,16 +26,21 @@ TransparentSegment::TransparentSegment(const TransparentSegment &segment) :
     NumRegUsed = segment.NumRegUsed;
     Nodes = segment.Nodes;
     Links = segment.Links;
+    opticalPathSpecDensity = segment.opticalPathSpecDensity;
 }
 
 Signal TransparentSegment::bypass(Signal S)
 {
     S = Links.front().lock()->Origin.lock()->add(S);
 
+    if(considerFilterImperfection)
+        {
+        opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
+        }
+
     for (auto &it : Links)
         {
         S = it.lock()->bypass(S);
-
         if (it.lock() == Links.back().lock())
             {
             S = it.lock()->Destination.lock()->drop(S);
@@ -43,6 +48,11 @@ Signal TransparentSegment::bypass(Signal S)
         else
             {
             S = it.lock()->Destination.lock()->bypass(S);
+
+            if(considerFilterImperfection)
+                {
+                opticalPathSpecDensity.push_back(*(S.signalSpecDensity));
+                }
             }
         }
 

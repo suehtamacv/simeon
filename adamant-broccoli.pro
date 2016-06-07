@@ -3,8 +3,8 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle qt
 
-QMAKE_CXXFLAGS += -std=c++11 -fopenmp
-QMAKE_LFLAGS += -std=c++11 -fopenmp
+QMAKE_CXXFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
+QMAKE_LFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -25,6 +25,7 @@ SOURCES += src/main.cpp \
     src/Devices/Splitter.cpp \
     src/Devices/SSS.cpp \
     src/GeneralClasses/Gain.cpp \
+    src/GeneralClasses/LinkSpectralDensity.cpp \
     src/GeneralClasses/ModulationScheme.cpp \
     src/GeneralClasses/Power.cpp \
     src/GeneralClasses/Signal.cpp \
@@ -86,7 +87,6 @@ SOURCES += src/main.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_ModulationScheme.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Noise.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.cpp \
-    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Occupability.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_OrigDestIndex.cpp \
     src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Slots.cpp \
@@ -150,6 +150,7 @@ HEADERS += \
     include/Devices/Splitter.h \
     include/GeneralClasses.h \
     include/GeneralClasses/Gain.h \
+    include/GeneralClasses/LinkSpectralDensity.h \
     include/GeneralClasses/ModulationScheme.h \
     include/GeneralClasses/PhysicalConstants.h \
     include/GeneralClasses/Power.h \
@@ -228,7 +229,6 @@ HEADERS += \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_ModulationScheme.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Noise.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedContiguity.h \
-    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Occupability.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_OrigDestIndex.h \
     include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_Slots.h \

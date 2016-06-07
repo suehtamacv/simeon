@@ -22,12 +22,7 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
-    /**
-     * @brief get_TransferFunction returns the transfer function that represents the device's frequency response.
-     * @param numSlots is the number of slots used to calculate the transfer function.
-     * @return the transfer function that represents the device's frequency response.
-     */
-    TF::TransferFunction &get_TransferFunction(unsigned int numSlots);
+    TF::TransferFunction &get_TransferFunction(double, double);
     double get_CapEx();
     double get_OpEx();
 

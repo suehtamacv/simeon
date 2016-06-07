@@ -13,10 +13,7 @@ ExactFit::ExactFit(std::shared_ptr<Topology> T) :
 
 }
 
-std::map<std::weak_ptr<Link>,
-    std::vector<std::weak_ptr<Slot>>,
-    std::owner_less<std::weak_ptr<Link>>>
-    ExactFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
+mapSlots ExactFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 {
 
     int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);

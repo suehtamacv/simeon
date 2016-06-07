@@ -34,7 +34,7 @@ std::shared_ptr<Device> Regenerator::clone()
     return std::shared_ptr<Device>(new Regenerator());
 }
 
-TransferFunction& Regenerator::get_TransferFunction(unsigned int)
+TransferFunction& Regenerator::get_TransferFunction(double, double)
 {
     return *deviceTF.get();
 }

@@ -9,6 +9,7 @@
 #include <Devices/Regenerator.h>
 #include <Devices/SSS.h>
 #include <Devices/Splitter.h>
+#include <GeneralClasses/PhysicalConstants.h>
 
 using namespace Devices;
 
@@ -61,9 +62,15 @@ Node::Node(const Node &node) : ID(node.ID)
         insert_Link(newlink->Destination, newlink);
         }
 
+    bool foundSSS = false;
     for (auto &device : node.Devices)
         {
         Devices.push_back(device->clone());
+        if (!foundSSS && device->DevType == Device::SSSDevice)
+            {
+            foundSSS = true;
+            entranceSSS = dynamic_cast<SSS*>(Devices.back().get());
+            }
         }
 
     for (size_t i = 0; i < node.Regenerators.size(); i++)
@@ -103,7 +110,7 @@ bool Node::operator >=(const Node &N) const
     return (operator ==(N)) || (operator >(N));
 }
 
-void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
+void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> link)
 {
     bool LinkExists = false;
 
@@ -119,7 +126,9 @@ void Node::insert_Link(std::weak_ptr<Node> N, std::shared_ptr<Link> Link)
     if (!LinkExists)
         {
         Neighbours.push_back(N);
-        Links.push_back(Link);
+        N.lock()->isNeighbourOf.push_back(link->Origin);
+        N.lock()->incomingLinks.push_back(link);
+        Links.push_back(link);
         }
 }
 
@@ -164,6 +173,7 @@ void Node::create_Devices()
 
         case SwitchingSelect:
             Devices.push_back(std::shared_ptr<Device>(new SSS(this)));
+            entranceSSS = dynamic_cast<SSS*>(Devices.back().get());
             break;
         }
 
@@ -182,10 +192,11 @@ Signal &Node::bypass(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction(S.numSlots);
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                          S.freqMax - S.freqMin); //bandwidth
             }
         }
-
+    S += *evalCrosstalk(S);
     return S;
 }
 
@@ -195,7 +206,8 @@ Signal &Node::drop(Signal &S)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
-        S *= it->get_TransferFunction(S.numSlots);
+        S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                      S.freqMax - S.freqMin); //bandwidth
 
         if ((it->DevType == Device::SplitterDevice) ||
                 (it->DevType == Device::SSSDevice))
@@ -203,7 +215,7 @@ Signal &Node::drop(Signal &S)
             break;
             }
         }
-
+    S += *evalCrosstalk(S);
     return S;
 }
 
@@ -223,7 +235,8 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
-        S *= (*it)->get_TransferFunction(S.numSlots);
+        S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
+                                         S.freqMax - S.freqMin);
         }
 
     return S;
@@ -337,6 +350,27 @@ void Node::set_NodeActive()
 void Node::set_NodeInactive()
 {
     isActive = false;
+}
+
+std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
+{
+    entranceSSS->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
+                                      S.freqMax - S.freqMin);
+    auto X = std::make_shared<SpectralDensity>(S.freqMin, S.freqMax,
+             Slot::numFrequencySamplesPerSlot * S.numSlots, true);
+
+    for (std::shared_ptr<Link> &link : incomingLinks)
+        {
+        if (*(S.incomingLink.lock()) != *(link.get()))
+            {
+            (*X) += (*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
+                     * entranceSSS->get_BlockTransferFunction((S.freqMin + S.freqMax) /
+                             2.0, //central frequency
+                             S.freqMax - S.freqMin)); //bandwidth
+            }
+        }
+
+    return X;
 }
 
 std::ostream& operator <<(std::ostream &out, const Node& node)

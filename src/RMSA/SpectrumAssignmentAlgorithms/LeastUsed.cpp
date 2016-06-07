@@ -12,9 +12,7 @@ LeastUsed::LeastUsed(std::shared_ptr<Topology> T) :
 
 }
 
-std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
-    std::owner_less<std::weak_ptr<Link>>>
-    LeastUsed::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
+mapSlots LeastUsed::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 {
     int RequiredSlots = Seg.ModScheme.get_NumSlots(C->Bitrate);
     std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,

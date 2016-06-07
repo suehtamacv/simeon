@@ -76,9 +76,20 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
             Slots.clear();
             C->Status = Call::Not_Evaluated;
 
-            int requiredSlots = scheme.get_NumSlots(C->Bitrate);
             TransparentSegment Segment(route, scheme, 0);
-            Signal S(requiredSlots);
+
+            auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
+            if (SegmentSlots.empty())
+                {
+                if (scheme == *(Schemes.begin()))
+                    {
+                    C->Status = Call::Blocked;
+                    return nullptr;
+                    }
+                continue;
+                }
+
+            Signal S(SegmentSlots);
             S = Segment.bypass(S);
 
             if (
@@ -87,22 +98,8 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
                 (!considerFilterImperfection ||
                  S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
                 {
-                Segments.push_back(Segment);
-                auto SegmentSlots = WA_Alg->assignSlots(C, Segment);
-
-                //There's no spectrum with this scheme
-                if (SegmentSlots.empty())
-                    {
-                    //There's no scheme with any scheme
-                    if (scheme == *(Schemes.begin()))
-                        {
-                        C->Status = Call::Blocked;
-                        continue;
-                        }
-                    continue;
-                    }
-
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
+                Segments.push_back(Segment);
                 break;
                 }
             //There's no quality with any scheme
@@ -132,9 +129,9 @@ RoutingWavelengthAssignment::routeCall_Translucent(std::shared_ptr<Call> C)
 {
     std::vector<std::vector<std::weak_ptr<Link>>> possibleRoutes;
     std::vector<TransparentSegment> Segments;
-    std::map<std::weak_ptr<Link>, std::vector<std::weak_ptr<Slot>>,
-        std::owner_less<std::weak_ptr<Link>>> Slots;
+    mapSlots Slots;
 
+    RA_Alg->thisRMSA = this;
     possibleRoutes = R_Alg->route(C);
 
     //There's no route

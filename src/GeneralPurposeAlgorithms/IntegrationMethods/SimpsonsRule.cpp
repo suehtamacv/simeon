@@ -8,7 +8,7 @@ SimpsonsRule::SimpsonsRule()
 
 }
 
-double SimpsonsRule::calculate(const arma::mat &YPoints, double XRange)
+double SimpsonsRule::calculate(const arma::mat &YPoints, const double &XRange)
 {
     EXPECT_FALSE(YPoints.empty());
 

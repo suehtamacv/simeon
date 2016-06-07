@@ -27,7 +27,7 @@ public:
      * @brief TransferFunction is a constructor for a TransferFunction.
      * @param scale is the result of the gains and losses over this transfer function.
      */
-    TransferFunction(double scale);
+    TransferFunction(double scale = 1);
     /**
      * @brief frequencySamples is a vector with the frequency samples along the signal's bandwidth.
      */
@@ -49,10 +49,6 @@ public:
      * @brief freqMax is the end of the signal's bandwidth.
      */
     double freqMax;
-    /**
-     * @brief numSamples is the number of frequency samples along the bandwidth.
-     */
-    unsigned long int numSamples;
 };
 }
 

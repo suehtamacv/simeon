@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <GeneralClasses/LinkSpectralDensity.h>
 
 class Node;
 class Call;
@@ -77,6 +78,17 @@ public:
      * @brief numLineAmplifiers is the number of in line amplifiers.
      */
     int numLineAmplifiers;
+
+    /**
+     * @brief operator == compares two links for equality.
+     * @return true iff the links are the same.
+     */
+    bool operator ==(const Link &) const;
+    /**
+     * @brief operator != compares two links for unequality.
+     * @return true iff the links are not the same.
+     */
+    bool operator !=(const Link &) const;
 
     /**
      * @brief isSlotFree returns true iff the i-th slot is free.
@@ -161,6 +173,8 @@ public:
     void set_LinkInactive();
 
     friend std::ostream& operator<<(std::ostream &out, const Link &link);
+
+    std::shared_ptr<LinkSpectralDensity> linkSpecDens;
 
 private:
     void create_Slots();

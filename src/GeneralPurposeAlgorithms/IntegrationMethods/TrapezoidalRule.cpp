@@ -8,7 +8,7 @@ TrapezoidalRule::TrapezoidalRule()
 
 }
 
-double TrapezoidalRule::calculate(const arma::mat &YPoints, double XRange)
+double TrapezoidalRule::calculate(arma::mat const &YPoints, const double &XRange)
 {
     EXPECT_FALSE(YPoints.empty());
     double Result, Sum = 0, h;

@@ -6,6 +6,7 @@
 #include <Calls.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
 #include <iostream>
+#include <Structure/Link.h>
 
 using namespace Simulations;
 using namespace RMSA;
@@ -57,12 +58,22 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
         }
     else
         {
-        for (auto &node : route->Slots)
+        unsigned int auxCount = 0;
+        for (auto &link : route->Slots)
             {
-            for (auto &slot : node.second)
+
+            if(considerFilterImperfection)
+            {
+                SpectralDensity thisSpecDensity = (route->Segments.begin())->opticalPathSpecDensity.at(auxCount);
+                (((link.first).lock())->linkSpecDens)->updateLink(thisSpecDensity, link.second);
+            }
+
+            for (auto &slot : link.second)
                 {
                 slot.lock()->useSlot();
                 }
+
+            auxCount++;
             }
 
         for (auto &reg : route->Regenerators)

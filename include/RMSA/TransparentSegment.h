@@ -90,6 +90,8 @@ public:
      * @return the availability of this segment.
      */
     int get_Availability() const;
+
+    std::vector<SpectralDensity> opticalPathSpecDensity;
 };
 }
 

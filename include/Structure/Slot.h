@@ -2,6 +2,8 @@
 #define SLOT_H
 
 #include <memory>
+#include <vector>
+#include <GeneralClasses/SpectralDensity.h>
 
 class Link;
 
@@ -45,6 +47,14 @@ public:
      * @brief useSlot uses this slot, if it isn't used.
      */
     void useSlot();
+    /**
+     * @brief numFrequencySamplesPerSlot is the number of frequency samples per slot.
+     */
+    static constexpr unsigned long numFrequencySamplesPerSlot = 25;
+    /**
+     * @brief S is the main signal spectral density.
+     */
+    std::shared_ptr<SpectralDensity> S;
 };
 
 #endif // SLOT_H

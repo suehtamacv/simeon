@@ -18,9 +18,11 @@ public:
     IntegrationMethod();
     /**
      * @brief calculate is used to compute the IntegrationMethod.
+     * @param YPoints are the points being integrated.
+     * @param XRange is the length of the interval being integrated on.
      * @return the result of the calculations.
      */
-    virtual double calculate(const arma::mat &, double) = 0;
+    virtual double calculate(arma::mat const &YPoints, const double &XRange) = 0;
 };
 }
 

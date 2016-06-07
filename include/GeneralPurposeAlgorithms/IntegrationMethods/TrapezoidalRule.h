@@ -19,7 +19,7 @@ public:
      * @brief calculate is used to compute the SimpsonsRule integration method.
      * @return the result of the calculations.
      */
-    double calculate(const arma::mat &, double);
+    double calculate(const arma::mat &, const double&);
 };
 }
 

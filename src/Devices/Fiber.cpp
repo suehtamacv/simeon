@@ -39,7 +39,7 @@ double Fiber::get_OpEx()
     return 0;
 }
 
-TransferFunction& Fiber::get_TransferFunction(unsigned int)
+TransferFunction& Fiber::get_TransferFunction(double, double)
 {
     return *deviceTF.get();
 }

@@ -27,9 +27,11 @@ Link::Link(std::weak_ptr<Node> Origin,
 
     create_Slots();
     create_Devices();
+
+    linkSpecDens = std::make_shared<LinkSpectralDensity>(Slots);
 }
 
-Link::Link(const Link &link)
+Link::Link(const Link &link) // linkSpecDens aqui?
 {
     Length = link.Length;
     Origin = link.Origin;
@@ -87,15 +89,37 @@ void Link::create_Devices()
     Devices.push_back(std::make_shared<PreAmplifier>((Fiber &)*Devices.back(), *Destination.lock()));
 }
 
+bool Link::operator ==(const Link &link) const
+{
+    return (Length == link.Length) &&
+           (*(Origin.lock()) == *(link.Origin.lock())) &&
+           (*(Destination.lock()) == *(link.Destination.lock()));
+}
+
+bool Link::operator !=(const Link &link) const
+{
+    return !(operator ==(link));
+}
+
 Signal &Link::bypass(Signal &S)
 {
+    for (auto &link : Origin.lock()->Links)
+        {
+        if (*link == *this)
+            {
+            S.incomingLink = link;
+            break;
+            }
+        }
+
     for (auto &it : Devices)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction(S.numSlots);
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                          S.freqMax - S.freqMin); //bandwidth
             }
         }
 
