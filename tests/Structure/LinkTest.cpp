@@ -141,6 +141,12 @@ TEST_F(LinkTest, Devices)
 
     EXPECT_EQ(numFibers, numAmplifiers) << "There should be one fiber segment to each amplifier.";
     EXPECT_EQ(numFibers, link->numLineAmplifiers + 1) << "Link amplifiers should be composed by one booster amplifier among all line amplifiers.";
+
+    size_t numDevices = link->Devices.size();
+    link->set_AvgSpanLength(10);
+    EXPECT_NE(numDevices, link->Devices.size()) << "Setting average span length has no effect.";
+    link->set_AvgSpanLength(100);
+    EXPECT_EQ(numDevices, link->Devices.size()) << "Number of devices in a link is varying.";
 }
 
 #endif

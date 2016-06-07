@@ -75,18 +75,16 @@ void Link::create_Devices()
 
     for (int i = 0; i < numLineAmplifiers; i++)
         {
-        Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
-        Devices.push_back(std::shared_ptr<InLineAmplifier>(
-                              new InLineAmplifier((Fiber &)*Devices.back())));
+        Devices.push_back(std::make_shared<Fiber>(SpanLength));
+        Devices.push_back(std::make_shared<InLineAmplifier>((Fiber &)*Devices.back()));
         }
 
     //There's an extra fiber segment in the end of the link
-    Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
+    Devices.push_back(std::make_shared<Fiber>(SpanLength));
 
     //There's a preamplifier in the node's entrance.
     //It compensates the fiber segment loss and also the switching element loss.
-    Devices.push_back(std::shared_ptr<PreAmplifier>(new PreAmplifier((
-                          Fiber &)*Devices.back(), *Destination.lock())));
+    Devices.push_back(std::make_shared<PreAmplifier>((Fiber &)*Devices.back(), *Destination.lock()));
 }
 
 Signal &Link::bypass(Signal &S)
@@ -243,5 +241,5 @@ void Link::set_LinkInactive()
 std::ostream& operator <<(std::ostream &out, const Link &link)
 {
     return out << "Link: (" << *(link.Origin.lock()) << " -> " << *
-        (link.Destination.lock()) << "), length = " << link.Length << "km";
+           (link.Destination.lock()) << "), length = " << link.Length << "km";
 }

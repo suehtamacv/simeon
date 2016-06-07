@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include <armadillo>
 
-TEST(TrapezoidalMethodTest, TrapezoidalRule)
+TEST(IntegrationMethodTest, TrapezoidalRule)
 {
     NumericMethods::TrapezoidalRule TR;
 

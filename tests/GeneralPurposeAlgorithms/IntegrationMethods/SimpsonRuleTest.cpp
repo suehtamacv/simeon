@@ -4,7 +4,7 @@
 #include "GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h"
 #include <armadillo>
 
-TEST(SimpsonMethodTest, SimpsonRule)
+TEST(IntegrationMethodTest, SimpsonRule)
 {
     NumericMethods::SimpsonsRule SR;
 

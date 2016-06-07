@@ -117,18 +117,18 @@ SOURCES += src/main.cpp \
     src/SimulationTypes/Simulation_RegeneratorNumber.cpp \
     src/SimulationTypes/Simulation_StatisticalTrend.cpp \
     src/SimulationTypes/Simulation_TransparencyAnalysis.cpp \
+    tests/Calls/CallTest.cpp \
+    tests/Calls/CallGeneratorTest.cpp \
+    tests/Calls/EventTest.cpp \
     tests/GeneralClasses/GainTest.cpp \
     tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
-    tests/Structure/SlotTest.cpp \
-    tests/Calls/EventTest.cpp \
-    tests/Calls/CallGeneratorTest.cpp \
-    tests/Calls/CallTest.cpp \
+    tests/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonRuleTest.cpp \
+    tests/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRuleTest.cpp \
     tests/Structure/LinkTest.cpp \
     tests/Structure/NodeTest.cpp \
-    tests/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRuleTest.cpp \
-    tests/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonRuleTest.cpp \
+    tests/Structure/SlotTest.cpp \
     tests/Structure/TopologyTest.cpp
 
 HEADERS += \

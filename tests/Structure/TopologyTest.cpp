@@ -21,6 +21,9 @@ void TopologyTest::SetUp()
     N2 = T->add_Node(2, Node::TranslucentNode, Node::SwitchingSelect, 20);
     N3 = T->add_Node(3, Node::TransparentNode, Node::BroadcastAndSelect, 0);
     N4 = T->add_Node(4, Node::TranslucentNode, Node::BroadcastAndSelect, 40);
+    ASSERT_EQ(T->Nodes.size(), 4) << "There should be four nodes.";
+    ASSERT_EQ(T->get_NumTranslucentNodes(), 2) << "There should be two translucent nodes.";
+    ASSERT_EQ(T->get_NumRegenerators(), 60) << "There should be sixty regenerators.";
     N5 = T->add_Node(5, Node::TransparentNode, Node::SwitchingSelect, 0);
     N6 = T->add_Node(6, Node::TranslucentNode, Node::SwitchingSelect, 60);
     N7 = T->add_Node(7, Node::TransparentNode, Node::BroadcastAndSelect, 0);
@@ -34,6 +37,8 @@ void TopologyTest::SetUp()
     T->add_Link(N2, N3, 230);
     T->add_Link(N3, N4, 340);
     T->add_Link(N4, N5, 450);
+    ASSERT_EQ(T->Links.size(), 5) << "There should be five links.";
+    ASSERT_EQ(T->get_LengthLongestLink(), 450) << "Longest link not being correctly calculated.";
     T->add_Link(N5, N4, 540);
     T->add_Link(N5, N6, 560);
     T->add_Link(N6, N7, 670);
@@ -92,6 +97,25 @@ TEST_F(TopologyTest, Topology_CopyConstructor)
     EXPECT_EQ(T_Copy.get_NumTranslucentNodes(), 4) << "There should be four translucent nodes.";
     EXPECT_EQ(T_Copy.get_NumRegenerators(), 200) << "There should be two hundred regenerators.";
     EXPECT_EQ(T_Copy.get_LengthLongestLink(), 810) << "Longest link not being correctly calculated.";
+}
+
+TEST_F(TopologyTest, LinkReferences)
+{
+    for (auto &linkIterator : T->Links)
+        {
+        std::shared_ptr<Link> link = linkIterator.second;
+        EXPECT_TRUE(link->Origin.lock()->hasAsNeighbour(link->Destination));
+        }
+
+    int numNeighbourRelationships = 0;
+    for (std::shared_ptr<Node> source : T->Nodes)
+        {
+        for (std::shared_ptr<Node> dest : T->Nodes)
+            {
+            numNeighbourRelationships += (source->hasAsNeighbour(dest));
+            }
+        }
+    EXPECT_EQ(numNeighbourRelationships, T->Links.size()) << "There should be as many links as there are neighbour relationships in a topology.";
 }
 
 #endif
