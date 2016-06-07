@@ -208,6 +208,11 @@ void Topology::save(std::string TopologyFileName)
 
 double Topology::get_LengthLongestLink()
 {
+    if (Links.empty())
+        {
+        return 0;
+        }
+
     if (LongestLink == -1)
         {
         for (auto &link : Links)

@@ -113,8 +113,9 @@ void SimulationType::load()
                 chosenMetrics.push_back((SimulationType::Physical_Impairment) Metric);
                 } //Verifies that the metric hasn't been chosen.
 
-            std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
-                      << std::endl;
+            if (numPossibleMetrics > 1)
+                std::cout << std::endl << "-> Select a physical impairment. (-1 to exit)"
+                          << std::endl;
             }
         while(1);
 

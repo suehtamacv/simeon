@@ -128,7 +128,8 @@ SOURCES += src/main.cpp \
     tests/Structure/LinkTest.cpp \
     tests/Structure/NodeTest.cpp \
     tests/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRuleTest.cpp \
-    tests/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonRuleTest.cpp
+    tests/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonRuleTest.cpp \
+    tests/Structure/TopologyTest.cpp
 
 HEADERS += \
     include/Calls.h \
