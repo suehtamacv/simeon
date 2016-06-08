@@ -91,7 +91,7 @@ void SignalQualityPrediction_Variants::evaluateLNMax()
 
     auto bitrate = Bitrates.front(); //Greatest possible bitrate
 
-    unsigned maxLN = LNMax.at(std::make_pair(bitrate, scheme));
+    unsigned maxLN = LNMax.at({bitrate, scheme});
 
     for (auto &ln_pair : LNMax)
         {

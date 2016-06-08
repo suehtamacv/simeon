@@ -54,7 +54,7 @@ Dijkstra_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 
             auto locknode = node.lock();
             double newLength = MinDistance[CurrentNode->ID] +
-                               RCost->get_Cost(T->Links.at(std::make_pair(CurrentNode->ID, locknode->ID)), C);
+                               RCost->get_Cost(T->Links.at({CurrentNode->ID, locknode->ID}), C);
 
             if (MinDistance[locknode->ID] > newLength)
                 {
@@ -97,8 +97,7 @@ Dijkstra_RoutingAlgorithm::route(std::shared_ptr<Call> C)
 
     for (int i = NodesInRoute.size() - 1; i > 0; i--)
         {
-        RouteLinks.push_back(T->Links.at(std::make_pair(NodesInRoute[i],
-                                         NodesInRoute[i - 1])));
+        RouteLinks.push_back(T->Links.at({NodesInRoute[i],NodesInRoute[i - 1]}));
         }
 
     //Checks whether the route is correct

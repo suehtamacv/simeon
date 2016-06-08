@@ -120,6 +120,8 @@ SOURCES += src/main.cpp \
     tests/Calls/CallTest.cpp \
     tests/Calls/CallGeneratorTest.cpp \
     tests/Calls/EventTest.cpp \
+    tests/Devices/FiberTest.cpp \
+    tests/Devices/SplitterTest.cpp \
     tests/GeneralClasses/GainTest.cpp \
     tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \

@@ -223,5 +223,5 @@ void SignalQualityPrediction::evaluateLNMax()
 double SignalQualityPrediction::get_LNMax(TransmissionBitrate bitrate,
         ModulationScheme scheme)
 {
-    return LNMax.at(std::make_pair(bitrate, scheme));
+    return LNMax.at({bitrate, scheme});
 }

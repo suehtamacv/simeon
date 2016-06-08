@@ -49,6 +49,11 @@ public:
      * @brief freqMax is the end of the signal's bandwidth.
      */
     double freqMax;
+    /**
+     * @brief operator == compares two transfer functions for equality.
+     * @return true iff the transfer functions are equal.
+     */
+    bool operator ==(const TransferFunction &) const;
 };
 }
 

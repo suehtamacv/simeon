@@ -23,7 +23,7 @@ SpectralDensity::SpectralDensity
     else
         {
         double centerFreq = (freqMax + freqMin) / 2.0;
-        std::pair<double, double> freqValues = std::make_pair(freqMin, freqMax);
+        std::pair<double, double> freqValues = {freqMin, freqMax};
 
         if (specDensityMap.count(freqValues) == 0)
             {

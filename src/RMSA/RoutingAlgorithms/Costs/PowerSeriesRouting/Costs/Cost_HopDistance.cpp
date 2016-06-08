@@ -18,8 +18,7 @@ PSR::cHopDistance::cHopDistance(int NMin, int NMax, std::shared_ptr<Topology> T)
 arma::rowvec PSR::cHopDistance::getCost(std::weak_ptr<Link>,
                                         std::shared_ptr<Call> C)
 {
-    return cache.at(std::make_pair(C->Origin.lock()->ID,
-                                   C->Destination.lock()->ID));
+    return cache.at({C->Origin.lock()->ID, C->Destination.lock()->ID});
 }
 
 PSR::cHopDistance::Comparator::Comparator

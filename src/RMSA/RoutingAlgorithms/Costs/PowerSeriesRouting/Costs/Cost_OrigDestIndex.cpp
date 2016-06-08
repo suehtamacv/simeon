@@ -16,8 +16,7 @@ PSR::cOrigDestIndex::cOrigDestIndex
 arma::rowvec PSR::cOrigDestIndex::getCost
 (std::weak_ptr<Link>, std::shared_ptr<Call> C)
 {
-    return cache.at(std::make_pair(C->Origin.lock()->ID,
-                                   C->Destination.lock()->ID));
+    return cache.at({C->Origin.lock()->ID, C->Destination.lock()->ID});
 }
 
 void PSR::cOrigDestIndex::createCache()
