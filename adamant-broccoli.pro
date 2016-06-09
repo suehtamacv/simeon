@@ -37,7 +37,6 @@ SOURCES += src/main.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.cpp \
-    src/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.cpp \
     src/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2.cpp \
     src/GeneralPurposeAlgorithms/NSGA-II/NSGA2_Generation.cpp \
@@ -126,7 +125,6 @@ SOURCES += src/main.cpp \
     tests/GeneralClasses/ModulationSchemeTest.cpp \
     tests/GeneralClasses/PowerTest.cpp \
     tests/GeneralClasses/TransmissionBitrateTest.cpp \
-    tests/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonRuleTest.cpp \
     tests/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRuleTest.cpp \
     tests/Structure/LinkTest.cpp \
     tests/Structure/NodeTest.cpp \
@@ -166,7 +164,6 @@ HEADERS += \
     include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
     include/GeneralPurposeAlgorithms/GA/GA_Individual.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/IntegrationMethod.h \
-    include/GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h \
     include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h \
     include/GeneralPurposeAlgorithms/NSGA-2.h \
     include/GeneralPurposeAlgorithms/NSGA-II/NSGA2.h \

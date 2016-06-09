@@ -16,7 +16,7 @@ public:
      */
     TrapezoidalRule();
     /**
-     * @brief calculate is used to compute the SimpsonsRule integration method.
+     * @brief calculate is used to compute the TrapezoidalRule integration method.
      * @return the result of the calculations.
      */
     double calculate(const arma::mat &, const double&);

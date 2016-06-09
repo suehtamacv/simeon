@@ -1,7 +1,7 @@
 #include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
 #include <GeneralClasses/PhysicalConstants.h>
-#include <GeneralPurposeAlgorithms/IntegrationMethods/SimpsonsRule.h>
+#include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
 #include <GeneralClasses/LinkSpectralDensity.h>
 
 using namespace TF;
@@ -77,7 +77,7 @@ Power Signal::get_NoisePower()
 Power Signal::get_SpectralPower()
 {
     return Power(
-               SimpsonsRule().calculate(signalSpecDensity->specDensity, freqMax - freqMin)
+               TrapezoidalRule().calculate(signalSpecDensity->specDensity, freqMax - freqMin)
                * signalSpecDensity->densityScaling, Power::Watt);
 }
 
@@ -89,7 +89,7 @@ Gain Signal::get_SignalPowerRatio()
                                  Slot::numFrequencySamplesPerSlot * numSlots);
 
         originalSpecDensityCache.emplace(numSlots, Power(
-                                             SimpsonsRule().calculate(originSD.specDensity, freqMax - freqMin)
+                                             TrapezoidalRule().calculate(originSD.specDensity, freqMax - freqMin)
                                              * originSD.densityScaling, Power::Watt));
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
@@ -100,9 +100,9 @@ Gain Signal::get_WeightedCrosstalk()
     arma::rowvec S = signalSpecDensity->specDensity;
     arma::rowvec X = crosstalkSpecDensity->specDensity;
 
-    double P = SimpsonsRule().calculate(S, freqMax - freqMin);
-    double k = P / SimpsonsRule().calculate(S % S, freqMax - freqMin);
+    double P = TrapezoidalRule().calculate(S, freqMax - freqMin);
+    double k = P / TrapezoidalRule().calculate(S % S, freqMax - freqMin);
 
     return
-        Gain(SimpsonsRule().calculate(k * S % X, freqMax - freqMin) / k, Gain::Linear);
+        Gain(TrapezoidalRule().calculate(k * S % X, freqMax - freqMin) / P, Gain::Linear);
 }

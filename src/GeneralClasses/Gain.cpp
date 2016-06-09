@@ -12,7 +12,8 @@ Gain::Gain(double value, InitType Type) : value_Linear(0),
         }
     else if (Type == InitType::Linear)
         {
-        EXPECT_GT(value, 0) << "There's no dB value for something negative.";
+        EXPECT_GE(value, 0) << "There's no dB value for something negative.";
+        value = (value >= 0) ? value : 0;
         value_dB = 10 * log10(value);
         }
 }
