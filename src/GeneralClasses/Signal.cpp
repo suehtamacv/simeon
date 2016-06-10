@@ -51,6 +51,7 @@ Signal &Signal::operator *=(TransferFunction &TF)
     if (considerFilterImperfection)
         {
         (*signalSpecDensity) *= (TF);
+        (*crosstalkSpecDensity) *= (TF);
         }
     return *this;
 }

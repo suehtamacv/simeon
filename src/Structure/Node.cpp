@@ -354,8 +354,6 @@ void Node::set_NodeInactive()
 
 std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
 {
-    entranceSSS->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
-                                      S.freqMax - S.freqMin);
     auto X = std::make_shared<SpectralDensity>(S.freqMin, S.freqMax,
              Slot::numFrequencySamplesPerSlot * S.numSlots, true);
 
