@@ -1,10 +1,10 @@
 #include <GeneralClasses/LinkSpectralDensity.h>
-#include <boost/assert.hpp>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
 #include <GeneralClasses/SpectralDensity.h>
+#include <gtest/gtest.h>
 
 unsigned long LinkSpectralDensity::numFrequencySamples =
     Slot::numFrequencySamplesPerSlot * Link::NumSlots;
@@ -50,8 +50,7 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
     double freqMin = usedSlots.front().lock()->S->freqMin;
     double freqMax = usedSlots.back().lock()->S->freqMax;
 
-    BOOST_ASSERT_MSG(freqMax - freqMin == numSlots * Slot::BSlot,
-                     "Slots are not contiguous");
+    EXPECT_EQ(freqMax - freqMin,numSlots * Slot::BSlot) << "Slots are not contiguous";
 
     std::shared_ptr<SpectralDensity> PSD = std::make_shared<SpectralDensity>
                                            (freqMin, freqMax, Slot::numFrequencySamplesPerSlot * numSlots, true);
@@ -60,7 +59,7 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
         {
         PSD->specDensity.cols(s * Slot::numFrequencySamplesPerSlot,
                               (s + 1) * Slot::numFrequencySamplesPerSlot - 1)
-            = S.at(usedSlots.at(s).lock()->numSlot)->specDensity;
+            = S.at(usedSlots[s].lock()->numSlot)->specDensity;
         }
 
     return PSD;

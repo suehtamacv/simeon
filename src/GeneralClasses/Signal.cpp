@@ -51,6 +51,7 @@ Signal &Signal::operator *=(TransferFunction &TF)
     if (considerFilterImperfection)
         {
         (*signalSpecDensity) *= (TF);
+        (*crosstalkSpecDensity) *= (TF);
         }
     return *this;
 }
@@ -97,8 +98,8 @@ Gain Signal::get_SignalPowerRatio()
 
 Gain Signal::get_WeightedCrosstalk()
 {
-    arma::rowvec S = signalSpecDensity->specDensity;
-    arma::rowvec X = crosstalkSpecDensity->specDensity;
+    arma::rowvec S = signalSpecDensity->specDensity * signalSpecDensity->densityScaling;
+    arma::rowvec X = crosstalkSpecDensity->specDensity * crosstalkSpecDensity->densityScaling;
 
     double P = TrapezoidalRule().calculate(S, freqMax - freqMin);
     double k = P / TrapezoidalRule().calculate(S % S, freqMax - freqMin);

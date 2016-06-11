@@ -1,8 +1,8 @@
 #include "GeneralClasses/SpectralDensity.h"
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
-#include <boost/assert.hpp>
 #include <Structure/Slot.h>
+#include <gtest/gtest.h>
 
 using namespace TF;
 
@@ -39,15 +39,13 @@ SpectralDensity::SpectralDensity
         }
 }
 
-SpectralDensity::SpectralDensity(const SpectralDensity &spec)
+SpectralDensity::SpectralDensity(const SpectralDensity &spec) :
+    densityScaling(spec.densityScaling),
+    freqMin(spec.freqMin),
+    freqMax(spec.freqMax),
+    specDensity(spec.specDensity)
 {
-    TxFilterOrder = spec.TxFilterOrder;
-    GaussianOrder = spec.GaussianOrder;
-    densityScaling = spec.densityScaling;
-    freqMin = spec.freqMin;
-    freqMax = spec.freqMax;
-    specDensity = arma::rowvec(spec.specDensity);
-    specDensityMap = spec.specDensityMap;
+
 }
 
 SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
@@ -122,8 +120,8 @@ void SpectralDensity::define_SignalsFilterOrder()
 
 SpectralDensity& SpectralDensity::operator +=(const SpectralDensity &PSD)
 {
-    BOOST_ASSERT_MSG((freqMin == PSD.freqMin) && (freqMax == PSD.freqMax),
-                     "Error summing two spectral densities");
+    EXPECT_EQ(freqMin, PSD.freqMin) << "Error summing two spectral densities.";
+    EXPECT_EQ(freqMax, PSD.freqMax) << "Error summing two spectral densities.";
     specDensity = densityScaling * specDensity +
                   PSD.densityScaling * PSD.specDensity;
     densityScaling = 1;

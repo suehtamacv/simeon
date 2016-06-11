@@ -50,7 +50,7 @@ public:
     /**
      * @brief numFrequencySamplesPerSlot is the number of frequency samples per slot.
      */
-    static constexpr unsigned long numFrequencySamplesPerSlot = 25;
+    static constexpr unsigned long numFrequencySamplesPerSlot = 50;
     /**
      * @brief S is the main signal spectral density.
      */

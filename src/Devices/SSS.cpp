@@ -107,9 +107,10 @@ TransferFunction& SSS::get_BlockTransferFunction(double centerFreq,
                                                centerFreq + bandwidth / 2.0,
                                                Slot::numFrequencySamplesPerSlot * numSlots,
                                                filterOrder, std::pow(get_Gain().in_Linear(), 2));
-            //Stopband filter
+            //Notch filter
+            double maxValue = blockingFunctionsCache[freq].frequencySamples.max();
             blockingFunctionsCache[freq].frequencySamples
-                = 1.0 - blockingFunctionsCache[freq].frequencySamples;
+                = maxValue - blockingFunctionsCache[freq].frequencySamples;
             }
         return blockingFunctionsCache.at(freq);
         }
