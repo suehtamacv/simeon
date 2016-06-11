@@ -39,15 +39,13 @@ SpectralDensity::SpectralDensity
         }
 }
 
-SpectralDensity::SpectralDensity(const SpectralDensity &spec)
+SpectralDensity::SpectralDensity(const SpectralDensity &spec) :
+    densityScaling(spec.densityScaling),
+    freqMin(spec.freqMin),
+    freqMax(spec.freqMax),
+    specDensity(spec.specDensity)
 {
-    TxFilterOrder = spec.TxFilterOrder;
-    GaussianOrder = spec.GaussianOrder;
-    densityScaling = spec.densityScaling;
-    freqMin = spec.freqMin;
-    freqMax = spec.freqMax;
-    specDensity = arma::rowvec(spec.specDensity);
-    specDensityMap = spec.specDensityMap;
+
 }
 
 SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)

@@ -59,7 +59,7 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
         {
         PSD->specDensity.cols(s * Slot::numFrequencySamplesPerSlot,
                               (s + 1) * Slot::numFrequencySamplesPerSlot - 1)
-            = S.at(usedSlots.at(s).lock()->numSlot)->specDensity;
+            = S.at(usedSlots[s].lock()->numSlot)->specDensity;
         }
 
     return PSD;
