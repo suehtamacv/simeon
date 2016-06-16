@@ -206,8 +206,11 @@ Signal &Node::drop(Signal &S)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
-        S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
-                                      S.freqMax - S.freqMin); //bandwidth
+        if (considerFilterImperfection)
+            {
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
+                                          S.freqMax - S.freqMin); //bandwidth
+            }
 
         if ((it->DevType == Device::SplitterDevice) ||
                 (it->DevType == Device::SSSDevice))

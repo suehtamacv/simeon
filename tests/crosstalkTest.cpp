@@ -47,7 +47,7 @@ TEST(CrosstalkTest, Epsilon)
         }
 
     S14 = Seg14.bypass(S14);
-    std::cout << S14.get_WeightedCrosstalk().in_Linear() << std::endl;
+    std::cout << S14.get_WeightedCrosstalk() << std::endl;
 }
 
 #endif

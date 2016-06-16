@@ -130,7 +130,8 @@ SOURCES += src/main.cpp \
     tests/Structure/NodeTest.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Structure/TopologyTest.cpp \
-    tests/crosstalkTest.cpp
+    tests/crosstalkTest.cpp \
+    tests/Devices/AmplifierTest.cpp
 
 HEADERS += \
     include/Calls.h \
