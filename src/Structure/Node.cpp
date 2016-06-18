@@ -192,8 +192,7 @@ Signal &Node::bypass(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
-                                          S.freqMax - S.freqMin); //bandwidth
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0); //central frequency
             }
         }
     S += *evalCrosstalk(S);
@@ -208,8 +207,7 @@ Signal &Node::drop(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
-                                          S.freqMax - S.freqMin); //bandwidth
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0); //central frequency
             }
 
         if ((it->DevType == Device::SplitterDevice) ||
@@ -238,8 +236,7 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
-        S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
-                                         S.freqMax - S.freqMin);
+        S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0);
         }
 
     return S;
@@ -365,9 +362,7 @@ std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
         if (*(S.incomingLink.lock()) != *(link.get()))
             {
             (*X) += (*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
-                     * entranceSSS->get_BlockTransferFunction(
-                         (S.freqMin + S.freqMax) / 2.0, //central frequency
-                         S.freqMax - S.freqMin)); //bandwidth
+                     * (entranceSSS->get_BlockTransferFunction((S.freqMin + S.freqMax) / 2.0)));
             }
         }
 

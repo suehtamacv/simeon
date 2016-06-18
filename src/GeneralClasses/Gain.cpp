@@ -94,6 +94,20 @@ bool Gain::operator <=(const Gain &G) const
     return ((operator <(G)) || (operator ==(G)));
 }
 
+Gain& Gain::operator +=(const Gain &G)
+{
+    value_dB += G.value_dB;
+    calculatedLinear = false;
+    return *this;
+}
+
+Gain& Gain::operator -=(const Gain &G)
+{
+    value_dB -= G.value_dB;
+    calculatedLinear = false;
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const Gain &G)
 {
     return os << G.in_dB() << "dB";

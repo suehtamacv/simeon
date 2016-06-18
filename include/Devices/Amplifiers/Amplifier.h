@@ -29,7 +29,7 @@ public:
     Amplifier(Gain G);
 
     Power &get_Noise();
-    TF::TransferFunction &get_TransferFunction(double, double);
+    std::shared_ptr<TF::Transmittance> get_TransferFunction(double);
     double get_CapEx();
     double get_OpEx();
 
@@ -58,7 +58,7 @@ private:
     /**
      * @brief deviceTF  is the device's transfer function.
      */
-    std::shared_ptr<TF::TransferFunction> deviceTF;
+    std::shared_ptr<TF::Transmittance> deviceTF;
 };
 }
 

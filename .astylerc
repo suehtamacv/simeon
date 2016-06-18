@@ -1,5 +1,6 @@
 --lineend=linux
 --mode=c
+--max-code-length=110
 
 --style=vtk
 

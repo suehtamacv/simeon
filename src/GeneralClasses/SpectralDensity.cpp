@@ -14,8 +14,10 @@ int SpectralDensity::TxFilterOrder = 1;
 
 SpectralDensity::SpectralDensity
 (double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec) :
-    densityScaling(1), freqMin(freqMin), freqMax(freqMax)
+    densityScaling(0, Gain::dB), freqMin(freqMin), freqMax(freqMax)
 {
+    stepFrequency = (freqMax - freqMin) / (double) numSamples;
+
     if (cleanSpec)
         {
         specDensity.zeros(numSamples);
@@ -30,10 +32,9 @@ SpectralDensity::SpectralDensity
             arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
             for (auto& val : thisSpecDensity)
                 {
-                val = std::exp2l( (-2) *
-                                  pow(2 * (val - centerFreq) / SBW_3dB, 2 * TxFilterOrder));
+                val = std::exp2l( (-2) * pow(2 * (val - centerFreq) / SBW_3dB, 2 * TxFilterOrder));
                 }
-            specDensityMap.emplace(freqValues, thisSpecDensity);
+            specDensityMap[freqValues] = thisSpecDensity;
             }
         specDensity = specDensityMap[freqValues];
         }
@@ -48,14 +49,12 @@ SpectralDensity::SpectralDensity(const SpectralDensity &spec) :
 
 }
 
-SpectralDensity& SpectralDensity::operator *=(TransferFunction &H)
+SpectralDensity& SpectralDensity::operator *=(std::shared_ptr<TF::Transmittance> H)
 {
-    densityScaling *= H.scale;
-    if (!H.isImpulseTransferFunction)
+    for (size_t c = 0; c < specDensity.n_cols; ++c)
         {
-        specDensity %= H.frequencySamples;
+        specDensity[c] *= H->get_TransmittanceAt(freqMin + c * stepFrequency).in_Linear();
         }
-
     return *this;
 }
 
@@ -122,13 +121,13 @@ SpectralDensity& SpectralDensity::operator +=(const SpectralDensity &PSD)
 {
     EXPECT_EQ(freqMin, PSD.freqMin) << "Error summing two spectral densities.";
     EXPECT_EQ(freqMax, PSD.freqMax) << "Error summing two spectral densities.";
-    specDensity = densityScaling * specDensity +
-                  PSD.densityScaling * PSD.specDensity;
-    densityScaling = 1;
+    specDensity = densityScaling.in_Linear() * specDensity +
+                  Gain(PSD.densityScaling).in_Linear() * PSD.specDensity;
+    densityScaling = Gain(0, Gain::dB);
     return *this;
 }
 
-SpectralDensity SpectralDensity::operator *(TF::TransferFunction &H) const
+SpectralDensity SpectralDensity::operator *(std::shared_ptr<TF::Transmittance> H) const
 {
     SpectralDensity spec(*this);
     spec *= H;

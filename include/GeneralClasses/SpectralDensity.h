@@ -1,8 +1,9 @@
 #ifndef SPECTRALDENSITY_H
 #define SPECTRALDENSITY_H
 
-#include <GeneralClasses/TransferFunctions/TransferFunction.h>
+#include <GeneralClasses/TransferFunctions/Transmittance.h>
 #include <map>
+#include <memory>
 
 /**
  * @brief The SpectralDensity class represents the elements related to a signal's spectral density.
@@ -40,7 +41,7 @@ public:
     /**
      * @brief densityScaling is the result of the gains and losses over this spectral density.
      */
-    double densityScaling;
+    Gain densityScaling;
     /**
      * @brief freqMin is the beginning of the signal's bandwidth.
      */
@@ -62,9 +63,12 @@ public:
      * @param H is the TransferFunction.
      * @return a reference to this object.
      */
-    SpectralDensity& operator*=(TF::TransferFunction &H);
-    SpectralDensity operator*(TF::TransferFunction &H) const;
+    SpectralDensity& operator*=(std::shared_ptr<TF::Transmittance> H);
+    SpectralDensity operator*(std::shared_ptr<TF::Transmittance> H) const;
     SpectralDensity& operator+=(const SpectralDensity &);
+
+private:
+    double stepFrequency;
 };
 
 #endif // SPECTRALDENSITY_H

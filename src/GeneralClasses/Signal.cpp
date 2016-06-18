@@ -46,12 +46,12 @@ Signal &Signal::operator +=(Power &P)
     return *this;
 }
 
-Signal &Signal::operator *=(TransferFunction &TF)
+Signal &Signal::operator *=(std::shared_ptr<Transmittance> TF)
 {
     if (considerFilterImperfection)
         {
-        (*signalSpecDensity) *= (TF);
-        (*crosstalkSpecDensity) *= (TF);
+        (*signalSpecDensity) *= TF;
+        (*crosstalkSpecDensity) *= TF;
         }
     return *this;
 }
@@ -79,7 +79,7 @@ Power Signal::get_SpectralPower()
 {
     return Power(
                TrapezoidalRule().calculate(signalSpecDensity->specDensity, freqMax - freqMin)
-               * signalSpecDensity->densityScaling, Power::Watt);
+               * signalSpecDensity->densityScaling.in_Linear(), Power::Watt);
 }
 
 Gain Signal::get_SignalPowerRatio()
@@ -91,15 +91,15 @@ Gain Signal::get_SignalPowerRatio()
 
         originalSpecDensityCache.emplace(numSlots, Power(
                                              TrapezoidalRule().calculate(originSD.specDensity, freqMax - freqMin)
-                                             * originSD.densityScaling, Power::Watt));
+                                             * originSD.densityScaling.in_Linear(), Power::Watt));
         }
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }
 
 Gain Signal::get_WeightedCrosstalk()
 {
-    arma::rowvec S = signalSpecDensity->specDensity * signalSpecDensity->densityScaling;
-    arma::rowvec X = crosstalkSpecDensity->specDensity * crosstalkSpecDensity->densityScaling;
+    arma::rowvec S = signalSpecDensity->specDensity * signalSpecDensity->densityScaling.in_Linear();
+    arma::rowvec X = crosstalkSpecDensity->specDensity * crosstalkSpecDensity->densityScaling.in_Linear();
 
     double P = TrapezoidalRule().calculate(S, freqMax - freqMin);
     double k = P / TrapezoidalRule().calculate(S % S, freqMax - freqMin);

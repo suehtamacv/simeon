@@ -30,8 +30,6 @@ SOURCES += src/main.cpp \
     src/GeneralClasses/Power.cpp \
     src/GeneralClasses/Signal.cpp \
     src/GeneralClasses/SpectralDensity.cpp \
-    src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
-    src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
     src/GeneralClasses/TransmissionBitrate.cpp \
     src/GeneralPurposeAlgorithms/GA/GA.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
@@ -131,7 +129,12 @@ SOURCES += src/main.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Structure/TopologyTest.cpp \
     tests/crosstalkTest.cpp \
-    tests/Devices/AmplifierTest.cpp
+    tests/Devices/AmplifierTest.cpp \
+    src/GeneralClasses/TransferFunctions/Transmittance.cpp \
+    src/GeneralClasses/TransferFunctions/GaussianFilter.cpp \
+    src/GeneralClasses/TransferFunctions/ConstantTransmittance.cpp \
+    src/GeneralClasses/TransferFunctions/GaussianPassbandFilter.cpp \
+    src/GeneralClasses/TransferFunctions/GaussianStopbandFilter.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -159,8 +162,6 @@ HEADERS += \
     include/GeneralClasses/RandomGenerator.h \
     include/GeneralClasses/Signal.h \
     include/GeneralClasses/SpectralDensity.h \
-    include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
-    include/GeneralClasses/TransferFunctions/TransferFunction.h \
     include/GeneralClasses/TransmissionBitrate.h \
     include/GeneralPurposeAlgorithms/GA/GA.h \
     include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
@@ -259,7 +260,12 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
+    include/GeneralClasses/TransferFunctions/Transmittance.h \
+    include/GeneralClasses/TransferFunctions/GaussianFilter.h \
+    include/GeneralClasses/TransferFunctions/ConstantTransmittance.h \
+    include/GeneralClasses/TransferFunctions/GaussianPassbandFilter.h \
+    include/GeneralClasses/TransferFunctions/GaussianStopbandFilter.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas -lgtest
 

@@ -50,7 +50,7 @@ public:
      * @brief operator *= multiplies this signal spectral density by a transfer function.
      * @return a signal after the transfer function.
      */
-    Signal &operator *=(TF::TransferFunction &);
+    Signal &operator *=(std::shared_ptr<TF::Transmittance>);
     /**
      * @brief operator += adds a crosstalk PSD to this signal's crosstalk.
      * @return a signal after adding the crosstalk.
