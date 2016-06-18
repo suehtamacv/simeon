@@ -1,5 +1,5 @@
 #include <Devices/Fiber.h>
-#include <GeneralClasses/TransferFunctions/ConstantTransmittance.h>
+#include <GeneralClasses/Transmittances/ConstantTransmittance.h>
 
 using namespace Devices;
 using namespace TF;

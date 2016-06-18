@@ -15,8 +15,7 @@ TEST(DevicesTest, SplitterTest)
     std::shared_ptr<Link> link21 = std::make_shared<Link>(NodeAux2, NodeAux1, 1000);
 
     Devices::Splitter Splitter1(NodeAux1.get());
-    EXPECT_TRUE(Splitter1.get_TransferFunction(1000, 50).isImpulseTransferFunction) << "Splitter does not have a transfer function that depends on the frequency.";
-    EXPECT_EQ(Splitter1.get_TransferFunction(1000, 50).scale, std::pow(Splitter1.get_Gain().in_Linear(), 2)) << "Transfer function gain not being correctly set.";
+    EXPECT_EQ(Splitter1.get_TransferFunction(1000)->get_TransmittanceAt(123), Splitter1.get_Gain()) << "Transfer function gain not being correctly set.";
     ASSERT_EQ(Splitter1.get_Gain(), Gain(0)) << "A splitter does not insert loss when the node does not have any neighbours.";
 
     NodeAux2->insert_Link(NodeAux1, link21);
@@ -29,7 +28,6 @@ TEST(DevicesTest, SplitterTest)
     EXPECT_EQ(Splitter1.get_Noise(), Splitter3->get_Noise()) << "Splitter cloning not working correctly: noise unequal.";
     EXPECT_EQ(Splitter1.get_CapEx(), Splitter3->get_CapEx()) << "Splitter cloning not working correctly: CapEx unequal.";
     EXPECT_EQ(Splitter1.get_OpEx(), Splitter3->get_OpEx()) << "Splitter cloning not working correctly: OpEx unequal.";
-    EXPECT_EQ(Splitter1.get_TransferFunction(5000, 125), Splitter3->get_TransferFunction(5000, 125)) << "Splitter cloning not working correctly: transfer function unequal.";
 
     Gain origGain = Splitter1.get_Gain();
     NodeAux1->insert_Link(NodeAux3, link13);

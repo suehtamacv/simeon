@@ -1,5 +1,5 @@
 #include <Devices/Amplifiers/Amplifier.h>
-#include <GeneralClasses/TransferFunctions/ConstantTransmittance.h>
+#include <GeneralClasses/Transmittances/ConstantTransmittance.h>
 
 using namespace Devices;
 using namespace TF;
@@ -18,7 +18,7 @@ Power &Amplifier::get_Noise()
 void Amplifier::set_Gain(Gain G)
 {
     AmplifierGain = G;
-    deviceTF = std::make_shared<ConstantTransmittance>(get_Gain());
+    deviceTF = std::make_shared<ConstantTransmittance>(G);
     calculate_NoisePower();
 }
 

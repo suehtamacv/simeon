@@ -1,7 +1,7 @@
 #ifndef GAUSSIANFILTER_H
 #define GAUSSIANFILTER_H
 
-#include <GeneralClasses/TransferFunctions/Transmittance.h>
+#include <GeneralClasses/Transmittances/Transmittance.h>
 #include <map>
 
 namespace TF

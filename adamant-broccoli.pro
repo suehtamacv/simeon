@@ -3,8 +3,8 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle qt
 
-QMAKE_CXXFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
-QMAKE_LFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
+QMAKE_CXXFLAGS += -std=c++11 -fopenmp
+QMAKE_LFLAGS += -std=c++11 -fopenmp
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -130,11 +130,11 @@ SOURCES += src/main.cpp \
     tests/Structure/TopologyTest.cpp \
     tests/crosstalkTest.cpp \
     tests/Devices/AmplifierTest.cpp \
-    src/GeneralClasses/TransferFunctions/Transmittance.cpp \
-    src/GeneralClasses/TransferFunctions/GaussianFilter.cpp \
-    src/GeneralClasses/TransferFunctions/ConstantTransmittance.cpp \
-    src/GeneralClasses/TransferFunctions/GaussianPassbandFilter.cpp \
-    src/GeneralClasses/TransferFunctions/GaussianStopbandFilter.cpp
+    src/GeneralClasses/Transmittances/Transmittance.cpp \
+    src/GeneralClasses/Transmittances/GaussianFilter.cpp \
+    src/GeneralClasses/Transmittances/ConstantTransmittance.cpp \
+    src/GeneralClasses/Transmittances/GaussianPassbandFilter.cpp \
+    src/GeneralClasses/Transmittances/GaussianStopbandFilter.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -261,13 +261,13 @@ HEADERS += \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h \
-    include/GeneralClasses/TransferFunctions/Transmittance.h \
-    include/GeneralClasses/TransferFunctions/GaussianFilter.h \
-    include/GeneralClasses/TransferFunctions/ConstantTransmittance.h \
-    include/GeneralClasses/TransferFunctions/GaussianPassbandFilter.h \
-    include/GeneralClasses/TransferFunctions/GaussianStopbandFilter.h
+    include/GeneralClasses/Transmittances/Transmittance.h \
+    include/GeneralClasses/Transmittances/GaussianFilter.h \
+    include/GeneralClasses/Transmittances/ConstantTransmittance.h \
+    include/GeneralClasses/Transmittances/GaussianPassbandFilter.h \
+    include/GeneralClasses/Transmittances/GaussianStopbandFilter.h
 
-LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas -lgtest
+LIBS += -lboost_system -lboost_program_options -larmadillo -lgtest
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*

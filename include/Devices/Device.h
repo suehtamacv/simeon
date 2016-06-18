@@ -4,7 +4,7 @@
 #include <memory>
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/Power.h>
-#include <GeneralClasses/TransferFunctions/Transmittance.h>
+#include <GeneralClasses/Transmittances/Transmittance.h>
 
 //! Optical Devices.
 namespace Devices

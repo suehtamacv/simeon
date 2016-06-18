@@ -32,7 +32,7 @@ SpectralDensity::SpectralDensity
             arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
             for (auto& val : thisSpecDensity)
                 {
-                val = std::exp2l( (-2) * pow(2 * (val - centerFreq) / SBW_3dB, 2 * TxFilterOrder));
+                val = std::exp2l(-pow(2 * (val - centerFreq) / SBW_3dB, 2 * TxFilterOrder));
                 }
             specDensityMap[freqValues] = thisSpecDensity;
             }

@@ -1,6 +1,6 @@
 #include <Devices/Splitter.h>
 #include <Structure/Node.h>
-#include <GeneralClasses/TransferFunctions/ConstantTransmittance.h>
+#include <GeneralClasses/Transmittances/ConstantTransmittance.h>
 
 using namespace Devices;
 using namespace TF;

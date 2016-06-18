@@ -1,4 +1,4 @@
-#include "include/GeneralClasses/TransferFunctions/ConstantTransmittance.h"
+#include "include/GeneralClasses/Transmittances/ConstantTransmittance.h"
 
 using namespace TF;
 

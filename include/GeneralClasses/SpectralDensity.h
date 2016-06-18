@@ -1,7 +1,7 @@
 #ifndef SPECTRALDENSITY_H
 #define SPECTRALDENSITY_H
 
-#include <GeneralClasses/TransferFunctions/Transmittance.h>
+#include <GeneralClasses/Transmittances/Transmittance.h>
 #include <map>
 #include <memory>
 

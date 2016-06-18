@@ -1,4 +1,4 @@
-#include "include/GeneralClasses/TransferFunctions/GaussianStopbandFilter.h"
+#include "include/GeneralClasses/Transmittances/GaussianStopbandFilter.h"
 
 using namespace TF;
 
@@ -11,5 +11,5 @@ GaussianStopbandFilter::GaussianStopbandFilter
 
 Gain GaussianStopbandFilter::get_TransmittanceAt(double freq)
 {
-    return scale + Gain(1.0 - get_TransmittanceAt(freq).in_Linear(), Gain::Linear);
+    return Gain(1.0 - get_GaussianAt(freq).in_Linear(), Gain::Linear) + scale;
 }

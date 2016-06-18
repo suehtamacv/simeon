@@ -1,4 +1,4 @@
-#include "include/GeneralClasses/TransferFunctions/GaussianPassbandFilter.h"
+#include "include/GeneralClasses/Transmittances/GaussianPassbandFilter.h"
 
 using namespace TF;
 

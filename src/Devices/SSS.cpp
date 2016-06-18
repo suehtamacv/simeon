@@ -6,9 +6,9 @@
 #include <GeneralClasses/LinkSpectralDensity.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
-#include <GeneralClasses/TransferFunctions/ConstantTransmittance.h>
-#include <GeneralClasses/TransferFunctions/GaussianPassbandFilter.h>
-#include <GeneralClasses/TransferFunctions/GaussianStopbandFilter.h>
+#include <GeneralClasses/Transmittances/ConstantTransmittance.h>
+#include <GeneralClasses/Transmittances/GaussianPassbandFilter.h>
+#include <GeneralClasses/Transmittances/GaussianStopbandFilter.h>
 
 using namespace Devices;
 using namespace TF;
