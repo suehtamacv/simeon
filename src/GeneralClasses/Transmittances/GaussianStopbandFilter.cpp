@@ -9,7 +9,12 @@ GaussianStopbandFilter::GaussianStopbandFilter
 
 }
 
-Gain GaussianStopbandFilter::get_TransmittanceAt(double freq)
+Gain &GaussianStopbandFilter::get_TransmittanceAt(double freq)
 {
-    return Gain(1.0 - get_GaussianAt(freq).in_Linear(), Gain::Linear) + scale;
+    if (!calculatedGains.count(freq))
+        {
+        Gain G(std::exp2l(- pow(2 * (freq - centerFreq) / BW_3dB, 2 * filterOrder)), Gain::Linear);
+        calculatedGains.emplace(freq, Gain(1.0 - G.in_Linear(), Gain::Linear) + scale);
+        }
+    return calculatedGains.at(freq);
 }

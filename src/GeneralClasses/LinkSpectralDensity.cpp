@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 unsigned long LinkSpectralDensity::numFrequencySamples =
-    Slot::numFrequencySamplesPerSlot * Link::NumSlots;
+    Slot::samplesPerSlot * Link::NumSlots;
 
 LinkSpectralDensity::LinkSpectralDensity
 (std::vector<std::shared_ptr<Slot>> LinkSlots) : LinkSlots(LinkSlots)
@@ -28,7 +28,7 @@ void LinkSpectralDensity::updateLink(SpectralDensity thisSpecDensity,
     for(unsigned int i = firstSlot; i <= lastSlot; i++)
         {
         S.at(i)->densityScaling = thisSpecDensity.densityScaling;
-        for(unsigned int j = 0; j < Slot::numFrequencySamplesPerSlot; j++)
+        for(unsigned int j = 0; j < Slot::samplesPerSlot; j++)
             {
             S.at(i)->specDensity(j) = thisSpecDensity.specDensity(k);
             k++;
@@ -50,15 +50,14 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
     double freqMin = usedSlots.front().lock()->S->freqMin;
     double freqMax = usedSlots.back().lock()->S->freqMax;
 
-    EXPECT_EQ(freqMax - freqMin,numSlots * Slot::BSlot) << "Slots are not contiguous";
+    EXPECT_EQ(freqMax - freqMin, numSlots * Slot::BSlot) << "Slots are not contiguous";
 
     std::shared_ptr<SpectralDensity> PSD = std::make_shared<SpectralDensity>
-                                           (freqMin, freqMax, Slot::numFrequencySamplesPerSlot * numSlots, true);
+                                           (freqMin, freqMax, Slot::samplesPerSlot * numSlots, true);
 
     for (int s = 0; s < numSlots; s++)
         {
-        PSD->specDensity.cols(s * Slot::numFrequencySamplesPerSlot,
-                              (s + 1) * Slot::numFrequencySamplesPerSlot - 1)
+        PSD->specDensity.cols(s * Slot::samplesPerSlot, (s + 1) * Slot::samplesPerSlot - 1)
             = S.at(usedSlots[s].lock()->numSlot)->specDensity;
         }
 

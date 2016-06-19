@@ -27,7 +27,7 @@ SpectralDensity::SpectralDensity
         double centerFreq = (freqMax + freqMin) / 2.0;
         std::pair<double, double> freqValues = {freqMin, freqMax};
 
-        if (specDensityMap.count(freqValues) == 0)
+        if (!specDensityMap.count(freqValues))
             {
             arma::rowvec thisSpecDensity = arma::linspace(freqMin, freqMax, numSamples).t();
             for (auto& val : thisSpecDensity)
@@ -44,7 +44,8 @@ SpectralDensity::SpectralDensity(const SpectralDensity &spec) :
     densityScaling(spec.densityScaling),
     freqMin(spec.freqMin),
     freqMax(spec.freqMax),
-    specDensity(spec.specDensity)
+    specDensity(spec.specDensity),
+    stepFrequency(spec.stepFrequency)
 {
 
 }
@@ -66,7 +67,6 @@ void SpectralDensity::define_SignalsFilterOrder()
 
     do
         {
-
         int filterOrder;
         std::cin >> filterOrder;
 

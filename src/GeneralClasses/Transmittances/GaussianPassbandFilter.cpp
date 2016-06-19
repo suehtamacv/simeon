@@ -9,7 +9,12 @@ GaussianPassbandFilter::GaussianPassbandFilter
 
 }
 
-Gain GaussianPassbandFilter::get_TransmittanceAt(double freq)
+Gain &GaussianPassbandFilter::get_TransmittanceAt(double freq)
 {
-    return get_GaussianAt(freq) + scale;
+    if (!calculatedGains.count(freq))
+        {
+        Gain G(std::exp2l(- pow(2 * (freq - centerFreq) / BW_3dB, 2 * filterOrder)), Gain::Linear);
+        calculatedGains.emplace(freq, scale + G);
+        }
+    return calculatedGains.at(freq);
 }

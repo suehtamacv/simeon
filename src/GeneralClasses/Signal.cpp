@@ -27,9 +27,9 @@ Signal::Signal(mapSlots occupiedSlots) : occupiedSlots(occupiedSlots),
     if(considerFilterImperfection)
         {
         signalSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
-                            (int) Slot::numFrequencySamplesPerSlot * numSlots);
+                            (int) Slot::samplesPerSlot * numSlots);
         crosstalkSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
-                               (int) Slot::numFrequencySamplesPerSlot * numSlots, true);
+                               (int) Slot::samplesPerSlot * numSlots, true);
         }
 }
 
@@ -87,7 +87,7 @@ Gain Signal::get_SignalPowerRatio()
     if (!originalSpecDensityCache.count(numSlots))
         {
         SpectralDensity originSD(freqMin, freqMax,
-                                 Slot::numFrequencySamplesPerSlot * numSlots);
+                                 Slot::samplesPerSlot * numSlots);
 
         originalSpecDensityCache.emplace(numSlots, Power(
                                              TrapezoidalRule().calculate(originSD.specDensity, freqMax - freqMin)

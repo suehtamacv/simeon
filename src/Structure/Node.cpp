@@ -195,7 +195,12 @@ Signal &Node::bypass(Signal &S)
             S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0); //central frequency
             }
         }
-    S += *evalCrosstalk(S);
+
+    if (considerFilterImperfection)
+        {
+        S += *evalCrosstalk(S);
+        }
+
     return S;
 }
 
@@ -207,16 +212,20 @@ Signal &Node::drop(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0); //central frequency
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0);
             }
 
-        if ((it->DevType == Device::SplitterDevice) ||
-                (it->DevType == Device::SSSDevice))
+        if ((it->DevType == Device::SplitterDevice) || (it->DevType == Device::SSSDevice))
             {
             break;
             }
         }
-    S += *evalCrosstalk(S);
+
+    if (considerFilterImperfection)
+        {
+        S += *evalCrosstalk(S);
+        }
+
     return S;
 }
 
@@ -236,7 +245,10 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
-        S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0);
+        if (considerFilterImperfection)
+            {
+            S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0);
+            }
         }
 
     return S;
@@ -355,7 +367,7 @@ void Node::set_NodeInactive()
 std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
 {
     auto X = std::make_shared<SpectralDensity>(S.freqMin, S.freqMax,
-             Slot::numFrequencySamplesPerSlot * S.numSlots, true);
+             Slot::samplesPerSlot * S.numSlots, true);
 
     for (std::shared_ptr<Link> &link : incomingLinks)
         {

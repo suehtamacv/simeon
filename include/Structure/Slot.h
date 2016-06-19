@@ -48,9 +48,9 @@ public:
      */
     void useSlot();
     /**
-     * @brief numFrequencySamplesPerSlot is the number of frequency samples per slot.
+     * @brief samplesPerSlot is the number of frequency samples per slot.
      */
-    static constexpr unsigned long numFrequencySamplesPerSlot = 50;
+    static constexpr unsigned long samplesPerSlot = 50;
     /**
      * @brief S is the main signal spectral density.
      */

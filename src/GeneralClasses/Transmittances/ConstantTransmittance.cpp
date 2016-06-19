@@ -7,7 +7,7 @@ ConstantTransmittance::ConstantTransmittance(Gain scale) : Transmittance(scale)
 
 }
 
-Gain ConstantTransmittance::get_TransmittanceAt(double)
+Gain &ConstantTransmittance::get_TransmittanceAt(double)
 {
     return scale;
 }

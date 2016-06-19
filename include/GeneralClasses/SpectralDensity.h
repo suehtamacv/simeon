@@ -18,12 +18,11 @@ public:
      * @param numSamples is the number of frequency samples along the bandwidth.
      * @param cleanSpec is a flag for creating a rowvec of zeros as signal spectral density or not.
      */
-    SpectralDensity(double freqMin, double freqMax, unsigned int numSamples,
-                    bool cleanSpec = false);
+    SpectralDensity(double freqMin, double freqMax, unsigned int numSamples, bool cleanSpec = false);
     SpectralDensity(const SpectralDensity &spec);
     /**
-     * @brief SBW_3dB is the bandwidth of a gaussian function of order 1 to 3 dB,
-     * used on transmitedsignal spectral density calculations.
+     * @brief SBW_3dB is the bandwidth of a gaussian function to 3 dB,
+     * used on transmitted signal spectral density calculations.
      */
     static constexpr double SBW_3dB = 40e9;
     /**

@@ -10,7 +10,7 @@ Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
                         BSlot * (numSlot - (Link::NumSlots / 2));
     S = std::make_shared<SpectralDensity>(centerFreq - BSlot / 2.0,
                                           centerFreq + BSlot / 2.0,
-                                          (int) numFrequencySamplesPerSlot, true);
+                                          (int) samplesPerSlot, true);
 }
 
 void Slot::freeSlot()

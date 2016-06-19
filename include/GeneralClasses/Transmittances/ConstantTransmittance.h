@@ -10,7 +10,7 @@ class ConstantTransmittance : public Transmittance
 public:
     ConstantTransmittance(Gain scale);
 
-    Gain get_TransmittanceAt(double);
+    Gain& get_TransmittanceAt(double);
 };
 }
 

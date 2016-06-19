@@ -19,7 +19,7 @@ public:
      * @param scale is the scale of this filter.
      */
     GaussianPassbandFilter(double centerFreq, unsigned int filterOrder, Gain scale);
-    Gain get_TransmittanceAt(double freq);
+    Gain& get_TransmittanceAt(double freq);
 };
 }
 

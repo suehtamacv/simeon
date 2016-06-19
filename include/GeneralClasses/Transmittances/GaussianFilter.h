@@ -28,8 +28,6 @@ protected:
     double centerFreq;
     unsigned int filterOrder;
     std::map<double, Gain> calculatedGains;
-
-    Gain get_GaussianAt(double freq);
 };
 }
 
