@@ -56,6 +56,7 @@ public:
      * @brief NumMaxCalls is the number of call requests that will be simulated.
      */
     long unsigned NumMaxCalls;
+
     /**
      * @brief NumCalls is the number of call requests that have been simulated.
      */
@@ -64,6 +65,21 @@ public:
      * @brief NumBlockedCalls is the number of blocked call requests.
      */
     long unsigned NumBlockedCalls;
+    /**
+     * @brief NumBlockedCalls_Spectrum is the number of calls requests that have been
+     * blocked due to not enough spectrum available.
+     */
+    long unsigned NumBlockedCalls_Spectrum;
+    /**
+     * @brief NumBlockedCalls_ASE_Noise is the number of call requests that have been
+     * blocked due to an OSNR too low.
+     */
+    long unsigned NumBlockedCalls_ASE_Noise;
+    /**
+     * @brief NumBlockedCalls_FilterImperfection is the number of call requests that
+     * have been blocked due to too little power on the required spectrum slice.
+     */
+    long unsigned NumBlockedCalls_FilterImperfection;
 
     /**
      * @brief get_CallBlockingProbability returns a estimation of the call request

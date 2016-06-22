@@ -16,8 +16,11 @@ NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                                      unsigned long NumMaxCalls) :
     Generator(Generator), RMSA(RMSA), NumMaxCalls(NumMaxCalls)
 {
-    NumCalls = 0;
-    NumBlockedCalls = 0;
+    NumCalls =
+        NumBlockedCalls =
+            NumBlockedCalls_Spectrum =
+                NumBlockedCalls_ASE_Noise =
+                    NumBlockedCalls_FilterImperfection = 0;
     hasSimulated = false;
 }
 
@@ -63,10 +66,10 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
             {
 
             if(considerFilterImperfection)
-            {
+                {
                 SpectralDensity thisSpecDensity = route->Segments.begin()->opticalPathSpecDensity.at(auxCount);
                 link.first.lock()->linkSpecDens->updateLink(thisSpecDensity, link.second);
-            }
+                }
 
             for (auto &slot : link.second)
                 {
