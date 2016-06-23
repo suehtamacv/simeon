@@ -24,6 +24,9 @@ public:
      */
     static constexpr double BW_3dB = 41e9;
 
+    double &get_CenterFreq();
+    unsigned int &get_FilterOrder();
+
 protected:
     double centerFreq;
     unsigned int filterOrder;

@@ -6,3 +6,8 @@ Transmittance::Transmittance(Gain scale) : scale(scale)
 {
 
 }
+
+Gain &Transmittance::get_Gain()
+{
+    return scale;
+}

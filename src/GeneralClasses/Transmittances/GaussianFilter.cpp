@@ -8,3 +8,13 @@ GaussianFilter::GaussianFilter(double centerFreq, unsigned int filterOrder, Gain
 {
 
 }
+
+double &GaussianFilter::get_CenterFreq()
+{
+    return centerFreq;
+}
+
+unsigned int &GaussianFilter::get_FilterOrder()
+{
+    return filterOrder;
+}

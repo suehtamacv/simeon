@@ -27,6 +27,7 @@ public:
      * @return the value of the transmittance at @param freq.
      */
     virtual Gain& get_TransmittanceAt(double freq) = 0;
+    Gain &get_Gain();
 
 protected:
     /**

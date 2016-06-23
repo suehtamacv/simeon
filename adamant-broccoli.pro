@@ -134,7 +134,8 @@ SOURCES += src/main.cpp \
     tests/Structure/NodeTest.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Structure/TopologyTest.cpp \
-    tests/crosstalkTest.cpp
+    tests/crosstalkTest.cpp \
+    tests/GeneralClasses/Transmittances/TransmittanceTest.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -264,8 +265,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_PowerRatioThreshold.h \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
-    include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_StatisticalTrend.h \    
 
 LIBS += -lboost_system -lboost_program_options -larmadillo -lgtest
 
