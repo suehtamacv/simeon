@@ -33,7 +33,7 @@ public:
     double get_OpEx();
 
     /**
-     * @brief get_TransferFunction returns the transfer function that represents the device's blocking frequency response.
+     * @brief get_BlockTransferFunction returns the transfer function that represents the device's blocking frequency response.
      * @param centerFreq is the central frequency of this transfer function.
      * @return the transfer function that represents the device's frequency response.
      */

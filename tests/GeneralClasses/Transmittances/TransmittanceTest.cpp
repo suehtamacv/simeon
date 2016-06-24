@@ -8,8 +8,25 @@
 #include <GeneralClasses/Transmittances/GaussianStopbandFilter.h>
 
 #include <Devices/SSS.h>
+#include <cstdlib>
 
 using namespace TF;
+
+TEST(TransmittanceTest, ConstantTransmittanceTest)
+{
+    unsigned int NumPorts = 4;
+    Gain TempSplitterGain (1.0 / (NumPorts + 1), Gain::Linear);
+    ConstantTransmittance ConstTransmit(TempSplitterGain);
+
+    EXPECT_EQ(ConstTransmit.get_Gain(),
+              TempSplitterGain) << "The proper gain is not being initialized.";
+
+    double freqValue1 = 1.0 * rand();
+    double freqValue2 = 1.0 * rand();
+    EXPECT_EQ(ConstTransmit.get_TransmittanceAt(freqValue1),
+              ConstTransmit.get_TransmittanceAt(freqValue2)) <<
+                      "The frequency is being considered in the transmittance.";
+}
 
 TEST(TransmittanceTest, GaussianPassbandFilterTest)
 {
@@ -18,11 +35,11 @@ TEST(TransmittanceTest, GaussianPassbandFilterTest)
     GaussianPassbandFilter GaussPBFilter(centerFreq, filterOrder, Devices::SSS::SSSLoss);
 
     EXPECT_EQ(GaussPBFilter.get_CenterFreq(),
-              centerFreq) << "Gaussian Passband Filter not initializing the proper center frequencie.";
+              centerFreq) << "The proper frequency is not being initialized.";
     EXPECT_EQ(GaussPBFilter.get_FilterOrder(),
-              filterOrder) << "Gaussian Passband Filter not initializing the proper filter order.";
+              filterOrder) << "The proper filter order is not being initialized.";
     EXPECT_EQ(GaussPBFilter.get_Gain(), Devices::SSS::SSSLoss)
-            << "Gaussian Passband Filter not initializing the proper gain.";
+            << "The proper gain is not being initialized.";
 }
 
 #endif
