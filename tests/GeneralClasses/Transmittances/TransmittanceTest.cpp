@@ -8,7 +8,6 @@
 #include <GeneralClasses/Transmittances/GaussianStopbandFilter.h>
 
 #include <Devices/SSS.h>
-#include <cstdlib>
 
 using namespace TF;
 
@@ -21,8 +20,8 @@ TEST(TransmittanceTest, ConstantTransmittanceTest)
     EXPECT_EQ(ConstTransmit.get_Gain(),
               TempSplitterGain) << "The proper gain is not being initialized.";
 
-    double freqValue1 = 1.0 * rand();
-    double freqValue2 = 1.0 * rand();
+    double freqValue1 = 193.4E12;
+    double freqValue2 = 193.4E12 + 25E9;
     EXPECT_EQ(ConstTransmit.get_TransmittanceAt(freqValue1),
               ConstTransmit.get_TransmittanceAt(freqValue2)) <<
                       "The frequency is being considered in the transmittance.";
