@@ -40,7 +40,9 @@ void RoutingAlgorithm::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
+#ifdef RUN_ASSERTIONS
     EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#endif
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  RoutingAlgorithm = " <<

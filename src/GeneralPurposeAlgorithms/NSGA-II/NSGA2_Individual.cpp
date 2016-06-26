@@ -89,13 +89,17 @@ std::string NSGA2_Individual::print(bool pretty)
 std::shared_ptr<NSGA2_Parameter> NSGA2_Individual::getParameter(
     unsigned int i) const
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_LT(i, Parameters.size()) << "Invalid parameter requested";
+#endif
     return Parameters[i];
 }
 
 double NSGA2_Individual::getParameterValue(unsigned int i) const
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_LT(i, Parameters.size()) << "Invalid parameter requested";
+#endif
     return Parameters[i]->evaluate();
 }
 

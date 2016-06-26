@@ -15,14 +15,18 @@ Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 
 void Slot::freeSlot()
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_FALSE(isFree) << "Only occupied slots can be freed.";
+#endif
     isFree = true;
     S->specDensity.zeros();
 }
 
 void Slot::useSlot()
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_TRUE(isFree) << "Only free slots can be used.";
+#endif
     isFree = false;
 }
 

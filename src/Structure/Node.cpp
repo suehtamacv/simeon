@@ -286,9 +286,11 @@ void Node::set_NodeType(NodeType T)
 
 void Node::request_Regenerators(unsigned int NReg)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_TRUE((Type == OpaqueNode) ||
                 (NReg + NumUsedRegenerators <= Regenerators.size())) <<
                         "Request to more regenerators than available.";
+#endif
 
     NumUsedRegenerators += NReg;
     TotalNumRequestedRegenerators += NReg;

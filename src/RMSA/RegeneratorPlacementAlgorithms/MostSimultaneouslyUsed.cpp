@@ -25,8 +25,10 @@ MostSimultaneouslyUsed::MostSimultaneouslyUsed(std::shared_ptr<Topology> T,
 
 void MostSimultaneouslyUsed::placeRegenerators(unsigned NumTotalReg, unsigned)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_NE(RMSA->RA_Alg, nullptr) << "Regenerator Placement can only run if "
                                      "a Regenerator Assignment Algorithm has been set.";
+#endif
 
     if (NumTotalReg == 0)
         {

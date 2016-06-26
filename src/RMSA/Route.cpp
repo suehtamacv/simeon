@@ -74,9 +74,10 @@ Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
 
     for (auto node = Nodes.begin(); node != Nodes.end(); ++node)
         {
+#ifdef RUN_ASSERTIONS
         EXPECT_NE((*node).lock(), Nodes.end()->lock()) <<
                 "orig node is not in the Route.";
-
+#endif
         if (orig.lock() == (*node).lock())
             {
             currentNode = node;
@@ -86,9 +87,10 @@ Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
 
     for (auto node = currentNode ; node != Nodes.end(); ++node)
         {
+#ifdef RUN_ASSERTIONS
         EXPECT_NE((*node).lock(), Nodes.end()->lock()) <<
                 "dest node is not in the Route.";
-
+#endif
         if (dest.lock() == (*node).lock())
             {
             break;

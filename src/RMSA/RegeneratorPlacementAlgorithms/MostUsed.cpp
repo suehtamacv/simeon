@@ -31,8 +31,10 @@ void MostUsed::load()
 
 void MostUsed::placeRegenerators(unsigned N, unsigned X)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_NE(RMSA->RA_Alg, nullptr) << "Regenerator Placement can only run"
                                      " if a Regenerator Assignment Algorithm has been set.";
+#endif
 
     for (auto &node : T->Nodes)
         {

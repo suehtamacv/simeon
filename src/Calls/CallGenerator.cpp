@@ -63,7 +63,9 @@ std::shared_ptr<Call> CallGenerator::generate_Call()
 
 void CallGenerator::set_Load(double h)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_GE(h, 0) << "Network loads must be positive.";
+#endif
     this->h = h;
     ExponentialDistributionH = std::exponential_distribution<double>(h);
 }

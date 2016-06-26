@@ -97,9 +97,11 @@ std::map<std::weak_ptr<Link>,
 void FirstFitEvolutionary::setSlotsList(std::map<int, std::vector<int> >
                                         newSlotsList)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_TRUE(slotsList.empty() ||
                 (newSlotsList.size() == slotsList.size())) <<
                         "Invalid slots list to FFE algorithm.";
+#endif
     slotsList = newSlotsList;
     hasSetSlots = true;
 }

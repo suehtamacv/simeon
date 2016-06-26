@@ -280,7 +280,7 @@ OTHER_FILES += README.md \
                .travis.yml
 
 CONFIG(debug, debug|release) {
-DEFINES += RUN_TESTS
+DEFINES += RUN_TESTS RUN_ASSERTIONS
 }
 
 INCLUDEPATH += include/

@@ -20,7 +20,9 @@ void NodalDegreeFirst::load()
 
 void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_LE(N, T->Nodes.size()) << "Can't have more translucent nodes than nodes";
+#endif
 
     if ((N == 0) && (X == 0))
         {

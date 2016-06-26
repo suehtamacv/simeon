@@ -50,7 +50,9 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
     double freqMin = usedSlots.front().lock()->S->freqMin;
     double freqMax = usedSlots.back().lock()->S->freqMax;
 
+#ifdef RUN_ASSERTIONS
     EXPECT_EQ(freqMax - freqMin, numSlots * Slot::BSlot) << "Slots are not contiguous";
+#endif
 
     std::shared_ptr<SpectralDensity> PSD = std::make_shared<SpectralDensity>
                                            (freqMin, freqMax, Slot::samplesPerSlot * numSlots, true);

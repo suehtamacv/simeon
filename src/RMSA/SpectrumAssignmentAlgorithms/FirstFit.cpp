@@ -60,7 +60,9 @@ mapSlots FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
 
     if (si != -1)
         {
+#ifdef RUN_ASSERTIONS
         EXPECT_EQ(sf, si + RequiredSlots - 1) << "Error in Wavelength Assingment";
+#endif
         for (auto &link : Seg.Links)
             {
             Slots.emplace(link, std::vector<std::weak_ptr<Slot>>

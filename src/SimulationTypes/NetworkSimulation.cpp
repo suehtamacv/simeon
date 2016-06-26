@@ -52,8 +52,10 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
     auto route = RMSA->routeCall(evt->Parent);
     evt->Parent->CallEnding.lock()->route = evt->route = route;
 
+#ifdef RUN_ASSERTIONS
     EXPECT_NE(evt->Parent->Status, Call::Not_Evaluated) <<
             "Call was neither accepted nor blocked.";
+#endif
 
     if (evt->Parent->Status == Call::Blocked)
         {

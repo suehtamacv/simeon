@@ -132,8 +132,9 @@ void RegeneratorPlacementAlgorithm::save(std::string SimConfigFileName,
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
+#ifdef RUN_ASSERTIONS
     EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
-
+#endif
     SimConfigFile << "  RegeneratorPlacementAlgorithm = " <<
                   RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
                       RegPlacAlg) << std::endl;

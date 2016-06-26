@@ -127,7 +127,9 @@ Signal &Link::bypass(Signal &S)
 
 bool Link::isSlotFree(int slot) const
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_LT(slot, NumSlots) << "Invalid slot requested.";
+#endif
     return (Slots[slot])->isFree;
 }
 
@@ -153,10 +155,12 @@ int Link::get_Occupability()
 
 int Link::get_Contiguity(std::shared_ptr<Call> C)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_NE(C->Scheme.get_M(), 0) <<
                                     "Can't calculate contiguity without knowing the modulation"
                                     " scheme. Either you forgot to set it or one of the chosen "
                                     "algorithms is not compatible with the contiguity measure";
+#endif
     int NumRequiredSlots = C->Scheme.get_NumSlots(C->Bitrate);
     int Contiguity = 0;
     int CurrentFreeSlots = 0;
@@ -216,7 +220,9 @@ void Link::save(std::string SimConfigFileName, std::shared_ptr<Topology> T)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
+#ifdef RUN_ASSERTIONS
     EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#endif
 
     SimConfigFile << "  AvgSpanLength = " << T->AvgSpanLength << std::endl;
 }

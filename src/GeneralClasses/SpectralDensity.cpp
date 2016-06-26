@@ -119,8 +119,10 @@ void SpectralDensity::define_SignalsFilterOrder()
 
 SpectralDensity& SpectralDensity::operator +=(const SpectralDensity &PSD)
 {
+#ifdef RUN_ASSERTIONS
     EXPECT_EQ(freqMin, PSD.freqMin) << "Error summing two spectral densities.";
     EXPECT_EQ(freqMax, PSD.freqMax) << "Error summing two spectral densities.";
+#endif
     specDensity = densityScaling.in_Linear() * specDensity +
                   Gain(PSD.densityScaling).in_Linear() * PSD.specDensity;
     densityScaling = Gain(0, Gain::dB);

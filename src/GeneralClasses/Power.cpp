@@ -10,7 +10,9 @@ Power::Power(double value, InitType Type)
         }
     else if (Type == InitType::Watt)
         {
+#ifdef RUN_ASSERTIONS
         EXPECT_GE(value , 0) << "A power, in Watts, can't be negative.";
+#endif
         value_Watts = value;
         }
 }
