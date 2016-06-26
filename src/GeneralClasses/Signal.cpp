@@ -24,7 +24,7 @@ Signal::Signal(mapSlots occupiedSlots) : occupiedSlots(occupiedSlots),
     numSlots = occupiedSlots.begin()->second.size();
     freqMin = occupiedSlots.begin()->second.front().lock()->S->freqMin;
     freqMax = occupiedSlots.begin()->second.back().lock()->S->freqMax;
-    if(considerFilterImperfection)
+    if (considerFilterImperfection)
         {
         signalSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
                             (int) Slot::samplesPerSlot * numSlots);

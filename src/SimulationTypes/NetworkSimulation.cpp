@@ -17,10 +17,11 @@ NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
     Generator(Generator), RMSA(RMSA), NumMaxCalls(NumMaxCalls)
 {
     NumCalls =
-        NumBlockedCalls =
+            NumBlockedCalls =
+            NumBlockedCalls_Route =
             NumBlockedCalls_Spectrum =
-                NumBlockedCalls_ASE_Noise =
-                    NumBlockedCalls_FilterImperfection = 0;
+            NumBlockedCalls_ASE_Noise =
+            NumBlockedCalls_FilterImperfection = 0;
     hasSimulated = false;
 }
 
@@ -59,6 +60,10 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 
     if (evt->Parent->Status == Call::Blocked)
         {
+        NumBlockedCalls_Route += (evt->Parent->blockingReason & Call::Blocking_Route) != 0;
+        NumBlockedCalls_ASE_Noise += (evt->Parent->blockingReason & Call::Blocking_ASE_Noise) != 0;
+        NumBlockedCalls_FilterImperfection += (evt->Parent->blockingReason & Call::Blocking_FilterImperfection) != 0;
+        NumBlockedCalls_Spectrum += (evt->Parent->blockingReason & Call::Blocking_Spectrum) != 0;
         NumBlockedCalls++;
         }
     else

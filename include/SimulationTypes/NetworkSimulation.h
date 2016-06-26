@@ -66,6 +66,11 @@ public:
      */
     long unsigned NumBlockedCalls;
     /**
+     * @brief NumBlockedCalls_Route is the number of call requests that have been
+     * blocked due to inexistence of route.
+     */
+    long unsigned NumBlockedCalls_Route;
+    /**
      * @brief NumBlockedCalls_Spectrum is the number of calls requests that have been
      * blocked due to not enough spectrum available.
      */

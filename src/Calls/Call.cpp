@@ -8,7 +8,8 @@ Call::Call(std::weak_ptr<Node> Origin,
     Destination(Destination),
     Bitrate(Bitrate),
     Status(Not_Evaluated),
-    Scheme(ModulationScheme(0, Gain(0)))
+    Scheme(ModulationScheme(0, Gain(0))),
+    blockingReason(0x0)
 {
 
 }
