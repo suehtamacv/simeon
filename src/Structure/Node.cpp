@@ -1,5 +1,3 @@
-#include <gtest/gtest.h>
-
 #include <boost/assign.hpp>
 #include <limits>
 #include <Structure/Node.h>
@@ -192,11 +190,15 @@ Signal &Node::bypass(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
-                                          S.freqMax - S.freqMin); //bandwidth
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0); //central frequency
             }
         }
-    S += *evalCrosstalk(S);
+
+    if (considerFilterImperfection)
+        {
+        S += *evalCrosstalk(S);
+        }
+
     return S;
 }
 
@@ -208,17 +210,20 @@ Signal &Node::drop(Signal &S)
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0, //central frequency
-                                          S.freqMax - S.freqMin); //bandwidth
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0);
             }
 
-        if ((it->DevType == Device::SplitterDevice) ||
-                (it->DevType == Device::SSSDevice))
+        if ((it->DevType == Device::SplitterDevice) || (it->DevType == Device::SSSDevice))
             {
             break;
             }
         }
-    S += *evalCrosstalk(S);
+
+    if (considerFilterImperfection)
+        {
+        S += *evalCrosstalk(S);
+        }
+
     return S;
 }
 
@@ -238,8 +243,10 @@ Signal &Node::add(Signal &S)
         {
         S *= (*it)->get_Gain();
         S += (*it)->get_Noise();
-        S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0,
-                                         S.freqMax - S.freqMin);
+        if (considerFilterImperfection)
+            {
+            S *= (*it)->get_TransferFunction((S.freqMin + S.freqMax) / 2.0);
+            }
         }
 
     return S;
@@ -277,9 +284,13 @@ void Node::set_NodeType(NodeType T)
 
 void Node::request_Regenerators(unsigned int NReg)
 {
-    EXPECT_TRUE((Type == OpaqueNode) ||
-                (NReg + NumUsedRegenerators <= Regenerators.size())) <<
-                        "Request to more regenerators than available.";
+#ifdef RUN_ASSERTIONS
+    if ((Type != OpaqueNode) && (NReg + NumUsedRegenerators > Regenerators.size()))
+        {
+        std::cerr << "Request to more regenerators than available." << std::endl;
+        abort();
+        }
+#endif
 
     NumUsedRegenerators += NReg;
     TotalNumRequestedRegenerators += NReg;
@@ -293,7 +304,12 @@ void Node::request_Regenerators(unsigned int NReg)
 
 void Node::free_Regenerators(unsigned int NReg)
 {
-    EXPECT_GE(NumUsedRegenerators, NReg) << "Freed more regenerators than available.";
+#ifdef RUN_ASSERTIONS
+    if (NumUsedRegenerators < NReg) {
+        std::cerr << "Freed more regenerators than available." << std::endl;
+        abort();
+    }
+#endif
     NumUsedRegenerators -= NReg;
 }
 
@@ -358,16 +374,14 @@ void Node::set_NodeInactive()
 std::shared_ptr<SpectralDensity> Node::evalCrosstalk(Signal &S)
 {
     auto X = std::make_shared<SpectralDensity>(S.freqMin, S.freqMax,
-             Slot::numFrequencySamplesPerSlot * S.numSlots, true);
+             Slot::samplesPerSlot * S.numSlots, true);
 
     for (std::shared_ptr<Link> &link : incomingLinks)
         {
         if (*(S.incomingLink.lock()) != *(link.get()))
             {
             (*X) += (*(link->linkSpecDens->slice(S.occupiedSlots.at(S.incomingLink)))
-                     * entranceSSS->get_BlockTransferFunction(
-                         (S.freqMin + S.freqMax) / 2.0, //central frequency
-                         S.freqMax - S.freqMin)); //bandwidth
+                     * (entranceSSS->get_BlockTransferFunction((S.freqMin + S.freqMax) / 2.0)));
             }
         }
 

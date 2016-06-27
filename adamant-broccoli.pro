@@ -3,8 +3,8 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle qt
 
-QMAKE_CXXFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
-QMAKE_LFLAGS += -std=c++11 -fopenmp -DARMA_NO_WRAPPER
+QMAKE_CXXFLAGS += -std=c++11 -fopenmp
+QMAKE_LFLAGS += -std=c++11 -fopenmp
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -30,9 +30,12 @@ SOURCES += src/main.cpp \
     src/GeneralClasses/Power.cpp \
     src/GeneralClasses/Signal.cpp \
     src/GeneralClasses/SpectralDensity.cpp \
-    src/GeneralClasses/TransferFunctions/GaussianTransferFunction.cpp \
-    src/GeneralClasses/TransferFunctions/TransferFunction.cpp \
     src/GeneralClasses/TransmissionBitrate.cpp \
+    src/GeneralClasses/Transmittances/ConstantTransmittance.cpp \
+    src/GeneralClasses/Transmittances/GaussianFilter.cpp \
+    src/GeneralClasses/Transmittances/GaussianPassbandFilter.cpp \
+    src/GeneralClasses/Transmittances/GaussianStopbandFilter.cpp \
+    src/GeneralClasses/Transmittances/Transmittance.cpp \
     src/GeneralPurposeAlgorithms/GA/GA.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Generation.cpp \
     src/GeneralPurposeAlgorithms/GA/GA_Individual.cpp \
@@ -119,6 +122,7 @@ SOURCES += src/main.cpp \
     tests/Calls/CallTest.cpp \
     tests/Calls/CallGeneratorTest.cpp \
     tests/Calls/EventTest.cpp \
+    tests/Devices/AmplifierTest.cpp \
     tests/Devices/FiberTest.cpp \
     tests/Devices/SplitterTest.cpp \
     tests/GeneralClasses/GainTest.cpp \
@@ -131,7 +135,7 @@ SOURCES += src/main.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Structure/TopologyTest.cpp \
     tests/crosstalkTest.cpp \
-    tests/Devices/AmplifierTest.cpp
+    tests/GeneralClasses/Transmittances/TransmittanceTest.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -159,9 +163,12 @@ HEADERS += \
     include/GeneralClasses/RandomGenerator.h \
     include/GeneralClasses/Signal.h \
     include/GeneralClasses/SpectralDensity.h \
-    include/GeneralClasses/TransferFunctions/GaussianTransferFunction.h \
-    include/GeneralClasses/TransferFunctions/TransferFunction.h \
     include/GeneralClasses/TransmissionBitrate.h \
+    include/GeneralClasses/Transmittances/ConstantTransmittance.h \
+    include/GeneralClasses/Transmittances/GaussianFilter.h \
+    include/GeneralClasses/Transmittances/GaussianPassbandFilter.h \
+    include/GeneralClasses/Transmittances/GaussianStopbandFilter.h \
+    include/GeneralClasses/Transmittances/Transmittance.h \
     include/GeneralPurposeAlgorithms/GA/GA.h \
     include/GeneralPurposeAlgorithms/GA/GA_Generation.h \
     include/GeneralPurposeAlgorithms/GA/GA_Individual.h \
@@ -261,7 +268,7 @@ HEADERS += \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
     include/SimulationTypes/Simulation_TransparencyAnalysis.h
 
-LIBS += -lboost_system -lboost_program_options -larmadillo -lopenblas -lgtest
+LIBS += -lboost_system -lboost_program_options -larmadillo -lgtest
 
 INSTALL_TOPOLOGIES.path = $$OUT_PWD/data/topologies
 INSTALL_TOPOLOGIES.files = data/topologies/*
@@ -273,7 +280,7 @@ OTHER_FILES += README.md \
                .travis.yml
 
 CONFIG(debug, debug|release) {
-DEFINES += RUN_TESTS
+DEFINES += RUN_TESTS RUN_ASSERTIONS
 }
 
 INCLUDEPATH += include/

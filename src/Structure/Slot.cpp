@@ -2,7 +2,6 @@
 #include <Structure/Link.h>
 #include <GeneralClasses/LinkSpectralDensity.h>
 #include <GeneralClasses/PhysicalConstants.h>
-#include <gtest/gtest.h>
 
 Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 {
@@ -10,19 +9,31 @@ Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
                         BSlot * (numSlot - (Link::NumSlots / 2));
     S = std::make_shared<SpectralDensity>(centerFreq - BSlot / 2.0,
                                           centerFreq + BSlot / 2.0,
-                                          (int) numFrequencySamplesPerSlot, true);
+                                          (int) samplesPerSlot, true);
 }
 
 void Slot::freeSlot()
 {
-    EXPECT_FALSE(isFree) << "Only occupied slots can be freed.";
+#ifdef RUN_ASSERTIONS
+    if (isFree)
+        {
+        std::cerr << "Only occupied slots can be freed." << std::endl;
+        abort();
+        }
+#endif
     isFree = true;
     S->specDensity.zeros();
 }
 
 void Slot::useSlot()
 {
-    EXPECT_TRUE(isFree) << "Only free slots can be used.";
+#ifdef RUN_ASSERTIONS
+    if (!isFree)
+        {
+        std::cerr << "Only occupied slots can be used." << std::endl;
+        abort();
+        }
+#endif
     isFree = false;
 }
 

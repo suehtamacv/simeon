@@ -44,6 +44,16 @@ public:
      * @return the net gain after subtracting two successive gains.
      */
     Gain operator-(Gain &);
+    /**
+     * @brief operator += sums a gain @param G to this gain.
+     * @return this gain after summing two successive gains.
+     */
+    Gain& operator+=(const Gain &G);
+    /**
+     * @brief operator -= subtracts a gain @param G to this gain.
+     * @return this gain after subtracting two successive gains.
+     */
+    Gain& operator-=(const Gain &G);
 
     bool operator>(const Gain &) const;
     bool operator<(const Gain &) const;

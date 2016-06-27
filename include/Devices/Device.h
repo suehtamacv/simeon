@@ -4,7 +4,7 @@
 #include <memory>
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/Power.h>
-#include <GeneralClasses/TransferFunctions/TransferFunction.h>
+#include <GeneralClasses/Transmittances/Transmittance.h>
 
 //! Optical Devices.
 namespace Devices
@@ -51,10 +51,9 @@ public:
     /**
      * @brief get_TransferFunction returns the transfer function that represents the device's frequency response.
      * @param centerFreq is the central frequency of this transfer function.
-     * @param bandwidth is the passband transfer function's bandwidth.
      * @return the transfer function that represents the device's frequency response.
      */
-    virtual TF::TransferFunction &get_TransferFunction(double centerFreq, double bandwidth) = 0;
+    virtual std::shared_ptr<TF::Transmittance> get_TransferFunction(double centerFreq) = 0;
     /**
      * @brief get_CapEx returns the CapEx cost of the device.
      * @return the CapEx cost of the device.

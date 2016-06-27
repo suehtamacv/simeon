@@ -1,5 +1,3 @@
-#include <gtest/gtest.h>
-
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
 #include <RMSA/Route.h>
@@ -16,8 +14,12 @@ NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
                                      unsigned long NumMaxCalls) :
     Generator(Generator), RMSA(RMSA), NumMaxCalls(NumMaxCalls)
 {
-    NumCalls = 0;
-    NumBlockedCalls = 0;
+    NumCalls =
+        NumBlockedCalls =
+            NumBlockedCalls_Route =
+                NumBlockedCalls_Spectrum =
+                    NumBlockedCalls_ASE_Noise =
+                        NumBlockedCalls_FilterImperfection = 0;
     hasSimulated = false;
 }
 
@@ -49,11 +51,20 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
     auto route = RMSA->routeCall(evt->Parent);
     evt->Parent->CallEnding.lock()->route = evt->route = route;
 
-    EXPECT_NE(evt->Parent->Status, Call::Not_Evaluated) <<
-            "Call was neither accepted nor blocked.";
+#ifdef RUN_ASSERTIONS
+    if (evt->Parent->Status == Call::Not_Evaluated)
+        {
+        std::cerr << "Call was neither accepted nor blocked." << std::endl;
+        abort();
+        }
+#endif
 
     if (evt->Parent->Status == Call::Blocked)
         {
+        NumBlockedCalls_Route += (evt->Parent->blockingReason & Call::Blocking_Route) != 0;
+        NumBlockedCalls_ASE_Noise += (evt->Parent->blockingReason & Call::Blocking_ASE_Noise) != 0;
+        NumBlockedCalls_FilterImperfection += (evt->Parent->blockingReason & Call::Blocking_FilterImperfection) != 0;
+        NumBlockedCalls_Spectrum += (evt->Parent->blockingReason & Call::Blocking_Spectrum) != 0;
         NumBlockedCalls++;
         }
     else
@@ -63,10 +74,10 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
             {
 
             if(considerFilterImperfection)
-            {
+                {
                 SpectralDensity thisSpecDensity = route->Segments.begin()->opticalPathSpecDensity.at(auxCount);
                 link.first.lock()->linkSpecDens->updateLink(thisSpecDensity, link.second);
-            }
+                }
 
             for (auto &slot : link.second)
                 {

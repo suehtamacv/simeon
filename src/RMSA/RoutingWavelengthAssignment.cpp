@@ -67,6 +67,7 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
         if (possibleRoutes.empty() || possibleRoutes.front().empty())
             {
             C->Status = Call::Blocked;
+            C->blockingReason |= Call::Blocking_Route;
             return nullptr;
             }
 
@@ -75,6 +76,7 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
             Segments.clear();
             Slots.clear();
             C->Status = Call::Not_Evaluated;
+            C->blockingReason = 0x0;
 
             TransparentSegment Segment(route, scheme, 0);
 
@@ -84,6 +86,7 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
                 if (scheme == *(Schemes.begin()))
                     {
                     C->Status = Call::Blocked;
+                    C->blockingReason |= Call::Blocking_Spectrum;
                     return nullptr;
                     }
                 continue;
@@ -92,11 +95,18 @@ RoutingWavelengthAssignment::routeCall_Transparent(std::shared_ptr<Call> C)
             Signal S(SegmentSlots);
             S = Segment.bypass(S);
 
-            if (
-                (!considerAseNoise ||
-                 S.get_OSNR() >= scheme.get_ThresholdOSNR(C->Bitrate)) &&
-                (!considerFilterImperfection ||
-                 S.get_SignalPowerRatio() >= T->get_PowerRatioThreshold()))
+            if (considerAseNoise && S.get_OSNR() < scheme.get_ThresholdOSNR(C->Bitrate))
+                {
+                C->Status = Call::Blocked;
+                C->blockingReason |= Call::Blocking_ASE_Noise;
+                }
+            if (considerFilterImperfection && S.get_SignalPowerRatio() < T->get_PowerRatioThreshold())
+                {
+                C->Status = Call::Blocked;
+                C->blockingReason |= Call::Blocking_FilterImperfection;
+                }
+
+            if (C->Status != Call::Blocked)
                 {
                 Slots.insert(SegmentSlots.begin(), SegmentSlots.end());
                 Segments.push_back(Segment);
@@ -138,18 +148,23 @@ RoutingWavelengthAssignment::routeCall_Translucent(std::shared_ptr<Call> C)
     if (possibleRoutes.empty() || possibleRoutes.front().empty())
         {
         C->Status = Call::Blocked;
+        C->blockingReason |= Call::Blocking_Route;
         return nullptr;
         }
 
     for (auto &route : possibleRoutes)
         {
         C->Status = Call::Not_Evaluated;
+        C->blockingReason = 0x0;
         Segments = RA_Alg->assignRegenerators(C, route);
 
         //There are no regenerators
         if (Segments.empty())
             {
             C->Status = Call::Blocked;
+            C->blockingReason |= Call::Blocking_ASE_Noise;
+            C->blockingReason |= Call::Blocking_FilterImperfection;
+            C->blockingReason |= Call::Blocking_Spectrum;
             continue;
             }
 
@@ -161,6 +176,7 @@ RoutingWavelengthAssignment::routeCall_Translucent(std::shared_ptr<Call> C)
             if (SegmentSlots.empty())
                 {
                 C->Status = Call::Blocked;
+                C->blockingReason |= Call::Blocking_Spectrum;
                 Slots.clear();
                 break;
                 }

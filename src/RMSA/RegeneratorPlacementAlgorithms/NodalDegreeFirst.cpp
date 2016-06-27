@@ -1,7 +1,5 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/NodalDegreeFirst.h>
 #include <random>
-#include <gtest/gtest.h>
-
 #include <GeneralClasses/RandomGenerator.h>
 #include <Structure/Topology.h>
 
@@ -20,7 +18,13 @@ void NodalDegreeFirst::load()
 
 void NodalDegreeFirst::placeRegenerators(unsigned N, unsigned X)
 {
-    EXPECT_LE(N, T->Nodes.size()) << "Can't have more translucent nodes than nodes";
+#ifdef RUN_ASSERTIONS
+    if (N > T->Nodes.size())
+        {
+        std::cerr << "Can't have more translucent nodes than nodes" << std::endl;
+        abort();
+        }
+#endif
 
     if ((N == 0) && (X == 0))
         {

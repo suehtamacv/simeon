@@ -1,5 +1,4 @@
 #include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h"
-#include <gtest/gtest.h>
 #include <Structure/Topology.h>
 #include <Calls/Call.h>
 #include <Structure/Link.h>
@@ -97,9 +96,13 @@ std::map<std::weak_ptr<Link>,
 void FirstFitEvolutionary::setSlotsList(std::map<int, std::vector<int> >
                                         newSlotsList)
 {
-    EXPECT_TRUE(slotsList.empty() ||
-                (newSlotsList.size() == slotsList.size())) <<
-                        "Invalid slots list to FFE algorithm.";
+#ifdef RUN_ASSERTIONS
+    if (!slotsList.empty() && (newSlotsList.size() != slotsList.size()))
+        {
+        std::cerr << "Invalid slots list to FFE algorithm." << std::endl;
+        abort();
+        }
+#endif
     slotsList = newSlotsList;
     hasSetSlots = true;
 }

@@ -3,7 +3,6 @@
 #include <boost/assign.hpp>
 #include <iostream>
 #include <fstream>
-#include <gtest/gtest.h>
 
 using namespace RMSA::SA;
 
@@ -99,7 +98,13 @@ void SpectrumAssignmentAlgorithm::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
                   SpectrumAssignmentAlgorithmNicknames.left.at(SpecAssAlgType)

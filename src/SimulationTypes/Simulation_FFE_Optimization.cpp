@@ -5,7 +5,6 @@
 #include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FFE_Individual.h"
 #include "include/RMSA/SpectrumAssignmentAlgorithms/FFE/FirstFitEvolutionary.h"
 #include <boost/program_options.hpp>
-#include <gtest/gtest.h>
 
 using namespace Simulations;
 using namespace RMSA;
@@ -15,10 +14,10 @@ Simulation_FFE_Optimization::Simulation_FFE_Optimization() :
 {
     hasLoaded = false;
 
-    {
+        {
         //Initializing FFE Algorithm
         auto FFE = std::make_shared<SA::FFE::FirstFitEvolutionary>(T);
-    }
+        }
 }
 
 void Simulation_FFE_Optimization::help()
@@ -217,7 +216,13 @@ void Simulation_FFE_Optimization::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
                       Type) << std::endl;
@@ -238,7 +243,13 @@ void Simulation_FFE_Optimization::save(std::string SimConfigFileName)
     SimConfigFile.open(SimConfigFileName,
                        std::ofstream::out | std::ofstream::app);
 
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
@@ -270,7 +281,13 @@ void Simulation_FFE_Optimization::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    EXPECT_TRUE(ConfigFile.is_open()) << "Input file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!ConfigFile.is_open())
+        {
+        std::cerr << "Input file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);

@@ -6,7 +6,9 @@
 #include <GeneralClasses/LinkSpectralDensity.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
-#include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
+#include <GeneralClasses/Transmittances/ConstantTransmittance.h>
+#include <GeneralClasses/Transmittances/GaussianPassbandFilter.h>
+#include <GeneralClasses/Transmittances/GaussianStopbandFilter.h>
 
 using namespace Devices;
 using namespace TF;
@@ -18,8 +20,7 @@ SSS::SSS(Node *parent) :
     NoisePower(0, Power::Watt), parent(parent)
 {
     filterOrder = SpectralDensity::GaussianOrder;
-    deviceTF = std::make_shared<TransferFunction>
-               (std::pow(get_Gain().in_Linear(), 2));
+    deviceTF = std::make_shared<ConstantTransmittance>(get_Gain());
 }
 
 Gain &SSS::get_Gain()
@@ -68,54 +69,36 @@ double SSS::get_OpEx()
     return 0.2;
 }
 
-TransferFunction& SSS::get_TransferFunction(double centerFreq,
-        double bandwidth)
+std::shared_ptr<Transmittance> SSS::get_TransferFunction(double centerFreq)
 {
     if (considerFilterImperfection)
         {
-        auto freq = std::make_pair(centerFreq, bandwidth);
-        int numSlots = std::round(bandwidth / Slot::BSlot);
-
-        if (!bypassFunctionsCache.count(freq))
+        if (!bypassFunctionsCache.count(centerFreq))
             {
-            bypassFunctionsCache[freq] = GaussianTransferFunction(
-                                             centerFreq - bandwidth / 2.0,
-                                             centerFreq + bandwidth / 2.0,
-                                             Slot::numFrequencySamplesPerSlot * numSlots,
-                                             filterOrder, std::pow(get_Gain().in_Linear(), 2));
+            bypassFunctionsCache[centerFreq] = std::make_shared<GaussianPassbandFilter>
+                                               (centerFreq, filterOrder, get_Gain());
             }
-        return bypassFunctionsCache.at(freq);
+        return bypassFunctionsCache.at(centerFreq);
         }
     else
         {
-        return *deviceTF;
+        return deviceTF;
         }
 }
 
-TransferFunction& SSS::get_BlockTransferFunction(double centerFreq,
-        double bandwidth)
+std::shared_ptr<Transmittance> SSS::get_BlockTransferFunction(double centerFreq)
 {
     if (considerFilterImperfection)
         {
-        auto freq = std::make_pair(centerFreq, bandwidth);
-        int numSlots = std::round(bandwidth / Slot::BSlot);
-
-        if (!blockingFunctionsCache.count(freq))
+        if (!blockingFunctionsCache.count(centerFreq))
             {
-            blockingFunctionsCache[freq] = GaussianTransferFunction(
-                                               centerFreq - bandwidth / 2.0,
-                                               centerFreq + bandwidth / 2.0,
-                                               Slot::numFrequencySamplesPerSlot * numSlots,
-                                               filterOrder, std::pow(get_Gain().in_Linear(), 2));
-            //Notch filter
-            double maxValue = blockingFunctionsCache[freq].frequencySamples.max();
-            blockingFunctionsCache[freq].frequencySamples
-                = maxValue - blockingFunctionsCache[freq].frequencySamples;
+            blockingFunctionsCache[centerFreq] = std::make_shared<GaussianStopbandFilter>
+                                                 (centerFreq, filterOrder, get_Gain());
             }
-        return blockingFunctionsCache.at(freq);
+        return blockingFunctionsCache.at(centerFreq);
         }
     else
         {
-        return *deviceTF;
+        return deviceTF;
         }
 }

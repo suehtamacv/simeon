@@ -1,6 +1,6 @@
 #include <GeneralClasses/Power.h>
 #include <cmath>
-#include <gtest/gtest.h>
+#include <iostream>
 
 Power::Power(double value, InitType Type)
 {
@@ -10,7 +10,13 @@ Power::Power(double value, InitType Type)
         }
     else if (Type == InitType::Watt)
         {
-        EXPECT_GE(value , 0) << "A power, in Watts, can't be negative.";
+#ifdef RUN_ASSERTIONS
+        if (value < 0)
+            {
+            std::cerr <<  "A power, in Watts, can't be negative." << std::endl;
+            abort();
+            }
+#endif
         value_Watts = value;
         }
 }

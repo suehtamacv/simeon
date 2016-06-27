@@ -8,6 +8,7 @@ extern bool considerFilterImperfection;
 
 TEST(CrosstalkTest, Epsilon)
 {
+    bool backup_Filter = considerFilterImperfection;
     considerFilterImperfection = true;
 
     std::shared_ptr<Topology> T = std::make_shared<Topology>();
@@ -48,6 +49,8 @@ TEST(CrosstalkTest, Epsilon)
 
     S14 = Seg14.bypass(S14);
     std::cout << S14.get_WeightedCrosstalk() << std::endl;
+
+    considerFilterImperfection = backup_Filter;
 }
 
 #endif

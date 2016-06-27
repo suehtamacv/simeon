@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <boost/program_options.hpp>
 #include <boost/assign.hpp>
-#include <gtest/gtest.h>
 #include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs.h>
 #include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PSRVariants.h>
 
@@ -150,9 +149,11 @@ bool PowerSeriesRouting::initCoefficients(std::string Filename)
     NMin = VariablesMap.find("PSR.minexponent")->second.as<int>();
     NMax = VariablesMap.find("PSR.maxexponent")->second.as<int>();
 
-    EXPECT_EQ(Variant, VariantNicknames.right.at(
-                  VariablesMap.find("PSR.variant")->second.as<std::string>())) <<
-                          "Coefficients were chosen for a different Variant.";
+    if (Variant != VariantNicknames.right.at(VariablesMap.find("PSR.variant")->second.as<std::string>()))
+        {
+        std::cerr << "Coefficients were chosen for a different Variant.";
+        abort();
+        }
 
     std::clog << "Reading a PSR with min. exponent " << NMin
               << " and max. exponent " << NMax << "." << std::endl;
