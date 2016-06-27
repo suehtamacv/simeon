@@ -1,6 +1,4 @@
 #include <Structure/Topology.h>
-#include <gtest/gtest.h>
-
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
@@ -118,8 +116,13 @@ Topology::Topology(std::string TopologyFileName) : PowerRatioThreshold(0.6, Gain
 
         std::istringstream LinkParameters(link);
         LinkParameters >> OriginID >> DestinationID >> length;
-        EXPECT_NE(OriginID, DestinationID) <<
-                                           "Link can't have the same Origin and Destination.";
+#ifdef RUN_ASSERTIONS
+        if (OriginID == DestinationID)
+            {
+            std::cerr << "Link can't have the same Origin and Destination." << std::endl;
+            abort();
+            }
+#endif
 
         int NodesFound = 0;
 
@@ -138,7 +141,12 @@ Topology::Topology(std::string TopologyFileName) : PowerRatioThreshold(0.6, Gain
                 }
             }
 
-        EXPECT_EQ(NodesFound, 2) << "Link with invalid origin and/or destination.";
+#ifdef RUN_ASSERTIONS
+        if (NodesFound != 2) {
+            std::cerr << "Link with invalid origin and/or destination." << std::endl;
+            abort();
+        }
+#endif
 
         add_Link(Origin, Destination, length);
         }
@@ -178,7 +186,13 @@ void Topology::save(std::string TopologyFileName)
     std::ofstream TopologyFile(TopologyFileName,
                                std::ofstream::out | std::ofstream::app);
 
-    EXPECT_TRUE(TopologyFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!TopologyFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     TopologyFile << "  [nodes]" << std::endl << std::endl;
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;

@@ -1,5 +1,3 @@
-#include <gtest/gtest.h>
-
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
 #include <RMSA/Route.h>
@@ -17,11 +15,11 @@ NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
     Generator(Generator), RMSA(RMSA), NumMaxCalls(NumMaxCalls)
 {
     NumCalls =
-            NumBlockedCalls =
+        NumBlockedCalls =
             NumBlockedCalls_Route =
-            NumBlockedCalls_Spectrum =
-            NumBlockedCalls_ASE_Noise =
-            NumBlockedCalls_FilterImperfection = 0;
+                NumBlockedCalls_Spectrum =
+                    NumBlockedCalls_ASE_Noise =
+                        NumBlockedCalls_FilterImperfection = 0;
     hasSimulated = false;
 }
 
@@ -54,8 +52,11 @@ void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
     evt->Parent->CallEnding.lock()->route = evt->route = route;
 
 #ifdef RUN_ASSERTIONS
-    EXPECT_NE(evt->Parent->Status, Call::Not_Evaluated) <<
-            "Call was neither accepted nor blocked.";
+    if (evt->Parent->Status == Call::Not_Evaluated)
+        {
+        std::cerr << "Call was neither accepted nor blocked." << std::endl;
+        abort();
+        }
 #endif
 
     if (evt->Parent->Status == Call::Blocked)

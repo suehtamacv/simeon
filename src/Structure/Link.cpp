@@ -7,7 +7,6 @@
 #include <Devices/Fiber.h>
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
-#include <gtest/gtest.h>
 
 using namespace Devices;
 
@@ -18,7 +17,13 @@ Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
            double Length)
 {
-    EXPECT_GE(Length, 0) << "Length can't be negative.";
+#ifdef RUN_ASSERTIONS
+    if (Length < 0)
+        {
+        std::cerr << "Length can't be negative." << std::endl;
+        abort();
+        }
+#endif
     this->Origin = Origin;
     this->Destination = Destination;
     this->Length = Length;
@@ -128,7 +133,11 @@ Signal &Link::bypass(Signal &S)
 bool Link::isSlotFree(int slot) const
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_LT(slot, NumSlots) << "Invalid slot requested.";
+    if (slot >= NumSlots)
+        {
+        std::cerr << "Invalid slot requested." << std::endl;
+        abort();
+        }
 #endif
     return (Slots[slot])->isFree;
 }
@@ -156,10 +165,13 @@ int Link::get_Occupability()
 int Link::get_Contiguity(std::shared_ptr<Call> C)
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_NE(C->Scheme.get_M(), 0) <<
-                                    "Can't calculate contiguity without knowing the modulation"
-                                    " scheme. Either you forgot to set it or one of the chosen "
-                                    "algorithms is not compatible with the contiguity measure";
+    if (C->Scheme.get_M() == 0)
+        {
+        std::cerr << "Can't calculate contiguity without knowing the modulation"
+                  " scheme. Either you forgot to set it or one of the chosen "
+                  "algorithms is not compatible with the contiguity measure" << std::endl;
+        abort();
+        }
 #endif
     int NumRequiredSlots = C->Scheme.get_NumSlots(C->Bitrate);
     int Contiguity = 0;
@@ -221,7 +233,11 @@ void Link::save(std::string SimConfigFileName, std::shared_ptr<Topology> T)
                                 std::ofstream::out | std::ofstream::app);
 
 #ifdef RUN_ASSERTIONS
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
 #endif
 
     SimConfigFile << "  AvgSpanLength = " << T->AvgSpanLength << std::endl;

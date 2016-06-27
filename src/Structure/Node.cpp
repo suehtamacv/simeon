@@ -1,5 +1,3 @@
-#include <gtest/gtest.h>
-
 #include <boost/assign.hpp>
 #include <limits>
 #include <Structure/Node.h>
@@ -287,9 +285,11 @@ void Node::set_NodeType(NodeType T)
 void Node::request_Regenerators(unsigned int NReg)
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_TRUE((Type == OpaqueNode) ||
-                (NReg + NumUsedRegenerators <= Regenerators.size())) <<
-                        "Request to more regenerators than available.";
+    if ((Type != OpaqueNode) && (NReg + NumUsedRegenerators > Regenerators.size()))
+        {
+        std::cerr << "Request to more regenerators than available." << std::endl;
+        abort();
+        }
 #endif
 
     NumUsedRegenerators += NReg;
@@ -304,7 +304,12 @@ void Node::request_Regenerators(unsigned int NReg)
 
 void Node::free_Regenerators(unsigned int NReg)
 {
-    EXPECT_GE(NumUsedRegenerators, NReg) << "Freed more regenerators than available.";
+#ifdef RUN_ASSERTIONS
+    if (NumUsedRegenerators < NReg) {
+        std::cerr << "Freed more regenerators than available." << std::endl;
+        abort();
+    }
+#endif
     NumUsedRegenerators -= NReg;
 }
 

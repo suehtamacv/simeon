@@ -1,7 +1,6 @@
 #include "include/RMSA/RoutingAlgorithms/RoutingCost.h"
 #include "include/RMSA/RoutingCosts.h"
 #include <boost/assign.hpp>
-#include <gtest/gtest.h>
 #include <iostream>
 
 using namespace RMSA::ROUT;
@@ -37,7 +36,13 @@ void RoutingCost::save(std::string filename)
     std::ofstream SimConfigFile(filename,
                                 std::ofstream::out | std::ofstream::app);
 
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  RoutingCost = " << RoutingCostsNicknames.left.at(

@@ -1,6 +1,4 @@
 #include <algorithm>
-#include <gtest/gtest.h>
-
 #include <RMSA/Route.h>
 #include <Structure/Slot.h>
 #include <Structure/Node.h>
@@ -19,9 +17,13 @@ Route::Route(std::vector<TransparentSegment> Segments,
     for (auto &segment : Segments)
         {
         Nodes.insert(Nodes.end(), segment.Nodes.begin(), segment.Nodes.end() - 1);
-        EXPECT_TRUE((!segment.NumRegUsed) ||
-                    (segment.Nodes.back().lock()->get_NodeType() != Node::TransparentNode)) <<
-                            "Trying to regenerate in transparent node.";
+#ifdef RUN_ASSERTIONS
+        if (segment.NumRegUsed && (segment.Nodes.back().lock()->get_NodeType() == Node::TransparentNode))
+            {
+            std::cerr << "Trying to regenerate in transparent node." << std::endl;
+            abort();
+            }
+#endif
         Regenerators.emplace(segment.Nodes.back(), segment.NumRegUsed);
 
         Links.insert(Links.end(), segment.Links.begin(), segment.Links.end());
@@ -75,8 +77,11 @@ Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
     for (auto node = Nodes.begin(); node != Nodes.end(); ++node)
         {
 #ifdef RUN_ASSERTIONS
-        EXPECT_NE((*node).lock(), Nodes.end()->lock()) <<
-                "orig node is not in the Route.";
+        if (node->lock() == Nodes.end()->lock())
+            {
+            std::cerr << "Source node is not in the Route." << std::endl;
+            abort();
+            }
 #endif
         if (orig.lock() == (*node).lock())
             {
@@ -88,8 +93,11 @@ Signal &Route::partial_bypass(Signal &S, std::weak_ptr<Node> orig,
     for (auto node = currentNode ; node != Nodes.end(); ++node)
         {
 #ifdef RUN_ASSERTIONS
-        EXPECT_NE((*node).lock(), Nodes.end()->lock()) <<
-                "dest node is not in the Route.";
+        if (node->lock() == Nodes.end()->lock())
+            {
+            std::cerr << "Destination node is not in the Route." << std::endl;
+            abort();
+            }
 #endif
         if (dest.lock() == (*node).lock())
             {

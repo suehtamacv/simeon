@@ -2,7 +2,6 @@
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralClasses/Signal.h>
 #include <Structure/Slot.h>
-#include <gtest/gtest.h>
 
 using namespace TF;
 
@@ -120,8 +119,11 @@ void SpectralDensity::define_SignalsFilterOrder()
 SpectralDensity& SpectralDensity::operator +=(const SpectralDensity &PSD)
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_EQ(freqMin, PSD.freqMin) << "Error summing two spectral densities.";
-    EXPECT_EQ(freqMax, PSD.freqMax) << "Error summing two spectral densities.";
+    if ((freqMin != PSD.freqMin) || (freqMax != PSD.freqMax))
+        {
+        std::cerr << "Error summing two spectral densities." << std::endl;
+        abort();
+        }
 #endif
     specDensity = densityScaling.in_Linear() * specDensity +
                   Gain(PSD.densityScaling).in_Linear() * PSD.specDensity;

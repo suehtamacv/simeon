@@ -1,6 +1,4 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/MostUsed.h>
-#include <gtest/gtest.h>
-
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Calls/CallGenerator.h>
 #include <RMSA/RoutingWavelengthAssignment.h>
@@ -32,8 +30,12 @@ void MostUsed::load()
 void MostUsed::placeRegenerators(unsigned N, unsigned X)
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_NE(RMSA->RA_Alg, nullptr) << "Regenerator Placement can only run"
-                                     " if a Regenerator Assignment Algorithm has been set.";
+    if (RMSA->RA_Alg == nullptr)
+        {
+        std::cerr << "Regenerator Placement can only run if a Regenerator Assignment Algorithm has been set." <<
+                  std::endl;
+        abort();
+        }
 #endif
 
     for (auto &node : T->Nodes)

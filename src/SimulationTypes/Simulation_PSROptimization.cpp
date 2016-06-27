@@ -7,8 +7,6 @@
 #include <RMSA.h>
 #include <Structure/Link.h>
 #include <sstream>
-#include <gtest/gtest.h>
-
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <map>
@@ -354,7 +352,13 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
                       Type) << std::endl;
@@ -426,7 +430,13 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    EXPECT_TRUE(ConfigFile.is_open()) << "Input file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!ConfigFile.is_open())
+        {
+        std::cerr << "Input file is not open" << std::endl;
+        abort();
+        }
+#endif
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();

@@ -2,7 +2,6 @@
 #include <Calls/Call.h>
 #include <Structure/Link.h>
 #include <Structure/Slot.h>
-#include <gtest/gtest.h>
 
 using namespace RMSA::SA;
 
@@ -61,7 +60,11 @@ mapSlots FirstFit::assignSlots(std::shared_ptr<Call> C, TransparentSegment Seg)
     if (si != -1)
         {
 #ifdef RUN_ASSERTIONS
-        EXPECT_EQ(sf, si + RequiredSlots - 1) << "Error in Wavelength Assingment";
+        if (sf != si + RequiredSlots - 1)
+            {
+            std::cerr << "Error in Wavelength Assignment" << std::endl;
+            abort();
+            }
 #endif
         for (auto &link : Seg.Links)
             {

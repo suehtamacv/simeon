@@ -2,7 +2,6 @@
 #include <Structure/Link.h>
 #include <GeneralClasses/LinkSpectralDensity.h>
 #include <GeneralClasses/PhysicalConstants.h>
-#include <gtest/gtest.h>
 
 Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 {
@@ -16,7 +15,11 @@ Slot::Slot(int numSlot) : numSlot(numSlot), isFree(true)
 void Slot::freeSlot()
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_FALSE(isFree) << "Only occupied slots can be freed.";
+    if (isFree)
+        {
+        std::cerr << "Only occupied slots can be freed." << std::endl;
+        abort();
+        }
 #endif
     isFree = true;
     S->specDensity.zeros();
@@ -25,7 +28,11 @@ void Slot::freeSlot()
 void Slot::useSlot()
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_TRUE(isFree) << "Only free slots can be used.";
+    if (!isFree)
+        {
+        std::cerr << "Only occupied slots can be used." << std::endl;
+        abort();
+        }
 #endif
     isFree = false;
 }

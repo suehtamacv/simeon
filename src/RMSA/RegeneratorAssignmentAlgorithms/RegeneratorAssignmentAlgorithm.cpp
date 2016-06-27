@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
-#include <gtest/gtest.h>
 #include <boost/assign.hpp>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
@@ -113,9 +112,8 @@ ModulationScheme RegeneratorAssignmentAlgorithm::getMostEfficientScheme(
             }
         }
 
-#ifdef RUN_ASSERTIONS
-    EXPECT_TRUE(false) << "No Scheme can implement Call in Transparent Segment.";
-#endif
+    std::cerr << "No Scheme can implement Call in Transparent Segment." << std::endl;
+    abort();
     return *(ModulationSchemes.end());
 }
 
@@ -234,7 +232,11 @@ void RegeneratorAssignmentAlgorithm::save(std::string SimConfigFileName)
                                 std::ofstream::out | std::ofstream::app);
 
 #ifdef RUN_ASSERTIONS
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
 #endif
     SimConfigFile << "  RegeneratorAssignmentAlgorithm = " <<
                   RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNicknames.left.at(

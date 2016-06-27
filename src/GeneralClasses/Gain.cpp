@@ -1,7 +1,6 @@
 #include <GeneralClasses/Gain.h>
 #include <cmath>
-#include <gtest/gtest.h>
-#include <ostream>
+#include <iostream>
 
 Gain::Gain(double value, InitType Type) : value_Linear(0),
     calculatedLinear(false)
@@ -13,7 +12,11 @@ Gain::Gain(double value, InitType Type) : value_Linear(0),
     else if (Type == InitType::Linear)
         {
 #ifdef RUN_ASSERTIONS
-        EXPECT_GE(value, 0) << "There's no dB value for something negative.";
+        if (value < 0)
+            {
+            std::cerr << "There's no dB value for something negative." << std::endl;
+            abort();
+            }
 #endif
         value_Linear = (value >= 0) ? value : 0;
         value_dB = 10 * log10(value_Linear);

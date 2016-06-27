@@ -2,7 +2,6 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2.h>
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h>
 #include <GeneralClasses/RandomGenerator.h>
-#include <gtest/gtest.h>
 #include <iostream>
 
 using namespace NSGA_II;
@@ -90,7 +89,11 @@ std::shared_ptr<NSGA2_Parameter> NSGA2_Individual::getParameter(
     unsigned int i) const
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_LT(i, Parameters.size()) << "Invalid parameter requested";
+    if (i >= Parameters.size())
+        {
+        std::cerr << "Invalid parameter requested" << std::endl;
+        abort();
+        }
 #endif
     return Parameters[i];
 }
@@ -98,7 +101,11 @@ std::shared_ptr<NSGA2_Parameter> NSGA2_Individual::getParameter(
 double NSGA2_Individual::getParameterValue(unsigned int i) const
 {
 #ifdef RUN_ASSERTIONS
-    EXPECT_LT(i, Parameters.size()) << "Invalid parameter requested";
+    if (i >= Parameters.size())
+        {
+        std::cerr << "Invalid parameter requested" << std::endl;
+        abort();
+        }
 #endif
     return Parameters[i]->evaluate();
 }

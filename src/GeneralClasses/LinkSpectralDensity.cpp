@@ -4,7 +4,6 @@
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
 #include <GeneralClasses/SpectralDensity.h>
-#include <gtest/gtest.h>
 
 unsigned long LinkSpectralDensity::numFrequencySamples =
     Slot::samplesPerSlot * Link::NumSlots;
@@ -51,7 +50,11 @@ std::shared_ptr<SpectralDensity> LinkSpectralDensity::slice(
     double freqMax = usedSlots.back().lock()->S->freqMax;
 
 #ifdef RUN_ASSERTIONS
-    EXPECT_EQ(freqMax - freqMin, numSlots * Slot::BSlot) << "Slots are not contiguous";
+    if (freqMax - freqMin != numSlots * Slot::BSlot)
+        {
+        std::cerr << "Slots are not contiguous" << std::endl;
+        abort();
+        }
 #endif
 
     std::shared_ptr<SpectralDensity> PSD = std::make_shared<SpectralDensity>

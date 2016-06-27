@@ -1,7 +1,6 @@
 #include <SimulationTypes/SimulationType.h>
 #include "SimulationTypes.h"
 #include <boost/assign.hpp>
-#include <gtest/gtest.h>
 #include <boost/program_options.hpp>
 #include <iostream>
 #include <GeneralClasses/SpectralDensity.h>
@@ -175,7 +174,13 @@ void SimulationType::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::trunc);
 
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  [general]" << std::endl << std::endl;
     SimConfigFile << "  SimulationType = " << SimulationTypeNicknames.left.at(
@@ -264,7 +269,13 @@ std::shared_ptr<SimulationType> SimulationType::open()
 
     variables_map VariablesMap;
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    EXPECT_TRUE(ConfigFile.is_open()) << "Input file is not open";
+#ifdef RUN_ASSERTIONS
+    if (!ConfigFile.is_open())
+        {
+        std::cerr << "Input file is not open" << std::endl;
+        abort();
+        }
+#endif
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();

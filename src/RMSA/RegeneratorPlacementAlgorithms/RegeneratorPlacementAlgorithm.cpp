@@ -1,7 +1,6 @@
 #include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
 #include <RMSA/RegeneratorPlacementAlgorithms.h>
 #include <boost/assign.hpp>
-#include <gtest/gtest.h>
 #include <iostream>
 #include <fstream>
 
@@ -133,7 +132,11 @@ void RegeneratorPlacementAlgorithm::save(std::string SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
 #ifdef RUN_ASSERTIONS
-    EXPECT_TRUE(SimConfigFile.is_open()) << "Output file is not open";
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
 #endif
     SimConfigFile << "  RegeneratorPlacementAlgorithm = " <<
                   RegeneratorPlacementAlgorithm::RegeneratorPlacementNicknames.left.at(
