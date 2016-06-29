@@ -14,22 +14,25 @@ Signal::Signal(mapSlots occupiedSlots) : occupiedSlots(occupiedSlots),
     SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
-    std::sort(occupiedSlots.begin()->second.begin(),
-              occupiedSlots.begin()->second.end(),
-              [](const std::weak_ptr<Slot> &l, const std::weak_ptr<Slot> &r)
+    if (!occupiedSlots.empty())
         {
-        return l.lock()->numSlot < r.lock()->numSlot;
-        });
+        std::sort(occupiedSlots.begin()->second.begin(),
+                  occupiedSlots.begin()->second.end(),
+                  [](const std::weak_ptr<Slot> &l, const std::weak_ptr<Slot> &r)
+            {
+            return l.lock()->numSlot < r.lock()->numSlot;
+            });
 
-    numSlots = occupiedSlots.begin()->second.size();
-    freqMin = occupiedSlots.begin()->second.front().lock()->S->freqMin;
-    freqMax = occupiedSlots.begin()->second.back().lock()->S->freqMax;
-    if (considerFilterImperfection)
-        {
-        signalSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
-                            (int) Slot::samplesPerSlot * numSlots);
-        crosstalkSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
-                               (int) Slot::samplesPerSlot * numSlots, true);
+        numSlots = occupiedSlots.begin()->second.size();
+        freqMin = occupiedSlots.begin()->second.front().lock()->S->freqMin;
+        freqMax = occupiedSlots.begin()->second.back().lock()->S->freqMax;
+        if (considerFilterImperfection)
+            {
+            signalSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
+                                (int) Slot::samplesPerSlot * numSlots);
+            crosstalkSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
+                                   (int) Slot::samplesPerSlot * numSlots, true);
+            }
         }
 }
 

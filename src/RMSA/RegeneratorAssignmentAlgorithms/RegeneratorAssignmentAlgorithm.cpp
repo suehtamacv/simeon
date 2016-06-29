@@ -14,6 +14,12 @@
 using namespace RMSA;
 using namespace RMSA::RA;
 
+/**
+ * @brief RegeneratorBitrate is the maximum bitrate that a single
+ * Regenerator can regenerate. It's measured in bits per second.
+ */
+double RegeneratorAssignmentAlgorithm::RegeneratorBitrate = 100E9;
+
 RegeneratorAssignmentAlgorithm::RegAssignNameBimap
 RegeneratorAssignmentAlgorithm::RegeneratorAssignmentNames =
     boost::assign::list_of<RegeneratorAssignmentAlgorithm::RegAssignNameBimap::relation>

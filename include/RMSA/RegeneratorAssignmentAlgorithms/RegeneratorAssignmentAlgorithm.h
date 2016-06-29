@@ -53,7 +53,7 @@ public:
      * @brief RegeneratorBitrate is the maximum bitrate that a single
      * Regenerator can regenerate. It's measured in bits per second.
      */
-    constexpr static double RegeneratorBitrate = 100E9;
+    static double RegeneratorBitrate;
 
     /**
      * @brief RegeneratorAssignmentAlgorithm is the standard constructor for a

@@ -36,7 +36,7 @@ void Simulation_RegeneratorNumber::run()
         }
 
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
-    std::cout << "NUM REGENERATORS\tCALL BLOCKING PROBABILITY" << std::endl;
+    std::cout << "REGENERABLE BITRATE\tCALL BLOCKING PROBABILITY" << std::endl;
 
     std::ofstream OutFile(FileName.c_str());
 
@@ -52,9 +52,11 @@ void Simulation_RegeneratorNumber::run()
 
         #pragma omp ordered
             {
-            std::cout << simulations[i]->Generator->T->get_NumRegenerators() << "\t\t\t"
+            std::cout << simulations[i]->Generator->T->get_NumRegenerators() *
+                      RegeneratorAssignmentAlgorithm::RegeneratorBitrate / 1E9 << "Gbps\t\t\t"
                       << simulations[i]->get_CallBlockingProbability() << std::endl;
-            OutFile << simulations[i]->Generator->T->get_NumRegenerators() << "\t"
+            OutFile << simulations[i]->Generator->T->get_NumRegenerators() *
+                    RegeneratorAssignmentAlgorithm::RegeneratorBitrate << "\t"
                     << simulations[i]->get_CallBlockingProbability() << "\t"
                     << simulations[i]->Generator->T->get_NumTranslucentNodes() << std::endl;
             }
