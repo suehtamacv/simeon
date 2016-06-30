@@ -135,7 +135,8 @@ SOURCES += src/main.cpp \
     tests/Structure/SlotTest.cpp \
     tests/Structure/TopologyTest.cpp \
     tests/crosstalkTest.cpp \
-    tests/GeneralClasses/Transmittances/TransmittanceTest.cpp
+    tests/GeneralClasses/Transmittances/TransmittanceTest.cpp \
+    tests/GeneralClasses/SpectralDensityTest.cpp
 
 HEADERS += \
     include/Calls.h \

@@ -49,6 +49,24 @@ SpectralDensity::SpectralDensity(const SpectralDensity &spec) :
 
 }
 
+bool SpectralDensity::operator ==(const SpectralDensity &originSpecDens) const
+{
+    size_t i = 0;
+    bool specFlag = true;
+    for(auto& val : originSpecDens.specDensity)
+    {
+        if(specDensity(i) != val)
+        {
+            specFlag = false;
+        }
+        i++;
+    }
+
+    return (densityScaling == originSpecDens.densityScaling && freqMin == originSpecDens.freqMin &&
+            freqMax == originSpecDens.freqMax && specFlag &&
+            stepFrequency == originSpecDens.stepFrequency);
+}
+
 SpectralDensity& SpectralDensity::operator *=(std::shared_ptr<TF::Transmittance> H)
 {
     for (size_t c = 0; c < specDensity.n_cols; ++c)

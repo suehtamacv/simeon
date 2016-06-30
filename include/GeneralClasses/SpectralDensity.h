@@ -50,11 +50,15 @@ public:
      */
     double freqMax;
     /**
-     * @brief specDensity is a vector of this spectral density's samples.
+     * @brief stepFrequency is the step of the frequency values along the samples.
      */
     arma::rowvec specDensity;
     /**
      * @brief specDensityMap is a cache of the spectral density's possible values, given a set of freqMin and freqMax.
+     */
+    double stepFrequency;
+    /**
+     * @brief specDensity is a vector of this spectral density's samples.
      */
     static std::map<std::pair<double, double>, arma::rowvec> specDensityMap;
     /**
@@ -65,9 +69,7 @@ public:
     SpectralDensity& operator*=(std::shared_ptr<TF::Transmittance> H);
     SpectralDensity operator*(std::shared_ptr<TF::Transmittance> H) const;
     SpectralDensity& operator+=(const SpectralDensity &);
-
-private:
-    double stepFrequency;
+    bool operator==(const SpectralDensity &) const;
 };
 
 #endif // SPECTRALDENSITY_H
