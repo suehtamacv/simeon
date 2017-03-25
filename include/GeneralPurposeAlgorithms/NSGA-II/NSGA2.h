@@ -51,11 +51,11 @@ public:
     /**
      * @brief numGen is the number of generations run by the NSGA2.
      */
-    static constexpr unsigned int numGen = 300;
+    static constexpr unsigned int numGen = 150;
     /**
      * @brief numIndiv is the number of Individuals in each generation.
      */
-    static constexpr unsigned int numIndiv = 100;
+    static constexpr unsigned int numIndiv = 200;
     /**
      * @brief binaryTournamentParameter is a parameter to the Binary Tournament,
      * that takes part in the Selection process. Each Individual is tested against
