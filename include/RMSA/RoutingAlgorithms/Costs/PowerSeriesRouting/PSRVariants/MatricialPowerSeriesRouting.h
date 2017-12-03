@@ -20,6 +20,8 @@ public:
     MatricialPowerSeriesRouting(std::shared_ptr<Topology> T,
                                 std::vector<std::shared_ptr<PSR::Cost>> Costs);
     double get_Cost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
+
+    std::map<std::vector<double>, double> cache;
 };
 }
 }

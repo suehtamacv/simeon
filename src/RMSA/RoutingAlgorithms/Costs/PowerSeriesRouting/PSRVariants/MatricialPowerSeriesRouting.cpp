@@ -25,18 +25,34 @@ double MatricialPowerSeriesRouting::get_Cost
         return std::numeric_limits<double>::max();
         }
 
-    arma::mat cost_matrix = arma::ones(1);
-
+    std::vector<double> costs;
     for (auto &cost : Costs)
         {
-        cost_matrix = arma::kron(cost_matrix, cost->getCost(link, C));
+        costs.push_back(cost->getUnitCost(link, C));
         }
 
-    if (!firstTimeRun)
+    if (false && cache.count(costs))
         {
-        coefficients.copy_size(cost_matrix);
-        firstTimeRun = true;
+        return cache[costs];
         }
+    else
+        {
+        arma::mat cost_matrix = arma::ones(1);
 
-    return arma::accu(coefficients % cost_matrix);
+        for (auto &cost : Costs)
+            {
+            cost_matrix = arma::kron(cost_matrix, cost->getCost(link, C));
+            }
+
+        if (!firstTimeRun)
+            {
+            coefficients.copy_size(cost_matrix);
+            firstTimeRun = true;
+            }
+
+        double totalCost = arma::accu(coefficients % cost_matrix);
+        cache[costs] = totalCost;
+
+        return totalCost;
+        }
 }
