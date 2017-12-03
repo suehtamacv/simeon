@@ -17,15 +17,22 @@ arma::rowvec PSR::cNormContiguity::getCost(std::weak_ptr<Link> link,
     return cache.row(link.lock()->get_Contiguity(C));
 }
 
+double PSR::cNormContiguity::getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C)
+{
+    return unitCache[link.lock()->get_Contiguity(C)];
+}
+
 void PSR::cNormContiguity::createCache()
 {
     for (int contig = 0; contig <= Link::NumSlots; contig++)
         {
         int expo = 0;
+        double unitCost = contig / (1.0 * Link::NumSlots);
 
+        unitCache[contig] = unitCost;
         for (int n = NMin; n <= NMax; n++)
             {
-            cache(contig, expo++) = pow(contig / (1.0 * Link::NumSlots), n);
+            cache(contig, expo++) = pow(unitCost, n);
             }
         }
 }

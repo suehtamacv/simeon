@@ -27,10 +27,12 @@ public:
      */
     cBitrate(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link>, std::shared_ptr<Call> C);
+    double getUnitCost(std::weak_ptr<Link>, std::shared_ptr<Call> C);
 
 private:
     void createCache();
     std::map<TransmissionBitrate, arma::rowvec> cache;
+    std::map<TransmissionBitrate, double> unitCache;
 };
 
 }

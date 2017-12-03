@@ -14,6 +14,11 @@ arma::rowvec PSR::cSlots::getCost(std::weak_ptr<Link>, std::shared_ptr<Call> C)
     return cache.at(C->Scheme.get_NumSlots(C->Bitrate));
 }
 
+double PSR::cSlots::getUnitCost(std::weak_ptr<Link>, std::shared_ptr<Call> C)
+{
+    return unitCache[C->Scheme.get_NumSlots(C->Bitrate)];
+}
+
 void PSR::cSlots::createCache()
 {
     unsigned int maxSlots = 1;
@@ -34,11 +39,14 @@ void PSR::cSlots::createCache()
             {
             unsigned int numSlots = scheme.get_NumSlots(bitrate);
             cache.emplace(numSlots, arma::ones<arma::rowvec>(NMax - NMin + 1));
-            int expo = 0;
 
+            int expo = 0;
+            double unitCost = numSlots / maxSlots;
+
+            unitCache[numSlots] = unitCost;
             for (int n = NMin; n <= NMax; n++)
                 {
-                cache.at(numSlots)(expo++) = pow(numSlots / maxSlots, n);
+                cache.at(numSlots)(expo++) = pow(unitCost, n);
                 }
             }
         }

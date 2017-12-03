@@ -19,15 +19,22 @@ arma::rowvec PSR::cAvailability::getCost(std::weak_ptr<Link> link,
     return cache.row(link.lock()->get_Availability());
 }
 
+double PSR::cAvailability::getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call>)
+{
+    return unitCache[link.lock()->get_Availability()];
+}
+
 void PSR::cAvailability::createCache()
 {
     for (int avail = 0; avail <= Link::NumSlots; avail++)
         {
         int expo = 0;
+        double unitCost = avail / (double) Link::NumSlots;
 
+        unitCache[avail] = unitCost;
         for (int n = NMin; n <= NMax; n++)
             {
-            cache(avail, expo++) = pow(avail / (double) Link::NumSlots, n);
+            cache(avail, expo++) = pow(unitCost, n);
             }
         }
 }

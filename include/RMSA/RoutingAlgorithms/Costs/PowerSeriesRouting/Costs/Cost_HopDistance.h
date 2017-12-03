@@ -4,7 +4,8 @@
 #include "Cost.h"
 #include <map>
 
-namespace RMSA {
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -26,10 +27,12 @@ public:
      */
     cHopDistance(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
+    double getUnitCost(std::weak_ptr<Link>, std::shared_ptr<Call>);
 
 private:
     void createCache();
     std::map<std::pair<int, int>, arma::rowvec> cache;
+    std::map<std::pair<int, int>, double> unitCache;
 
     struct Comparator
     {

@@ -20,6 +20,13 @@ arma::rowvec PSR::cNoise::getCost(std::weak_ptr<Link> link,
                                    C->Bitrate, C->Scheme));
 }
 
+double PSR::cNoise::getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C)
+{
+    return unitCache.at(CallProperties(link.lock()->Origin.lock()->ID,
+                                       link.lock()->Destination.lock()->ID,
+                                       C->Bitrate, C->Scheme));
+}
+
 void PSR::cNoise::createCache()
 {
     auto WAAlg =
@@ -58,6 +65,7 @@ void PSR::cNoise::createCache()
                 cache.emplace(Prop, arma::ones<arma::rowvec>(NMax - NMin + 1));
                 int expo = 0;
 
+                unitCache[Prop] = NoisePower;
                 for (int n = NMin; n <= NMax; n++)
                     {
                     cache.at(Prop)(expo++) = pow(NoisePower / ThresholdNoise, n);

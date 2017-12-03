@@ -18,6 +18,11 @@ arma::rowvec PSR::cLinkLength::getCost
     return cache.at(link.lock());
 }
 
+double PSR::cLinkLength::getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call>)
+{
+    return unitCache.at(link.lock());
+}
+
 bool PSR::cLinkLength::Comparator::operator <(const Comparator &other) const
 {
     auto locklink = link.lock();
@@ -55,12 +60,14 @@ void PSR::cLinkLength::createCache()
     for (auto &linkcomp : LinkComparator)
         {
         cache.emplace(linkcomp.link.lock(), arma::ones<arma::rowvec>(NMax - NMin + 1));
-        int expo = 0;
 
+        int expo = 0;
+        double unitCost = (1.0 * Index) / LinkComparator.size();
+
+        unitCache[linkcomp.link.lock()] = unitCost;
         for (int n = NMin; n <= NMax; n++)
             {
-            cache.at(linkcomp.link.lock())(expo++) =
-                pow((1.0 * Index) / LinkComparator.size(), n);
+            cache.at(linkcomp.link.lock())(expo++) = pow(unitCost, n);
             }
         Index++;
         }

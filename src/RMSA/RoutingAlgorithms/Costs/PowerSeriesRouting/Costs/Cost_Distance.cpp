@@ -18,17 +18,24 @@ arma::rowvec PSR::cDistance::getCost(std::weak_ptr<Link> link,
     return cache.at(link.lock());
 }
 
+double PSR::cDistance::getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call>)
+{
+    return unitCache[link.lock()];
+}
+
 void PSR::cDistance::createCache()
 {
     for (auto link : T->Links)
         {
         cache.emplace(link.second, arma::ones<arma::rowvec>(NMax - NMin + 1));
-        int expo = 0;
 
+        int expo = 0;
+        double unitCost = link.second->Length / T->get_LengthLongestLink();
+
+        unitCache[link.second] = unitCost;
         for (int n = NMin; n <= NMax; n++)
             {
-            cache.at(link.second)(expo++) = pow(link.second->Length /
-                                                T->get_LengthLongestLink(), n);
+            cache.at(link.second)(expo++) = pow(unitCost, n);
             }
         }
 }

@@ -27,10 +27,12 @@ public:
      */
     cNormContiguity(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
+    double getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call> C);
 
 private:
     void createCache();
     arma::mat cache;
+    std::map<unsigned int, double> unitCache;
 };
 
 }

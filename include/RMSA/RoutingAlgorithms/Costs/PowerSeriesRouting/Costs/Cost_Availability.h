@@ -3,7 +3,8 @@
 
 #include "Cost.h"
 
-namespace RMSA {
+namespace RMSA
+{
 namespace ROUT
 {
 namespace PSR
@@ -24,10 +25,14 @@ public:
      */
     cAvailability(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
+    double getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
 
 private:
     void createCache();
+
     arma::mat cache;
+
+    std::map<unsigned int, double> unitCache;
 };
 
 }

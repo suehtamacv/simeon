@@ -16,6 +16,11 @@ arma::rowvec PSR::cBitrate::getCost(std::weak_ptr<Link>,
     return cache[C->Bitrate];
 }
 
+double PSR::cBitrate::getUnitCost(std::weak_ptr<Link>, std::shared_ptr<Call> C)
+{
+    return unitCache[C->Bitrate];
+}
+
 void PSR::cBitrate::createCache()
 {
     double maxBitrate = -1;
@@ -31,11 +36,14 @@ void PSR::cBitrate::createCache()
     for (auto &bitrate : TransmissionBitrate::DefaultBitrates)
         {
         cache.emplace(bitrate, arma::rowvec(NMax - NMin + 1));
-        int expo = 0;
 
+        int expo = 0;
+        double unitCost = bitrate.get_Bitrate() / maxBitrate;
+
+        unitCache[bitrate] = unitCost;
         for (int n = NMin; n <= NMax; n++)
             {
-            cache.at(bitrate)(expo++) = pow(bitrate.get_Bitrate() / maxBitrate, n);
+            cache.at(bitrate)(expo++) = pow(unitCost, n);
             }
         }
 }

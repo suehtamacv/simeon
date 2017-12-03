@@ -27,10 +27,12 @@ public:
      */
     cLinkLength(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
+    double getUnitCost(std::weak_ptr<Link> link, std::shared_ptr<Call>);
 
 private:
     void createCache();
     std::map<std::shared_ptr<Link>, arma::rowvec> cache;
+    std::map<std::shared_ptr<Link>, double> unitCache;
 
     struct Comparator
     {

@@ -27,10 +27,12 @@ public:
      */
     cSlots(int NMin, int NMax, std::shared_ptr<Topology> T);
     arma::rowvec getCost(std::weak_ptr<Link>, std::shared_ptr<Call>);
+    double getUnitCost(std::weak_ptr<Link>, std::shared_ptr<Call>);
 
 private:
     void createCache();
     std::map<unsigned int, arma::rowvec> cache;
+    std::map<unsigned int, double> unitCache;
 };
 
 }

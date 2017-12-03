@@ -68,6 +68,15 @@ public:
      */
     virtual arma::rowvec getCost(std::weak_ptr<Link> link,
                                  std::shared_ptr<Call> C) = 0;
+
+    /**
+     * @brief getUnitCost returns the unit cost of this link.
+     * @param link is the current link where the cost is being calculated.
+     * @param C is the Call being routed.
+     * @return the unit cost.
+     */
+    virtual double getUnitCost(std::weak_ptr<Link> link,
+                               std::shared_ptr<Call> C) = 0;
     /**
      * @brief getCost returns the cost, elevated to \a N.
      * @param N is the exponent.

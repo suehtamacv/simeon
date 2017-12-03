@@ -19,6 +19,11 @@ arma::rowvec PSR::cOrigDestIndex::getCost
     return cache.at({C->Origin.lock()->ID, C->Destination.lock()->ID});
 }
 
+double PSR::cOrigDestIndex::getUnitCost(std::weak_ptr<Link>, std::shared_ptr<Call> C)
+{
+    return unitCache.at({C->Origin.lock()->ID, C->Destination.lock()->ID});
+}
+
 void PSR::cOrigDestIndex::createCache()
 {
     int Index = 1;
@@ -35,11 +40,14 @@ void PSR::cOrigDestIndex::createCache()
 
             auto OrigDestPair = std::make_pair(orig->ID, dest->ID);
             cache.emplace(OrigDestPair, arma::ones<arma::rowvec>(NMax - NMin + 1));
-            int expo = 0;
 
+            int expo = 0;
+            double unitCost = (1.0 * Index) / numPairs;
+
+            unitCache[OrigDestPair] = unitCost;
             for (int n = NMin; n <= NMax; n++)
                 {
-                cache.at(OrigDestPair)(expo++) = pow((1.0 * Index) / numPairs, n);
+                cache.at(OrigDestPair)(expo++) = pow(unitCost, n);
                 }
             Index++;
             }
