@@ -31,7 +31,7 @@ double MatricialPowerSeriesRouting::get_Cost
         costs.push_back(cost->getUnitCost(link, C));
         }
 
-    if (false && cache.count(costs))
+    if (cache.count(costs))
         {
         return cache[costs];
         }

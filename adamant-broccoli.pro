@@ -136,7 +136,8 @@ SOURCES += src/main.cpp \
     tests/Structure/TopologyTest.cpp \
     tests/crosstalkTest.cpp \
     tests/GeneralClasses/Transmittances/TransmittanceTest.cpp \
-    tests/GeneralClasses/SpectralDensityTest.cpp
+    tests/GeneralClasses/SpectralDensityTest.cpp \
+    src/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.cpp
 
 HEADERS += \
     include/Calls.h \
@@ -267,7 +268,8 @@ HEADERS += \
     include/SimulationTypes/Simulation_PSROptimization.h \
     include/SimulationTypes/Simulation_RegeneratorNumber.h \
     include/SimulationTypes/Simulation_StatisticalTrend.h \
-    include/SimulationTypes/Simulation_TransparencyAnalysis.h
+    include/SimulationTypes/Simulation_TransparencyAnalysis.h \
+    include/RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs/Cost_NormalizedNoise.h
 
 LIBS += -lboost_system -lboost_program_options -larmadillo -lgtest
 

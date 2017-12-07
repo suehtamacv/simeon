@@ -2,6 +2,9 @@
 #define COST_NORMALIZEDCONTIGUITY_H
 
 #include "Cost.h"
+#include "GeneralClasses/TransmissionBitrate.h"
+#include "GeneralClasses/ModulationScheme.h"
+#include <map>
 
 namespace RMSA
 {
