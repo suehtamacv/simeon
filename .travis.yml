@@ -10,6 +10,7 @@ addons:
     - gcc-4.8
     - g++-4.8
     - libarmadillo-dev
+    - libgtest-dev
 
 script:
   - qmake adamant-broccoli.pro
