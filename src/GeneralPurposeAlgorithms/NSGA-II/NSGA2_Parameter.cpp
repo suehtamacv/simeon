@@ -1,5 +1,7 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h>
 
+using namespace NSGA_II;
+
 NSGA2_Parameter::NSGA2_Parameter(std::vector<int> gene) :
     isEvaluated(false), value(-1), gene(gene)
 {

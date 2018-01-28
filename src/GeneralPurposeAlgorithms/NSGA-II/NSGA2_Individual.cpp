@@ -2,8 +2,9 @@
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2.h>
 #include <GeneralPurposeAlgorithms/NSGA-II/NSGA2_Parameter.h>
 #include <GeneralClasses/RandomGenerator.h>
-#include <boost/assert.hpp>
 #include <iostream>
+
+using namespace NSGA_II;
 
 NSGA2_Individual::NSGA2_Individual() :
     crowdingDistance(-1),
@@ -87,14 +88,25 @@ std::string NSGA2_Individual::print(bool pretty)
 std::shared_ptr<NSGA2_Parameter> NSGA2_Individual::getParameter(
     unsigned int i) const
 {
-    BOOST_ASSERT_MSG(i < Parameters.size(), "Invalid parameter requested");
+#ifdef RUN_ASSERTIONS
+    if (i >= Parameters.size())
+        {
+        std::cerr << "Invalid parameter requested" << std::endl;
+        abort();
+        }
+#endif
     return Parameters[i];
 }
 
 double NSGA2_Individual::getParameterValue(unsigned int i) const
 {
-    BOOST_ASSERT_MSG(i < Parameters.size(), "Invalid parameter requested");
-
+#ifdef RUN_ASSERTIONS
+    if (i >= Parameters.size())
+        {
+        std::cerr << "Invalid parameter requested" << std::endl;
+        abort();
+        }
+#endif
     return Parameters[i]->evaluate();
 }
 

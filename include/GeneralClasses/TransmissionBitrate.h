@@ -2,6 +2,7 @@
 #define TRANSMISSIONBITRATE_H
 
 #include <vector>
+#include <ostream>
 
 /**
  * @brief The TransmissionBitrate class represents a transmission bitrate.
@@ -26,6 +27,9 @@ public:
      * @param Bitrate is the bitrate, in bits per second.
      */
     TransmissionBitrate(double Bitrate);
+    /**
+     * @brief TransmissionBitrate is the copy constructor.
+     */
     TransmissionBitrate(const TransmissionBitrate &);
     /**
      * @brief get_Bitrate returns the value of the bitrate, in bits per second.
@@ -33,10 +37,20 @@ public:
      */
     double get_Bitrate() const;
 
-    bool operator <(const TransmissionBitrate &) const;
     bool operator ==(const TransmissionBitrate &) const;
+    bool operator !=(const TransmissionBitrate &) const;
+    bool operator <(const TransmissionBitrate &) const;
+    bool operator <=(const TransmissionBitrate &) const;
+    bool operator >(const TransmissionBitrate &) const;
+    bool operator >=(const TransmissionBitrate &) const;
 
+    /**
+     * @brief DefaultBitrates is a vector containing the default bitrates considered
+     * through the simulator.
+     */
     static std::vector<TransmissionBitrate> DefaultBitrates;
+
+    friend std::ostream& operator <<(std::ostream &out, const TransmissionBitrate &br);
 private:
     double Bitrate;
 };

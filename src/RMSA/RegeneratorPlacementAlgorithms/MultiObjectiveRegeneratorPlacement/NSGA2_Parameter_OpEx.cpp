@@ -1,0 +1,38 @@
+#include "include/RMSA/RegeneratorPlacementAlgorithms/MultiObjectiveRegeneratorPlacement/NSGA2_Parameter_OpEx.h"
+#include "include/SimulationTypes/Simulation_NSGA2_RegnPlac.h"
+
+using namespace RMSA::RP::MORP;
+
+NSGA2_Parameter_OpEx::NSGA2_Parameter_OpEx(std::vector<int> gene,
+        Simulations::Simulation_NSGA2_RegnPlac &Sim) :
+    NSGA2_Parameter(gene), Sim(Sim)
+{
+
+}
+
+double NSGA2_Parameter_OpEx::evaluate()
+{
+    if (!isEvaluated)
+        {
+        Topology T(*Sim.T);
+
+        for (size_t i = 0; i < gene.size(); i++)
+            {
+            if (gene[i] != 0)
+                {
+                T.Nodes[i]->set_NodeType(Node::TranslucentNode);
+                }
+            else
+                {
+                T.Nodes[i]->set_NodeType(Node::TransparentNode);
+                }
+
+            T.Nodes[i]->set_NumRegenerators(gene[i]);
+            }
+
+        value = T.get_OpEx();
+        isEvaluated = true;
+        }
+
+    return value;
+}

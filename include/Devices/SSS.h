@@ -5,7 +5,11 @@
 #include <map>
 
 class Node;
+class Link;
+class SpectralDensity;
 
+namespace Devices
+{
 /**
  * @brief The SSS class represents a spectrum selective switch.
  */
@@ -24,18 +28,41 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
+    std::shared_ptr<TF::Transmittance> get_TransferFunction(double centerFreq);
     double get_CapEx();
     double get_OpEx();
 
+    /**
+     * @brief get_BlockTransferFunction returns the transfer function that represents the device's blocking frequency response.
+     * @param centerFreq is the central frequency of this transfer function.
+     * @return the transfer function that represents the device's frequency response.
+     */
+    std::shared_ptr<TF::Transmittance> get_BlockTransferFunction(double centerFreq);
+
     std::shared_ptr<Device> clone();
+    /**
+     * @brief filterOrder is the order of the optical filter in this device.
+     */
     unsigned int filterOrder;
 
 private:
     Power NoisePower;
     Node *parent;
-    std::map<int, TransferFunction> transFunctionsCache;
-    std::shared_ptr<TransferFunction> deviceTF;
+    /**
+     * @brief deviceTF is the device's transfer function.
+     */
+    std::shared_ptr<TF::Transmittance> deviceTF;
+    /**
+     * @brief bypassFunctionsCache is a map of the transfer functions of this
+     * SSS device, given a certain central frequency and bandwidth.
+     */
+    std::map<double, std::shared_ptr<TF::Transmittance>> bypassFunctionsCache;
+    /**
+     * @brief blockingFunctionsCache is a map of the blocking transfer functions
+     *  of this SSS device, given a certain central frequency and bandwidth.
+     */
+    std::map<double, std::shared_ptr<TF::Transmittance>> blockingFunctionsCache;
 };
+}
 
 #endif // SSS_H

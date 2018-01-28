@@ -1,6 +1,8 @@
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Fiber.h>
 
+using namespace Devices;
+
 InLineAmplifier::InLineAmplifier(Fiber &Segment) : EDFA(-Segment.get_Gain())
 {
 

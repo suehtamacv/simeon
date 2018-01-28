@@ -1,16 +1,24 @@
 #include "include/GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h"
 
-TrapezoidalRule::TrapezoidalRule(arma::mat &YPoints, double XRange)
-    : IntegrationMethod(YPoints, XRange)
+using namespace NumericMethods;
+
+TrapezoidalRule::TrapezoidalRule()
 {
 
 }
 
-double TrapezoidalRule::calculate()
+double TrapezoidalRule::calculate(arma::mat const &YPoints, const double &XRange)
 {
+#ifdef RUN_ASSERTIONS
+    if (YPoints.empty())
+        {
+        std::cerr << "Cannot integrate empty vector." << std::endl;
+        abort();
+        }
+#endif
     double Result, Sum = 0, h;
     h = XRange / (YPoints.size() - 1);
-    for(unsigned int Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
+    for(size_t Cont = 1; Cont <= (YPoints.size() - 2); Cont++)
         {
         Sum += YPoints.at(Cont);
         }

@@ -4,8 +4,11 @@
 #include <memory>
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/Power.h>
-#include <GeneralClasses/TransferFunctions/TransferFunction.h>
+#include <GeneralClasses/Transmittances/Transmittance.h>
 
+//! Optical Devices.
+namespace Devices
+{
 /**
  * @brief The Device class represents in a generic way a device on the network.
  */
@@ -46,10 +49,11 @@ public:
      */
     virtual Power &get_Noise() = 0;
     /**
-     * @brief get_TransferFunction returns the transfer function that represents the device's frequency response
-     * @return the transfer function that represents the device's frequency response
+     * @brief get_TransferFunction returns the transfer function that represents the device's frequency response.
+     * @param centerFreq is the central frequency of this transfer function.
+     * @return the transfer function that represents the device's frequency response.
      */
-    virtual TransferFunction &get_TransferFunction(unsigned int numSlots) = 0;
+    virtual std::shared_ptr<TF::Transmittance> get_TransferFunction(double centerFreq) = 0;
     /**
      * @brief get_CapEx returns the CapEx cost of the device.
      * @return the CapEx cost of the device.
@@ -66,5 +70,6 @@ public:
      */
     virtual std::shared_ptr<Device> clone() = 0;
 };
+}
 
 #endif // DEVICE_H

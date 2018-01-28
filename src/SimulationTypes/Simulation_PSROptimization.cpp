@@ -1,25 +1,32 @@
 #include <SimulationTypes/Simulation_PSROptimization.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
 #include <iomanip>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/Costs.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/Costs.h>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Calls.h>
-#include <RWA.h>
+#include <RMSA.h>
 #include <Structure/Link.h>
 #include <sstream>
-#include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace RMSA;
 using namespace Simulations;
+using namespace ROUT::PSR;
+using namespace SA;
+using namespace RA;
+using namespace RP;
+using namespace PSO;
 
 double Simulation_PSROptimization::NumCalls;
 double Simulation_PSROptimization::OptimizationLoad;
-std::vector<std::shared_ptr<PSR::Cost>> Simulation_PSROptimization::Costs;
+std::vector<std::shared_ptr<Cost>> Simulation_PSROptimization::Costs;
 std::shared_ptr<Topology> Simulation_PSROptimization::Fitness::T;
 PowerSeriesRouting::Variants Simulation_PSROptimization::Fitness::Variant;
-WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+ROUT::RoutingAlgorithm::RoutingAlgorithms
+Simulation_PSROptimization::Routing_Algorithm;
+SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
 Simulation_PSROptimization::WavAssign_Algorithm;
 RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
 Simulation_PSROptimization::RegPlacement_Algorithm;
@@ -107,11 +114,14 @@ void Simulation_PSROptimization::load()
 
     Link::load(T);
 
-    //RWA Algorithms
+    //RMSA Algorithms
         {
+        //Routing Algorithm
+        Routing_Algorithm = ROUT::RoutingAlgorithm::define_RoutingAlgorithm();
+
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
 
         if (Type == TranslucentNetwork)
             {
@@ -188,13 +198,13 @@ void Simulation_PSROptimization::load()
 
     do
         {
-        std::vector<PSR::Cost::PossibleCosts> chosenCosts;
+        std::vector<Cost::PossibleCosts> chosenCosts;
 
         do
             {
             int numPossibleCosts = 0;
 
-            for (auto &cost : PSR::Cost::CostsNames.left)
+            for (auto &cost : Cost::CostsNames.left)
                 {
                 if (std::find(chosenCosts.begin(), chosenCosts.end(),
                               cost.first) != chosenCosts.end())
@@ -215,7 +225,7 @@ void Simulation_PSROptimization::load()
             std::cin >> Cost;
 
             if (std::cin.fail() ||
-                    PSR::Cost::CostsNames.left.count((PSR::Cost::PossibleCosts) Cost) == 0)
+                    Cost::CostsNames.left.count((Cost::PossibleCosts) Cost) == 0)
                 {
                 std::cin.clear();
                 std::cin.ignore();
@@ -228,11 +238,10 @@ void Simulation_PSROptimization::load()
                 std::cerr << "Invalid Cost." << std::endl;
                 }
             else if (std::find(chosenCosts.begin(), chosenCosts.end(),
-                               (PSR::Cost::PossibleCosts) Cost) == chosenCosts.end())
+                               (Cost::PossibleCosts) Cost) == chosenCosts.end())
                 {
-                chosenCosts.push_back((PSR::Cost::PossibleCosts) Cost);
-                Costs.push_back(PSR::Cost::createCost(
-                                    (PSR::Cost::PossibleCosts) Cost, NMin, NMax, T));
+                chosenCosts.push_back((Cost::PossibleCosts) Cost);
+                Costs.push_back(Cost::createCost((Cost::PossibleCosts) Cost, NMin, NMax, T));
                 } //Verifies that the cost hasn't been chosen.
 
             std::cout << std::endl << "-> Choose the PSR Costs. (-1 to exit)" << std::endl;
@@ -336,11 +345,6 @@ void Simulation_PSROptimization::load()
     hasLoaded = true;
 }
 
-void Simulation_PSROptimization::create_Simulation()
-{
-
-}
-
 void Simulation_PSROptimization::save(std::string SimConfigFileName)
 {
     SimulationType::save(SimConfigFileName);
@@ -348,7 +352,13 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
                       Type) << std::endl;
@@ -359,11 +369,9 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
 
     SimConfigFile.open(SimConfigFileName,
                        std::ofstream::out | std::ofstream::app);
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
-
     SimConfigFile << std::endl << "  [algorithms]" << std::endl << std::endl;
     SimConfigFile << "  WavelengthAssignmentAlgorithm = " <<
-                  WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.left.at(
+                  SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.left.at(
                       WavAssign_Algorithm) << std::endl;
     if(Type == TranslucentNetwork)
         {
@@ -381,7 +389,7 @@ void Simulation_PSROptimization::save(std::string SimConfigFileName)
     SimConfigFile << "  PSRCosts =";
     for(auto &cost : Costs)
         {
-        SimConfigFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
+        SimConfigFile << " " << Cost::CostsNicknames.left.at(cost->Type);
         }
     SimConfigFile << std::endl;
     SimConfigFile << "  PSRVariant =" << PowerSeriesRouting::VariantNicknames.
@@ -422,8 +430,13 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-
+#ifdef RUN_ASSERTIONS
+    if (!ConfigFile.is_open())
+        {
+        std::cerr << "Input file is not open" << std::endl;
+        abort();
+        }
+#endif
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();
@@ -437,7 +450,7 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
     T->set_avgSpanLength(VariablesMap["general.AvgSpanLength"].as<long double>());
 
     WavAssign_Algorithm =
-        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     if(Type == Network_Type::TranslucentNetwork)
         {
@@ -461,9 +474,8 @@ void Simulation_PSROptimization::load_file(std::string ConfigFileName)
         while(PSR_Costs.tellg() != -1) // Reading the last cost twice
             {
             PSR_Costs >> Aux;
-            Costs.push_back(PSR::Cost::createCost(
-                                (PSR::Cost::PossibleCosts) PSR::Cost::CostsNicknames.right.at(Aux), NMin, NMax,
-                                T));
+            Costs.push_back(Cost::createCost((Cost::PossibleCosts)
+                                             Cost::CostsNicknames.right.at(Aux), NMin, NMax, T));
             }
         }
 
@@ -508,22 +520,28 @@ void Simulation_PSROptimization::print()
     std::cout << std::endl <<
               "  A Power Series Routing PSO Optimization Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
+    std::cout << "-> Routing Algorithm = " <<
+              ROUT::RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
+              << std::endl;
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
@@ -541,7 +559,7 @@ void Simulation_PSROptimization::print()
     std::cout << "-> PSR Costs =" << std::endl;
     for(auto &cost : Costs)
         {
-        std::cout << "\t-> " << PSR::Cost::CostsNames.left.at(cost->Type) <<
+        std::cout << "\t-> " << Cost::CostsNames.left.at(cost->Type) <<
                   std::endl;
         }
 
@@ -550,6 +568,8 @@ void Simulation_PSROptimization::print()
               << std::endl;
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << OptimizationLoad << std::endl;
+
+    T->print();
 }
 
 void Simulation_PSROptimization::run()
@@ -573,11 +593,13 @@ double Simulation_PSROptimization::Fitness::operator()(
     //Creates a copy of the topology.
     auto TopologyCopy = std::make_shared<Topology>(*T);
 
-    //Creates the RWA Algorithms
-    auto R_Alg = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
+    //Creates the RMSA Algorithms
+    auto R_Alg = ROUT::RoutingAlgorithm::create_RoutingAlgorithm
+                 (Routing_Algorithm, ROUT::RoutingCost::matPSR, TopologyCopy, false); //first with Matricial PSR. Changes later.
+    auto RCost = PowerSeriesRouting::createPSR(TopologyCopy, Costs, Variant);
 
-    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             Simulation_PSROptimization::WavAssign_Algorithm, TopologyCopy);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
@@ -591,18 +613,20 @@ double Simulation_PSROptimization::Fitness::operator()(
         RA_Alg = nullptr;
         }
 
-    //Initializes routing algorithm with the particle.
-    R_Alg->initCoefficients(particle.get()->X);
+    //Initializes routing cost with the particle.
+    RCost->initCoefficients(particle.get()->X);
+    //Sets the routing algorithm with the PSR cost.
+    R_Alg->RCost = RCost;
 
-    //Creates the Call Generator and the RWA Object
+    //Creates the Call Generator and the RMSA Object
     auto Generator = std::make_shared<CallGenerator>(TopologyCopy,
                      Simulation_PSROptimization::OptimizationLoad,
                      TransmissionBitrate::DefaultBitrates);
-    auto RWA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg, RA_Alg,
-               ModulationScheme::DefaultSchemes, TopologyCopy);
+    auto RMSA = std::make_shared<RoutingWavelengthAssignment> (R_Alg, WA_Alg,
+                RA_Alg, ModulationScheme::DefaultSchemes, TopologyCopy);
 
     return
-        NetworkSimulation(Generator, RWA, Simulation_PSROptimization::NumCalls).
+        NetworkSimulation(Generator, RMSA, Simulation_PSROptimization::NumCalls).
         get_CallBlockingProbability();
 }
 
@@ -629,7 +653,7 @@ void Simulation_PSROptimization::printCoefficients(std::string file,
         {
         for (auto &cost : Costs)
             {
-            OutFile << " " << PSR::Cost::CostsNicknames.left.at(cost->Type);
+            OutFile << " " << Cost::CostsNicknames.left.at(cost->Type);
             }
         OutFile << std::endl;
         }
@@ -689,7 +713,7 @@ void Simulation_PSROptimization::runPSR()
 
     std::ofstream logFile(LogFilename);
 
-    for (unsigned i = 1; i <= G; i++)
+    for (size_t i = 1; i <= G; i++)
         {
         if (!hasRun && (!BestParticle || BestParticle->bestFit != 0.0))
             {

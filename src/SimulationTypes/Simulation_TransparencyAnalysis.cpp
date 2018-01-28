@@ -1,32 +1,31 @@
 #include <SimulationTypes/Simulation_TransparencyAnalysis.h>
-#include <RWA/RoutingAlgorithms/StaticRouting/ShortestPath.h>
-#include <RWA/WavelengthAssignmentAlgorithms/FirstFit.h>
-#include <RWA/RoutingWavelengthAssignment.h>
-#include <RWA/Route.h>
+#include <RMSA/RoutingAlgorithms/Costs/ShortestPath.h>
+#include <RMSA/RoutingAlgorithms/Algorithms/Dijkstra_RoutingAlgorithm.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/FirstFit.h>
+#include <RMSA/RoutingWavelengthAssignment.h>
+#include <RMSA/Route.h>
 #include <Structure/Link.h>
 #include <Calls/Call.h>
 #include <GeneralClasses/Signal.h>
 #include <algorithm>
-#include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <map>
 
+using namespace RMSA;
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
 
 Simulation_TransparencyAnalysis::Simulation_TransparencyAnalysis() :
     SimulationType(Simulation_Type::transparency)
 {
     hasLoaded = hasRun = false;
-    minModulationScheme =
-        std::shared_ptr<ModulationScheme>(new ModulationScheme(*std::min_element(
-                ModulationScheme::DefaultSchemes.begin(),
-                ModulationScheme::DefaultSchemes.end())));
-
-    maxBitrate =
-        std::shared_ptr<TransmissionBitrate>(new TransmissionBitrate(*std::max_element(
-                    TransmissionBitrate::DefaultBitrates.begin(),
-                    TransmissionBitrate::DefaultBitrates.end())));
+    minModulationScheme = std::make_shared<ModulationScheme>(*
+                          (ModulationScheme::DefaultSchemes.begin()));
+    maxBitrate = std::make_shared<TransmissionBitrate>(*std::max_element(
+                     TransmissionBitrate::DefaultBitrates.begin(),
+                     TransmissionBitrate::DefaultBitrates.end()));
 }
 
 void Simulation_TransparencyAnalysis::help()
@@ -72,14 +71,15 @@ void Simulation_TransparencyAnalysis::run()
                     }
                 }
 
-            std::shared_ptr<ShortestPath> SP(new ShortestPath(TopCopy));
-            std::shared_ptr<WA::FirstFit> FF(new WA::FirstFit(TopCopy));
+            auto SP = RMSA::ROUT::RoutingAlgorithm::create_RoutingAlgorithm(
+                          RoutingAlgorithm::dijkstra, RoutingCost::SP, TopCopy);
+            std::shared_ptr<SA::FirstFit> FF(new SA::FirstFit(TopCopy));
 
-            RoutingWavelengthAssignment RWA(SP, FF, ModulationScheme::DefaultSchemes,
-                                            TopCopy);
+            RoutingWavelengthAssignment RMSA(SP, FF, ModulationScheme::DefaultSchemes,
+                                             TopCopy);
             std::shared_ptr<Call> C(new Call(origin, destination, *maxBitrate));
 
-            if (RWA.routeCall(C) != nullptr)
+            if (!RMSA.routeCall(C)->Slots.empty())
                 {
                 TransparentPoints.push_back(InLineDistance_OSNR_Point(avgSpan, inOSNR));
                 }
@@ -90,6 +90,9 @@ void Simulation_TransparencyAnalysis::run()
             }
         }
 
+    std::ofstream TransparentFile((FileName + "_TR").c_str());
+    std::ofstream OpaqueFile((FileName + "_OP").c_str());
+
     std::cout << std::endl << "* * RESULTS * *" << std::endl;
 
     if (!TransparentPoints.empty())
@@ -99,6 +102,7 @@ void Simulation_TransparencyAnalysis::run()
         for (auto &pair : TransparentPoints)
             {
             std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
+            TransparentFile << pair.first << "\t" << pair.second << std::endl;
             }
         }
 
@@ -109,6 +113,7 @@ void Simulation_TransparencyAnalysis::run()
         for (auto &pair : OpaquePoints)
             {
             std::cout << "[" << pair.first << "km, " << pair.second << "dB] ";
+            OpaqueFile << pair.first << "\t" << pair.second << std::endl;
             }
         }
 
@@ -262,6 +267,28 @@ void Simulation_TransparencyAnalysis::load()
         }
     while (1);
 
+    std::cout << std::endl << "-> Define the file where to store the results."
+              << std::endl;
+    do
+        {
+        std::cin >> FileName;
+
+        if (std::cin.fail())
+            {
+            std::cin.clear();
+            std::cin.ignore();
+
+            std::cerr << "Invalid filename." << std::endl;
+            std::cout << std::endl << "-> Define the file where to store the results."
+                      << std::endl;
+            }
+        else
+            {
+            break;
+            }
+        }
+    while (1);
+
     find_OriginDestination();
 
     hasLoaded = true;
@@ -287,8 +314,13 @@ void Simulation_TransparencyAnalysis::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-
+#ifdef RUN_ASSERTIONS
+    if (!ConfigFile.is_open())
+        {
+        std::cerr << "Input file is not open" << std::endl;
+        abort();
+        }
+#endif
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();
@@ -314,7 +346,13 @@ void Simulation_TransparencyAnalysis::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << std::endl << "  [distance]" << std::endl << std::endl;
     SimConfigFile << "  minAvgLinkSpan = " << minAvgLinkSpan << std::endl;
@@ -340,25 +378,32 @@ void Simulation_TransparencyAnalysis::print()
     std::cout << std::endl <<
               "  A Transparency Analysis Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Minimum Average Span Length = " << minAvgLinkSpan << std::endl;
     std::cout << "-> Maximum Average Span Length = " << maxAvgLinkSpan << std::endl;
     std::cout << "-> Minimum OSNR = " << minAvgLinkSpan << std::endl;
     std::cout << "-> Maximum OSNR = " << maxAvgLinkSpan << std::endl;
+
+    T->print();
 }
 
 void Simulation_TransparencyAnalysis::find_OriginDestination()
 {
-    ShortestPath SP(T);
+    auto R_Alg = RoutingAlgorithm::create_RoutingAlgorithm(
+                     RoutingAlgorithm::dijkstra, RoutingCost::SP, T);
+
     double maxLength = -1;
 
     for (auto orig : T->Nodes)
@@ -371,10 +416,10 @@ void Simulation_TransparencyAnalysis::find_OriginDestination()
                 }
 
             std::shared_ptr<Call> DummyCall(new Call(orig, dest, 0));
-            auto links = SP.route(DummyCall);
+            auto route = R_Alg->route(DummyCall).front();
             double length = 0;
 
-            for (auto link : links)
+            for (auto link : route)
                 {
                 length += link.lock()->Length;
                 }

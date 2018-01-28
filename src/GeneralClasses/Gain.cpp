@@ -1,21 +1,27 @@
-#include <boost/assert.hpp>
-#include <cmath>
 #include <GeneralClasses/Gain.h>
+#include <cmath>
+#include <iostream>
 
 Gain::Gain(double value, InitType Type) : value_Linear(0),
     calculatedLinear(false)
 {
-
     if (Type == InitType::dB)
         {
         value_dB = value;
         }
     else if (Type == InitType::Linear)
         {
-        BOOST_ASSERT_MSG(value > 0, "There's no dB value for something negative.");
-        value_dB = 10 * log10(value);
+#ifdef RUN_ASSERTIONS
+        if (value < 0)
+            {
+            std::cerr << "There's no dB value for something negative." << std::endl;
+            abort();
+            }
+#endif
+        value_Linear = (value >= 0) ? value : 0;
+        value_dB = 10 * log10(value_Linear);
+        calculatedLinear = true;
         }
-
 }
 
 Gain Gain::operator -()
@@ -57,7 +63,6 @@ double Gain::in_Linear()
 {
     if (!calculatedLinear)
         {
-
         value_Linear = pow10(0.1 * value_dB);
         calculatedLinear = true;
         }
@@ -80,6 +85,11 @@ bool Gain::operator ==(const Gain &G) const
     return (value_dB == G.in_dB());
 }
 
+bool Gain::operator !=(const Gain &G) const
+{
+    return !(operator ==(G));
+}
+
 bool Gain::operator >=(const Gain &G) const
 {
     return ((operator >(G)) || (operator ==(G)));
@@ -88,4 +98,23 @@ bool Gain::operator >=(const Gain &G) const
 bool Gain::operator <=(const Gain &G) const
 {
     return ((operator <(G)) || (operator ==(G)));
+}
+
+Gain& Gain::operator +=(const Gain &G)
+{
+    value_dB += G.value_dB;
+    calculatedLinear = false;
+    return *this;
+}
+
+Gain& Gain::operator -=(const Gain &G)
+{
+    value_dB -= G.value_dB;
+    calculatedLinear = false;
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const Gain &G)
+{
+    return os << G.in_dB() << "dB";
 }

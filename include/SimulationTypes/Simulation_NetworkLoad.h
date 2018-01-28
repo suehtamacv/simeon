@@ -5,14 +5,25 @@
 #include <vector>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <SimulationTypes/SimulationType.h>
-#include "RWA.h"
+#include "RMSA.h"
 
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_NetworkLoad class is the simulation that varies the
+ * network load and analyses the effect on the call blocking probability.
+ *
+ * This simulation varies the network load, and analyzes the network performance
+ * in terms of predefined metrics, such as call blocking probability,
+ * or slot blocking probability.
+ */
 class Simulation_NetworkLoad : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_NetworkLoad is the default constructor.
+     */
     Simulation_NetworkLoad();
 
     void help();
@@ -33,13 +44,13 @@ private:
 
     std::string FileName;
 
-    RoutingAlgorithm::RoutingAlgorithms
-    Routing_Algorithm;
-    WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    RMSA::ROUT::RoutingCost::RoutingCosts Routing_Cost;
+    RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     void create_Simulations();

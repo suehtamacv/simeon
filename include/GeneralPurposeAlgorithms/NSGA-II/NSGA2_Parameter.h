@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+namespace NSGA_II
+{
 /**
  * @brief The NSGA2_Parameter class represents a Parameter to a NSGA2_Individual.
  */
@@ -44,5 +46,6 @@ protected:
     double value;
     std::vector<int> gene;
 };
+}
 
 #endif // NSGA2_PARAMETER_H

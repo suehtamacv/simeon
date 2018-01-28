@@ -4,6 +4,8 @@
 #include <GeneralClasses/RandomGenerator.h>
 #include <algorithm>
 
+using namespace NSGA_II;
+
 NSGA2::NSGA2() : generation(0)
 {
 

@@ -5,14 +5,26 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <SimulationTypes/SimulationType.h>
 #include <vector>
-#include "RWA.h"
+#include "RMSA.h"
 
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_RegeneratorNumber class represents a simulation that
+ * varies the number of regenerators.
+ *
+ * This simulation inserts regenerators in the nodes of the  topology, and
+ * analyses the call requisition blocking probability. If the RP Algorithm is NX,
+ * then the same number of regenerators will be inserted in each node. Otherwise,
+ * the product N . X of regenerators is distributed over the topology.
+ */
 class Simulation_RegeneratorNumber : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_RegeneratorNumber is the default constructor.
+     */
     Simulation_RegeneratorNumber();
 
     void help();
@@ -35,13 +47,13 @@ private:
     unsigned long stepRegNumber;
     unsigned int numTranslucentNodes;
 
-    RoutingAlgorithm::RoutingAlgorithms
-    Routing_Algorithm;
-    WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    RMSA::ROUT::RoutingCost::RoutingCosts Routing_Cost;
+    RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     void createSimulations();

@@ -25,6 +25,17 @@ public:
         Blocked, /*!< The RWA algorithm could not find a route to stablish the call */
         Not_Evaluated /*!< The RWA algorithm is running / will run over the call */
     };
+    /**
+     * @brief The BlockingReason enum is used to specify the reason why the call
+     * was blocked
+     */
+    enum BlockingReason
+    {
+        Blocking_Route = 0x01,
+        Blocking_Spectrum = 0x02, /*!< There was not enough spectrum to implement the call */
+        Blocking_ASE_Noise = 0x04, /*!< There OSNR was too low to implement the call */
+        Blocking_FilterImperfection = 0x08 /*!< The power ratio due to the filter imperfection was too low */
+    };
 
     /**
     * @brief Call is the standard constructor for a Call object.
@@ -35,6 +46,17 @@ public:
     Call(std::weak_ptr<Node> Origin,
          std::weak_ptr<Node> Destination,
          TransmissionBitrate Bitrate);
+    /**
+    * @brief Call is the standard constructor for a Call object.
+    * @param Origin is a weak_ptr for the Origin node.
+    * @param Destination is a weak_ptr for the Destination node.
+    * @param Bitrate is a TransmissionBitrate.
+    * @param Scheme is the ModulationScheme.
+    */
+    Call(std::weak_ptr<Node> Origin,
+         std::weak_ptr<Node> Destination,
+         TransmissionBitrate Bitrate,
+         ModulationScheme Scheme);
 
     /**
      * @brief CallRequisition is a pointer to the requisition event.
@@ -71,6 +93,10 @@ public:
      * algorithm is incompatible with translucent networks.
      */
     ModulationScheme Scheme;
+    /**
+     * @brief blockingReason specifies the reason why the call was blocked.
+     */
+    uint8_t blockingReason;
 };
 
 #endif // CALL_H

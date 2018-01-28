@@ -3,8 +3,12 @@
 
 #include <Devices/Amplifiers/EDFA.h>
 
+namespace Devices
+{
 class Fiber;
+}
 
+namespace Devices {
 /**
  * @brief The InLineAmplifier class represents an In-Line Amplifier.
  *
@@ -30,5 +34,6 @@ public:
     std::shared_ptr<Device> clone();
 
 };
+}
 
 #endif // LINEAMPLIFIER_H

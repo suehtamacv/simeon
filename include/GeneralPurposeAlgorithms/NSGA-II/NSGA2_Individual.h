@@ -4,6 +4,9 @@
 #include <memory>
 #include <vector>
 
+namespace NSGA_II
+{
+
 class NSGA2_Generation;
 class NSGA2_Parameter;
 
@@ -127,5 +130,6 @@ protected:
      */
     std::vector<int> Gene;
 };
+}
 
 #endif // NSGA2_INDIVIDUAL_H

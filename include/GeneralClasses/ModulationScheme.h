@@ -3,24 +3,25 @@
 
 #include <GeneralClasses/Gain.h>
 #include <GeneralClasses/TransmissionBitrate.h>
-#include <vector>
+#include <set>
+#include <ostream>
 
 /**
  * @brief The ModulationScheme class represents a modulation scheme.
  */
 class ModulationScheme
 {
-public:
-/**
-  * In DEFAULT_MODULATIONSCHEMES there are the default modulation schemes used
-  * through the simulator. To add a new M-QAM scheme, add to the list
-  * X(M, Gain(SNR_PER_BIT, Gain::dB)).
-  **/
+    /**
+    * In DEFAULT_MODULATIONSCHEMES there are the default modulation schemes used
+    * through the simulator. To add a new M-QAM scheme, add to the list
+    * X(M, Gain(SNR_PER_BIT, Gain::dB)).
+    **/
 #define DEFAULT_MODULATIONSCHEMES \
   X(4, Gain(6.8, Gain::dB)) \
   X(16, Gain(10.5, Gain::dB)) \
   X(64, Gain(14.8, Gain::dB)) //X Macros
 
+public:
     /**
      * @brief ModulationScheme is the standard constructor for a ModulationScheme.
      * @param M is the number of points in the QAM constellation.
@@ -51,9 +52,12 @@ public:
      */
     ModulationScheme &operator=(const ModulationScheme &scheme);
 
-    bool operator<(const ModulationScheme &scheme) const;
-    bool operator>(const ModulationScheme &scheme) const;
     bool operator==(const ModulationScheme &scheme) const;
+    bool operator!=(const ModulationScheme &scheme) const;
+    bool operator<(const ModulationScheme &scheme) const;
+    bool operator<=(const ModulationScheme &scheme) const;
+    bool operator>(const ModulationScheme &scheme) const;
+    bool operator>=(const ModulationScheme &scheme) const;
 
     /**
      * @brief get_ThresholdOSNR calculates the minimum OSNR acceptable to
@@ -62,7 +66,7 @@ public:
      * @return the minimum OSNR acceptable to implement a Call with this scheme
      * and a certain TransmissionBitrate.
      */
-    Gain get_ThresholdOSNR(TransmissionBitrate &BitRate);
+    Gain get_ThresholdOSNR(TransmissionBitrate &BitRate) const;
     /**
      * @brief get_NumSlots calculates the number of slots necessary to implement
      * a Call with this scheme and a certain TransmissionBitrate.
@@ -70,11 +74,13 @@ public:
      * @return the number of slots necessary to implement a Call with this
      * scheme and a certain TransmissionBitrate.
      */
-    unsigned int get_NumSlots(TransmissionBitrate &BitRate);
+    unsigned int get_NumSlots(TransmissionBitrate &BitRate) const;
     /**
-     * @brief DefaultSchemes is a vector with the default Modulation Schemes.
+     * @brief DefaultSchemes is a set with the default Modulation Schemes.
      */
-    static std::vector<ModulationScheme> DefaultSchemes;
+    static std::set<ModulationScheme> DefaultSchemes;
+
+    friend std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme);
 
 private:
     unsigned int M;

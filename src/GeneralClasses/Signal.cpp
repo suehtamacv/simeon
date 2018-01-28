@@ -2,20 +2,37 @@
 #include <Structure/Slot.h>
 #include <GeneralClasses/PhysicalConstants.h>
 #include <GeneralPurposeAlgorithms/IntegrationMethods/TrapezoidalRule.h>
+#include <GeneralClasses/LinkSpectralDensity.h>
+
+using namespace TF;
+using namespace NumericMethods;
 
 Power Signal::InputPower = Power(0, Power::dBm);
 Gain Signal::InputOSNR = Gain(30, Gain::dB);
-unsigned long Signal::numFrequencySamples = 25;
 
-Signal::Signal(unsigned int numSlots) : numSlots(numSlots),
+Signal::Signal(mapSlots occupiedSlots) : occupiedSlots(occupiedSlots),
     SignalPower(InputPower),
     NoisePower(InputPower * -InputOSNR)
 {
-    if(considerFilterImperfection)
+    if (!occupiedSlots.empty())
         {
-        frequencyRange = numSlots * Slot::BSlot / 2;
-        signalSpecDensity = std::make_shared<SpectralDensity>(PhysicalConstants::freq -
-                            frequencyRange, PhysicalConstants::freq + frequencyRange, numFrequencySamples);
+        std::sort(occupiedSlots.begin()->second.begin(),
+                  occupiedSlots.begin()->second.end(),
+                  [](const std::weak_ptr<Slot> &l, const std::weak_ptr<Slot> &r)
+            {
+            return l.lock()->numSlot < r.lock()->numSlot;
+            });
+
+        numSlots = occupiedSlots.begin()->second.size();
+        freqMin = occupiedSlots.begin()->second.front().lock()->S->freqMin;
+        freqMax = occupiedSlots.begin()->second.back().lock()->S->freqMax;
+        if (considerFilterImperfection)
+            {
+            signalSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
+                                (int) Slot::samplesPerSlot * numSlots);
+            crosstalkSpecDensity = std::make_shared<SpectralDensity>(freqMin, freqMax,
+                                   (int) Slot::samplesPerSlot * numSlots, true);
+            }
         }
 }
 
@@ -32,11 +49,21 @@ Signal &Signal::operator +=(Power &P)
     return *this;
 }
 
-Signal &Signal::operator *=(TransferFunction &TF)
+Signal &Signal::operator *=(std::shared_ptr<Transmittance> TF)
 {
     if (considerFilterImperfection)
         {
-        signalSpecDensity->operator *=(TF);
+        (*signalSpecDensity) *= TF;
+        (*crosstalkSpecDensity) *= TF;
+        }
+    return *this;
+}
+
+Signal &Signal::operator +=(SpectralDensity &PSD)
+{
+    if (considerFilterImperfection)
+        {
+        (*crosstalkSpecDensity) += (PSD);
         }
     return *this;
 }
@@ -54,27 +81,32 @@ Power Signal::get_NoisePower()
 Power Signal::get_SpectralPower()
 {
     return Power(
-               TrapezoidalRule(signalSpecDensity->specDensity, frequencyRange * 2).calculate()
-               * signalSpecDensity->densityScaling, Power::Watt);
+               TrapezoidalRule().calculate(signalSpecDensity->specDensity, freqMax - freqMin)
+               * signalSpecDensity->densityScaling.in_Linear(), Power::Watt);
 }
 
-double Signal::get_SignalPowerRatio()
+Gain Signal::get_SignalPowerRatio()
 {
-
-    if(originalSpecDensityCache.count(numSlots) == 0)
+    if (!originalSpecDensityCache.count(numSlots))
         {
-        SpectralDensity originSD(PhysicalConstants::freq - frequencyRange,
-                                 PhysicalConstants::freq + frequencyRange, numFrequencySamples);
+        SpectralDensity originSD(freqMin, freqMax,
+                                 Slot::samplesPerSlot * numSlots);
 
-        originalSpecDensityCache.emplace(numSlots,
-                                         Power(TrapezoidalRule(originSD.specDensity, frequencyRange * 2).calculate()
-                                               * originSD.densityScaling, Power::Watt));
+        originalSpecDensityCache.emplace(numSlots, Power(
+                                             TrapezoidalRule().calculate(originSD.specDensity, freqMax - freqMin)
+                                             * originSD.densityScaling.in_Linear(), Power::Watt));
         }
-
     return get_SpectralPower() / originalSpecDensityCache.at(numSlots);
 }
 
-double Signal::get_PowerRatioThreshold()
+Gain Signal::get_WeightedCrosstalk()
 {
-    return 0.6;
+    arma::rowvec S = signalSpecDensity->specDensity * signalSpecDensity->densityScaling.in_Linear();
+    arma::rowvec X = crosstalkSpecDensity->specDensity * crosstalkSpecDensity->densityScaling.in_Linear();
+
+    double P = TrapezoidalRule().calculate(S, freqMax - freqMin);
+    double k = P / TrapezoidalRule().calculate(S % S, freqMax - freqMin);
+
+    return
+        Gain(TrapezoidalRule().calculate(k * S % X, freqMax - freqMin) / P, Gain::Linear);
 }

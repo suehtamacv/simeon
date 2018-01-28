@@ -3,18 +3,27 @@
 
 #include <SimulationTypes/SimulationType.h>
 #include <GeneralPurposeAlgorithms/PSO.h>
-#include <RWA/RoutingAlgorithms/PowerSeriesRouting/PowerSeriesRouting.h>
-#include <RWA/RoutingAlgorithms/RoutingAlgorithm.h>
-#include <RWA/WavelengthAssignmentAlgorithms/WavelengthAssignmentAlgorithm.h>
-#include <RWA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
-#include <RWA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
+#include <RMSA/RoutingAlgorithms/Costs/PowerSeriesRouting/PowerSeriesRouting.h>
+#include <RMSA/RoutingAlgorithms/RoutingAlgorithm.h>
+#include <RMSA/SpectrumAssignmentAlgorithms/SpectrumAssignmentAlgorithm.h>
+#include <RMSA/RegeneratorPlacementAlgorithms/RegeneratorPlacementAlgorithm.h>
+#include <RMSA/RegeneratorAssignmentAlgorithms/RegeneratorAssignmentAlgorithm.h>
 
 namespace Simulations
 {
 
+/**
+ * @brief The Simulation_PSROptimization class is the PSR Optimization simulation.
+ *
+ * This simulation runs the Particle Swarm Optimization algorithm to find a set
+ * of coefficients that minimize the call blocking probability of the network.
+ */
 class Simulation_PSROptimization : public SimulationType
 {
 public:
+    /**
+     * @brief Simulation_PSROptimization is the default constructor.
+     */
     Simulation_PSROptimization();
 
     void help();
@@ -28,15 +37,16 @@ private:
     bool hasLoaded;
     bool hasRun;
 
-    std::shared_ptr<PSO_Particle<double>> BestParticle;
+    std::shared_ptr<PSO::PSO_Particle<double>> BestParticle;
 
-    PowerSeriesRouting::Variants Variant;
+    RMSA::ROUT::PSR::PowerSeriesRouting::Variants Variant;
 
-    static WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithms
+    static RMSA::ROUT::RoutingAlgorithm::RoutingAlgorithms Routing_Algorithm;
+    static RMSA::SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithms
     WavAssign_Algorithm;
-    static RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
+    static RMSA::RP::RegeneratorPlacementAlgorithm::RegeneratorPlacementAlgorithms
     RegPlacement_Algorithm;
-    static RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
+    static RMSA::RA::RegeneratorAssignmentAlgorithm::RegeneratorAssignmentAlgorithms
     RegAssignment_Algorithm;
 
     static double NumCalls;
@@ -44,7 +54,7 @@ private:
 
     int NMin;
     int NMax;
-    static std::vector<std::shared_ptr<PSR::Cost>> Costs;
+    static std::vector<std::shared_ptr<RMSA::ROUT::PSR::Cost>> Costs;
 
     std::string CoefficientsFilename;
     std::string LogFilename;
@@ -55,8 +65,6 @@ private:
     static constexpr double XMax = 1;
     static constexpr double VMin = -1;
     static constexpr double VMax = 1;
-
-    void create_Simulation();
 
     void runPSR();
 
@@ -71,11 +79,11 @@ private:
     struct Fitness
     {
         static std::shared_ptr<Topology> T;
-        static PowerSeriesRouting::Variants Variant;
-        double operator()(std::shared_ptr<PSO_Particle<double>>);
+        static RMSA::ROUT::PSR::PowerSeriesRouting::Variants Variant;
+        double operator()(std::shared_ptr<PSO::PSO_Particle<double>>);
     };
 
-    std::shared_ptr<ParticleSwarmOptimization<double, Fitness, Compare>>
+    std::shared_ptr<PSO::ParticleSwarmOptimization<double, Fitness, Compare>>
             PSO_Optim;
 
     void printCoefficients(std::string file, bool override = true);

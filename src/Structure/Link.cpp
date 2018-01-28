@@ -1,4 +1,3 @@
-#include <boost/assert.hpp>
 #include <cmath>
 #include <iostream>
 #include <Calls/Call.h>
@@ -9,6 +8,8 @@
 #include <Devices/Amplifiers/InLineAmplifier.h>
 #include <Devices/Amplifiers/PreAmplifier.h>
 
+using namespace Devices;
+
 int Link::NumSlots = 64;
 double Link::DefaultAvgSpanLength = -1;
 
@@ -16,23 +17,32 @@ Link::Link(std::weak_ptr<Node> Origin,
            std::weak_ptr<Node> Destination,
            double Length)
 {
-
-    BOOST_ASSERT_MSG(Length >= 0, "Length can't be negative.");
+#ifdef RUN_ASSERTIONS
+    if (Length < 0)
+        {
+        std::cerr << "Length can't be negative." << std::endl;
+        abort();
+        }
+#endif
     this->Origin = Origin;
     this->Destination = Destination;
     this->Length = Length;
+    isActive = true;
     AvgSpanLength = DefaultAvgSpanLength;
 
     create_Slots();
     create_Devices();
+
+    linkSpecDens = std::make_shared<LinkSpectralDensity>(Slots);
 }
 
-Link::Link(const Link &link)
+Link::Link(const Link &link) // linkSpecDens aqui?
 {
     Length = link.Length;
     Origin = link.Origin;
     Destination = link.Destination;
     AvgSpanLength = link.AvgSpanLength;
+    isActive = link.isActive;
 
     for (auto &slot : link.Slots)
         {
@@ -72,52 +82,63 @@ void Link::create_Devices()
 
     for (int i = 0; i < numLineAmplifiers; i++)
         {
-        Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
-        Devices.push_back(std::shared_ptr<InLineAmplifier>(
-                              new InLineAmplifier((Fiber &)*Devices.back())));
+        Devices.push_back(std::make_shared<Fiber>(SpanLength));
+        Devices.push_back(std::make_shared<InLineAmplifier>((Fiber &)*Devices.back()));
         }
 
     //There's an extra fiber segment in the end of the link
-    Devices.push_back(std::shared_ptr<Fiber>(new Fiber(SpanLength)));
+    Devices.push_back(std::make_shared<Fiber>(SpanLength));
 
     //There's a preamplifier in the node's entrance.
     //It compensates the fiber segment loss and also the switching element loss.
-    Devices.push_back(std::shared_ptr<PreAmplifier>(new PreAmplifier((
-                          Fiber &)*Devices.back(), *Destination.lock())));
+    Devices.push_back(std::make_shared<PreAmplifier>((Fiber &)*Devices.back(), *Destination.lock()));
+}
+
+bool Link::operator ==(const Link &link) const
+{
+    return (Length == link.Length) &&
+           (*(Origin.lock()) == *(link.Origin.lock())) &&
+           (*(Destination.lock()) == *(link.Destination.lock()));
+}
+
+bool Link::operator !=(const Link &link) const
+{
+    return !(operator ==(link));
 }
 
 Signal &Link::bypass(Signal &S)
 {
+    for (auto &link : Origin.lock()->Links)
+        {
+        if (*link == *this)
+            {
+            S.incomingLink = link;
+            break;
+            }
+        }
+
     for (auto &it : Devices)
         {
         S *= it->get_Gain();
         S += it->get_Noise();
         if (considerFilterImperfection)
             {
-            S *= it->get_TransferFunction(S.numSlots);
+            S *= it->get_TransferFunction((S.freqMin + S.freqMax) / 2.0); //central frequency
             }
         }
 
     return S;
 }
 
-bool Link::operator ==(const Link &L) const
-{
-    return ((Origin.lock() == L.Origin.lock()) &&
-            (Destination.lock() == L.Destination.lock()) &&
-            (Length == L.Length));
-}
-
-bool Link::operator <(const Link &L) const
-{
-    return ((Origin.lock() < L.Origin.lock()) ||
-            (Destination.lock() < L.Destination.lock()) ||
-            (Length < L.Length));
-}
-
 bool Link::isSlotFree(int slot) const
 {
-    BOOST_ASSERT_MSG(slot < NumSlots, "Invalid slot requested.");
+#ifdef RUN_ASSERTIONS
+    if (slot >= NumSlots)
+        {
+        std::cerr << "Invalid slot requested." << std::endl;
+        abort();
+        }
+#endif
     return (Slots[slot])->isFree;
 }
 
@@ -143,10 +164,15 @@ int Link::get_Occupability()
 
 int Link::get_Contiguity(std::shared_ptr<Call> C)
 {
-    BOOST_ASSERT_MSG(C->Scheme.get_M() != 0,
-                     "Can't calculate contiguity without knowing the modulation"
-                     " scheme. Either you forgot to set it or one of the chosen "
-                     "algorithms is not compatible with the contiguity measure");
+#ifdef RUN_ASSERTIONS
+    if (C->Scheme.get_M() == 0)
+        {
+        std::cerr << "Can't calculate contiguity without knowing the modulation"
+                  " scheme. Either you forgot to set it or one of the chosen "
+                  "algorithms is not compatible with the contiguity measure" << std::endl;
+        abort();
+        }
+#endif
     int NumRequiredSlots = C->Scheme.get_NumSlots(C->Bitrate);
     int Contiguity = 0;
     int CurrentFreeSlots = 0;
@@ -206,7 +232,13 @@ void Link::save(std::string SimConfigFileName, std::shared_ptr<Topology> T)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  AvgSpanLength = " << T->AvgSpanLength << std::endl;
 }
@@ -239,4 +271,20 @@ void Link::set_AvgSpanLength(double avgSpanLength)
 {
     AvgSpanLength = avgSpanLength;
     create_Devices();
+}
+
+void Link::set_LinkActive()
+{
+    isActive = true;
+}
+
+void Link::set_LinkInactive()
+{
+    isActive = false;
+}
+
+std::ostream& operator <<(std::ostream &out, const Link &link)
+{
+    return out << "Link: (" << *(link.Origin.lock()) << " -> " << *
+           (link.Destination.lock()) << "), length = " << link.Length << "km";
 }

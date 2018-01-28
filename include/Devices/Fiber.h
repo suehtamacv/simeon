@@ -3,6 +3,8 @@
 
 #include <Devices/Device.h>
 
+namespace Devices
+{
 /**
  * @brief The Fiber class represents a Fiber segment.
  */
@@ -22,7 +24,7 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
+    std::shared_ptr<TF::Transmittance> get_TransferFunction(double);
     double get_CapEx();
     double get_OpEx();
 
@@ -32,7 +34,11 @@ private:
     double SpanLength;
     Gain NetLoss;
     Power NoisePower;
-    std::shared_ptr<TransferFunction> deviceTF;
+    /**
+     * @brief deviceTF  is the device's transfer function.
+     */
+    std::shared_ptr<TF::Transmittance> deviceTF;
 };
+}
 
 #endif // FIBER_H

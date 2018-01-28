@@ -3,6 +3,8 @@
 
 #include <Devices/Amplifiers/Amplifier.h>
 
+namespace Devices
+{
 /**
  * @brief The EDFA class represents an erbium doped fiber amplifier. This class
  * of amplifiers has a ASE noise power modelling.
@@ -24,5 +26,6 @@ private:
      */
     static Gain NoiseFigure;
 };
+}
 
 #endif // EDFA_H

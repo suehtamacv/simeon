@@ -1,11 +1,5 @@
-#include "GeneralClasses.h"
-#include "Devices.h"
-#include "Structure.h"
-#include "Calls.h"
-#include "RWA.h"
 #include "SimulationTypes.h"
-
-#include <GeneralClasses/TransferFunctions/GaussianTransferFunction.h>
+#include <gtest/gtest.h>
 
 namespace Simulations
 {
@@ -15,13 +9,23 @@ bool parallelism_enabled = true;
 bool considerAseNoise = false;
 bool considerFilterImperfection = false;
 
-int main(void)
+#ifdef RUN_TESTS
+int main(int argc, char **argv)
 {
+    ::testing::InitGoogleTest(&argc, argv);
+    if (RUN_ALL_TESTS())
+        {
+        return -1;
+        }
+#else
+int main()
+{
+#endif
+
     std::cout << "\t* * * SIMULATOR OF SLICE OPTICAL NETWORKS * * *"
               << std::endl;
 
-    auto simulation = Simulations::SimulationType::create(); // For regular simulations
-    //auto simulation = Simulations::SimulationType::open(); // For testing Save/Load functions
+    auto simulation = Simulations::SimulationType::create();
     simulation->print();
     simulation->run();
 

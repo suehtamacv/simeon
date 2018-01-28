@@ -1,20 +1,25 @@
-#include <boost/assert.hpp>
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Slot.h>
-#include <RWA/Route.h>
+#include <RMSA/Route.h>
 #include <Calls.h>
-#include <RWA/RoutingWavelengthAssignment.h>
+#include <RMSA/RoutingWavelengthAssignment.h>
 #include <iostream>
+#include <Structure/Link.h>
 
 using namespace Simulations;
+using namespace RMSA;
 
 NetworkSimulation::NetworkSimulation(std::shared_ptr<CallGenerator> Generator,
-                                     std::shared_ptr<RoutingWavelengthAssignment> RWA,
+                                     std::shared_ptr<RoutingWavelengthAssignment> RMSA,
                                      unsigned long NumMaxCalls) :
-    Generator(Generator), RWA(RWA), NumMaxCalls(NumMaxCalls)
+    Generator(Generator), RMSA(RMSA), NumMaxCalls(NumMaxCalls)
 {
-    NumCalls = 0;
-    NumBlockedCalls = 0;
+    NumCalls =
+        NumBlockedCalls =
+            NumBlockedCalls_Route =
+                NumBlockedCalls_Spectrum =
+                    NumBlockedCalls_ASE_Noise =
+                        NumBlockedCalls_FilterImperfection = 0;
     hasSimulated = false;
 }
 
@@ -43,24 +48,43 @@ void NetworkSimulation::run()
 
 void NetworkSimulation::implement_call(std::shared_ptr<Event> evt)
 {
-    auto route = RWA->routeCall(evt->Parent);
+    auto route = RMSA->routeCall(evt->Parent);
     evt->Parent->CallEnding.lock()->route = evt->route = route;
 
-    BOOST_ASSERT_MSG(evt->Parent->Status != Call::Not_Evaluated,
-                     "Call was neither accepted nor blocked.");
+#ifdef RUN_ASSERTIONS
+    if (evt->Parent->Status == Call::Not_Evaluated)
+        {
+        std::cerr << "Call was neither accepted nor blocked." << std::endl;
+        abort();
+        }
+#endif
 
     if (evt->Parent->Status == Call::Blocked)
         {
+        NumBlockedCalls_Route += (evt->Parent->blockingReason & Call::Blocking_Route) != 0;
+        NumBlockedCalls_ASE_Noise += (evt->Parent->blockingReason & Call::Blocking_ASE_Noise) != 0;
+        NumBlockedCalls_FilterImperfection += (evt->Parent->blockingReason & Call::Blocking_FilterImperfection) != 0;
+        NumBlockedCalls_Spectrum += (evt->Parent->blockingReason & Call::Blocking_Spectrum) != 0;
         NumBlockedCalls++;
         }
     else
         {
-        for (auto &node : route->Slots)
+        unsigned int auxCount = 0;
+        for (auto &link : route->Slots)
             {
-            for (auto &slot : node.second)
+
+            if(considerFilterImperfection)
+                {
+                SpectralDensity thisSpecDensity = route->Segments.begin()->opticalPathSpecDensity.at(auxCount);
+                link.first.lock()->linkSpecDens->updateLink(thisSpecDensity, link.second);
+                }
+
+            for (auto &slot : link.second)
                 {
                 slot.lock()->useSlot();
                 }
+
+            auxCount++;
             }
 
         for (auto &reg : route->Regenerators)

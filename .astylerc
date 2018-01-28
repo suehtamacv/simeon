@@ -1,10 +1,10 @@
 --lineend=linux
 --mode=c
+--max-code-length=110
 
 --style=vtk
 
 --add-brackets
 
---max-code-length=80
 --break-after-logical
 --pad-oper

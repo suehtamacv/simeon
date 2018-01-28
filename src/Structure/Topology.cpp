@@ -1,5 +1,4 @@
 #include <Structure/Topology.h>
-#include <boost/assert.hpp>
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
@@ -22,18 +21,19 @@ Topology::DefaultTopPathsBimap Topology::DefaultTopologiesPaths =
 #undef DEFAULT_TOPOLOGIES
     ;
 
-Topology::Topology()
+Topology::Topology() : PowerRatioThreshold(0.6, Gain::Linear)
 {
     Nodes.clear();
     Links.clear();
-    LongestLink = -1;
+    AvgSpanLength = LongestLink = -1;
 }
 
-Topology::Topology(const Topology &topology)
+Topology::Topology(const Topology &topology) : PowerRatioThreshold(0.6, Gain::Linear)
 {
     Nodes.clear();
     Links.clear();
     LongestLink = -1;
+    AvgSpanLength = topology.AvgSpanLength;
 
     for (auto &node : topology.Nodes)
         {
@@ -65,13 +65,13 @@ Topology::Topology(const Topology &topology)
         }
 }
 
-Topology::Topology(std::string TopologyFileName)
+Topology::Topology(std::string TopologyFileName) : PowerRatioThreshold(0.6, Gain::Linear)
 {
     using namespace boost::program_options;
 
     Nodes.clear();
     Links.clear();
-    LongestLink = -1;
+    AvgSpanLength = LongestLink = -1;
 
     options_description TopologyDescription("Topology");
     TopologyDescription.add_options()
@@ -116,8 +116,13 @@ Topology::Topology(std::string TopologyFileName)
 
         std::istringstream LinkParameters(link);
         LinkParameters >> OriginID >> DestinationID >> length;
-        BOOST_ASSERT_MSG(OriginID != DestinationID,
-                         "Link can't have the same Origin and Destination.");
+#ifdef RUN_ASSERTIONS
+        if (OriginID == DestinationID)
+            {
+            std::cerr << "Link can't have the same Origin and Destination." << std::endl;
+            abort();
+            }
+#endif
 
         int NodesFound = 0;
 
@@ -136,8 +141,12 @@ Topology::Topology(std::string TopologyFileName)
                 }
             }
 
-        BOOST_ASSERT_MSG(NodesFound == 2,
-                         "Link with invalid origin and/or destination.");
+#ifdef RUN_ASSERTIONS
+        if (NodesFound != 2) {
+            std::cerr << "Link with invalid origin and/or destination." << std::endl;
+            abort();
+        }
+#endif
 
         add_Link(Origin, Destination, length);
         }
@@ -146,13 +155,12 @@ Topology::Topology(std::string TopologyFileName)
 std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
                                        Node::NodeArchitecture Arch, int NumReg)
 {
-
     if (NodeID == -1)
         {
         NodeID = Nodes.size() + 1;
         }
 
-    Nodes.push_back(std::shared_ptr<Node>(new Node(NodeID, Type, Arch)));
+    Nodes.push_back(std::make_shared<Node>(NodeID, Type, Arch));
     Nodes.back()->set_NumRegenerators(NumReg);
     return (std::weak_ptr<Node>) Nodes.back();
 }
@@ -160,14 +168,17 @@ std::weak_ptr<Node> Topology::add_Node(int NodeID, Node::NodeType Type,
 std::weak_ptr<Link> Topology::add_Link(std::weak_ptr<Node> Origin,
                                        std::weak_ptr<Node> Destination, double Length)
 {
-    Links.emplace(std::make_pair(Origin.lock()->ID, Destination.lock()->ID),
-                  std::shared_ptr<Link>(new Link(Origin, Destination, Length)));
-    Origin.lock()->insert_Link(Destination,
-                               Links.at(std::make_pair(Origin.lock()->ID,
-                                        Destination.lock()->ID)));
+    std::shared_ptr<Link> link = std::make_shared<Link>(Origin, Destination, Length);
+
+    Links.emplace(std::make_pair(Origin.lock()->ID, Destination.lock()->ID), link);
+    Origin.lock()->insert_Link(Destination, link);
     LongestLink = -1;
-    return (std::weak_ptr<Link>) Links.at(std::make_pair(Origin.lock()->ID,
-                                          Destination.lock()->ID));
+    if (AvgSpanLength != -1)
+        {
+        link->set_AvgSpanLength(AvgSpanLength);
+        }
+
+    return link;
 }
 
 void Topology::save(std::string TopologyFileName)
@@ -175,7 +186,13 @@ void Topology::save(std::string TopologyFileName)
     std::ofstream TopologyFile(TopologyFileName,
                                std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(TopologyFile.is_open(), "Output file is not open");
+#ifdef RUN_ASSERTIONS
+    if (!TopologyFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     TopologyFile << "  [nodes]" << std::endl << std::endl;
     TopologyFile << "# node = ID TYPE ARCHITECTURE NUMREG" << std::endl;
@@ -205,6 +222,11 @@ void Topology::save(std::string TopologyFileName)
 
 double Topology::get_LengthLongestLink()
 {
+    if (Links.empty())
+        {
+        return 0;
+        }
+
     if (LongestLink == -1)
         {
         for (auto &link : Links)
@@ -291,4 +313,28 @@ void Topology::set_avgSpanLength(double avgSpanLength)
         link.second->set_AvgSpanLength(avgSpanLength);
         }
     AvgSpanLength = avgSpanLength;
+}
+
+Gain Topology::get_PowerRatioThreshold()
+{
+    return PowerRatioThreshold;
+}
+
+void Topology::set_PowerRatioThreshold(Gain PRThreshold)
+{
+    PowerRatioThreshold = PRThreshold;
+}
+
+void Topology::print()
+{
+    std::cout << "-> Topology = " << std::endl;
+
+    for (auto &it : Nodes)
+        {
+        std::cout << "\t (" << it->ID
+                  << ")\t" << Node::NodeArchitecturesNames.left.at(it->get_NodeArch())
+                  << "\t" << it->get_NumRegenerators() << " Regenerators" << std::endl;
+        }
+
+    std::cout << std::endl;
 }

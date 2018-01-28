@@ -2,13 +2,16 @@
 #include <SimulationTypes/NetworkSimulation.h>
 #include <Structure/Link.h>
 #include <Calls/CallGenerator.h>
-#include <RWA/RoutingWavelengthAssignment.h>
-#include <boost/assert.hpp>
+#include <RMSA/RoutingWavelengthAssignment.h>
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <map>
 
 using namespace Simulations;
+using namespace ROUT;
+using namespace SA;
+using namespace RA;
+using namespace RP;
 
 Simulation_StatisticalTrend::Simulation_StatisticalTrend() :
     SimulationType(Simulation_Type::statisticaltrend)
@@ -60,14 +63,17 @@ void Simulation_StatisticalTrend::load()
 
     Link::load(T);
 
-    //RWA Algorithms
+    //RMSA Algorithms
         {
         //Routing Algorithm
         Routing_Algorithm = RoutingAlgorithm::define_RoutingAlgorithm();
 
+        //Routing Cost
+        Routing_Cost = RoutingCost::define_RoutingCost();
+
         //Wavelength Assignment Algorithm
         WavAssign_Algorithm =
-            WA::WavelengthAssignmentAlgorithm::define_WavelengthAssignmentAlgorithm();
+            SA::SpectrumAssignmentAlgorithm::define_SpectrumAssignmentAlgorithm();
 
         if (Type == TranslucentNetwork)
             {
@@ -185,11 +191,12 @@ void Simulation_StatisticalTrend::create_Simulations()
         //Creates a copy of the topology.
         std::shared_ptr<Topology> TopologyCopy(new Topology(*T));
 
-        //Creates the RWA Algorithms
+        //Creates the RMSA Algorithms
         std::shared_ptr<RoutingAlgorithm> R_Alg =
-            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, TopologyCopy);
-        std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-            WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+            RoutingAlgorithm::create_RoutingAlgorithm(Routing_Algorithm, Routing_Cost,
+                    TopologyCopy);
+        std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+            SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
                 WavAssign_Algorithm, TopologyCopy);
         std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg;
 
@@ -203,14 +210,14 @@ void Simulation_StatisticalTrend::create_Simulations()
             RA_Alg = nullptr;
             }
 
-        //Creates the Call Generator and the RWA Object
+        //Creates the Call Generator and the RMSA Object
         auto Generator = std::make_shared<CallGenerator>(TopologyCopy, NetworkLoad);
-        auto RWA = std::make_shared<RoutingWavelengthAssignment>(R_Alg, WA_Alg, RA_Alg,
-                   ModulationScheme::DefaultSchemes, TopologyCopy);
+        auto RMSA = std::make_shared<RoutingWavelengthAssignment>(R_Alg, WA_Alg, RA_Alg,
+                    ModulationScheme::DefaultSchemes, TopologyCopy);
 
         //Push simulation into stack
         simulations.push_back(
-            std::make_shared<NetworkSimulation>(Generator, RWA, NumCalls));
+            std::make_shared<NetworkSimulation>(Generator, RMSA, NumCalls));
         }
 }
 
@@ -220,20 +227,20 @@ void Simulation_StatisticalTrend::place_Regenerators(
 
     std::shared_ptr<RoutingAlgorithm> R_Alg =
         RoutingAlgorithm::create_RoutingAlgorithm(
-            Routing_Algorithm, T);
-    std::shared_ptr<WA::WavelengthAssignmentAlgorithm> WA_Alg =
-        WA::WavelengthAssignmentAlgorithm::create_WavelengthAssignmentAlgorithm(
+            Routing_Algorithm, Routing_Cost, T);
+    std::shared_ptr<SA::SpectrumAssignmentAlgorithm> WA_Alg =
+        SA::SpectrumAssignmentAlgorithm::create_SpectrumAssignmentAlgorithm(
             WavAssign_Algorithm, T);
     std::shared_ptr<RegeneratorAssignmentAlgorithm> RA_Alg =
         RegeneratorAssignmentAlgorithm::create_RegeneratorAssignmentAlgorithm(
             RegAssignment_Algorithm, T);
-    std::shared_ptr<RoutingWavelengthAssignment> RWA(
+    std::shared_ptr<RoutingWavelengthAssignment> RMSA(
         new RoutingWavelengthAssignment(
             R_Alg, WA_Alg, RA_Alg, ModulationScheme::DefaultSchemes, T));
 
     std::shared_ptr<RegeneratorPlacementAlgorithm> RP_Alg =
         RegeneratorPlacementAlgorithm::create_RegeneratorPlacementAlgorithm(
-            RegPlacement_Algorithm, T, RWA, NetworkLoad, NumCalls, runLoadNX);
+            RegPlacement_Algorithm, T, RMSA, NetworkLoad, NumCalls, runLoadNX);
 
     RP_Alg->placeRegenerators();
 
@@ -249,25 +256,27 @@ void Simulation_StatisticalTrend::print()
     std::cout << std::endl <<
               "  A Statistical Trend Analysis Simulation is about to start with the following parameters: "
               << std::endl;
-    std::cout << "-> Metrics =" <<std::endl;
+    std::cout << "-> Metrics =" << std::endl;
     for(auto &metric : Metrics)
-    {
-        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(metric) << std::endl;
-    }
+        {
+        std::cout << "\t-> " << SimulationType::MetricTypes.left.at(
+                      metric) << std::endl;
+        }
     if(considerFilterImperfection)
-    {
-        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder << std::endl;
-        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder << std::endl;
-    }
+        {
+        std::cout << "-> Tx Filter Order = " << SpectralDensity::TxFilterOrder <<
+                  std::endl;
+        std::cout << "-> Gaussian Filter Order = " << SpectralDensity::GaussianOrder <<
+                  std::endl;
+        }
     std::cout << "-> Network Type = " << NetworkTypesNicknames.left.at(
                   Type) << std::endl;
     std::cout << "-> Distance Between Inline Amplifiers = " << T->AvgSpanLength <<
               std::endl;
-    std::cout << "-> Routing Algorithm = " <<
-              RoutingAlgorithm::RoutingAlgorithmNames.left.at(Routing_Algorithm)
-              << std::endl;
+    simulations.front()->RMSA->R_Alg->print();
+    simulations.front()->RMSA->R_Alg->RCost->print();
     std::cout << "-> Wavelength Assignment Algorithm = " <<
-              WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNames.left.at(
+              SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNames.left.at(
                   WavAssign_Algorithm)
               << std::endl;
     if(Type == TranslucentNetwork)
@@ -282,6 +291,8 @@ void Simulation_StatisticalTrend::print()
     std::cout << "-> Number of Calls = " << NumCalls << std::endl;
     std::cout << "-> Network Load = " << NetworkLoad << std::endl;
     std::cout << "-> Number of Repetitions = " << NumRepetitions << std::endl;
+
+    T->print();
 }
 
 void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
@@ -291,7 +302,13 @@ void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
     std::ofstream SimConfigFile(SimConfigFileName,
                                 std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << "  NetworkType = " << NetworkTypesNicknames.left.at(
                       Type) << std::endl;
@@ -299,18 +316,24 @@ void Simulation_StatisticalTrend::save(std::string SimConfigFileName)
 
     Link::save(SimConfigFileName, T);
 
-    simulations.front()->RWA->R_Alg->save(SimConfigFileName);
-    simulations.front()->RWA->WA_Alg->save(SimConfigFileName);
+    simulations.front()->RMSA->R_Alg->save(SimConfigFileName);
+    simulations.front()->RMSA->WA_Alg->save(SimConfigFileName);
     if(Type == TranslucentNetwork)
         {
         RegeneratorPlacementAlgorithm::save(SimConfigFileName, RegPlacement_Algorithm);
-        simulations.front()->RWA->RA_Alg->save(SimConfigFileName);
+        simulations.front()->RMSA->RA_Alg->save(SimConfigFileName);
         }
 
     SimConfigFile.open(SimConfigFileName,
                        std::ofstream::out | std::ofstream::app);
 
-    BOOST_ASSERT_MSG(SimConfigFile.is_open(), "Output file is not open");
+#ifdef RUN_ASSERTIONS
+    if (!SimConfigFile.is_open())
+        {
+        std::cerr << "Output file is not open" << std::endl;
+        abort();
+        }
+#endif
 
     SimConfigFile << std::endl << "  [sim_info]" << std::endl << std::endl;
     SimConfigFile << "  NumCalls = " << NumCalls << std::endl;
@@ -357,8 +380,13 @@ void Simulation_StatisticalTrend::load_file(std::string ConfigFileName)
     variables_map VariablesMap;
 
     std::ifstream ConfigFile(ConfigFileName, std::ifstream::in);
-    BOOST_ASSERT_MSG(ConfigFile.is_open(), "Input file is not open");
-
+#ifdef RUN_ASSERTIONS
+    if (!ConfigFile.is_open())
+        {
+        std::cerr << "Input file is not open" << std::endl;
+        abort();
+        }
+#endif
     store(parse_config_file<char>(ConfigFile, ConfigDesctription, true),
           VariablesMap);
     ConfigFile.close();
@@ -373,7 +401,7 @@ void Simulation_StatisticalTrend::load_file(std::string ConfigFileName)
     Routing_Algorithm = RoutingAlgorithm::RoutingAlgorithmNicknames.right.at(
                             VariablesMap["algorithms.RoutingAlgorithm"].as<std::string>());
     WavAssign_Algorithm =
-        WA::WavelengthAssignmentAlgorithm::WavelengthAssignmentAlgorithmNicknames.right.at(
+        SA::SpectrumAssignmentAlgorithm::SpectrumAssignmentAlgorithmNicknames.right.at(
             VariablesMap["algorithms.WavelengthAssignmentAlgorithm"].as<std::string>());
     if(Type == Network_Type::TranslucentNetwork)
         {
@@ -436,7 +464,7 @@ void Simulation_StatisticalTrend::run()
     extern bool parallelism_enabled;
     #pragma omp parallel for ordered schedule(dynamic) if(parallelism_enabled)
 
-    for (unsigned i = 0; i < simulations.size(); i++)
+    for (size_t i = 0; i < simulations.size(); i++)
         {
         simulations[i]->run();
 

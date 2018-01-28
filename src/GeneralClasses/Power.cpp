@@ -1,6 +1,6 @@
-#include <boost/assert.hpp>
-#include <cmath>
 #include <GeneralClasses/Power.h>
+#include <cmath>
+#include <iostream>
 
 Power::Power(double value, InitType Type)
 {
@@ -10,7 +10,13 @@ Power::Power(double value, InitType Type)
         }
     else if (Type == InitType::Watt)
         {
-        BOOST_ASSERT_MSG(value >= 0, "A power, in Watts, can't be negative.");
+#ifdef RUN_ASSERTIONS
+        if (value < 0)
+            {
+            std::cerr <<  "A power, in Watts, can't be negative." << std::endl;
+            abort();
+            }
+#endif
         value_Watts = value;
         }
 }
@@ -31,12 +37,12 @@ Power &Power::operator *=(Gain &G)
     return *this;
 }
 
-Power Power::operator +(Power &P)
+Power Power::operator +(const Power &P)
 {
     return Power(value_Watts + P.in_Watts(), Power::Watt);
 }
 
-Power &Power::operator +=(Power &P)
+Power &Power::operator +=(const Power &P)
 {
     value_Watts += P.in_Watts();
     return *this;
@@ -57,7 +63,37 @@ bool Power::operator <(const Power &P) const
     return value_Watts < P.value_Watts;
 }
 
-double Power::operator /(const Power &P) const
+bool Power::operator <=(const Power &P) const
 {
-    return value_Watts / P.value_Watts;
+    return ((operator <(P)) || (operator ==(P)));
+}
+
+bool Power::operator >(const Power &P) const
+{
+    return value_Watts > P.value_Watts;
+}
+
+bool Power::operator >=(const Power &P) const
+{
+    return ((operator >(P)) || (operator ==(P)));
+}
+
+Gain Power::operator /(const Power &P) const
+{
+    return Gain(value_Watts / P.value_Watts, Gain::Linear);
+}
+
+bool Power::operator ==(const Power &P) const
+{
+    return (value_Watts == P.value_Watts);
+}
+
+bool Power::operator !=(const Power &P) const
+{
+    return !(operator ==(P));
+}
+
+std::ostream& operator<<(std::ostream& os, const Power &P)
+{
+    return os << P.in_dBm() << "dBm";
 }

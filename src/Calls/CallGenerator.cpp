@@ -2,7 +2,6 @@
 #include <Calls/Call.h>
 #include <Calls/Event.h>
 #include <GeneralClasses/RandomGenerator.h>
-#include <boost/assert.hpp>
 
 bool CallGenerator::EventCompare::operator()(const std::shared_ptr<Event> a,
         const std::shared_ptr<Event> b) const
@@ -63,7 +62,13 @@ std::shared_ptr<Call> CallGenerator::generate_Call()
 
 void CallGenerator::set_Load(double h)
 {
-    BOOST_ASSERT_MSG(h >= 0, "Network loads must be positive.");
+#ifdef RUN_ASSERTIONS
+    if (h < 0)
+        {
+        std::cerr << "Network loads must be positive." << std::endl;
+        abort();
+        }
+#endif
     this->h = h;
     ExponentialDistributionH = std::exponential_distribution<double>(h);
 }

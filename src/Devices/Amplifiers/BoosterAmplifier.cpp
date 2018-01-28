@@ -1,6 +1,8 @@
 #include <Devices/Amplifiers/BoosterAmplifier.h>
 #include <Devices/SSS.h>
 
+using namespace Devices;
+
 BoosterAmplifier::BoosterAmplifier() : EDFA(-SSS::SSSLoss)
 {
 

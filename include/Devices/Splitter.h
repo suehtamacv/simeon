@@ -5,6 +5,8 @@
 
 class Node;
 
+namespace Devices
+{
 /**
  * @brief The Splitter class represents a splitter. Is only used with the
  * Broadcast-And-Select node architecture.
@@ -20,7 +22,7 @@ public:
 
     Gain &get_Gain();
     Power &get_Noise();
-    TransferFunction &get_TransferFunction(unsigned int numSlots);
+    std::shared_ptr<TF::Transmittance> get_TransferFunction(double);
     double get_CapEx();
     double get_OpEx();
 
@@ -38,7 +40,11 @@ private:
     unsigned int NumPorts;
     Gain SplitterLoss;
     Power NoisePower;
-    std::shared_ptr<TransferFunction> deviceTF;
+    /**
+     * @brief deviceTF  is the device's transfer function.
+     */
+    std::shared_ptr<TF::Transmittance> deviceTF;
 };
+}
 
 #endif // SPLITTER_H

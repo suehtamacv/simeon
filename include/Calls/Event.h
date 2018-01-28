@@ -4,7 +4,11 @@
 #include <memory>
 
 class Call;
+
+namespace RMSA
+{
 class Route;
+}
 
 /**
  * @brief The Event class represents an event that happened in the network. Is
@@ -38,6 +42,16 @@ public:
      * @return true iff this event ocurrs after the Event passed as argument.
      */
     bool operator>(const Event &) const;
+    /**
+     * @brief operator < is used to compare the ocurral instants of two events.
+     * @return true iff this event ocurrs before the Event passed as argument.
+     */
+    bool operator<(const Event &) const;
+    /**
+     * @brief operator == compares two events for equality.
+     * @return true iff the events have the same occural time.
+     */
+    bool operator==(const Event &) const;
 
     /**
      * @brief t is the ocurring time of the event.
@@ -55,7 +69,7 @@ public:
      * @brief route is a pointer to the Route used to stablish the Parent Call.
      * If did not succeeded to stablish, then this is a pointer to nullptr.
      */
-    std::shared_ptr<Route> route;
+    std::shared_ptr<RMSA::Route> route;
 };
 
 #endif // EVENT_H

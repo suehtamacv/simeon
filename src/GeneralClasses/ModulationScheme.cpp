@@ -3,7 +3,7 @@
 #include <GeneralClasses/PhysicalConstants.h>
 #include <Structure/Slot.h>
 
-std::vector<ModulationScheme> ModulationScheme::DefaultSchemes =
+std::set<ModulationScheme> ModulationScheme::DefaultSchemes =
 {
 #define X(a,b)  ModulationScheme(a,b),
     DEFAULT_MODULATIONSCHEMES
@@ -41,28 +41,48 @@ Gain ModulationScheme::get_SNR_Per_Bit() const
 
 bool ModulationScheme::operator <(const ModulationScheme &scheme) const
 {
-    return (M < scheme.get_M());
+    return (M < scheme.M);
+}
+
+bool ModulationScheme::operator <=(const ModulationScheme &scheme) const
+{
+    return (operator ==(scheme)) || (operator <(scheme));
 }
 
 bool ModulationScheme::operator >(const ModulationScheme &scheme) const
 {
-    return (M > scheme.get_M());
+    return (M > scheme.M);
+}
+
+bool ModulationScheme::operator >=(const ModulationScheme &scheme) const
+{
+    return (operator ==(scheme)) || (operator >(scheme));
 }
 
 bool ModulationScheme::operator ==(const ModulationScheme &scheme) const
 {
-    return ((M == scheme.get_M()) && (SNR_Per_Bit == scheme.get_SNR_Per_Bit()));
+    return (M == scheme.M);
 }
 
-Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate)
+bool ModulationScheme::operator !=(const ModulationScheme &scheme) const
 {
-    return Gain(0.5 * BitRate.get_Bitrate() * SNR_Per_Bit.in_Linear() /
+    return !operator ==(scheme);
+}
+
+Gain ModulationScheme::get_ThresholdOSNR(TransmissionBitrate &BitRate) const
+{
+    return Gain(0.5 * BitRate.get_Bitrate() * pow10(0.1 * SNR_Per_Bit.in_dB()) /
                 PhysicalConstants::BRef, Gain::Linear);
 }
 
-unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate)
+unsigned int ModulationScheme::get_NumSlots(TransmissionBitrate &BitRate) const
 {
     return ceil(BitRate.get_Bitrate() / (Slot::BSlot *
                                          PhysicalConstants::numPolarizations *
                                          log2(M)));
+}
+
+std::ostream& operator <<(std::ostream &out, const ModulationScheme &scheme)
+{
+    return out << scheme.M << "-QAM";
 }
