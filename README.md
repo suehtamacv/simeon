@@ -1,4 +1,4 @@
-# adamant-broccoli
-A Huge Endeavour Awaits
+# SimEON
+Simulator for Elastic Optical Networks
 
-[![Build Status](https://travis-ci.org/suehtamacv/adamant-broccoli.svg?branch=master)](https://travis-ci.org/suehtamacv/adamant-broccoli)
+For details, please refer to our article, https://link.springer.com/article/10.1007/s11107-017-0697-9
